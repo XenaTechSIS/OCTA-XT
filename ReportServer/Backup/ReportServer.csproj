@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A203451E-0501-4EB9-A4FD-3A223DA2C5B7}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ReportServer</RootNamespace>
+    <AssemblyName>ReportServer</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Global.asax" />
+    <Content Include="img\glyphicons-halflings-white.png" />
+    <Content Include="img\glyphicons-halflings.png" />
+    <Content Include="img\octa_survey layout_header.png" />
+    <Content Include="Reports\Alarms.aspx" />
+    <Content Include="Reports\Assists.aspx" />
+    <Content Include="Reports\CombinedReport.aspx" />
+    <Content Include="Reports\DriverAndBeatHours.aspx" />
+    <Content Include="Reports\DriverAndBeatHoursNew.aspx" />
+    <Content Include="Reports\DriverBreaks.aspx" />
+    <Content Include="Reports\EarlyRollIns.aspx" />
+    <Content Include="Reports\GPSPositionReport.aspx" />
+    <Content Include="Reports\Logon.aspx" />
+    <Content Include="Reports\ReportMain.aspx" />
+    <Content Include="Reports\Schedules.aspx" />
+    <Content Include="Reports\Speeding.aspx" />
+    <Content Include="Reports\TruckMessages.aspx" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\jquery-1.9.1.js" />
+    <Content Include="Scripts\jquery-ui-1.10.0.custom.js" />
+    <Content Include="Styles\bootstrap-responsive.css" />
+    <Content Include="Styles\bootstrap.css" />
+    <Content Include="Styles\images\animated-overlay.gif" />
+    <Content Include="Styles\images\ui-bg_flat_30_cccccc_40x100.png" />
+    <Content Include="Styles\images\ui-bg_flat_50_5c5c5c_40x100.png" />
+    <Content Include="Styles\images\ui-bg_glass_20_555555_1x400.png" />
+    <Content Include="Styles\images\ui-bg_glass_40_0078a3_1x400.png" />
+    <Content Include="Styles\images\ui-bg_glass_40_ffc73d_1x400.png" />
+    <Content Include="Styles\images\ui-bg_gloss-wave_25_333333_500x100.png" />
+    <Content Include="Styles\images\ui-bg_highlight-soft_80_eeeeee_1x100.png" />
+    <Content Include="Styles\images\ui-bg_inset-soft_25_000000_1x100.png" />
+    <Content Include="Styles\images\ui-bg_inset-soft_30_f58400_1x100.png" />
+    <Content Include="Styles\images\ui-icons_222222_256x240.png" />
+    <Content Include="Styles\images\ui-icons_4b8e0b_256x240.png" />
+    <Content Include="Styles\images\ui-icons_a83300_256x240.png" />
+    <Content Include="Styles\images\ui-icons_cccccc_256x240.png" />
+    <Content Include="Styles\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Styles\jquery-ui-1.10.0.custom.css" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Classes\ReportData.cs" />
+    <Compile Include="Classes\Reports.cs" />
+    <Compile Include="Classes\SQLCode.cs" />
+    <Compile Include="Classes\SQLConn.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\Alarms.aspx.cs">
+      <DependentUpon>Alarms.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\Alarms.aspx.designer.cs">
+      <DependentUpon>Alarms.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Assists.aspx.cs">
+      <DependentUpon>Assists.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\Assists.aspx.designer.cs">
+      <DependentUpon>Assists.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\CombinedReport.aspx.cs">
+      <DependentUpon>CombinedReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\CombinedReport.aspx.designer.cs">
+      <DependentUpon>CombinedReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\DriverAndBeatHours.aspx.cs">
+      <DependentUpon>DriverAndBeatHours.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\DriverAndBeatHours.aspx.designer.cs">
+      <DependentUpon>DriverAndBeatHours.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\DriverAndBeatHoursNew.aspx.cs">
+      <DependentUpon>DriverAndBeatHoursNew.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\DriverAndBeatHoursNew.aspx.designer.cs">
+      <DependentUpon>DriverAndBeatHoursNew.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\DriverBreaks.aspx.cs">
+      <DependentUpon>DriverBreaks.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\DriverBreaks.aspx.designer.cs">
+      <DependentUpon>DriverBreaks.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\EarlyRollIns.aspx.cs">
+      <DependentUpon>EarlyRollIns.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\EarlyRollIns.aspx.designer.cs">
+      <DependentUpon>EarlyRollIns.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\GPSPositionReport.aspx.cs">
+      <DependentUpon>GPSPositionReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\GPSPositionReport.aspx.designer.cs">
+      <DependentUpon>GPSPositionReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Logon.aspx.cs">
+      <DependentUpon>Logon.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\Logon.aspx.designer.cs">
+      <DependentUpon>Logon.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ReportMain.aspx.cs">
+      <DependentUpon>ReportMain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\ReportMain.aspx.designer.cs">
+      <DependentUpon>ReportMain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Schedules.aspx.cs">
+      <DependentUpon>Schedules.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\Schedules.aspx.designer.cs">
+      <DependentUpon>Schedules.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Speeding.aspx.cs">
+      <DependentUpon>Speeding.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\Speeding.aspx.designer.cs">
+      <DependentUpon>Speeding.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\TruckMessages.aspx.cs">
+      <DependentUpon>TruckMessages.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\TruckMessages.aspx.designer.cs">
+      <DependentUpon>TruckMessages.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>58856</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

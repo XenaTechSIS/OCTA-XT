@@ -1,0 +1,9 @@
+C:\GitHub\OCTA\Web Site\FSP.Common\bin\Development\FSP.Common.dll
+C:\GitHub\OCTA\Web Site\FSP.Common\bin\Development\FSP.Common.pdb
+C:\GitHub\OCTA\Web Site\FSP.Common\bin\Development\FSP.Domain.dll
+C:\GitHub\OCTA\Web Site\FSP.Common\bin\Development\FSP.Domain.pdb
+C:\GitHub\OCTA\Web Site\FSP.Common\bin\Development\FSP.Domain.dll.config
+C:\GitHub\OCTA\Web Site\FSP.Common\obj\Development\FSP.Common.csprojResolveAssemblyReference.cache
+C:\GitHub\OCTA\Web Site\FSP.Common\obj\Development\FSP.Common.csproj.CoreCompileInputs.cache
+C:\GitHub\OCTA\Web Site\FSP.Common\obj\Development\FSP.Common.dll
+C:\GitHub\OCTA\Web Site\FSP.Common\obj\Development\FSP.Common.pdb

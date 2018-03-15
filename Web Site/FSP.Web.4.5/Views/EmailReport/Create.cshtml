@@ -1,0 +1,80 @@
+﻿@model FSP.Domain.Model.AERecipient
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>AERecipient</legend>
+
+        <div class="editor-label">
+            Recipient Email
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("AERecipientEmail", String.Empty)
+            @Html.ValidationMessageFor(model => model.AERecipientEmail)
+        </div>
+
+        <div class="editor-label">
+            Report
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("AEReportID", String.Empty)
+            @Html.ValidationMessageFor(model => model.AEReportID)
+        </div>
+
+        <div class="editor-label">
+            Frequency
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("AEFrequencyID", String.Empty)
+            @Html.ValidationMessageFor(model => model.AEFrequencyID)
+        </div>
+
+        <div class="editor-label">
+            Report Type
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("AEReportTypeID", String.Empty)
+            @Html.ValidationMessageFor(model => model.AEReportTypeID)
+        </div>
+
+       @* <div class="editor-label">
+        </div>
+        <div class="editor-field">
+            <label class="checkbox">
+                @Html.EditorFor(model => model.AEIsContractor)
+                Is Contractor
+            </label>
+
+            @Html.ValidationMessageFor(model => model.AEIsContractor)
+        </div>*@
+
+        <div class="editor-label">
+            Contractor
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("AEContractorID", String.Empty)
+            @Html.ValidationMessageFor(model => model.AEContractorID)
+        </div>
+
+
+
+        <p>
+            <input type="submit" value="Create" class="btn btn-primary" />
+            <a href="~/EmailReport/Index" class="btn">Cancel</a>
+        </p>
+    </fieldset>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

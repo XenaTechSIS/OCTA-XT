@@ -1,0 +1,57 @@
+﻿@model IEnumerable<FSP.Domain.Model.AERecipient>
+
+@{
+    ViewBag.Title = "Email Report";
+}
+
+<h2>Email Report</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Recipient
+        </th>
+        <th>
+            Contractor
+        </th>
+        <th>
+            Report
+        </th>
+        <th>
+            Frequency
+        </th>       
+        <th>
+            Report Type
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AERecipientEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AEIsContractor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AEReport.AEReportName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AEFrequency.AEFrequencyName)
+            </td>           
+            <td>
+                @Html.DisplayFor(modelItem => item.AEReportType.AEReportTypeName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.AERecipientID }) |          
+            @Html.ActionLink("Delete", "Delete", new { id = item.AERecipientID })
+            </td>
+        </tr>
+    }
+
+</table>

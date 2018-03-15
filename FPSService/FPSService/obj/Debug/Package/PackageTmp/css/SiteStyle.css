@@ -1,0 +1,268 @@
+﻿body 
+{
+    font-family: Arial, Sans-Serif;
+}
+
+h1
+{
+    font-weight:bold;
+    font-size:larger;
+    }
+           
+.lbl
+{
+    display:inline-block;
+    width:200px;
+    }
+    
+.logonText
+{
+    width:100px;
+    display:inline-block;
+    }
+    
+.multiColumn
+{
+    width:100%;margin:0 auto;
+    }
+
+.leftCol
+{
+    width:30%; float:left;
+    }
+
+.rightCol
+{
+    width:70%; float:left;
+    }
+    
+.lblVal
+{
+    right:200px;
+    }
+    
+.divEven
+{
+    background-color:Gray;
+    }
+  
+.divOdd
+{
+    background-color:Lime;
+    }
+    
+.dataTable
+{
+    border-collapse:collapse;
+    border: 1px solid black;
+    }
+
+.dataTable tr, th, td
+{
+    border: 1px solid black;
+    }
+    
+div.grid
+{
+    width:600px;
+    }
+    
+div.grid div
+{
+    float:left;
+    }
+    
+div.leftCol
+{
+    width:50%;
+    }
+
+div.rightCol
+{
+    width:50%;
+    }
+    
+div.clear
+{
+    clear:both;
+    }
+
+.TruckDiv
+{
+    width: 400px;
+    }
+
+.newTruck
+{
+    border: 1px;
+    border-color:Gray;
+    padding:10px;
+    border-style:solid;
+    }
+
+#CurrentIncidents
+{
+    width: 100%;
+    height: 400px;
+    overflow:scroll;
+    }
+    
+#CurrentAssists
+{
+    width: 100%;
+    height: 400px;
+    overflow:scroll;
+    }    
+
+#CurrentConnects
+{
+    width: 100%;
+    height: 700px;
+    overflow:scroll;
+    }
+    
+#CurrentState
+{
+    width:100%;
+    height: 400px;
+    overflow:scroll;
+    }
+    
+/* Header styles */
+#header {
+	clear:both;
+	float:left;
+	width:100%;
+}
+#header {
+	border-bottom:1px solid #000;
+}
+#header p,
+#header h1,
+#header h2 {
+	padding:.4em 15px 0 15px;
+	margin:0;
+}
+#header ul {
+	clear:left;
+	float:left;
+	width:100%;
+	list-style:none;
+	margin:10px 0 0 0;
+	padding:0;
+}
+#header ul li {
+	display:inline;
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+#header ul li a {
+	display:block;
+	float:left;
+	margin:0 0 0 1px;
+	padding:3px 10px;
+	text-align:center;
+	background:#eee;
+	color:#000;
+	text-decoration:none;
+	position:relative;
+	left:15px;
+	line-height:1.3em;
+}
+#header ul li a:hover {
+	background:#369;
+	color:#fff;
+}
+#header ul li a.active,
+#header ul li a.active:hover {
+	color:#fff;
+	background:#000;
+	font-weight:bold;
+}
+#header ul li a span {
+	display:block;
+}
+/* 'widths' sub menu */
+#layoutdims {
+	clear:both;
+	background:#eee;
+	border-top:4px solid #000;
+	margin:0;
+	padding:6px 15px !important;
+	text-align:right;
+}
+/* column container */
+.colmask {
+	position:relative;	/* This fixes the IE7 overflow hidden bug */
+	clear:both;
+	float:left;
+	width:100%;			/* width of whole page */
+	overflow:hidden;		/* This chops off any overhanging divs */
+}
+/* common column settings */
+.colright,
+.colmid,
+.colleft {
+	float:left;
+	width:100%;			/* width of page */
+	position:relative;
+}
+.col1,
+.col2,
+.col3 {
+	float:left;
+	position:relative;
+	padding:0 0 1em 0;	/* no left and right padding on columns, we just make them narrower instead 
+					only padding top and bottom is included here, make it whatever value you need */
+	overflow:hidden;
+}
+/* 3 Column settings */
+.threecol {
+	background:#eee;		/* right column background colour */
+}
+.threecol .colmid {
+	right:25%;			/* width of the right column */
+	background:#fff;		/* center column background colour */
+}
+.threecol .colleft {
+	right:50%;			/* width of the middle column */
+	background:#f4f4f4;	/* left column background colour */
+}
+.threecol .col1 {
+	width:33%;			/* width of center column content (column width minus padding on either side) */
+	left:97%;			/* 100% plus left padding of center column */
+}
+.threecol .col2 {
+	width:33%;			/* Width of left column content (column width minus padding on either side) */
+	left:42%;			/* width of (right column) plus (center column left and right padding) plus (left column left padding) */
+}
+.threecol .col3 {
+	width:33%;			/* Width of right column content (column width minus padding on either side) */
+	left:53%;			/* Please make note of the brackets here:
+					(100% - left column width) plus (center column left and right padding) plus (left column left and right padding) plus (right column left padding) */
+}
+/* Footer styles */
+#footer {
+	clear:both;
+	float:left;
+	width:100%;
+	border-top:1px solid #000;
+}
+#footer p {
+	padding:10px;
+	margin:0;
+}
+
+#Title
+{
+    font-size:x-large;
+    background-color:Black;
+    color:White;
+    }
+
+.subTitle
+{
+    font-size:medium;
+    background-color:Gray;
+    }
