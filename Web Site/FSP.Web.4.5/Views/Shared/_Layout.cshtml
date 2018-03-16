@@ -38,8 +38,7 @@
                                 href="#">Communication<b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
-                                @Html.MenuItem("Dispatch", "Index", "Dispatch", "", "")
-                                @* @Html.MenuItem("Driver Messaging", "Index", "AlertMessages", "", "")*@
+                                @Html.MenuItem("Dispatch", "Index", "Dispatch", "", "")                          
                                 <li><a href="~/AlertMessages/Index" target="_blank">Driver Messaging</a></li>
                                 @Html.MenuItem("Incidents", "Index", "Incident", "", "")
                             </ul>
@@ -84,16 +83,13 @@
         </div>
     </div>
     <div class="container">
-        @*<div id="websitePath" data-websitePath="@Request.ApplicationPath"></div>*@
-        
+        @*<div id="websitePath" data-websitePath="@Request.ApplicationPath"></div>*@        
         <div id="websitePath" data-websitePath="http://localhost:58329"></div>
-
         @RenderBody()
         <div style="padding-top: 30px">
             <p>&copy; @DateTime.Now.Year - LATA</p>
         </div>
     </div>
-
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryui")

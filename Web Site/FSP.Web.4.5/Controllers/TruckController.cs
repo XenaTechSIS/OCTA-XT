@@ -18,38 +18,25 @@ namespace FSP.Web.Controllers
     [CustomAuthorization]
     public class TruckController : MyController
     {
-        public List<TruckState> GetTruckStates()
+      
+        public ActionResult Grid()
         {
-            var returnList = new List<TruckState>();
-
-            if (HttpContext.Cache["truckStates"] == null)
-            {
-                using (var dc = new FSPDataContext())
-                {
-                    returnList = dc.TruckStates.ToList();
-                }
-
-                HttpContext.Cache.Insert("truckStates",
-                    returnList,
-                    null,
-                    Cache.NoAbsoluteExpiration,
-                    TimeSpan.FromMinutes(60));
-            }
-            else
-            {
-                returnList = (List<TruckState>) HttpContext.Cache["truckStates"];
-            }
-
-            return returnList;
+            return View();
         }
 
-        public ActionResult Grid()
+        public ActionResult Map()
+        {
+            return View();
+        }
+
+        public ActionResult MapOld()
         {
             return View();
         }
 
         [OutputCache(Duration = 10)]
         [AllowAnonymous]
+        [HttpGet]
         public ActionResult HaveAlarms()
         {
             var returnValue = false;
@@ -92,12 +79,33 @@ namespace FSP.Web.Controllers
             return Json(returnValue, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Map()
+        [HttpGet]
+        public List<TruckState> GetTruckStates()
         {
-            return View();
-        }
+            var returnList = new List<TruckState>();
 
-        //[OutputCache(CacheProfile = "TruckList")]
+            if (HttpContext.Cache["truckStates"] == null)
+            {
+                using (var dc = new FSPDataContext())
+                {
+                    returnList = dc.TruckStates.ToList();
+                }
+
+                HttpContext.Cache.Insert("truckStates",
+                    returnList,
+                    null,
+                    Cache.NoAbsoluteExpiration,
+                    TimeSpan.FromMinutes(60));
+            }
+            else
+            {
+                returnList = (List<TruckState>)HttpContext.Cache["truckStates"];
+            }
+
+            return returnList;
+        }
+        
+        [HttpGet]
         public ActionResult UpdateAllTrucks()
         {
             var towTrucks = new List<UITowTruck>();
@@ -107,7 +115,7 @@ namespace FSP.Web.Controllers
             {
                 if (HttpContext.Cache["Trucks"] != null)
                 {
-                    towTrucks = (List<UITowTruck>) HttpContext.Cache["Trucks"];
+                    towTrucks = (List<UITowTruck>)HttpContext.Cache["Trucks"];
                     Debug.WriteLine("Returning CACHED truck list: " + DateTime.Now);
                 }
                 else
@@ -211,7 +219,7 @@ namespace FSP.Web.Controllers
 
             return Json(towTrucks.OrderBy(p => p.BeatNumber).ThenBy(p => p.TruckNumber), JsonRequestBehavior.AllowGet);
         }
-       
+
         #region Other Calls
 
         [OutputCache(CacheProfile = "OtherDataCalls")]
@@ -316,8 +324,8 @@ namespace FSP.Web.Controllers
                 using (var dc = new FSPDataContext())
                 {
                     var beatsQuery = (from q in dc.vBeats
-                        where q.Active
-                        select q).ToList();
+                                      where q.Active
+                                      select q).ToList();
 
                     foreach (var beat in beatsQuery)
                     {
@@ -369,14 +377,14 @@ namespace FSP.Web.Controllers
             using (var dc = new FSPDataContext())
             {
                 var beatsQuery = from q in dc.vBeats
-                    where q.Active && q.BeatNumber.Contains(name_startsWith)
-                    orderby q.BeatNumber
-                    select new
-                    {
-                        //Number = q.BeatNumber,
-                        Number = q.BeatNumber.Substring(q.BeatNumber.Length - 3, 3),
-                        Description = q.BeatDescription
-                    };
+                                 where q.Active && q.BeatNumber.Contains(name_startsWith)
+                                 orderby q.BeatNumber
+                                 select new
+                                 {
+                                     //Number = q.BeatNumber,
+                                     Number = q.BeatNumber.Substring(q.BeatNumber.Length - 3, 3),
+                                     Description = q.BeatDescription
+                                 };
 
                 Debug.WriteLine("Beat numbers loaded: " + DateTime.Now);
                 return Json(beatsQuery, JsonRequestBehavior.AllowGet);
@@ -389,13 +397,13 @@ namespace FSP.Web.Controllers
             using (var dc = new FSPDataContext())
             {
                 var contractorQuery = from q in dc.Contractors
-                    where q.ContractCompanyName.Contains(name_startsWith)
-                    orderby q.ContractCompanyName
-                    select new
-                    {
-                        Number = q.ContractCompanyName,
-                        Description = q.ContractCompanyName
-                    };
+                                      where q.ContractCompanyName.Contains(name_startsWith)
+                                      orderby q.ContractCompanyName
+                                      select new
+                                      {
+                                          Number = q.ContractCompanyName,
+                                          Description = q.ContractCompanyName
+                                      };
                 Debug.WriteLine("Tow Truck Contractors: " + DateTime.Now);
                 return Json(contractorQuery.ToList(), JsonRequestBehavior.AllowGet);
             }
@@ -411,7 +419,7 @@ namespace FSP.Web.Controllers
                 try
                 {
                     var beatsQuery = (from q in dc.vBeatSegments
-                        select q).ToList();
+                                      select q).ToList();
 
                     foreach (var beat in beatsQuery)
                     {
