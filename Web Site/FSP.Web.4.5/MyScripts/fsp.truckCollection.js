@@ -49,7 +49,7 @@ lata.FspWeb.prototype.startTruckService = function () {
 
         try {
 
-            console.log("Add or update truck %s", dbTruck.TruckNumber);
+            //console.log("Add or update truck %s", dbTruck.TruckNumber);
 
             var currentTruck = ko.utils.arrayFirst(fspWeb.trucks(), function (i) { return i.truckNumber === dbTruck.TruckNumber; });
 

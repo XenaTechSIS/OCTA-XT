@@ -188,6 +188,7 @@
     <Compile Include="Areas\AdminArea\ViewModels\ContractCreateViewModel.cs" />
     <Compile Include="Areas\AdminArea\ViewModels\ContractIndexViewModel.cs" />
     <Compile Include="Areas\AdminArea\ViewModels\UsersViewModel.cs" />
+    <Compile Include="Helpers\HtmlExtensions.cs" />
     <Compile Include="Startup.cs" />
     <Content Include="app\app.js" />
     <Content Include="app\core\app.config.js" />
@@ -199,6 +200,7 @@
     <Content Include="app\services\mapService.js" />
     <Content Include="app\services\trucksService.js" />
     <Content Include="app\services\utilService.js" />
+    <Content Include="Content\bootstrap-octa-3.3.0.css" />
     <Content Include="Content\bootstrap232\css\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap232\css\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap232\css\bootstrap-responsive.min.css" />
@@ -211,7 +213,7 @@
     <Content Include="Content\bootstrap232\js\bootstrap.min.js" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
-    <Content Include="Content\googleMap.css" />
+    <Content Include="Content\octa\map.css" />
     <Content Include="Content\Images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\jquery.minicolors.css" />
     <Content Include="Content\themes\base\accordion.css" />
@@ -289,10 +291,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\CheckboxListHelper.cs" />
     <Compile Include="Helpers\FspCommon.cs" />
     <Compile Include="Helpers\MembershipExtensions.cs" />
-    <Compile Include="Helpers\MenuItemHelper.cs" />
     <Compile Include="Helpers\MyController.cs" />
     <Compile Include="Helpers\Util.cs" />
     <Compile Include="Hubs\TowTruckHub.cs">
@@ -325,7 +325,7 @@
     <Content Include="Assemblies\Microsoft.SqlServer.Types.dll" />
     <Content Include="Content\bootstrap204\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap204\bootstrap.css" />
-    <Content Include="Content\FSP.css" />
+    <Content Include="Content\octa\core.css" />
     <Content Include="Images\Alarm.png" />
     <Content Include="Images\arrow_down.png" />
     <Content Include="Images\arrow_up.png" />
@@ -482,11 +482,12 @@
     <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\bootstrap-3.3.2.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-popover.js" />
     <Content Include="Scripts\bootstrap-timepicker.js" />
     <Content Include="Scripts\bootstrap-tooltip.js" />
-    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap-2.0.4.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-touch.min.js.map" />
@@ -502,6 +503,7 @@
     <Content Include="Scripts\angular-animate.min.js.map" />
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
+    <Content Include="Content\bootstrap-3.3.2.css" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\googleMap\angular-minicolors.js" />
     <Content Include="Scripts\googleMap\jquery.minicolors.js" />
@@ -1389,7 +1391,6 @@
     <Content Include="Views\EmailReport\Edit.cshtml" />
     <Content Include="Views\EmailReport\Delete.cshtml" />
     <Content Include="Views\Truck\MapOld.cshtml" />
-    <Content Include="Views\Shared\_LayoutMap.cshtml" />
     <None Include="Web.Acceptance.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

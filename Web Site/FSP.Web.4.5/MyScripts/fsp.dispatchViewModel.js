@@ -1,7 +1,5 @@
-﻿/// <reference path="../Scripts/knockout-2.1.0.js" />
-/// <reference path="fsp.constructor.js" />
+﻿/// <reference path="fsp.constructor.js" />
 /// <reference path="fsp.truckCollection.js" />
-/// <reference path="../Scripts/knockout-2.2.1.js" />
 
 lata.FspWeb.prototype.dispatchViewModel = function () {
 
@@ -17,25 +15,26 @@ lata.FspWeb.prototype.dispatchViewModel = function () {
     self.resultingBeats = ko.observableArray([]);
     self.currentSort = ko.observable("beatNumber");
     self.currentSortDirection = ko.observable("Asc");
-    self.canSendTrucks = ko.observable(false);        
+    self.canSendTrucks = ko.observable(false);
     self.isSorting = false;
-    
-    self.columns = ko.observableArray([
-         new column(self, "Beat #", "beatNumber", true),
-         new column(self, "Truck #", "truckNumber", true),
-         new column(self, "Driver", "driverName", true),
-         new column(self, "Heading", "headingText", true),
-         new column(self, "Location", "location", true),
-         new column(self, "Status", "status", true),
-         new column(self, "Last Status Change", "lastStatusChanged", true),
-         new column(self, "Current Speed", "speed", true),
-         new column(self, "Max Speed", "speedingValue", true),
-         new column(self, "Speeding Time", "speedingTime", true),
+    self.inputIsValid = ko.observable(false);
 
-         new column(self, "Contractor", "contractorName", false),
-         new column(self, "Out of Bounds Message", "outOfBoundsMessage", false),
-         new column(self, "Out of Bounds Time", "outOfBoundsTime", false),
-         new column(self, "Last Update", "lastMessage", false)
+    self.columns = ko.observableArray([
+        new column(self, "Beat #", "beatNumber", true),
+        new column(self, "Truck #", "truckNumber", true),
+        new column(self, "Driver", "driverName", true),
+        new column(self, "Heading", "headingText", true),
+        new column(self, "Location", "location", true),
+        new column(self, "Status", "status", true),
+        new column(self, "Last Status Change", "lastStatusChanged", true),
+        new column(self, "Current Speed", "speed", true),
+        new column(self, "Max Speed", "speedingValue", true),
+        new column(self, "Speeding Time", "speedingTime", true),
+
+        new column(self, "Contractor", "contractorName", false),
+        new column(self, "Out of Bounds Message", "outOfBoundsMessage", false),
+        new column(self, "Out of Bounds Time", "outOfBoundsTime", false),
+        new column(self, "Last Update", "lastMessage", false)
     ]);
 
     var initDispatch = function () {
@@ -49,10 +48,8 @@ lata.FspWeb.prototype.dispatchViewModel = function () {
 
             if (self.isSorting === false)
                 self.doSort();
-        })
-
-    },
-    getResultingBeats = function () {
+        });
+    }, getResultingBeats = function () {
         if (fspDirection().length > 0 && fspFreeway().length > 0 && fspLocation().length > 0 && fspCrossStreet().length > 0) {
 
             try {
@@ -67,9 +64,9 @@ lata.FspWeb.prototype.dispatchViewModel = function () {
                     type: "GET",
                     dataType: "json",
                     data:
-                    {
-                        beatSegmentDescription: self.fspCrossStreet()
-                    },
+                        {
+                            beatSegmentDescription: self.fspCrossStreet()
+                        },
                     error: function (xhr, ajaxOptions, thrownError) {
                         //alert(xhr.status);
                         //alert(thrownError);
@@ -106,17 +103,25 @@ lata.FspWeb.prototype.dispatchViewModel = function () {
 
     self.fspDirection.subscribe(function () {
         getResultingBeats();
-    })
+        self.validateInput();
+    });
     self.fspFreeway.subscribe(function () {
         getResultingBeats();
-    })
+        self.validateInput();
+    });
     self.fspLocation.subscribe(function () {
         self.fspCrossStreet2('');
         getResultingBeats();
-    })
+        self.validateInput();
+    });
     self.fspCrossStreet.subscribe(function () {
         getResultingBeats();
-    })
+        self.validateInput();
+    });
+    self.validateInput = function () {
+        var isValid = self.fspDirection().length > 0 && self.fspFreeway().length > 0 && self.fspLocation().length > 0 && self.fspCrossStreet().length > 0;
+        self.inputIsValid(isValid);
+    };
 
     self.updateFspDirection = function (newDirection) {
         self.fspDirection(newDirection);
@@ -242,27 +247,9 @@ lata.FspWeb.prototype.dispatchViewModel = function () {
     }
 
     //show Config
-    self.showConfig = function (item) {
-        try {
-
-            $("#configModal").modal('show');
-
-        } catch (e) {
-
-        }
+    self.showConfig = function () {
+        $("#configModal").modal('show');
     }
-
-    //showAssistsList = function () {
-    //    try {
-    //        var url = fspWeb.SERVICE_BASE_URL + "/Assist/Index";;
-    //        var windowName = "Assists";
-    //        var windowSize = 'width=1000,height=800';
-    //        window.open(url, '', windowSize);
-    //        event.preventDefault();
-    //    } catch (e) {
-
-    //    }
-    //}
 
     //column
     function column(root, name, value, isVisible) {
@@ -392,10 +379,6 @@ $(function () {
 
     $("#fspDirection").focus();
 
-    //$("#towTruckGrid").on("click", "tbody tr", function (event) {
-    //    $(this).addClass('highlight');
-    //})
-
     //auto-completes    
     $("#fspDirection").autocomplete({
         source: function (request, response) {
@@ -511,81 +494,6 @@ $(function () {
             $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
         }
     });
-    //$("#fspCrossStreet").autocomplete({
-    //    source: function (request, response) {
-    //        var url = fspWeb.SERVICE_BASE_URL + "/Dispatch/GetCrossStreetFromBeatSegmentDescription";
-    //        $.ajax({
-    //            url: url,
-    //            dataType: "json",
-    //            data: {
-    //                featureClass: "P",
-    //                style: "full",
-    //                maxRows: 12,
-    //                name_startsWith: request.term
-    //            },
-    //            success: function (data) {
-    //                response($.map(data, function (item) {
-    //                    return {
-    //                        label: item,
-    //                        value: item,
-    //                    }
-    //                }));
-    //            },
-    //            error: function (data) {
-    //                alert(data);
-    //            }
-    //        });
-    //    },
-    //    minLength: 0,       
-    //    select: function (event, ui) {
-    //        fspWeb.dispatchViewModel.updateFspCrossStreet(ui.item.value);
-    //    },
-    //    open: function () {
-    //        $(this).removeClass("ui-corner-all").addClass("ui-corner-top");
-    //        var firstItem = $(this).autocomplete("widget").find("li")[0].innerText;
-    //        fspWeb.dispatchViewModel.updateFspCrossStreet(firstItem);
-    //    },
-    //    close: function () {
-    //        $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
-    //    }
-    //});
-    //$("#fspCrossStreet2").autocomplete({
-    //    source: function (request, response) {
-    //        var url = fspWeb.SERVICE_BASE_URL + "/Dispatch/GetCrossStreetFromBeatSegmentDescription";
-    //        $.ajax({
-    //            url: url,
-    //            dataType: "json",
-    //            data: {
-    //                featureClass: "P",
-    //                style: "full",
-    //                maxRows: 12,
-    //                name_startsWith: request.term
-    //            },
-    //            success: function (data) {
-    //                response($.map(data, function (item) {
-    //                    return {
-    //                        label: item,
-    //                        value: item,
-    //                    }
-    //                }));
-    //            },
-    //            error: function (data) {
-    //                alert(data);
-    //            }
-    //        });
-    //    },
-    //    minLength: 0,      
-    //    select: function (event, ui) {
-    //        fspWeb.dispatchViewModel.updateFspCrossStreet2(ui.item.value);
-    //    },
-    //    open: function () {
-    //        $(this).removeClass("ui-corner-all").addClass("ui-corner-top");
-    //    },
-    //    close: function () {
-    //        $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
-    //    }
-    //});
-
 });
 
 

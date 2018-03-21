@@ -1,23 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Security;
 
 namespace FSP.Web.Helpers
 {
     public static class MembershipExtensions
     {
-
         public static Guid GetUserId()
         {
-            Guid result = Guid.Empty;
+            var result = Guid.Empty;
             try
             {
-                MembershipUser myUser = Membership.GetUser();
-                Guid.TryParse(myUser.ProviderUserKey.ToString(), out result);
+                var myUser = Membership.GetUser();
+                if (myUser?.ProviderUserKey != null)
+                    Guid.TryParse(myUser.ProviderUserKey.ToString(), out result);
             }
-            catch { }
+            catch
+            {
+                // ignored
+            }
 
             return result;
         }

@@ -1,18 +1,128 @@
 ﻿@{
     ViewBag.Title = "LATATrax | Map";
-    Layout = "~/Views/Shared/_LayoutMap.cshtml";
 }
 
-<link href="~/Content/googleMap.css"
-      rel="stylesheet" />
-<link href="~/Content/titatoggle-dist-min.css"
-      rel="stylesheet" />
-<link href="~/Content/toastr.css" rel="stylesheet" />
-<link href="~/Content/jquery.minicolors.css" rel="stylesheet" />
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDUpSUrJujBkrtXscsS2kBWEhuBUadG1NU" type="text/javascript"></script>
+
+<link href="~/Content/octa/map.css" rel="stylesheet" />
 
 <div ng-app="octaApp">
     <div ng-controller="mapController">
-        {{header}}
+
+        <div class="mapTopNavigation">
+            <form class="form-inline">
+                <button class="btn btn-default"
+                        ng-click="showLegend()">
+                    Legend
+                </button>
+                <button class="btn btn-default"
+                        ng-click="showLegend()">
+                    Legend
+                </button>
+                <button class="btn btn-default"
+                        ng-click="showLegend()">
+                    Legend
+                </button>
+            </form>
+        </div>
+
+        @*<div class="mapSideNavigation" id="googleMapSideNavigation">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingTowTruckYards">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#towTruckYards" aria-expanded="false" aria-controls="towTruckYards">
+                                Tow Truck Yards
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="towTruckYards" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTowTruckYards">
+                        <div class="panel-body">
+                            <map-tow-yard reset-map="resetMap()"
+                                          display-map-data="displayMapData(polygons, markers)"
+                                          set-map-location="setMapLocation(lat, lon, zoom)"
+                                          set-edit-polygon="setEditPolygon(id)"
+                                          set-cancel-edit-polygon="setCancelEditPolygon(id, color)"
+                                          hide-map-data="hideMapData()"
+                                          visible="towTruckYardsVisible"
+                                          selected-polygon="selectedPolygon"
+                                          set-new-polygon="setNewPolygon(color)"></map-tow-yard>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingSegment">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#segments" aria-expanded="false" aria-controls="segments">
+                                Segments
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="segments" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSegment">
+                        <div class="panel-body">
+                            <map-segment reset-map="resetMap()"
+                                         display-map-data="displayMapData(polygons, markers)"
+                                         set-map-location="setMapLocation(lat, lon, zoom)"
+                                         set-edit-polygon="setEditPolygon(id)"
+                                         set-cancel-edit-polygon="setCancelEditPolygon(id, color)"
+                                         hide-map-data="hideMapData()"
+                                         visible="segmentsVisible"
+                                         selected-polygon="selectedPolygon"
+                                         make-all-polygons-uneditable="makeAllPolygonsUneditable()"
+                                         set-new-polygon="setNewPolygon(color)"></map-segment>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingBeats">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#beats" aria-expanded="false" aria-controls="collapseThree">
+                                Beats
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="beats" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingBeats">
+                        <div class="panel-body">
+                            <map-beat reset-map="resetMap()"
+                                      display-map-data="displayMapData(polygons, markers)"
+                                      set-map-location="setMapLocation(lat, lon, zoom)"
+                                      set-edit-polygons="setEditPolygons()"
+                                      set-cancel-edit-polygons="setCancelEditPolygons()"
+                                      hide-map-data="hideMapData()"
+                                      hide-map-markers="hideMapMarkers()"
+                                      visible="beatsVisible"
+                                      selected-polygon="selectedPolygon"
+                                      make-all-polygons-uneditable="makeAllPolygonsUneditable()"
+                                      set-new-polygon="setNewPolygon(color)"></map-beat>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingDropSites">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#dropSites" aria-expanded="false" aria-controls="collapseThree">
+                                Drop Sites
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="dropSites" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingDropSites">
+                        <div class="panel-body">
+                            <map-drop-site reset-map="resetMap()"
+                                           display-map-data="displayMapData(polygons, markers)"
+                                           set-map-location="setMapLocation(lat, lon, zoom)"
+                                           set-edit-polygon="setEditPolygon(id)"
+                                           set-cancel-edit-polygon="setCancelEditPolygon(id, color)"
+                                           hide-map-data="hideMapData()"
+                                           visible="dropSitesVisible"
+                                           selected-polygon="selectedPolygon"
+                                           set-new-polygon="setNewPolygon(color)"></map-drop-site>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+        <div id="googleMap" class="googleMap"></div>
     </div>
 </div>
 
@@ -21,7 +131,7 @@
     <script src="~/Scripts/googleMap/RichMarker.js"></script>
     <script src="~/Scripts/googleMap/markerwithlabel.js"></script>
     <script src="~/Scripts/googleMap/markerclusterer.js"></script>
-    <script src="~/Scripts/toastr.js"></script>
 
-    @Scripts.Render("~/bundles/appAngular")  
+    @Scripts.Render("~/bundles/app")
+    @Scripts.Render("~/bundles/appAngular")
 }

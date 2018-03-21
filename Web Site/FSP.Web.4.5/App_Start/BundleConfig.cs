@@ -41,15 +41,13 @@ namespace FSP.Web
 
             //bootstrap
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                "~/Scripts/bootstrap.js",
-                "~/Scripts/bootstrap-tooltip.js",
-                "~/Scripts/bootstrap-popover.js"
-            //"~/Scripts/bootstrap-datepicker.js"
+                "~/Scripts/bootstrap-3.3.2.js"                
             ));
 
             //app
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
-                "~/Scripts/sortable.js"
+                "~/Scripts/sortable.js",
+                "~/Scripts/toastr.js"
             ));
 
 
@@ -59,34 +57,30 @@ namespace FSP.Web
                 "~/Scripts/jquery.signalR-{version}.js"
             ));
 
-            //KO
+            
             bundles.Add(new ScriptBundle("~/bundles/KO").Include(
                 "~/Scripts/knockout-{version}.js"
             ));
-
-            //dispatch
+            
             bundles.Add(new ScriptBundle("~/bundles/fspDispatch").Include(
                 "~/MyScripts/fsp.constructor.js",
                 "~/MyScripts/fsp.dispatchViewModel.js",
                 "~/MyScripts/fsp.truckCollection.js"
             ));
-
-            //dispatch
+            
             bundles.Add(new ScriptBundle("~/bundles/fspAlertMessages").Include(
                 "~/MyScripts/fsp.constructor.js",
                 "~/MyScripts/fsp.alertMessagesViewModel.js",
                 "~/MyScripts/fsp.truckCollection.js"
             ));
 
-            //dispatch
             bundles.Add(new ScriptBundle("~/bundles/fspAlarmHistory").Include(
                 "~/Scripts/jquery.ui-{version}.js",
                 "~/Scripts/knockout-{version}.js",
                 "~/Scripts/moment.js",
                 "~/MyScripts/alarmHistory.js"
             ));
-
-            //dispatch
+            
             bundles.Add(new ScriptBundle("~/bundles/fspDriversAlertComments").Include(
                 "~/Scripts/jquery.ui-{version}.js",
                 "~/Scripts/knockout-{version}.js",
@@ -99,8 +93,7 @@ namespace FSP.Web
                 "~/MyScripts/fsp.constructor.js",
                 "~/MyScripts/fsp.alertsViewModel.js"
             ));
-
-            //truckList
+            
             bundles.Add(new ScriptBundle("~/bundles/fspTruckList").Include(
                 "~/MyScripts/fsp.constructor.js",
                 "~/MyScripts/fsp.gridViewModel.js",
@@ -119,41 +112,22 @@ namespace FSP.Web
                 "~/MyScripts/fsp.constructor.js",
                 "~/MyScripts/fsp.incidentViewModel.js"
             ));
-
-            //map
-            bundles.Add(new ScriptBundle("~/bundles/fspMap").Include(
-                "~/Scripts/markerwithlabel.js",
-                "~/Scripts/RichMarker.js",
-                "~/Sprites/Map/TruckMarkerOverlay.js",
-                "~/Scripts/Tooltip.js",
-                "~/MyScripts/fsp.map.LabelInFront.js",
-                "~/MyScripts/fsp.constructor.js",
-                "~/MyScripts/fsp.mapViewModel.js",
-                "~/MyScripts/fsp.truckCollection.js"
-            ));
-
-            bundles.Add(new StyleBundle("~/Content/bootstrap").Include(
-                "~/Content/bootstrap232/css/bootstrap.css",
-                "~/Content/bootstrap232/css/bootstrap-responsive.css"
-            ));
-
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                "~/Content/FSP.css"
+            
+            
+            //css & styles
+           
+            bundles.Add(new StyleBundle("~/Content/octa").Include(                               
+                "~/Content/themes/base/all.css",
+                "~/Content/bootstrap-3.3.2.css",
+                "~/Content/font-awesome.css",
+                "~/Content/toastr.css",  
+                "~/Content/titatoggle-dist-min.css",  
+                "~/Content/jquery.minicolors.css",  
+                "~/Content/octa/core.css"
             ));
 
             bundles.Add(new StyleBundle("~/Content/jqueryUI").Include(
-                "~/Content/themes/base/jquery.ui.core.css",
-                "~/Content/themes/base/jquery.ui.resizable.css",
-                "~/Content/themes/base/jquery.ui.selectable.css",
-                "~/Content/themes/base/jquery.ui.accordion.css",
-                "~/Content/themes/base/jquery.ui.autocomplete.css",
-                "~/Content/themes/base/jquery.ui.button.css",
-                "~/Content/themes/base/jquery.ui.dialog.css",
-                "~/Content/themes/base/jquery.ui.slider.css",
-                "~/Content/themes/base/jquery.ui.tabs.css",
-                "~/Content/themes/base/jquery.ui.datepicker.css",
-                "~/Content/themes/base/jquery.ui.progressbar.css",
-                "~/Content/themes/base/jquery.ui.theme.css"));
+                "~/Content/themes/base/all.css"));
         }
     }
 }

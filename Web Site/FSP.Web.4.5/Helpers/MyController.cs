@@ -1,40 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 
 namespace FSP.Web.Helpers
 {
     public class MyController : Controller
     {
-        public String UsersContractorCompanyName { get; set; }
-      
         public MyController()
         {
-            if (System.Web.HttpContext.Current.User != null)
+            if (System.Web.HttpContext.Current.User == null) return;
+
+            if (!System.Web.HttpContext.Current.User.IsInRole("Contractor")) return;
+
+            using (var common = new FspCommon())
             {
-                if (System.Web.HttpContext.Current.User.IsInRole("Contractor"))
-                {
-                    using (FspCommon common = new FspCommon())
-                    {
+                var contractorUsers = common.GetContractorUsers();
+                var contractors = common.GetContractors();
+                var contractorUser = contractorUsers.FirstOrDefault(p =>
+                    p.Email == System.Web.HttpContext.Current.User.Identity.Name);
 
-                        var contractorUsers = common.GetContractorUsers();
-                        var contractors = common.GetContractors();
-                        var contractorUser = contractorUsers.Where(p => p.Email == System.Web.HttpContext.Current.User.Identity.Name).FirstOrDefault();
-
-                        if (contractorUser != null && contractors != null)
-                        {
-                            this.UsersContractorCompanyName = contractors.Where(p => p.ContractorID == contractorUser.ContractorID).FirstOrDefault().ContractCompanyName;
-                        }
-                        else
-                            this.UsersContractorCompanyName = String.Empty;
-
-                    }
-                } 
+                if (contractorUser != null && contractors != null)
+                    UsersContractorCompanyName = contractors
+                        .FirstOrDefault(p => p.ContractorID == contractorUser.ContractorID)
+                        ?.ContractCompanyName;
+                else
+                    UsersContractorCompanyName = string.Empty;
             }
-
-            
         }
+
+        public string UsersContractorCompanyName { get; set; }
     }
 }
