@@ -6,27 +6,30 @@
 
 <link href="~/Content/octa/map.css" rel="stylesheet" />
 
-<div ng-app="octaApp">
+<div ng-app="octaApp" class="mapPageContainer">
     <div ng-controller="mapController">
 
         <div class="mapTopNavigation">
-            <form class="form-inline">
-                <button class="btn btn-default"
-                        ng-click="showLegend()">
-                    Legend
-                </button>
-                <button class="btn btn-default"
-                        ng-click="showLegend()">
-                    Legend
-                </button>
-                <button class="btn btn-default"
-                        ng-click="showLegend()">
-                    Legend
-                </button>
+            <form class="form-inline text-center">
+                <a class="btn btn-primary"
+                   ng-class="{'btn-danger': haveAlarms}"
+                   href="/AlertMessages/Alerts">
+                    Alarms
+                </a>
+                <a class="btn btn-primary"
+                   target="_blank"
+                   href="/Truck/Grid">
+                    Tow Truck List
+                </a>
+                <a class="btn btn-primary"
+                   target="_blank"
+                   href="http://38.124.164.211:9007/admin/Dashboard.aspx">
+                    Dashboard
+                </a>
             </form>
         </div>
 
-        @*<div class="mapSideNavigation" id="googleMapSideNavigation">
+        <div class="mapSideNavigation">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
                 <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="headingTowTruckYards">
@@ -120,7 +123,7 @@
                     </div>
                 </div>
             </div>
-        </div>*@
+        </div>
 
         <div id="googleMap" class="googleMap"></div>
     </div>

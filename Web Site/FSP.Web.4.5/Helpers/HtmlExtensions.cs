@@ -43,9 +43,7 @@ namespace FSP.Web.Helpers
             var currentControllerName = (string)helper.ViewContext.RouteData.Values["controller"];
             var currentActionName = (string)helper.ViewContext.RouteData.Values["action"];
 
-
-            if (!HttpContext.Current.User.Identity.IsAuthenticated) return MvcHtmlString.Create(sb.ToString());
-
+            
             //Home
             sb.Append($"<li class='{(currentControllerName == "Home" ? "active" : "")}'><a href='{applicationPath}/Home/Index'>Home</a></li>");
 
@@ -85,11 +83,11 @@ namespace FSP.Web.Helpers
 
 
             sb.Append($"<li class='dropdown {monCustomClass}'>");
-            sb.Append("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>");
+            sb.Append("<a id='monitoringTab' class='dropdown-toggle' data-toggle='dropdown' href='#'>");
             sb.Append("Monitoring <span class='caret'></span>");
             sb.Append("</a>");
             sb.Append("<ul class='dropdown-menu'>");
-            sb.Append($"<li><a href='{applicationPath}/AlertMessages/Alerts'>Alarms</a></li>");
+            sb.Append($"<li><a id='alertMenuItem' href='{applicationPath}/AlertMessages/Alerts'>Alarms</a></li>");
             sb.Append($"<li><a href='{applicationPath}/AssistAdmin/Create'>Assist Entry</a></li>");
             sb.Append($"<li><a href='{applicationPath}/CHPInformation/Index'>CHP</a></li>");
             sb.Append($"<li><a href='{applicationPath}/Admin/Index'>Database</a></li>");

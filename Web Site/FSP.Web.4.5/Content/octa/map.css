@@ -1,33 +1,58 @@
-﻿html, body {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+﻿.mapPageContainer {
+    margin-top: -10px;
+}
+
+html, body {
+    margin-left: -10px;
+    margin-right: -10px;
+    overflow: hidden;
 }
 
 .googleMap {
     position: absolute;
-    left: 300px;
-    top: 100px;
     overflow: hidden;
+    left: 300px;
+    top: 95px;
 }
 
 .mapTopNavigation {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    height: 45px;
     width: 100%;
-    height: 40px;
+    border-bottom: 1px solid lightgray;
     background-color: white;
-    border-bottom: 1px solid gray;    
+    padding-top: 4px;
+}
+
+.mapSideNavigation {
+    position: absolute;
+    top: 95px;
+    left: 0;
+    min-height: 500px;
+    width: 300px;
+    border-right: 1px solid lightgray;
+    background-color: white;
+    padding: 5px;
+}
+
+/*.mapTopNavigation {    
+    height: 45px;
+    background-color: white;
+    border-bottom: 1px solid lightgray;
+    padding-left: 15px;
 }
 
 .mapSideNavigation {
     float: left;
     position: fixed;
     min-height: 500px;
-    width: 300px;
-    border-right: 1px solid gray;
-    padding: 10px;
+    width: 285px;
+    border-right: 1px solid lightgray;
     overflow: auto;
-}
+    padding: 10px;    
+}*/
 
 .delete-menu {
     position: absolute;

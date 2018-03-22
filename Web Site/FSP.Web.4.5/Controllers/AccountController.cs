@@ -26,25 +26,24 @@ namespace FSP.Web.Controllers
         [HttpPost]
         public ActionResult ChangePassword(ChangePasswordModel model)
         {
-            if (ModelState.IsValid)
-            {
-                // ChangePassword will throw an exception rather
-                // than return false in certain failure scenarios.
-                bool changePasswordSucceeded;
-                try
-                {
-                    var currentUser = Membership.GetUser(User.Identity.Name, true);
-                    changePasswordSucceeded = currentUser.ChangePassword(model.OldPassword, model.NewPassword);
-                }
-                catch (Exception)
-                {
-                    changePasswordSucceeded = false;
-                }
+            if (!ModelState.IsValid) return View(model);
 
-                if (changePasswordSucceeded)
-                    return RedirectToAction("ChangePasswordSuccess");
-                ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
+            // ChangePassword will throw an exception rather
+            // than return false in certain failure scenarios.
+            bool changePasswordSucceeded;
+            try
+            {
+                var currentUser = Membership.GetUser(User.Identity.Name, true);
+                changePasswordSucceeded = currentUser.ChangePassword(model.OldPassword, model.NewPassword);
             }
+            catch (Exception)
+            {
+                changePasswordSucceeded = false;
+            }
+
+            if (changePasswordSucceeded)
+                return RedirectToAction("ChangePasswordSuccess");
+            ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
 
             // If we got this far, something failed, redisplay form
             return View(model);
@@ -60,16 +59,15 @@ namespace FSP.Web.Controllers
         [HttpPost]
         public JsonResult JsonLogin(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid)
-                if (Membership.ValidateUser(model.Email, model.Password))
-                {
-                    FormsAuthentication.SetAuthCookie(model.Email, model.RememberMe);
-                    return Json(new {success = true, redirect = returnUrl});
-                }
-                else
-                {
-                    ModelState.AddModelError("", "The user name or password provided is incorrect.");
-                }
+            if (!ModelState.IsValid) return Json(new {errors = GetErrorsFromModelState()});
+
+            if (Membership.ValidateUser(model.Email, model.Password))
+            {
+                FormsAuthentication.SetAuthCookie(model.Email, model.RememberMe);
+                return Json(new {success = true, redirect = returnUrl});
+            }
+
+            ModelState.AddModelError("", "The user name or password provided is incorrect.");
 
             // If we got this far, something failed
             return Json(new {errors = GetErrorsFromModelState()});
@@ -79,22 +77,21 @@ namespace FSP.Web.Controllers
         [HttpPost]
         public ActionResult JsonRegister(RegisterModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return Json(new {errors = GetErrorsFromModelState()});
+
+            // Attempt to register the user
+            MembershipCreateStatus createStatus;
+            Membership.CreateUser(model.Email, model.Password, model.Email, null, null, true, null,
+                out createStatus);
+            //((FSPMembershipProvider)Membership.Provider).CreateFSPUser(userId, user.Email, "", RoleID, user.FirstName, user.LastName, user.Address, user.City, user.State, user.Zip, user.PhoneNumber, true, out createStatus);
+
+            if (createStatus == MembershipCreateStatus.Success)
             {
-                // Attempt to register the user
-                MembershipCreateStatus createStatus;
-                Membership.CreateUser(model.Email, model.Password, model.Email, null, null, true, null,
-                    out createStatus);
-                //((FSPMembershipProvider)Membership.Provider).CreateFSPUser(userId, user.Email, "", RoleID, user.FirstName, user.LastName, user.Address, user.City, user.State, user.Zip, user.PhoneNumber, true, out createStatus);
-
-                if (createStatus == MembershipCreateStatus.Success)
-                {
-                    FormsAuthentication.SetAuthCookie(model.Email, false);
-                    return Json(new {success = true});
-                }
-
-                ModelState.AddModelError("", Util.ErrorCodeToString(createStatus));
+                FormsAuthentication.SetAuthCookie(model.Email, false);
+                return Json(new {success = true});
             }
+
+            ModelState.AddModelError("", Util.ErrorCodeToString(createStatus));
 
             // If we got this far, something failed
             return Json(new {errors = GetErrorsFromModelState()});
@@ -112,19 +109,18 @@ namespace FSP.Web.Controllers
         [HttpPost]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid)
-                if (Membership.ValidateUser(model.Email, model.Password))
-                {
-                    FormsAuthentication.SetAuthCookie(model.Email, model.RememberMe);
-                    if (Url.IsLocalUrl(returnUrl))
-                        return Redirect(returnUrl);
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    ModelState.AddModelError("",
-                        "Either the user name or password provided is incorrect or your account has not been yet approved.");
-                }
+            if (!ModelState.IsValid) return View(model);
+
+            if (Membership.ValidateUser(model.Email, model.Password))
+            {
+                FormsAuthentication.SetAuthCookie(model.Email, model.RememberMe);
+                if (Url.IsLocalUrl(returnUrl))
+                    return Redirect(returnUrl);
+                return RedirectToAction("Index", "Home");
+            }
+
+            ModelState.AddModelError("",
+                "Either the user name or password provided is incorrect or your account has not been yet approved.");
 
             // If we got this far, something failed, redisplay form
             return View(model);
@@ -134,7 +130,6 @@ namespace FSP.Web.Controllers
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();
-
             return RedirectToAction("Index", "Home");
         }
 
@@ -150,35 +145,34 @@ namespace FSP.Web.Controllers
         [HttpPost]
         public ActionResult Register(RegisterModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return View(model);
+
+            var userId = Guid.NewGuid();
+
+            // Attempt to register the user
+            MembershipCreateStatus createStatus;
+
+            ((FSPMembershipProvider) Membership.Provider).CreateFSPUser(userId, model.Email, model.Password,
+                Guid.Empty, false, out createStatus, model.FirstName, model.LastName);
+
+            if (createStatus == MembershipCreateStatus.Success)
             {
-                var userId = Guid.NewGuid();
+                var subject = "New User Registration";
+                var body = string.Empty;
+                body += "Hello, " + ConfigurationManager.AppSettings["OCTAAdminName"] + ": </br></br>";
+                body += "\"" + model.FirstName + " " + model.LastName +
+                        "\" has just registered for the <a href='http://latatrax.com/octafsp/' target='_blank'>OCTA FSP web site</a>. " +
+                        "</br></br>";
+                body +=
+                    "Please, view the <a href='http://latatrax.com/octafsp/AdminArea/Users/' target='_blank'>users page</a> to manage user accounts and access.</br></br></br></br>";
+                body += "-LATA Trax Email System";
 
-                // Attempt to register the user
-                MembershipCreateStatus createStatus;
+                Util.SendEmail(subject, body);
 
-                ((FSPMembershipProvider) Membership.Provider).CreateFSPUser(userId, model.Email, model.Password,
-                    Guid.Empty, false, out createStatus, model.FirstName, model.LastName);
-
-                if (createStatus == MembershipCreateStatus.Success)
-                {
-                    var subject = "New User Registration";
-                    var body = string.Empty;
-                    body += "Hello, " + ConfigurationManager.AppSettings["OCTAAdminName"] + ": </br></br>";
-                    body += "\"" + model.FirstName + " " + model.LastName +
-                            "\" has just registered for the <a href='http://latatrax.com/octafsp/' target='_blank'>OCTA FSP web site</a>. " +
-                            "</br></br>";
-                    body +=
-                        "Please, view the <a href='http://latatrax.com/octafsp/AdminArea/Users/' target='_blank'>users page</a> to manage user accounts and access.</br></br></br></br>";
-                    body += "-LATA Trax Email System";
-
-                    Util.SendEmail(subject, body);
-
-                    return RedirectToAction("AwaitingApproval", "Account");
-                }
-
-                ModelState.AddModelError("", Util.ErrorCodeToString(createStatus));
+                return RedirectToAction("AwaitingApproval", "Account");
             }
+
+            ModelState.AddModelError("", Util.ErrorCodeToString(createStatus));
 
             // If we got this far, something failed, redisplay form
             return View(model);

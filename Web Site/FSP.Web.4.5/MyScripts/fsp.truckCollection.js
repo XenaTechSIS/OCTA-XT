@@ -143,7 +143,6 @@ lata.FspWeb.prototype.startTruckService = function () {
         fspWeb.towTruckHub.server.initialize();
     });
 
-
 };
 
 

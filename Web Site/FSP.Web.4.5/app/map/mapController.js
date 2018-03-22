@@ -1,24 +1,29 @@
 ﻿(function () {
     'use strict';
-    angular.module("octaApp.map").controller("mapController", ['$scope', '$rootScope', '$window', mapController]);
-    function mapController($scope, $rootScope, $window) {
+    angular.module("octaApp.map").controller("mapController", ['$scope', '$rootScope', '$window', '$interval', 'trucksService', mapController]);
+    function mapController($scope, $rootScope, $window, $interval, trucksService) {
         $scope.header = "Hello World!" + $rootScope.applicationName;
 
         var DEFAULT_MAP_CENTER_LAT = 33.739660;
         var DEFAULT_MAP_CENTER_LON = -117.832146;
         var ZOOM_9 = 9;
 
+        var mapTopOffset = 95;
+        var mapLeftOffset = 295;
+        var refreshRate = 2000;
+
         $scope.map;
+        $scope.trucks = [];
+        $scope.haveAlarms = false;
 
         function sizeMap() {
-            var menuHeight = 100;
-            var sideMenuWidth = 300;
-            var wHeight = ($window.innerHeight - menuHeight) + 'px';
-            var wWidth = ($window.innerWidth - sideMenuWidth) + 'px';
+
+            var wHeight = ($window.innerHeight - mapTopOffset) + 'px';
+            var wWidth = ($window.innerWidth - mapLeftOffset) + 'px';
             $("#googleMap").height(wHeight);
             $("#googleMap").width(wWidth);
 
-            $("#googleMapSideNavigation").height(wHeight);
+            $(".mapSideNavigation").height(wHeight);
         }
 
         function setMapControls() {
@@ -49,7 +54,7 @@
             controlUI.appendChild(controlText);
 
             // Setup the click event listeners: simply set the map to Chicago.
-            controlUI.addEventListener('click', function() {
+            controlUI.addEventListener('click', function () {
                 updateMap(new google.maps.LatLng(DEFAULT_MAP_CENTER_LAT, DEFAULT_MAP_CENTER_LON), ZOOM_9);
             });
 
@@ -63,7 +68,60 @@
             $scope.map.setZoom(zoom);
         }
 
-        $scope.initMap = function () {
+        function checkForAlarms() {
+            console.log("Checking for alarms...");
+            trucksService.getTrucksRefreshRate().then(function (result) {
+                $scope.haveAlarms = result;
+                console.log("Have alarms? %s", $scope.haveAlarms);
+
+                if ($scope.haveAlarms) {                                        
+                    $("#monitoringTab").css("color", "red");
+                    $("#alertMenuItem").css("color", "red");
+                }
+                else {                                        
+                    $("#monitoringTab").css("color", "#999999");
+                    $("#alertMenuItem").css("color", "black");
+                }
+
+            });
+        }
+
+        function getTruckRefreshRate() {
+            console.log("Getting refresh rate...");
+            trucksService.getTrucksRefreshRate().then(function (result) {
+                refreshRate = result;
+                console.log(refreshRate);
+
+                getTrucks();
+                $interval(function () {
+                    getTrucks();
+                }, eval(refreshRate));
+            });
+        }
+
+        function getTrucks() {
+            console.log("Getting trucks...");
+            trucksService.getTrucks().then(function (results) {
+                console.log(results);
+                //for (var i = 0; i < results.length; i++) {
+                //    var exists = false;
+                //    for (var ii = 0; ii < $scope.trucks.length; ii++) {
+                //        if ($scope.trucks[ii].ipAddress === results[i].IPAddress) {
+                //            exists = true;
+                //            $scope.trucks[ii].update(results[i]);
+                //        }
+                //    }
+                //    if (!exists) $scope.trucks.push(new $rootScope.mtcTruck(results[i]));
+                //}
+                //drawTruckMarkers();
+                //cleanupTruckMarkers();
+                //if ($scope.truckToBeFollowed) {
+                //    updateMap(new google.maps.LatLng($scope.truckToBeFollowed.lat, $scope.truckToBeFollowed.lon), ZOOM_14);
+                //}
+            });
+        }
+
+        function initMap() {
             console.log("Initializing Map...");
 
             var defaultMapLocation = new google.maps.LatLng(DEFAULT_MAP_CENTER_LAT, DEFAULT_MAP_CENTER_LON);
@@ -83,11 +141,13 @@
             setMapControls();
         };
 
-        angular.element($window).bind('resize', function() {
+        angular.element($window).bind('resize', function () {
             sizeMap();
         });
 
-        $scope.initMap();
+        initMap();
+        checkForAlarms();
+        getTruckRefreshRate();
 
     }
 }());

@@ -41,7 +41,7 @@ namespace FSP.Web
 
             //bootstrap
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                "~/Scripts/bootstrap-3.3.2.js"                
+                "~/Scripts/bootstrap-3.3.2.js"
             ));
 
             //app
@@ -57,17 +57,17 @@ namespace FSP.Web
                 "~/Scripts/jquery.signalR-{version}.js"
             ));
 
-            
+
             bundles.Add(new ScriptBundle("~/bundles/KO").Include(
                 "~/Scripts/knockout-{version}.js"
             ));
-            
+
             bundles.Add(new ScriptBundle("~/bundles/fspDispatch").Include(
                 "~/MyScripts/fsp.constructor.js",
                 "~/MyScripts/fsp.dispatchViewModel.js",
                 "~/MyScripts/fsp.truckCollection.js"
             ));
-            
+
             bundles.Add(new ScriptBundle("~/bundles/fspAlertMessages").Include(
                 "~/MyScripts/fsp.constructor.js",
                 "~/MyScripts/fsp.alertMessagesViewModel.js",
@@ -80,7 +80,7 @@ namespace FSP.Web
                 "~/Scripts/moment.js",
                 "~/MyScripts/alarmHistory.js"
             ));
-            
+
             bundles.Add(new ScriptBundle("~/bundles/fspDriversAlertComments").Include(
                 "~/Scripts/jquery.ui-{version}.js",
                 "~/Scripts/knockout-{version}.js",
@@ -93,7 +93,7 @@ namespace FSP.Web
                 "~/MyScripts/fsp.constructor.js",
                 "~/MyScripts/fsp.alertsViewModel.js"
             ));
-            
+
             bundles.Add(new ScriptBundle("~/bundles/fspTruckList").Include(
                 "~/MyScripts/fsp.constructor.js",
                 "~/MyScripts/fsp.gridViewModel.js",
@@ -112,17 +112,18 @@ namespace FSP.Web
                 "~/MyScripts/fsp.constructor.js",
                 "~/MyScripts/fsp.incidentViewModel.js"
             ));
-            
-            
+
+
             //css & styles
-           
-            bundles.Add(new StyleBundle("~/Content/octa").Include(                               
+
+            bundles.Add(new StyleBundle("~/Content/octa").Include(
                 "~/Content/themes/base/all.css",
                 "~/Content/bootstrap-3.3.2.css",
                 "~/Content/font-awesome.css",
-                "~/Content/toastr.css",  
-                "~/Content/titatoggle-dist-min.css",  
-                "~/Content/jquery.minicolors.css",  
+                "~/Content/toastr.css",
+                "~/Content/titatoggle-dist-min.css",
+                "~/Content/jquery.minicolors.css",
+                "~/Content/octa/bootstrap-custom.css",
                 "~/Content/octa/core.css"
             ));
 

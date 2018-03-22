@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     <meta name="viewport" content="width=device-width" />
-    
+    <link href="/images/favicon.ico"
+          rel="shortcut icon"
+          type="image/x-icon" />
     @Styles.Render("~/Content/octa")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -29,13 +31,11 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid">
-        @*<div id="websitePath" data-websitePath="@Request.ApplicationPath"></div>*@
-        <div id="websitePath" data-websitePath="http://localhost:58329"></div>
-        @RenderBody()
-        <div style="padding-top: 30px">
-            <p>&copy; @DateTime.Now.Year - LATA</p>
+    <div class="container-fluid">                       
+        <div class="websiteUrl hidden">
+            @Request.Url.GetLeftPart(UriPartial.Authority)@Request.ApplicationPath
         </div>
+        @RenderBody()      
     </div>
 
     @Scripts.Render("~/bundles/jquery")

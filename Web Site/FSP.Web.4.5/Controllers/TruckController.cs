@@ -104,7 +104,14 @@ namespace FSP.Web.Controllers
 
             return returnList;
         }
-        
+            
+        [HttpGet]
+        public ActionResult GetTruckRefreshRate()
+        {
+            int.TryParse(ConfigurationManager.AppSettings["ServerRefreshRate"], out var refreshRate);
+            return Json(refreshRate, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpGet]
         public ActionResult UpdateAllTrucks()
         {
@@ -115,8 +122,7 @@ namespace FSP.Web.Controllers
             {
                 if (HttpContext.Cache["Trucks"] != null)
                 {
-                    towTrucks = (List<UITowTruck>)HttpContext.Cache["Trucks"];
-                    Debug.WriteLine("Returning CACHED truck list: " + DateTime.Now);
+                    towTrucks = (List<UITowTruck>)HttpContext.Cache["Trucks"];                   
                 }
                 else
                 {
@@ -192,19 +198,14 @@ namespace FSP.Web.Controllers
                             {
                                 Util.WriteToLog(ex.Message, "Error.txt");
                             }
-
-                            serviceTowTruck = null;
+                            
                             towTrucks.Add(truck);
-                            truck = null;
-
+                            
                             #endregion
                         }
 
-                        var refreshRate = 0;
-                        int.TryParse(ConfigurationManager.AppSettings["ServerRefreshRate"], out refreshRate);
-                        HttpContext.Cache.Add("Trucks", towTrucks, null, DateTime.Now.AddSeconds(refreshRate), Cache.NoSlidingExpiration, CacheItemPriority.High, null);
-                        serviceTowTrucks = null;
-                        Debug.WriteLine("Returning FRESH truck list: " + DateTime.Now);
+                        int.TryParse(ConfigurationManager.AppSettings["ServerRefreshRate"], out var refreshRate);
+                        HttpContext.Cache.Add("Trucks", towTrucks, null, DateTime.Now.AddMilliseconds(refreshRate), Cache.NoSlidingExpiration, CacheItemPriority.High, null);                        
                     }
                 }
             }

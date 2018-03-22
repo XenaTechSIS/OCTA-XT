@@ -6,21 +6,15 @@ var lata = lata || {};
 var fspWeb;
 
 lata.FspWeb = function () {
-
-
-    var thisFsp = this;
-
-    test = ko.observable(false);
-
-    thisFsp.SERVICE_BASE_URL = $("#websitePath").attr("data-websitePath");    
-    if (thisFsp.SERVICE_BASE_URL === "/")
-        thisFsp.SERVICE_BASE_URL = "http://localhost:58329";
-
-    console.log('Service base url %s', thisFsp.SERVICE_BASE_URL);
+    var thisFsp = this;    
+    //thisFsp.SERVICE_BASE_URL = $("#websitePath").attr("data-websitePath");    
+    thisFsp.SERVICE_BASE_URL = $(".websiteUrl").text().trim();        
+    
+    console.log("Service base url %s", thisFsp.SERVICE_BASE_URL);
 
     thisFsp.TRUCK_IMAGE_BASE_URL = thisFsp.SERVICE_BASE_URL + "/Images/";
 
-    thisFsp.userId = '';
+    thisFsp.userId = "";
     thisFsp.map = null;
     thisFsp.trucks = ko.observableArray([]);
     thisFsp.availableTrucks = ko.computed(function () {
@@ -30,7 +24,7 @@ lata.FspWeb = function () {
     });
     thisFsp.loggedOnTrucks = ko.computed(function () {
         return ko.utils.arrayFilter(thisFsp.trucks(), function (i) {
-            return (i.vehicleState() != "On Patrol" && i.vehicleState() != "Waiting for Driver Login");
+            return (i.vehicleState() !== "On Patrol" && i.vehicleState() !== "Waiting for Driver Login");
         });
     });
     thisFsp.notLoggedOnTrucks = ko.computed(function () {
@@ -45,7 +39,7 @@ lata.FspWeb = function () {
     thisFsp.selectedTruck = ko.observable(null);
     thisFsp.selectedId = ko.observable();
     thisFsp.selectedIdForDeletion = ko.observable();
-    thisFsp.towTruckHub;
+    var towTruckHub = thisFsp.towTruckHub;
 
 
     //truck object
@@ -159,28 +153,5 @@ lata.FspWeb = function () {
             self.hasAlarm(dbTruck.HasAlarm);
         };
 
-    };
-
-    //thisFsp.checkForAlerts = function () {
-    //    var url = thisFsp.SERVICE_BASE_URL + '/Truck/HaveAlarms';
-    //    $.get(url,
-    //            function (value) {
-    //                if (value === true) {
-    //                    $("#alertScreenLink").attr('class', 'btn btn-danger');
-    //                    $("#monitoringTab").css('color', 'red');
-    //                }
-    //                else {
-    //                    $("#alertScreenLink").attr('class', 'btn btn-info');
-    //                    $("#monitoringTab").css('color', '#999999');
-    //                }
-
-    //            }, "json");
-    //}
-
-    //thisFsp.checkForAlerts();
-    //setTimeout(function checkForAlertsFunction() {
-    //    console.log('Checking for Alerts');
-    //    thisFsp.checkForAlerts();
-    //    setTimeout(checkForAlertsFunction, 10000);
-    //}, 10000);
+    };   
 }
