@@ -75,8 +75,9 @@ namespace FSP.Web.Helpers
 
             //Monitoring
             var monCustomClass = "";
-            if ((currentControllerName == "AlertMessages" && currentActionName == "Index") ||
-                (currentControllerName == "Incident" && currentActionName == "Index"))
+            if ((currentControllerName == "AlertMessages" && currentActionName == "Alerts") ||
+                (currentControllerName == "AssistAdmin" && currentActionName == "Create") ||
+                (currentControllerName == "CHPInformation" && currentActionName == "Index"))
             {
                 monCustomClass = "active";
             }
@@ -105,13 +106,11 @@ namespace FSP.Web.Helpers
 
             //Analysis & System
             var sysCustomClass = "";
-            if ((currentControllerName == "AlertMessages" && currentActionName == "Index") ||
-                (currentControllerName == "Incident" && currentActionName == "Index"))
-            {
-                sysCustomClass = "active";
-            }
-
-
+            //if ((currentControllerName == "AlertMessages" && currentActionName == "Index") ||
+            //    (currentControllerName == "Incident" && currentActionName == "Index"))
+            //{
+            //    sysCustomClass = "active";
+            //}
             sb.Append($"<li class='dropdown {sysCustomClass}'>");
             sb.Append("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>");
             sb.Append("Analysis & System <span class='caret'></span>");

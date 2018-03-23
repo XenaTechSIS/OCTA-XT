@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Assist Entry";  
+    ViewBag.Title = "Assist Entry";
 }
 
 <h2>Assist Entry Screen</h2>
@@ -9,32 +9,41 @@
 <br />
 
 <div class="row">
-    <div class="span3">
+    <div class="col-sm-3">
         <label>Service Date</label>
-        <input id="txtServiceDate" type="text" class="span3 datepicker" placeholder="service date" />
+        <div class="input-group">
+            <span class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+            </span>
+            <input id="txtServiceDate" type="text" class="form-control datepicker" placeholder="service date" />
+        </div>
     </div>
-    <div class="span2">
+    <div class="col-sm-2">
         <label>Dispatch Time</label>
-        <div class="input-append bootstrap-timepicker">
-            <input type="text" id="txtDispatchTime" class="input-small timerpicker" placeholder="dispatch time" />
-            <span class="add-on"><i class="fa fa-calendar"></i></span>
-        </div>
-
+        <div class="input-group bootstrap-timepicker">
+            <span class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+            </span>
+            <input type="text" id="txtDispatchTime" class="form-control timerpicker" placeholder="dispatch time" />
+        </div>      
     </div>
-    <div class="span2">
-        <label for="assistStart">Assist Start Time</label>
-        <div class="input-append bootstrap-timepicker">
-            <input type="text" id="txtAssistStartTime" placeholder="assist start time" class="input-small timerpicker" />
-            <span class="add-on"><i class="fa fa-calendar"></i></span>
-        </div>
+    <div class="col-sm-2">
+        <label for="txtAssistStartTime">Assist Start Time</label>
+        <div class="input-group bootstrap-timepicker">
+            <span class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+            </span>
+            <input type="text" id="txtAssistStartTime" placeholder="assist start time" class="form-control timerpicker" />
+        </div>        
     </div>
-    <div class="span2">
-        <label for="assistEnd">Assist End Time</label>
-         <div class="input-append bootstrap-timepicker">
-        <input type="text" id="txtAssistEndTime" placeholder="assist end time" class="input-small timerpicker" />
-            <span class="add-on"><i class="fa fa-calendar"></i></span>
-        </div>
-        
+    <div class="col-sm-2">
+        <label for="txtAssistEndTime">Assist End Time</label>
+        <div class="input-group bootstrap-timepicker">
+            <span class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+            </span>
+            <input type="text" id="txtAssistEndTime" placeholder="assist end time" class="form-control timerpicker" />
+        </div>       
     </div>
 </div>
 
@@ -42,21 +51,21 @@
 <br />
 
 <div class="row">
-    <div class="span3">
+    <div class="col-sm-3">
         <label for="ddlDrivers">Drivers</label>
-        <select name="ddlDrivers" id="ddlDrivers" class="bigSel"></select><!--auto loaded through AJAX, see LogAssist.js-->
+        <select name="ddlDrivers" id="ddlDrivers" class="form-control"></select><!--auto loaded through AJAX, see LogAssist.js-->
     </div>
-    <div class="span3">
+    <div class="col-sm-3">
         <label for="ddlContractors">Contractors</label>
-        <select name="ddlContractors" id="ddlContractors" class="bigSel"></select><!--auto loaded through AJAX, see LogAssist.js-->
+        <select name="ddlContractors" id="ddlContractors" class="form-control"></select><!--auto loaded through AJAX, see LogAssist.js-->
     </div>
-    <div class="span3">
+    <div class="col-sm-3">
         <label for="ddlVehicles">Vehicles</label>
-        <select name="ddlVehicles" id="ddlVehicles" class="bigSel"></select><!--auto loaded through AJAX, see LogAssist.js-->
+        <select name="ddlVehicles" id="ddlVehicles" class="form-control"></select><!--auto loaded through AJAX, see LogAssist.js-->
     </div>
-    <div class="span3">
+    <div class="col-sm-3">
         <label for="ddlBeatNumbers">Beat Numbers</label>
-        <select name="ddlBeatNumbers" id="ddlBeatNumbers" class="bigSel"></select><!--auto loaded through AJAX, see LogAssist.js-->
+        <select name="ddlBeatNumbers" id="ddlBeatNumbers" class="form-control"></select><!--auto loaded through AJAX, see LogAssist.js-->
     </div>
 </div>
 
@@ -64,41 +73,38 @@
 <legend>Incident Information</legend>
 <div class="row">
     <!--incident-->
-    <div class="span3">
+    <div class="col-sm-3">
         <label for="ddlIncidentTypes">Incident Type</label>
-        <select name="ddlIncidentTypes" id="ddlIncidentTypes" class="bigSel"></select><!--auto loaded through AJAX, see LogAssist.js-->
+        <select name="ddlIncidentTypes" id="ddlIncidentTypes" class="form-control"></select><!--auto loaded through AJAX, see LogAssist.js-->
     </div>
-    <div class="span3">
+    <div class="col-sm-3">
         <label for="ddlTrafficSpeeds">Traffic Speed</label>
-        <select name="ddlTrafficSpeeds" id="ddlTrafficSpeeds" class="bigSel"></select>
+        <select name="ddlTrafficSpeeds" id="ddlTrafficSpeeds" class="form-control"></select>
     </div>
-     <div class="span3">
+    <div class="col-sm-3">
         <label for="txtCustomerWaitTime">Customer Wait Time</label>
-        <input type="text" name="txtCustomerWaitTime" id="txtCustomerWaitTime" value="0" />
+        <input type="text" name="txtCustomerWaitTime" id="txtCustomerWaitTime" value="0" class="form-control" />
     </div>
 </div>
 
 <br />
 <div class="row">
-    <div class="span4">
+    <div class="col-sm-4">
         <h4>Select Services Rendered</h4>
-        <div id="services">
-        </div>
-
+        <div id="services"></div>
     </div>
-   
 </div>
 
 <br />
 <legend>Location Information</legend>
 <div class="row">
-    <div class="span3">
+    <div class="col-sm-3">
         <label for="ddlFreeways">Freeway</label>
-        <select name="ddlFreeways" id="ddlFreeways" class="bigSel"></select><!--auto loaded through AJAX, see LogAssist.js-->
+        <select name="ddlFreeways" id="ddlFreeways" class="form-control"></select><!--auto loaded through AJAX, see LogAssist.js-->
     </div>
-    <div class="span3">
+    <div class="col-sm-3">
         <label>Freeway Direction</label>
-        <select id="ddlFreewayDirection" class="bigSel">
+        <select id="ddlFreewayDirection" class="form-control">
             <option selected>--Select--</option>
             <option>N</option>
             <option>S</option>
@@ -106,14 +112,14 @@
             <option>W</option>
         </select>
     </div>
-    <div class="span3">
+    <div class="col-sm-3">
         <label for="ddlVehiclePositions">Vehicle Position</label>
-        <select name="ddlVehiclePositions" id="ddlVehiclePositions" class="bigSel"></select>
+        <select name="ddlVehiclePositions" id="ddlVehiclePositions" class="form-control"></select>
     </div>
-    <div class="span3">
+    <div class="col-sm-3">
         <label>Location</label>
         @*JNO, JSO, JEO, JWO*@
-        <select id="ddlDirection" class="bigSel">
+        <select id="ddlDirection" class="form-control">
             <option selected>--Select--</option>
             <option>AT</option>
             <option>JNO</option>
@@ -125,9 +131,9 @@
 </div>
 <br />
 <div class="row">
-    <div class="span3">
+    <div class="col-sm-3">
         <label>Cross Street</label>
-        <input type="text" id="txtStreet" name="txtStreet" />
+        <input type="text" id="txtStreet" name="txtStreet" class="form-control" />
     </div>
 </div>
 
@@ -135,27 +141,27 @@
 <legend>Vehicle Information</legend>
 <div class="row">
     <!--vehicle-->
-    <div class="span3">
+    <div class="col-sm-3">
         <label for="txtVehicleMake">Make</label>
-        <input type="text" id="txtVehicleMake" />
+        <input type="text" id="txtVehicleMake" class="form-control" />
     </div>
-    <div class="span3">
+    <div class="col-sm-3">
         <label for="ddlVehicleTypes">Type</label>
-        <select name="ddlVehicleTypes" id="ddlVehicleTypes" class="bigSel"></select>
+        <select name="ddlVehicleTypes" id="ddlVehicleTypes" class="form-control"></select>
     </div>
-    <div class="span3">
+    <div class="col-sm-3">
         <label for="txtVehicleColor">Color</label>
-        <input type="text" id="txtVehicleColor" />
+        <input type="text" id="txtVehicleColor" class="form-control" />
     </div>
-    <div class="span3">
+    <div class="col-sm-3">
         <label for="txtLicensePlate">Plate</label>
-        <input type="text" id="txtLicensePlate" />
+        <input type="text" id="txtLicensePlate" class="form-control" />
     </div>
 </div>
 <div class="row">
-    <div class="span3">
+    <div class="col-sm-3">
         <label for="txtState">State</label>
-        <select id="selState" class="bigSel">
+        <select id="selState" class="form-control">
             <option>AL</option>
             <option>AK</option>
             <option>AS</option>
@@ -224,68 +230,70 @@
 <br />
 <legend>Tow Information</legend>
 <div class="row">
-    <div class="span3">
+    <div class="col-sm-3">
         <label for="txtStartOD">StartOD</label>
-        <input type="text" name="txtStartOD" id="txtStartOD" value="0.0" />
+        <input type="text" name="txtStartOD" id="txtStartOD" value="0.0" class="form-control" />
     </div>
-    <div class="span3">
+    <div class="col-sm-3">
         <label for="txtEndOD">EndOD</label>
-        <input type="text" name="txtEndOD" id="txtEndOD" value="0.0" />
+        <input type="text" name="txtEndOD" id="txtEndOD" value="0.0" class="form-control" />
     </div>
-    <div class="span3">
+    <div class="col-sm-3">
         <label for="ddlTowLocations">Tow Location</label>
-        <select name="ddlTowLocations" id="ddlTowLocations" class="bigSel"></select><!--auto loaded through AJAX, see LogAssist.js-->
+        <select name="ddlTowLocations" id="ddlTowLocations" class="form-control"></select><!--auto loaded through AJAX, see LogAssist.js-->
     </div>
-    <div class="span3">
+    <div class="col-sm-3">
         <label for="txtDropZone">Drop Zone</label>
-        <input type="text" id="txtDropZone" />
+        <input type="text" id="txtDropZone" class="form-control" />
     </div>
 </div>
 
 <br />
 <legend>Customer Information</legend>
 <div class="row">
-    <div class="span3">
+    <div class="col-sm-3">
         <label for="txtTip">Tip</label>
-        <input type="text" name="txtTip" id="txtTip" />
+        <input type="text" name="txtTip" id="txtTip" class="form-control" />
     </div>
-    <div class="span3">
+    <div class="col-sm-3">
         <label for="txtTipDetail">Tip Detail</label>
-        <input type="text" name="txtTipDetail" id="txtTipDetail" />
+        <input type="text" name="txtTipDetail" id="txtTipDetail" class="form-control" />
     </div>
-    <div class="span3">
+    <div class="col-sm-3">
         <label for="CustLastName">Customer Last Name</label>
-        <input type="text" name="txtCustomerLastName" id="txtCustomerLastName" />
+        <input type="text" name="txtCustomerLastName" id="txtCustomerLastName" class="form-control" />
     </div>
 </div>
 
 <br />
 <legend>Other</legend>
 <div class="row">
-    <div class="span3">
+    <div class="col-sm-3">
         <label for="txtLogNumber">Log Number</label>
-        <input type="text" name="txtLogNumber" id="txtLogNumber" />
+        <input type="text" name="txtLogNumber" id="txtLogNumber" class="form-control" />
     </div>
 </div>
 <br />
 <div class="row">
-    <div class="span12">
+    <div class="col-sm-12">
         <label>Comments</label>
-        <textarea id="txtComments" class="span12" rows="7"></textarea>
+        <textarea id="txtComments" rows="7" class="form-control"></textarea>
     </div>
 </div>
 
 <br />
 <div class="form-actions">
-    <button class="btn btn-success btn-large" data-bind="click: postAssist, enable: !isBusy()">Submit</button>
+    <button class="btn btn-success btn-lg" data-bind="click: postAssist, enable: !isBusy()">Submit</button>
 </div>
+
+<br />
+<br />
+
 
 
 @section Scripts{
-
-
+    @Scripts.Render("~/bundles/KO")
     <script src="~/Scripts/bootstrap-timepicker.js"></script>
-    <script src="~/Scripts/knockout-2.2.1.js"></script>
     <script src="~/Scripts/moment.min.js"></script>
     <script src="~/MyScripts/AssistEntry/AssistScript.js" type="text/javascript"></script>
 }

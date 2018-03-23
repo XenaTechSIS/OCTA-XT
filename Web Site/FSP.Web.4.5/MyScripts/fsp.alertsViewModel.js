@@ -26,7 +26,7 @@
         console.time('Gettings Alerts');
 
         $.ajax({
-            url: $("#websitePath").attr("data-websitePath") + '/AlertMessages/GetAlerts',
+            url: $(".websiteUrl").text().trim() + '/AlertMessages/GetAlerts',
             type: "GET",
             dataType: "json",
             success: function (dbAlerts) {
@@ -61,7 +61,7 @@
                     dbAlerts[i].IsLogOffAlarmExcused = moment(dbAlerts[i].LogOffAlarmExcused).format('MM/DD/YY') != '01/01/01';
 
                     dbAlerts[i].SpeedingAlarmTimeFormatted = moment(dbAlerts[i].SpeedingTime).format('HH:mm');
-                    dbAlerts[i].SpeedingAlarmTime = moment(dbAlerts[i].SpeedingTime).format('MM/DD/YY');                    
+                    dbAlerts[i].SpeedingAlarmTime = moment(dbAlerts[i].SpeedingTime).format('MM/DD/YY');
                     dbAlerts[i].IsSpeedingAlarmExcused = false;
 
                     dbAlerts[i].OutOfBoundsAlarmTimeFormatted = moment(dbAlerts[i].OutOfBoundsStartTime).format('HH:mm');
@@ -98,7 +98,7 @@
     };
 
     self.clearAlarm = function (alarmObject, alarmType) {
-        var url = $("#websitePath").attr("data-websitePath") + '/AlertMessages/ClearAlarm?id=' + alarmObject.VehicleNumber + '&alarmType=' + alarmType;
+        var url = $(".websiteUrl").text().trim() + '/AlertMessages/ClearAlarm?id=' + alarmObject.VehicleNumber + '&alarmType=' + alarmType;
         console.log('Clearing alarm ' + url);
 
         $.ajax({
@@ -109,7 +109,7 @@
                 self.getAlerts();
                 alert(result);
             },
-            error: function (xhr, ajaxOptions, thrownError) {
+            error: function () {
             }
         });
     };
@@ -133,7 +133,7 @@
     self.excuseAlarmSubmit = function () {
 
         $("#excuseCommentsModal").modal('hide');
-        var url = $("#websitePath").attr("data-websitePath") + '/AlertMessages/ExcuseAlarm?vehicleNumber=' + alarmToBeExcused.VehicleNumber + '&beatNumber=' + alarmToBeExcused.BeatNumber + '&alarmType=' + alarmToBeExcusedType + '&driverName=' + alarmToBeExcused.DriverName + '&comments=' + self.excuseComments();
+        var url = $(".websiteUrl").text().trim() + '/AlertMessages/ExcuseAlarm?vehicleNumber=' + alarmToBeExcused.VehicleNumber + '&beatNumber=' + alarmToBeExcused.BeatNumber + '&alarmType=' + alarmToBeExcusedType + '&driverName=' + alarmToBeExcused.DriverName + '&comments=' + self.excuseComments();
         console.log('Excusing alarm ' + url);
 
         $.ajax({

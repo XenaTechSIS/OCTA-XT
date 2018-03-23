@@ -2,67 +2,85 @@
     ViewBag.Title = "Driver's Alert Comments";
 }
 
-<h2 class="pull-left">@ViewBag.Heading&nbsp;<i class="fa fa-spinner fa-spin" data-bind="visible: isBusy()"></i></h2>
-<a href="~/AlertMessages/Alerts" class="btn btn-info pull-right" target="_blank">Current Alarms</a><br />
-<br />
-<br />
+<div class="row">
+    <div class="col-sm-6">
+        <h2>@ViewBag.Heading&nbsp;<i class="fa fa-spinner fa-spin" data-bind="visible: isBusy()"></i></h2>
+    </div>
+    <div class="col-sm-6">
+        <a href="~/AlertMessages/Alerts" class="btn btn-info pull-right" target="_blank">Current Alarms</a>
+    </div>
+</div>
 
 <div id="driversAlertComments">
 
-    <form class="form-inline">
+    <div class="row">
+        <div class="col-sm-12">
+            <form class="form-inline">
+                <select class="form-control" data-bind="enable: !isBusy(), options: beats,
+                optionsText: 'Text',
+                value: selectedBeat,
+                optionsCaption: 'All Beats'"></select>
 
-        <select data-bind="enable: !isBusy(), options: beats,
-    optionsText: 'Text',
-    value: selectedBeat,
-    optionsCaption: 'All Beats'">
-        </select>
+                <select class="form-control" data-bind="enable: !isBusy(), options: drivers,
+                optionsText: 'Text',
+                value: selectedDriver,
+                optionsCaption: 'All Drivers'"></select>
 
-        <select data-bind="enable: !isBusy(), options: drivers,
-    optionsText: 'Text',
-    value: selectedDriver,
-    optionsCaption: 'All Drivers'">
-        </select>
+                <select class="form-control" data-bind="enable: !isBusy(), options: alarmTypes,
+                value: selectedAlarmType,
+                optionsCaption: 'All Alarms'"></select>
 
-        <select data-bind="enable: !isBusy(), options: alarmTypes,
-    value: selectedAlarmType,
-    optionsCaption: 'All Alarms'">
-        </select>
-
-        <button type="button" class="btn btn-primary" data-bind="enable: !isBusy(), click: filter">Filter</button>
-        <button type="button" class="btn" data-bind="enable: !isBusy(), click: reset">Refresh</button>
-    </form>
-
-    <table class="table table-hover table-striped" data-bind="visible: driversAlertComments().length > 0">
-        <thead>
-            <tr>
-                <th>Beat</th>
-                <th>Vehicle</th>
-                <th>Driver First Name</th>
-                <th>Driver Last Name</th>
-                <th>Date</th>
-                <th>Explanation</th>
-                <th>CHP Log Number</th>
-                <th>Exception</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody data-bind="foreach: driversAlertComments">
-            <tr>
-                <td><span data-bind="text: BeatNumber"></span></td>
-                <td><span data-bind="text: VehicleNumber"></span></td>
-                <td><span data-bind="text: DriverFirstName"></span></td>
-                <td><span data-bind="text: DriverLastName"></span></td>
-                <td><span data-bind="text: Datestamp"></span></td>
-                <td><span data-bind="text: Explanation"></span></td>
-                <td><span data-bind="text: CHPLogNumber"></span></td>
-                <td><span data-bind="text: ExceptionType"></span></td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="alarm" data-bind="visible: driversAlertComments().length === 0">
-        No Alarms found
+                <button type="button" class="btn btn-primary" data-bind="enable: !isBusy(), click: filter">Filter</button>
+                <button type="button" class="btn btn-default" data-bind="enable: !isBusy(), click: reset">Refresh</button>
+            </form>
+        </div>
     </div>
 
+    <br />
+
+    <div class="row" data-bind="visible: driversAlertComments().length > 0">
+        <div class="col-sm-12">
+            <table class="table table-hover table-striped table-bordered" data-bind="visible: driversAlertComments().length > 0">
+                <thead>
+                    <tr>
+                        <th>Beat</th>
+                        <th>Vehicle</th>
+                        <th>Driver First Name</th>
+                        <th>Driver Last Name</th>
+                        <th>Date</th>
+                        <th>Explanation</th>
+                        <th>CHP Log Number</th>
+                        <th>Exception</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: driversAlertComments">
+                    <tr>
+                        <td><span data-bind="text: BeatNumber"></span></td>
+                        <td><span data-bind="text: VehicleNumber"></span></td>
+                        <td><span data-bind="text: DriverFirstName"></span></td>
+                        <td><span data-bind="text: DriverLastName"></span></td>
+                        <td><span data-bind="text: Datestamp"></span></td>
+                        <td><span data-bind="text: Explanation"></span></td>
+                        <td><span data-bind="text: CHPLogNumber"></span></td>
+                        <td><span data-bind="text: ExceptionType"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row" data-bind="visible: driversAlertComments().length === 0 && !isBusy()">
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    No Alarms found
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 

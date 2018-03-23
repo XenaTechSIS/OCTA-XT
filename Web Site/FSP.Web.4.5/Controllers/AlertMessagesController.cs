@@ -18,6 +18,14 @@ namespace FSP.Web.Controllers
     public class AlertMessagesController : Controller
     {
         private readonly FSPDataContext db = new FSPDataContext();
+        private readonly string dbConnectionString = "";
+
+        public AlertMessagesController()
+        {
+            dbConnectionString = ConfigurationManager.ConnectionStrings["fspConnectionString"].ToString();
+        }
+
+        #region views
 
         public ActionResult Alerts()
         {
@@ -25,18 +33,15 @@ namespace FSP.Web.Controllers
             return View();
         }
 
-        public ActionResult ClearAlarm(string id, string alarmType)
+        public ActionResult History()
         {
-            var retValue = string.Empty;
-            if (!string.IsNullOrEmpty(alarmType) && !string.IsNullOrEmpty(id))
-                using (var service = new TowTruckServiceClient())
-                {
-                    service.ClearAlarm(id, alarmType);
-                    Debug.WriteLine("Alarm Cleared for " + id);
-                    retValue = "Thank you! Alarm successfully cleared";
-                }
+            ViewBag.Heading = "Alarm Detail for " + DateTime.Today.ToString("MMMM dd, yyyy");
+            return View();
+        }
 
-            return Json(retValue, JsonRequestBehavior.AllowGet);
+        public ActionResult Index()
+        {
+            return View();
         }
 
         public ActionResult DriversAlertComments()
@@ -45,89 +50,9 @@ namespace FSP.Web.Controllers
             return View();
         }
 
-        public ActionResult ExcuseAlarm(string vehicleNumber, string beatNumber, string alarmType, string driverName, string comments)
-        {
-            var retValue = string.Empty;
-            if (!string.IsNullOrEmpty(alarmType) && !string.IsNullOrEmpty(vehicleNumber))
-                using (var service = new TowTruckServiceClient())
-                {
-                    service.ExcuseAlarm(vehicleNumber, beatNumber, alarmType, driverName, comments);
-                    Debug.WriteLine("Alarm Excused for " + vehicleNumber);
-                    retValue = "Thank you! Alarm successfully excused";
-                }
-            return Json(retValue, JsonRequestBehavior.AllowGet);
-        }
+        #endregion
 
-        //[OutputCache(Duration = 60, VaryByParam = "beat;driver;date")]
-        [HttpPost]
-        public ActionResult GetAlarmHistory(string beat, string driver, string date, string alarmType, bool? isExcused)
-        {
-            var returnList = new List<AlarmHistory>();
-
-            var start = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 0, 0, 0);
-            var end = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 23, 59, 59);
-
-            if (!string.IsNullOrEmpty(date))
-            {
-                var dtDate = Convert.ToDateTime(date);
-
-                start = new DateTime(dtDate.Year, dtDate.Month, dtDate.Day, 0, 0, 0);
-                end = new DateTime(dtDate.Year, dtDate.Month, dtDate.Day, 23, 59, 59);
-            }
-
-            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["fspConnectionString"].ToString()))
-            {
-                // Create the Command and Parameter objects.
-                var command = new SqlCommand("GetAlarmHistory", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@StartTime", start);
-                command.Parameters.AddWithValue("@EndTime", end);
-
-                // Open the connection in a try/catch block.  
-                // Create and execute the DataReader, writing the result 
-                // set to the console window. 
-                try
-                {
-                    connection.Open();
-                    var reader = command.ExecuteReader();
-                    while (reader.Read())
-                        returnList.Add(new AlarmHistory
-                        {
-                            BeatNumber = reader[0].ToString(),
-                            ContractCompanyName = reader[1].ToString(),
-                            VehicleNumber = reader[2].ToString(),
-                            DriverName = reader[3].ToString(),
-                            AlarmTime = Convert.ToDateTime(reader[4].ToString()),
-                            AlarmType = reader[5].ToString(),
-                            Comments = reader[6].ToString(),
-                            ExcuseTime = reader[7].ToString()
-                        });
-                    reader.Close();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                Console.ReadLine();
-            }
-
-            if (!string.IsNullOrEmpty(beat))
-                returnList = returnList.Where(p => p.BeatNumber == beat).ToList();
-
-            if (!string.IsNullOrEmpty(driver))
-                returnList = returnList.Where(p => p.DriverName == driver).ToList();
-
-            if (!string.IsNullOrEmpty(alarmType))
-                returnList = returnList.Where(p => p.AlarmType.Replace(" ", "").ToLower() == alarmType.ToLower()).ToList();
-
-            if (isExcused != null)
-                if (isExcused == true)
-                    returnList = returnList.Where(p => !string.IsNullOrEmpty(p.ExcuseTime)).ToList();
-                else
-                    returnList = returnList.Where(p => string.IsNullOrEmpty(p.ExcuseTime)).ToList();
-
-            return Json(returnList.OrderBy(p => p.BeatNumber).ThenBy(p => p.ContractCompanyName).ThenBy(p => p.VehicleNumber).ThenBy(p => p.DriverName).ToList(), JsonRequestBehavior.AllowGet);
-        }
+        #region lookups
 
         [OutputCache(Duration = 60)]
         public ActionResult GetAlarmTypes()
@@ -141,7 +66,7 @@ namespace FSP.Web.Controllers
             //GPSISSUE
             //STATIONARY
 
-            var alarmTypes = new List<string> {"LOGON", "ROLLIN", "ONPATROL", "LOGOFF", "INCIDENT", "GPSISSUE", "STATIONARY"};
+            var alarmTypes = new List<string> { "LOGON", "ROLLIN", "ONPATROL", "LOGOFF", "INCIDENT", "GPSISSUE", "STATIONARY" };
             return Json(alarmTypes, JsonRequestBehavior.AllowGet);
         }
 
@@ -194,12 +119,12 @@ namespace FSP.Web.Controllers
         public ActionResult GetAllBeats()
         {
             var query = from q in db.vBeats
-                orderby q.BeatNumber
-                select new
-                {
-                    Id = q.BeatID.ToString(),
-                    Text = q.BeatNumber
-                };
+                        orderby q.BeatNumber
+                        select new
+                        {
+                            Id = q.BeatID.ToString(),
+                            Text = q.BeatNumber
+                        };
             return Json(query, JsonRequestBehavior.AllowGet);
         }
 
@@ -207,13 +132,107 @@ namespace FSP.Web.Controllers
         public ActionResult GetAllDrivers()
         {
             var query = from q in db.Drivers
-                orderby q.LastName, q.FirstName
-                select new
-                {
-                    Id = q.DriverID.ToString(),
-                    Text = q.LastName + ", " + q.FirstName
-                };
+                        orderby q.LastName, q.FirstName
+                        select new
+                        {
+                            Id = q.DriverID.ToString(),
+                            Text = q.LastName + ", " + q.FirstName
+                        };
             return Json(query, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        public ActionResult ClearAlarm(string id, string alarmType)
+        {
+            var retValue = string.Empty;
+            if (string.IsNullOrEmpty(alarmType) || string.IsNullOrEmpty(id))
+                return Json(retValue, JsonRequestBehavior.AllowGet);
+
+            using (var service = new TowTruckServiceClient())
+            {
+                service.ClearAlarm(id, alarmType);             
+                retValue = "Thank you! Alarm successfully cleared";
+            }
+
+            return Json(retValue, JsonRequestBehavior.AllowGet);
+        }
+        
+        public ActionResult ExcuseAlarm(string vehicleNumber, string beatNumber, string alarmType, string driverName, string comments)
+        {
+            var retValue = string.Empty;
+            if (!string.IsNullOrEmpty(alarmType) && !string.IsNullOrEmpty(vehicleNumber))
+                using (var service = new TowTruckServiceClient())
+                {
+                    service.ExcuseAlarm(vehicleNumber, beatNumber, alarmType, driverName, comments);
+                    Debug.WriteLine("Alarm Excused for " + vehicleNumber);
+                    retValue = "Thank you! Alarm successfully excused";
+                }
+            return Json(retValue, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult GetAlarmHistory(string beat, string driver, string date, string alarmType, bool? isExcused)
+        {
+            var returnList = new List<AlarmHistory>();
+
+            var start = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 0, 0, 0);
+            var end = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 23, 59, 59);
+
+            if (!string.IsNullOrEmpty(date))
+            {
+                var dtDate = Convert.ToDateTime(date);
+
+                start = new DateTime(dtDate.Year, dtDate.Month, dtDate.Day, 0, 0, 0);
+                end = new DateTime(dtDate.Year, dtDate.Month, dtDate.Day, 23, 59, 59);
+            }
+
+            using (var connection = new SqlConnection(dbConnectionString))
+            {
+                // Create the Command and Parameter objects.
+                var command = new SqlCommand("GetAlarmHistory", connection) { CommandType = CommandType.StoredProcedure };
+                command.Parameters.AddWithValue("@StartTime", start);
+                command.Parameters.AddWithValue("@EndTime", end);
+
+                // Open the connection in a try/catch block.  
+                // Create and execute the DataReader, writing the result 
+                // set to the console window. 
+                try
+                {
+                    connection.Open();
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                        returnList.Add(new AlarmHistory
+                        {
+                            BeatNumber = reader[0].ToString(),
+                            ContractCompanyName = reader[1].ToString(),
+                            VehicleNumber = reader[2].ToString(),
+                            DriverName = reader[3].ToString(),
+                            AlarmTime = Convert.ToDateTime(reader[4].ToString()),
+                            AlarmType = reader[5].ToString(),
+                            Comments = reader[6].ToString(),
+                            ExcuseTime = reader[7].ToString()
+                        });
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }               
+            }
+
+            if (!string.IsNullOrEmpty(beat))
+                returnList = returnList.Where(p => p.BeatNumber == beat).ToList();
+
+            if (!string.IsNullOrEmpty(driver))
+                returnList = returnList.Where(p => p.DriverName == driver).ToList();
+
+            if (!string.IsNullOrEmpty(alarmType))
+                returnList = returnList.Where(p => p.AlarmType.Replace(" ", "").ToLower() == alarmType.ToLower()).ToList();
+
+            if (isExcused != null) returnList = isExcused == true ? returnList.Where(p => !string.IsNullOrEmpty(p.ExcuseTime)).ToList() : returnList.Where(p => string.IsNullOrEmpty(p.ExcuseTime)).ToList();
+
+            return Json(returnList.OrderBy(p => p.BeatNumber).ThenBy(p => p.ContractCompanyName).ThenBy(p => p.VehicleNumber).ThenBy(p => p.DriverName).ToList(), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -232,11 +251,10 @@ namespace FSP.Web.Controllers
                 end = new DateTime(dtDate.Year, dtDate.Month, dtDate.Day, 23, 59, 59);
             }
 
-            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["fspConnectionString"].ToString()))
+            using (var connection = new SqlConnection(dbConnectionString))
             {
                 // Create the Command and Parameter objects.
-                var command = new SqlCommand("GetEarlyRollIns", connection);
-                command.CommandType = CommandType.StoredProcedure;
+                var command = new SqlCommand("GetEarlyRollIns", connection) { CommandType = CommandType.StoredProcedure };
                 command.Parameters.AddWithValue("@dtStart", start);
                 command.Parameters.AddWithValue("@dtEnd", end);
 
@@ -264,9 +282,8 @@ namespace FSP.Web.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
-                }
-                Console.ReadLine();
+                    Debug.WriteLine(ex.Message);
+                }                
             }
 
             if (!string.IsNullOrEmpty(beat))
@@ -279,18 +296,6 @@ namespace FSP.Web.Controllers
                 returnList = returnList.Where(p => p.ExceptionType.Replace(" ", "").ToLower() == alarmType.ToLower()).ToList();
 
             return Json(returnList.OrderBy(p => p.BeatNumber).ThenBy(p => p.Datestamp).ToList(), JsonRequestBehavior.AllowGet);
-        }
-
-
-        public ActionResult History()
-        {
-            ViewBag.Heading = "Alarm Detail for " + DateTime.Today.ToString("MMMM dd, yyyy");
-            return View();
-        }
-
-        public ActionResult Index()
-        {
-            return View();
         }
 
         [HttpPost]
@@ -319,11 +324,11 @@ namespace FSP.Web.Controllers
                         }
                     }
 
-                    if(string.IsNullOrEmpty(ipAddress)) continue;
-                    
+                    if (string.IsNullOrEmpty(ipAddress)) continue;
+
 
                     var usr = users.FirstOrDefault(p => p.Email == User.Identity.Name);
-                    if(usr == null) continue;
+                    if (usr == null) continue;
 
                     var message = new TruckMessage
                     {
@@ -344,17 +349,18 @@ namespace FSP.Web.Controllers
         public ActionResult UpdateAlarm(AlarmHistory alarm)
         {
             var retValue = string.Empty;
-            if (alarm != null)
-                using (var service = new TowTruckServiceClient())
-                {
-                    if (alarm.IsExcused)
-                        service.ExcuseAlarm(alarm.VehicleNumber, alarm.BeatNumber, alarm.AlarmType, alarm.DriverName, alarm.Comments);
+            if (alarm == null) return Json(retValue, JsonRequestBehavior.AllowGet);
 
-                    else
-                        service.UnexcuseAlarm(alarm.VehicleNumber, alarm.BeatNumber, alarm.AlarmType, alarm.DriverName, alarm.Comments);
+            using (var service = new TowTruckServiceClient())
+            {
+                if (alarm.IsExcused)
+                    service.ExcuseAlarm(alarm.VehicleNumber, alarm.BeatNumber, alarm.AlarmType, alarm.DriverName, alarm.Comments);
 
-                    retValue = "Alarm Record Updated";
-                }
+                else
+                    service.UnexcuseAlarm(alarm.VehicleNumber, alarm.BeatNumber, alarm.AlarmType, alarm.DriverName, alarm.Comments);
+
+                retValue = "Alarm Record Updated";
+            }
 
             return Json(retValue, JsonRequestBehavior.AllowGet);
         }

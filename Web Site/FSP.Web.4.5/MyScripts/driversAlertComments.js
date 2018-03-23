@@ -30,7 +30,7 @@
             driver = self.selectedDriver().Text;     
 
         $.ajax({
-            url: $("#websitePath").attr("data-websitePath") + '/AlertMessages/GetDriversAlertComments',
+            url: $(".websiteUrl").text().trim() + '/AlertMessages/GetDriversAlertComments',
             type: "POST",
             dataType: "json",
             data: {
@@ -48,17 +48,19 @@
 
                 self.isBusy(false);
             },
-            error: function (xhr, ajaxOptions, thrownError) {
+            error: function (error) {
+                console.log(error);
             }
         });
 
     };
+
     self.getAlarmTypes = function () {
 
         console.time('Gettings Alarm Types');
 
         $.ajax({
-            url: $("#websitePath").attr("data-websitePath") + '/AlertMessages/GetAlarmTypes',
+            url: $(".websiteUrl").text().trim() + '/AlertMessages/GetAlarmTypes',
             type: "GET",
             dataType: "json",
             success: function (results) {
@@ -69,19 +71,18 @@
                 }
 
             },
-            error: function (xhr, ajaxOptions, thrownError) {
+            error: function () {
             }
         });
 
     };
-    //filter
-
+   
     self.getBeats = function () {
 
         console.time('Gettings Beats');
 
         $.ajax({
-            url: $("#websitePath").attr("data-websitePath") + '/AlertMessages/GetAllBeats',
+            url: $(".websiteUrl").text().trim() + '/AlertMessages/GetAllBeats',
             type: "GET",
             dataType: "json",
             success: function (results) {
@@ -92,17 +93,18 @@
                 }
 
             },
-            error: function (xhr, ajaxOptions, thrownError) {
+            error: function () {
             }
         });
 
     };
+
     self.getDrivers = function () {
 
         console.time('Gettings Drivers');
 
         $.ajax({
-            url: $("#websitePath").attr("data-websitePath") + '/AlertMessages/GetAllDrivers',
+            url: $(".websiteUrl").text().trim() + '/AlertMessages/GetAllDrivers',
             type: "GET",
             dataType: "json",
             success: function (results) {
@@ -113,7 +115,7 @@
                 }
 
             },
-            error: function (xhr, ajaxOptions, thrownError) {
+            error: function () {
             }
         });
 
@@ -122,6 +124,7 @@
     self.filter = function () {
         self.getDriversAlertComments();
     };
+
     self.reset = function () {
 
         self.selectedBeat(null);

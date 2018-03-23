@@ -1369,8 +1369,6 @@
     <Content Include="Views\AlertMessages\Index.cshtml" />
     <Content Include="Views\Shared\_TruckStatusList.cshtml" />
     <Content Include="Views\Shared\_TruckListColumnConfig.cshtml" />
-    <Content Include="Views\Shared\_LayoutBlank.cshtml" />
-    <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\AssistAdmin\Create.cshtml" />
     <Content Include="Views\AlertMessages\Alerts.cshtml" />
     <None Include="Service References\TowTruckServiceRef\TowTruckService1.wsdl" />

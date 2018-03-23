@@ -1,15 +1,4 @@
-﻿@*@if (Request.IsAuthenticated)
-    {
-        <span>@Html.ActionLink(User.Identity.Name + " (" + Roles.GetRolesForUser().FirstOrDefault() + ")", "ChangePassword", "Account", string.Empty, string.Empty, string.Empty, new {area = ""}, null)</span>
-        <span>|</span>
-        <span>@Html.ActionLink("Log Off", "LogOff", "Account", string.Empty, string.Empty, string.Empty, new {area = ""}, null)</span>
-    }
-    else
-    {
-        <span>@Html.ActionLink("Log On", "Login", "Account", string.Empty, string.Empty, string.Empty, new {area = ""}, null)</span>
-    }*@
-
-@using Microsoft.AspNet.Identity
+﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))

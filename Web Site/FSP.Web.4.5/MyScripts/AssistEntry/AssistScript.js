@@ -234,7 +234,7 @@ var ViewModel = function () {
 
     self.getDrivers = function () {
 
-        var url = $("#websitePath").attr("data-websitePath") + '/AssistAdmin/GetDrivers';
+        var url = $(".websiteUrl").text().trim() + '/AssistAdmin/GetDrivers';
 
         $.get(url,
                function (drivers) {
@@ -253,7 +253,7 @@ var ViewModel = function () {
     };
     self.getContractors = function () {
 
-        var url = $("#websitePath").attr("data-websitePath") + '/AssistAdmin/GetContractors';
+        var url = $(".websiteUrl").text().trim() + '/AssistAdmin/GetContractors';
         $.get(url,
                function (contractors) {
 
@@ -271,7 +271,7 @@ var ViewModel = function () {
     };
     self.getVehicles = function () {
 
-        var url = $("#websitePath").attr("data-websitePath") + '/AssistAdmin/GetVehicles';
+        var url = $(".websiteUrl").text().trim() + '/AssistAdmin/GetVehicles';
         $.get(url,
                 function (vehicles) {
 
@@ -289,7 +289,7 @@ var ViewModel = function () {
                 }, "json");
     };
     self.getBeatNumbers = function () {
-        var url = $("#websitePath").attr("data-websitePath") + '/AssistAdmin/GetBeatNumbers';
+        var url = $(".websiteUrl").text().trim() + '/AssistAdmin/GetBeatNumbers';
         $.get(url,
                 function (beatNumbers) {
 
@@ -308,7 +308,7 @@ var ViewModel = function () {
     }
     self.getIncidentTypes = function () {
 
-        var url = $("#websitePath").attr("data-websitePath") + '/AssistAdmin/GetIncidentTypes';
+        var url = $(".websiteUrl").text().trim() + '/AssistAdmin/GetIncidentTypes';
 
         $.get(url,
                function (results) {
@@ -328,7 +328,7 @@ var ViewModel = function () {
     };
     self.getTrafficSpeeds = function () {
 
-        var url = $("#websitePath").attr("data-websitePath") + '/AssistAdmin/GetTrafficSpeeds';
+        var url = $(".websiteUrl").text().trim() + '/AssistAdmin/GetTrafficSpeeds';
 
         $.get(url,
                function (results) {
@@ -348,7 +348,7 @@ var ViewModel = function () {
     };
     self.getFreeways = function () {
 
-        var url = $("#websitePath").attr("data-websitePath") + '/AssistAdmin/GetFreeways';
+        var url = $(".websiteUrl").text().trim() + '/AssistAdmin/GetFreeways';
 
         $.get(url,
                function (results) {
@@ -368,7 +368,7 @@ var ViewModel = function () {
     };
     self.getVehiclePositions = function () {
 
-        var url = $("#websitePath").attr("data-websitePath") + '/AssistAdmin/GetVehiclePositions';
+        var url = $(".websiteUrl").text().trim() + '/AssistAdmin/GetVehiclePositions';
 
         $.get(url,
                function (results) {
@@ -388,7 +388,7 @@ var ViewModel = function () {
     };
     self.getVehicleTypes = function () {
 
-        var url = $("#websitePath").attr("data-websitePath") + '/AssistAdmin/GetVehicleTypes';
+        var url = $(".websiteUrl").text().trim() + '/AssistAdmin/GetVehicleTypes';
 
         $.get(url,
                function (results) {
@@ -408,7 +408,7 @@ var ViewModel = function () {
     };
     self.getTowLocations = function () {
 
-        var url = $("#websitePath").attr("data-websitePath") + '/AssistAdmin/GetTowLocations';
+        var url = $(".websiteUrl").text().trim() + '/AssistAdmin/GetTowLocations';
 
         $.get(url,
                function (results) {
@@ -430,7 +430,7 @@ var ViewModel = function () {
 
     };
     self.getServiceTypes = function () {
-        var url = $("#websitePath").attr("data-websitePath") + '/AssistAdmin/GetServiceTypes';
+        var url = $(".websiteUrl").text().trim() + '/AssistAdmin/GetServiceTypes';
 
         $.get(url,
                function (results) {

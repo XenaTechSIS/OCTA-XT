@@ -14,7 +14,7 @@
 
     self.getSchedules = function () {
 
-        var url = $("#websitePath").attr("data-websitePath") + '/AdminArea/BeatSchedule/GetSchedules';
+        var url = $(".websiteUrl").text().trim() + '/AdminArea/BeatSchedule/GetSchedules';
 
         console.time('Getting Schedules');
 
@@ -32,7 +32,7 @@
     }
     self.getBeats = function () {
 
-        var url = $("#websitePath").attr("data-websitePath") + '/AdminArea/BeatSchedule/GetBeatsWithoutSchedules';
+        var url = $(".websiteUrl").text().trim() + '/AdminArea/BeatSchedule/GetBeatsWithoutSchedules';
         console.time('Getting Beats');
         $.get(url,
               function (beats) {
@@ -47,7 +47,7 @@
     }
     self.getBeatSchedules = function () {
 
-        var url = $("#websitePath").attr("data-websitePath") + '/AdminArea/BeatSchedule/GetBeatSchedules';
+        var url = $(".websiteUrl").text().trim() + '/AdminArea/BeatSchedule/GetBeatSchedules';
         console.time('Getting Beat Schedules');
         $.get(url,
               function (beatSchedules) {
@@ -101,7 +101,7 @@
     };
     self.deleteBeatSchedule = function (item) {
 
-        var url = $("#websitePath").attr("data-websitePath") + '/AdminArea/BeatSchedule/Delete';
+        var url = $(".websiteUrl").text().trim() + '/AdminArea/BeatSchedule/Delete';
 
         $.ajax({
             url: url,
@@ -143,7 +143,7 @@
 
         console.log('Number of selected schedules %s', self.selectedSchedules().length);
 
-        var url = $("#websitePath").attr("data-websitePath") + '/AdminArea/BeatSchedule/Save';
+        var url = $(".websiteUrl").text().trim() + '/AdminArea/BeatSchedule/Save';
 
         var selectedScheduleIds = ko.observableArray([]);
 

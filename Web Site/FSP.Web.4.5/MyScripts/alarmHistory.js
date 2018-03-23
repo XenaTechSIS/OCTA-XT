@@ -37,7 +37,7 @@
             isExcused = self.selectedExcusedType().IsExcused;
 
         $.ajax({
-            url: $("#websitePath").attr("data-websitePath") + '/AlertMessages/GetAlarmHistory',
+            url: $(".websiteUrl").text().trim() + '/AlertMessages/GetAlarmHistory',
             type: "POST",
             dataType: "json",
             data: {
@@ -56,7 +56,7 @@
 
                 self.isBusy(false);
             },
-            error: function (xhr, ajaxOptions, thrownError) {
+            error: function () {
             }
         });
 
@@ -66,7 +66,7 @@
         console.time('Gettings Alarm Types');
 
         $.ajax({
-            url: $("#websitePath").attr("data-websitePath") + '/AlertMessages/GetAlarmTypes',
+            url: $(".websiteUrl").text().trim() + '/AlertMessages/GetAlarmTypes',
             type: "GET",
             dataType: "json",
             success: function (results) {
@@ -77,7 +77,7 @@
                 }
 
             },
-            error: function (xhr, ajaxOptions, thrownError) {
+            error: function () {
             }
         });
 
@@ -89,7 +89,7 @@
         console.time('Gettings Beats');
 
         $.ajax({
-            url: $("#websitePath").attr("data-websitePath") + '/AlertMessages/GetAllBeats',
+            url: $(".websiteUrl").text().trim() + '/AlertMessages/GetAllBeats',
             type: "GET",
             dataType: "json",
             success: function (results) {
@@ -100,7 +100,7 @@
                 }
 
             },
-            error: function (xhr, ajaxOptions, thrownError) {
+            error: function () {
             }
         });
 
@@ -110,7 +110,7 @@
         console.time('Gettings Drivers');
 
         $.ajax({
-            url: $("#websitePath").attr("data-websitePath") + '/AlertMessages/GetAllDrivers',
+            url: $(".websiteUrl").text().trim() + '/AlertMessages/GetAllDrivers',
             type: "GET",
             dataType: "json",
             success: function (results) {
@@ -121,7 +121,7 @@
                 }
 
             },
-            error: function (xhr, ajaxOptions, thrownError) {
+            error: function () {
             }
         });
 
@@ -169,7 +169,7 @@
             console.log('Excuse Time ' + self.ExcuseTime() + ' Comments ' + self.Comments());
 
             $.ajax({
-                url: $("#websitePath").attr("data-websitePath") + '/AlertMessages/UpdateAlarm',
+                url: $(".websiteUrl").text().trim() + '/AlertMessages/UpdateAlarm',
                 type: "POST",
                 dataType: "json",
                 data: {
@@ -186,7 +186,7 @@
                     alert(result);
 
                 },
-                error: function (xhr, ajaxOptions, thrownError) {
+                error: function () {
                 }
             });
 
