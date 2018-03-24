@@ -941,31 +941,9 @@ lata.FspWeb.prototype.mapViewModel = function () {
                 infowindow.setContent($("#infoWindowContent").html());
                 infowindow.open(fspWeb.map, fspWeb.selectedTruck().mapMarker);
 
-
                 //send follow signal to other windows
                 var userId = fspWeb.userId;
-
                 fspWeb.towTruckHub.server.SetSelectedTruck(fspWeb.selectedTruck().truckNumber, userId);
-
-                //var url = fspWeb.SERVICE_BASE_URL + "/Truck/SetSelectedTruck";
-                //$.ajax({
-                //    url: url,
-                //    type: "GET",
-                //    dataType: "json",
-                //    data: {
-                //        truckNumber: fspWeb.selectedTruck().truckNumber,
-                //        userId: userId
-                //    },
-                //    error: function (xhr, ajaxOptions, thrownError) {
-                //        //alert(xhr.status);
-                //        //alert(thrownError);
-                //    },
-                //    success: function () {
-
-                //    }
-                //});
-
-
 
             } catch (e) {
 
@@ -1146,7 +1124,6 @@ lata.FspWeb.prototype.mapViewModel = function () {
 
             try {
                 var userId = fspWeb.userId;
-
                 //center map back to original
                 fspWeb.map.setCenter(defaultMapLocation);
                 fspWeb.towTruckHub.server.stopFollowingTruck(userId);
@@ -1154,30 +1131,6 @@ lata.FspWeb.prototype.mapViewModel = function () {
                 fspWeb.selectedTruck(null);
                 self.followingTruck(false);
                 if (infowindow) infowindow.close();
-
-                //var url = fspWeb.SERVICE_BASE_URL + "/Truck/StopFollowingTruck";
-                //$.ajax({
-                //    url: url,
-                //    type: "GET",
-                //    dataType: "json",
-                //    data: {
-                //        userId: userId
-                //    },
-                //    error: function (xhr, ajaxOptions, thrownError) {
-                //        //alert(xhr.status);
-                //        //alert(thrownError);
-                //    },
-                //    success: function () {
-
-                //        fspWeb.map.setZoom(DEFAULT_MAP_ZOOM);
-                //        fspWeb.selectedTruck(null);
-                //        self.followingTruck(false);
-                //        if (infowindow) infowindow.close();
-
-                //    }
-                //});           
-
-
             } catch (e) {
 
             }
@@ -1186,53 +1139,52 @@ lata.FspWeb.prototype.mapViewModel = function () {
             $("#filterModal").modal('show');
             $("#beatsFilter").focus();
         }
-        
-    beatsVisible.subscribe(function() {
+
+    beatsVisible.subscribe(function () {
         toggleBeatsVisibility();
     });
-    beatsLabelsVisible.subscribe(function() {
+    beatsLabelsVisible.subscribe(function () {
         toggleBeatLabelsVisibility();
     });
-    beatSegmentsVisible.subscribe(function() {
+    beatSegmentsVisible.subscribe(function () {
         toggleBeatSegmentsVisibility();
     });
-    beatSegmentsLabelsVisible.subscribe(function() {
+    beatSegmentsLabelsVisible.subscribe(function () {
         toggleBeatSegmentLabelsVisibility();
     });
-    callBoxesVisible.subscribe(function() {
+    callBoxesVisible.subscribe(function () {
         toggleCallBoxesVisibility();
 
     });
-    dropZonesVisible.subscribe(function() {
+    dropZonesVisible.subscribe(function () {
         toggleDropZonesVisibility();
     });
 
-    showOnPatrol.subscribe(function() {
+    showOnPatrol.subscribe(function () {
         toggleTruckVisibility();
     });
 
-    showDriverLoggedOn.subscribe(function() {
+    showDriverLoggedOn.subscribe(function () {
         toggleTruckVisibility();
     });
 
-    showOnAssist.subscribe(function() {
+    showOnAssist.subscribe(function () {
         toggleTruckVisibility();
     });
 
-    showOnRollOutIn.subscribe(function() {
+    showOnRollOutIn.subscribe(function () {
         toggleTruckVisibility();
     });
 
-    showOnBreakLunch.subscribe(function() {
+    showOnBreakLunch.subscribe(function () {
         toggleTruckVisibility();
     });
 
-    showNotLoggedIn.subscribe(function() {
+    showNotLoggedIn.subscribe(function () {
         toggleTruckVisibility();
     });
 
-    checkAllTruckStates.subscribe(function() {
-
+    checkAllTruckStates.subscribe(function () {
         showOnPatrol(checkAllTruckStates());
         showOnAssist(checkAllTruckStates());
         showOnRollOutIn(checkAllTruckStates());
@@ -1241,17 +1193,17 @@ lata.FspWeb.prototype.mapViewModel = function () {
         showDriverLoggedOn(checkAllTruckStates());
     });
 
-    filterTrucksByContractor = function(contractorName) {
+    filterTrucksByContractor = function (contractorName) {
         self.contractorNameFilter(contractorName);
         toggleTruckVisibility();
     };
 
-    clearContractorNameFilter = function() {
+    clearContractorNameFilter = function () {
         self.contractorNameFilter('');
         toggleTruckVisibility();
     };
 
-    toggleDebug = function() {
+    toggleDebug = function () {
 
         if (showDebug() === true)
             showDebug(false);
@@ -1260,7 +1212,7 @@ lata.FspWeb.prototype.mapViewModel = function () {
 
     };
 
-    forceBeatRemoval = function() {
+    forceBeatRemoval = function () {
         removeTruck(truckBeatToRemove());
     };
 
@@ -1363,9 +1315,7 @@ function follow() {
 //binding trucks to map
 ko.bindingHandlers.map = {
     init: function (element, valueAccessor, allBindingsAccessor, truck) {
-
         try {
-
             var lat = allBindingsAccessor().lat();
             var lon = allBindingsAccessor().lon();
             var id = allBindingsAccessor().id;
@@ -1425,16 +1375,12 @@ ko.bindingHandlers.map = {
             } else {
                 fspWeb.mapViewModel.writeToDebug('Attempting to add duplicate truck: ' + id);
             }
-
         } catch (e) {
-
+            console.log(e);
         }
-
     },
     update: function (element, valueAccessor, allBindingsAccessor, truck) {
-
         try {
-
             var lat = truck.lat();
             var lon = truck.lon();
             var id = truck.id;
@@ -1487,13 +1433,11 @@ ko.bindingHandlers.map = {
                     }
                 }
             } catch (e) {
-
+                console.log(e);
             }
 
         } catch (e) {
-
+            console.log(e);
         }
-
-
     }
 };

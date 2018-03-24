@@ -11,14 +11,17 @@
 
         <div class="mapTopNavigation">
             <form class="form-inline text-center">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#filterModal">
+                    Filter
+                </button>
                 <a class="btn btn-primary"
                    ng-class="{'btn-danger': haveAlarms}"
-                   href="/AlertMessages/Alerts">
+                   href="{{$parent.rootUrl}}/AlertMessages/Alerts">
                     Alarms
                 </a>
                 <a class="btn btn-primary"
                    target="_blank"
-                   href="/Truck/Grid">
+                   href="{{$parent.rootUrl}}/Truck/Grid">
                     Tow Truck List
                 </a>
                 <a class="btn btn-primary"
@@ -126,6 +129,102 @@
         </div>
 
         <div id="googleMap" class="googleMap"></div>
+
+        <div class="modal fade"
+             id="filterModal"
+             tabindex="-1"
+             role="dialog"
+             aria-labelledby="myModalLabel">
+
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button"
+                                class="close"
+                                data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title"
+                            id="myModalLabel">
+                            Filter
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="checkbox checkbox-slider--b-flat">
+                                    <label>
+                                        <input type="checkbox"
+                                               ng-model="allFiltersChecked"
+                                               ng-click="toggleAllFilters()" /><span>Toggle All</span>
+                                    </label>
+                                </div>
+                                <br />
+                                <div class="checkbox checkbox-slider--b-flat">
+                                    <label>
+                                        <input type="checkbox"
+                                               ng-model="onPatrolChecked" /><span>On Patrol</span>
+                                    </label>
+                                </div>
+                                <div class="checkbox checkbox-slider--b-flat">
+                                    <label>
+                                        <input type="checkbox"
+                                               ng-model="driverLoggedOnChecked" /><span>Driver Logged On</span>
+                                    </label>
+                                </div>
+                                <div class="checkbox checkbox-slider--b-flat">
+                                    <label>
+                                        <input type="checkbox"
+                                               ng-model="onAssistChecked" /><span>On Assist</span>
+                                    </label>
+                                </div>
+                                <div class="checkbox checkbox-slider--b-flat">
+                                    <label>
+                                        <input type="checkbox"
+                                               ng-model="onBreakLunchCheched" /><span>On Break/Lunch</span>
+                                    </label>
+                                </div>
+                                <div class="checkbox checkbox-slider--b-flat">
+                                    <label>
+                                        <input type="checkbox"
+                                               ng-model="onRollOutInChecked" /><span>On Roll Out/Roll In</span>
+                                    </label>
+                                </div>
+                                <div class="checkbox checkbox-slider--b-flat">
+                                    <label>
+                                        <input type="checkbox"
+                                               ng-model="notLoggedOnChecked" /><span>Not Logged In</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <h3>Tow Contractor</h3>
+                                <form class="form-inline">
+                                    <input type="text"
+                                           class="form-control"
+                                           ng-model="contractorNameFilter" />
+                                    <button class="btn btn-default"
+                                            ng-show="contractorNameFilter"
+                                            ng-click="clearContractorName()">
+                                        <i class="fa fa-remove"></i>
+                                    </button>
+                                </form>                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btnSaveConfig"
+                                type="button"
+                                class="btn btn-primary"
+                                data-dismiss="modal">
+                            Done
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 

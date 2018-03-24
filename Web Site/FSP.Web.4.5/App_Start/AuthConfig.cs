@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using FSP.Web.Models;
-
-namespace FSP.Web
+﻿namespace FSP.Web
 {
     public static class AuthConfig
     {

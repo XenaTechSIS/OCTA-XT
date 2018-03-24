@@ -47,7 +47,8 @@ namespace FSP.Web
             //app
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
                 "~/Scripts/sortable.js",
-                "~/Scripts/toastr.js"
+                "~/Scripts/toastr.js",
+                "~/Scripts/moment.js"
             ));
 
 
@@ -116,7 +117,7 @@ namespace FSP.Web
 
             //css & styles
 
-            bundles.Add(new StyleBundle("~/Content/octa").Include(
+            bundles.Add(new StyleBundle("~/bundles/octa").Include(
                 "~/Content/themes/base/all.css",
                 "~/Content/bootstrap-3.3.2.css",
                 "~/Content/font-awesome.css",
@@ -129,6 +130,9 @@ namespace FSP.Web
 
             bundles.Add(new StyleBundle("~/Content/jqueryUI").Include(
                 "~/Content/themes/base/all.css"));
+
+
+            BundleTable.EnableOptimizations = false;
         }
     }
 }

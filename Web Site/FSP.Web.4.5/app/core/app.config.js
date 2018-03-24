@@ -16,6 +16,49 @@
     }
 
     function appRun($rootScope) {
-        $rootScope.applicationName = 'OCTA Web 1.0';
+        $rootScope.applicationName = "OCTA Web 1.0";
+        $rootScope.rootUrl = $(".websiteUrl").text().trim();
+        $rootScope.mtcTruck = function(dbTruck) {
+            var self = this;
+            self.id = "1";
+            self.truckNumber = "1";
+            self.ipAddress = "1";
+            self.beatNumber = "100";
+
+            self.update = function(dbTruck) {
+                console.log("Update Truck %O", dbTruck);
+                self.truckNumberOrginal = dbTruck.TruckNumber;                
+                if (dbTruck.TruckNumber !== null) {
+                    self.id = dbTruck.TruckNumber.replace(' ', '').replace('-', '').replace('_', '');
+                    self.truckNumber = dbTruck.TruckNumber;
+                }                
+                self.ipAddress = dbTruck.IPAddress;                
+                self.vehicleStateIconUrl = $(".websiteUrl").text().trim() + '/Images/' + dbTruck.VehicleStateIconUrl;
+                self.vehicleState = dbTruck.VehicleState;
+                
+                if (dbTruck.BeatNumber !== null) self.beatNumber = dbTruck.BeatNumber.substring(dbTruck.BeatNumber.indexOf("-") + 1);
+                self.beatNumberString = self.beatNumber;
+                self.beatSegmentNumber = dbTruck.BeatSegmentNumber;
+                
+                self.contractorId = dbTruck.ContractorId;
+                self.contractorName = dbTruck.ContractorName;
+
+                //location
+                self.heading = dbTruck.Heading;
+                self.lat = dbTruck.Lat;
+                self.lon = dbTruck.Lon;
+                self.speed = dbTruck.Speed;
+
+                self.driverName = dbTruck.DriverName;                
+                self.location = dbTruck.Location;
+                self.lastMessage = dbTruck.LastMessage;
+                self.speedingTime = dbTruck.SpeedingTime;
+                self.speedingValue = dbTruck.SpeedingValue;
+                self.outOfBoundsMessage = dbTruck.OutOfBoundsMessage;
+                self.outOfBoundsTime = dbTruck.OutOfBoundsTime;
+                self.hasAlarm = dbTruck.HasAlarm;
+            };
+            self.update(dbTruck);
+        };
     }
 })();
