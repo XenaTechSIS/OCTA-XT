@@ -2,6 +2,12 @@
     border: 0 !important;
 }
 
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak],
+.ng-cloak, .x-ng-cloak,
+.ng-hide:not(.ng-hide-animate) {
+    display: none !important;
+}
+
 .footerContainer {
     position: fixed;
     bottom: 0;

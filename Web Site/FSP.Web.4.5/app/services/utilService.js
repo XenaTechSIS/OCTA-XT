@@ -9,6 +9,14 @@
                     if (arr[i][propName] === propValue) return arr[i];
 
             },
+            findArrayElements: function (arr, propName, propValue) {
+                var returnValue = [];
+                for (var i = 0; i < arr.length; i++)
+                    if (arr[i][propName] === propValue) {
+                        returnValue.push(arr[i]);
+                    }
+                return returnValue;
+            },
             getPolygonCoords: function (polygon) {
                 var coords = [];
                 if (!polygon) return coords;

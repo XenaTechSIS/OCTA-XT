@@ -18,7 +18,7 @@ namespace FSP.Web.Controllers
     [CustomAuthorization]
     public class TruckController : MyController
     {
-      
+
         public ActionResult Grid()
         {
             return View();
@@ -104,12 +104,16 @@ namespace FSP.Web.Controllers
 
             return returnList;
         }
-            
+
         [HttpGet]
         public ActionResult GetTruckRefreshRate()
         {
+#if (DEBUG)
+            return Json(5000, JsonRequestBehavior.AllowGet);
+#else
             int.TryParse(ConfigurationManager.AppSettings["ServerRefreshRate"], out var refreshRate);
             return Json(refreshRate, JsonRequestBehavior.AllowGet);
+#endif
         }
 
         [HttpGet]
@@ -122,7 +126,7 @@ namespace FSP.Web.Controllers
             {
                 if (HttpContext.Cache["Trucks"] != null)
                 {
-                    towTrucks = (List<UITowTruck>)HttpContext.Cache["Trucks"];                   
+                    towTrucks = (List<UITowTruck>)HttpContext.Cache["Trucks"];
                 }
                 else
                 {
@@ -198,14 +202,14 @@ namespace FSP.Web.Controllers
                             {
                                 Util.WriteToLog(ex.Message, "Error.txt");
                             }
-                            
+
                             towTrucks.Add(truck);
-                            
+
                             #endregion
                         }
 
                         int.TryParse(ConfigurationManager.AppSettings["ServerRefreshRate"], out var refreshRate);
-                        HttpContext.Cache.Add("Trucks", towTrucks, null, DateTime.Now.AddMilliseconds(refreshRate), Cache.NoSlidingExpiration, CacheItemPriority.High, null);                        
+                        HttpContext.Cache.Add("Trucks", towTrucks, null, DateTime.Now.AddMilliseconds(refreshRate), Cache.NoSlidingExpiration, CacheItemPriority.High, null);
                     }
                 }
             }

@@ -658,7 +658,7 @@ RichMarker.prototype.getOffset_ = function () {
             break;
         case RichMarkerPosition['TOP']:
             offset.width = -width / 2;
-            break;
+            break;        
         case RichMarkerPosition['TOP_RIGHT']:
             offset.width = -width;
             break;

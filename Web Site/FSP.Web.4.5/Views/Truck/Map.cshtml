@@ -6,18 +6,25 @@
 
 <link href="~/Content/octa/map.css" rel="stylesheet" />
 
-<div ng-app="octaApp" class="mapPageContainer">
+<div ng-app="octaApp" class="mapPageContainer" ng-cloak>
     <div ng-controller="mapController">
 
         <div class="mapTopNavigation">
             <form class="form-inline text-center">
-                <button class="btn btn-primary" data-toggle="modal" data-target="#filterModal">
-                    Filter
+                <button class="btn btn-danger" ng-click="stopFollow()" ng-show="truckToBeFollowed && truckToBeFollowed.lat && truckToBeFollowed.lon">
+                    Stop Following {{truckToBeFollowed.truckNumber}}
+                </button>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#filterModal" ng-hide="filterApplied">
+                    <i class="fa fa-filter"></i> Filter
+                </button>
+                <button class="btn btn-danger" ng-show="filterApplied" ng-click="clearFilter()">
+                    Clear Filter
                 </button>
                 <a class="btn btn-primary"
+                   target="_blank"
                    ng-class="{'btn-danger': haveAlarms}"
                    href="{{$parent.rootUrl}}/AlertMessages/Alerts">
-                    Alarms
+                    <i class="fa fa-exclamation-triangle"></i> Alarms
                 </a>
                 <a class="btn btn-primary"
                    target="_blank"
@@ -176,13 +183,13 @@
                                 <div class="checkbox checkbox-slider--b-flat">
                                     <label>
                                         <input type="checkbox"
-                                               ng-model="onAssistChecked" /><span>On Assist</span>
+                                               ng-model="onAssistChecked" /><span>On Assist/Incident</span>
                                     </label>
                                 </div>
                                 <div class="checkbox checkbox-slider--b-flat">
                                     <label>
                                         <input type="checkbox"
-                                               ng-model="onBreakLunchCheched" /><span>On Break/Lunch</span>
+                                               ng-model="onBreakLunchChecked" /><span>On Break/Lunch</span>
                                     </label>
                                 </div>
                                 <div class="checkbox checkbox-slider--b-flat">
@@ -209,7 +216,7 @@
                                             ng-click="clearContractorName()">
                                         <i class="fa fa-remove"></i>
                                     </button>
-                                </form>                                
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -217,6 +224,7 @@
                         <button id="btnSaveConfig"
                                 type="button"
                                 class="btn btn-primary"
+                                ng-click="filter()"
                                 data-dismiss="modal">
                             Done
                         </button>

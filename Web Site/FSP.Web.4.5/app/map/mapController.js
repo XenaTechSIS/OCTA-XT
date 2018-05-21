@@ -5,10 +5,11 @@
         $scope.header = "Hello World!" + $rootScope.rootUrl;
 
         console.log($scope.header);
-            
+
         var DEFAULT_MAP_CENTER_LAT = 33.739660;
         var DEFAULT_MAP_CENTER_LON = -117.832146;
         var ZOOM_9 = 9;
+        var ZOOM_11 = 11;
         var ZOOM_12 = 12;
         var ZOOM_13 = 13;
         var ZOOM_14 = 14;
@@ -37,6 +38,7 @@
         });
         $scope.generalMarker = new google.maps.Marker({});
 
+        $scope.isBusyGettingTrucks = false;
         $scope.trucks = [];
         $scope.truckMarkers = [];
         $scope.selectedTruck = "";
@@ -48,27 +50,28 @@
         $scope.haveAlarms = false;
 
         //filter
+        $scope.filterApplied = false;
         $scope.allFiltersChecked = true;
         $scope.onPatrolChecked = true;
         $scope.driverLoggedOnChecked = true;
         $scope.onAssistChecked = true;
-        $scope.onBreakLunchCheched = true;
+        $scope.onBreakLunchChecked = true;
         $scope.onRollOutInChecked = true;
         $scope.notLoggedOnChecked = true;
         $scope.contractorNameFilter = "";
+
         $scope.toggleAllFilters = function () {
             console.log("Toggle all filters %s", $scope.allFiltersChecked);
             $scope.onPatrolChecked = $scope.allFiltersChecked;
             $scope.driverLoggedOnChecked = $scope.allFiltersChecked;
             $scope.onAssistChecked = $scope.allFiltersChecked;
-            $scope.onBreakLunchCheched = $scope.allFiltersChecked;
+            $scope.onBreakLunchChecked = $scope.allFiltersChecked;
             $scope.onRollOutInChecked = $scope.allFiltersChecked;
             $scope.notLoggedOnChecked = $scope.allFiltersChecked;
         };
         $scope.clearContractorName = function () {
             $scope.contractorNameFilter = "";
         }
-
 
         function sizeMap() {
 
@@ -109,7 +112,7 @@
 
             // Setup the click event listeners: simply set the map to Chicago.
             controlUI.addEventListener('click', function () {
-                updateMap(new google.maps.LatLng(DEFAULT_MAP_CENTER_LAT, DEFAULT_MAP_CENTER_LON), ZOOM_9);
+                updateMap(new google.maps.LatLng(DEFAULT_MAP_CENTER_LAT, DEFAULT_MAP_CENTER_LON), ZOOM_11);
             });
 
             controlDiv.index = 1;
@@ -125,8 +128,11 @@
         function checkForAlarms() {
             console.log("Checking for alarms...");
             trucksService.getTrucksRefreshRate().then(function (result) {
+
+                if ($scope.haveAlarms === false && result === true) {
+                    console.log("Have alarms? %s", $scope.haveAlarms);
+                }
                 $scope.haveAlarms = result;
-                console.log("Have alarms? %s", $scope.haveAlarms);
 
                 if ($scope.haveAlarms) {
                     $("#monitoringTab").css("color", "red");
@@ -153,25 +159,74 @@
             });
         }
 
+        function filterTrucks() {
+
+            if (!$scope.filterApplied) return;
+            if ($scope.allFiltersChecked && $scope.contractorNameFilter === "") return;
+
+            var filteredTrucks = [];
+
+            $scope.trucks.forEach(function (truck) {
+                var truckIsGood = false;
+                if (truck.vehicleState === "On Patrol" && $scope.onPatrolChecked) truckIsGood = true;
+                if (truck.vehicleState === "On Incident" && $scope.onAssistChecked) truckIsGood = true;
+                if (truck.vehicleState === "On Break" && $scope.onBreakLunchChecked) truckIsGood = true;
+
+                //if ($scope.contractorNameFilter) {
+                //    if ($scope.contractorNameFilter === truck.contractorName) truckIsGood = false;
+                //}
+                //else {
+                //    truckIsGood = true;
+                //}
+
+                if (truckIsGood) filteredTrucks.push(truck);
+            });
+
+            $scope.trucks = filteredTrucks;
+
+            console.log("%c Filtered Trucks %O", "color:red", $scope.trucks);
+        }
+
         function getTrucks() {
-            console.log("Getting trucks...");
-            trucksService.getTrucks().then(function (results) {
-                console.log("Trucks found: %O", results);
-                for (var i = 0; i < results.length; i++) {
-                    var exists = false;
-                    for (var ii = 0; ii < $scope.trucks.length; ii++) {
-                        if ($scope.trucks[ii].id === results[i].Id) {
-                            exists = true;
-                            $scope.trucks[ii].update(results[i]);
-                        }
+            if ($scope.isBusyGettingTrucks) return;
+            $scope.isBusyGettingTrucks = true;
+            trucksService.getTrucks().then(function (rawTrucks) {
+                $scope.isBusyGettingTrucks = false;
+                console.group("Truck Request");
+
+                try {
+                    console.log("%c Raw Trucks %O (%s)", "color:green", rawTrucks, new Date());
+
+                    rawTrucks.forEach(function (rawTruck) {
+                        var existingTruck = utilService.findArrayElement($scope.trucks, "truckNumber", rawTruck.TruckNumber);
+                        if (!existingTruck) $scope.trucks.push(new $rootScope.mtcTruck(rawTruck));
+                        else existingTruck.update(rawTruck);
+                    });
+
+                    console.log("%c Trucks %O", "color:blue", $scope.trucks);
+
+                } catch (e) {
+
+                }
+
+                console.groupEnd();
+
+                console.group("Map Trucks");
+
+                try {
+
+                    filterTrucks();
+                    drawTruckMarkers();
+                    cleanupTruckMarkers();
+
+                    if ($scope.truckToBeFollowed && $scope.truckToBeFollowed.lat && $scope.truckToBeFollowed.lon) {
+                        updateMap(new google.maps.LatLng($scope.truckToBeFollowed.lat, $scope.truckToBeFollowed.lon), ZOOM_15);
                     }
-                    if (!exists) $scope.trucks.push(new $rootScope.mtcTruck(results[i]));
+                } catch (e) {
+
                 }
-                drawTruckMarkers();
-                cleanupTruckMarkers();
-                if ($scope.truckToBeFollowed) {
-                    updateMap(new google.maps.LatLng($scope.truckToBeFollowed.lat, $scope.truckToBeFollowed.lon), ZOOM_14);
-                }
+
+                console.groupEnd();
             });
         }
 
@@ -182,47 +237,54 @@
         }
 
         function cleanupTruckMarkers() {
-            for (var i = 0; i < $scope.truckMarkers.length; i++) {
-                var truckMarker = $scope.truckMarkers[i];
+            console.group("Remove Trucks");
+            $scope.truckMarkers.forEach(function (truckMarker) {
                 var truck = utilService.findArrayElement($scope.trucks, "id", truckMarker.id);
                 if (!truck) {
+                    console.log("Removing truck marker for %s", truckMarker.id);
                     truckMarker.setMap(null);
                 }
-            }
+            });
+            console.groupEnd();
         }
 
         function buildDetailsContent(truck) {
             var content = "<table>";
             content += "<tr>";
-            content += "<td>Last Msg:</td>";
+            content += "<td>Last Msg </td>";
             content += "<td><strong>" + truck.lastMessage + "</strong></td>";
             content += "</tr>";
             content += "<tr>";
-            content += "<td>Beat:</td>";
+            content += "<td>Beat </td>";
             content += "<td><strong>" + truck.beatNumber + "</strong></td>";
             content += "</tr>";
-            content += "<td>Driver:</td>";
+            content += "<td>Driver </td>";
             content += "<td><strong>" + truck.driverName + "</strong></td>";
             content += "</tr>";
             content += "<tr>";
-            content += "<td>Truck Number:</td>";
+            content += "<td>Truck Number </td>";
             content += "<td><strong>" + truck.truckNumber + "</strong></td>";
             content += "</tr>";
             content += "<tr>";
-            content += "<td>Contractor:</td>";
+            content += "<td>Contractor </td>";
             content += "<td><strong>" + truck.contractorName + "</strong></td>";
             content += "</tr>";
             content += "<tr>";
-            content += "<td>Status:</td>";
+            content += "<td>Status </td>";
             content += "<td><strong>" + truck.vehicleState + "</strong></td>";
             content += "</tr>";
             content += "<tr>";
-            content += "<td>Speed:</td>";
-            content += "<td><strong>" + truck.speed + "mph</td>";
+            content += "<td>Speed </td>";
+            content += "<td><strong>" + truck.speed + " mph</td>";
             content += "</tr>";
+
             content += "<tr>";
-            content += "<td><button ng-click='follow(" + truck.truckNumber + ")'>Follow</button></td>";
-            content += "<td><button ng-click='zoomTo(" + truck.truckNumber + ")'>Zoom In</button></td>";
+            content += "<td colspan='2' style='text-align:center; padding:5px;'>";
+            content += "<div class='btn-group' role='group'>";
+            content += "<button type='button' class='btn btn-info btn-sm' ng-click='follow(\"" + truck.id + "\")'>Follow</button>";
+            content += "<button type='button' class='btn btn-primary btn-sm' ng-click='zoomTo(\"" + truck.id + "\")'>Zoom In</button>";
+            content += "</div>";
+            content += "</td>";
             content += "</tr>";
             content += "</table>";
             return content;
@@ -231,21 +293,22 @@
         function setTruckMarker(truck) {
 
             var detailsContent = $compile(buildDetailsContent(truck))($scope);
-
             var truckMarker = utilService.findArrayElement($scope.truckMarkers, "id", truck.id);
+
             if (!truckMarker) {
-                console.log("New truck marker %O", truck);
+                console.log("New marker for truck-id: %s - %O", truck.id, truck);
                 truckMarker = new RichMarker({
                     id: truck.id,
                     map: $scope.map,
                     animation: google.maps.Animation.DROP,
                     draggable: false,
                     flat: true,
-                    anchor: RichMarkerPosition.MIDDLE,
+                    width: 35,
+                    height: 35,
+                    anchor: RichMarkerPosition.TOP,
                     detailsContent: detailsContent,
-                    content: "<div style='cursor: pointer'><img id='truckIcon" + truck.id + "' src='" + truck.vehicleStateIconUrl + "' class='truckIcon' /></div>"
+                    content: "<div style='cursor: pointer !important'><img id='truckIcon" + truck.id + "' src='" + truck.vehicleStateIconUrl + "' class='truckIcon' /></div>"
                 });
-
                 google.maps.event.addListener(truckMarker, 'click', (function (truckMarker, scope) {
                     return function () {
                         scope.selectedTruckMarker = truckMarker;
@@ -253,16 +316,16 @@
                         scope.infowindow.open(scope.map, truckMarker);
                     };
                 })(truckMarker, $scope));
-
                 $scope.truckMarkers.push(truckMarker);
             }
             truckMarker.detailsContent = detailsContent;
+            if (truckMarker.map === null) truckMarker.setMap($scope.map);
 
             var latlng = new google.maps.LatLng(truck.lat, truck.lon);
             truckMarker.setPosition(latlng);
 
             var truckMarkerText = truck.beatNumberString;
-            if (truckMarkerText === 'Not set')
+            if (truckMarkerText === 'Not Assigned' || truckMarkerText === 'Not set')
                 truckMarkerText = truck.id;
 
             var truckMarkerRichContent = "<img id='truckIcon" + truck.id + "' src='" + truck.vehicleStateIconUrl + "' class='truckIcon' />" +
@@ -274,10 +337,11 @@
                 angle: truck.heading - 90
             });
 
-            if ($scope.selectedTruckMarker && $scope.selectedTruckMarker.id === truckMarker.id) {
+            //update info content with latest TRUCK values
+            if ($scope.selectedTruckMarker && $scope.selectedTruckMarker.id === truckMarker.id && truckMarker.detailsContent) {
+                console.log("Infowindow requsted for: %s", truckMarker.id);
                 $scope.infowindow.setContent(truckMarker.detailsContent[0]);
             }
-
         }
 
         function initMap() {
@@ -287,7 +351,7 @@
 
             var mapOptions = {
                 center: defaultMapLocation,
-                zoom: ZOOM_9,
+                zoom: ZOOM_11,
                 mapTypeId: google.maps.MapTypeId.ROADMAP //ROADMAP //SATELLITE //HYBRID //TERRAIN
             };
 
@@ -301,22 +365,51 @@
         };
 
         //user actions
-        $scope.follow = function (truckNumber) {
-            if (!truckNumber) return;
-            console.log("Follow %s", truckNumber);
-            $scope.truckToBeFollowed = utilService.findArrayElement($scope.trucks, "truckNumber", truckNumber);
-            if ($scope.truckToBeFollowed === undefined) return;
+        $scope.follow = function (truckId) {
+            console.log("FOLLOW truck: %s", truckId);
+            if (!truckId) return;
+            $scope.truckToBeFollowed = utilService.findArrayElement($scope.trucks, "id", truckId);
+            if (!$scope.truckToBeFollowed) return;
 
-            updateMap(new google.maps.LatLng($scope.truckToBeFollowed.lat, $scope.truckToBeFollowed.lon), ZOOM_14);
+            updateMap(new google.maps.LatLng($scope.truckToBeFollowed.lat, $scope.truckToBeFollowed.lon), ZOOM_15);
         };
 
-        $scope.zoomTo = function (truckNumber) {
-            if (!truckNumber) return;
-            console.log("Zoom To %s", truckNumber);
-            var truckToBeZoomedTo = utilService.findArrayElement($scope.trucks, "truckNumber", truckNumber);
-            if (truckToBeZoomedTo === undefined) return;
+        $scope.stopFollow = function () {
+            $scope.truckToBeFollowed = "";
+            updateMap(new google.maps.LatLng(DEFAULT_MAP_CENTER_LAT, DEFAULT_MAP_CENTER_LON), ZOOM_11);
+        };
+
+        $scope.zoomTo = function (truckId) {
+            console.log("ZOOM truck: %s", truckId);
+            if (!truckId) return;
+            var truckToBeZoomedTo = utilService.findArrayElement($scope.trucks, "id", truckId);
+            if (!truckToBeZoomedTo) return;
 
             updateMap(new google.maps.LatLng(truckToBeZoomedTo.lat, truckToBeZoomedTo.lon), ZOOM_14);
+        };
+
+        $scope.filter = function () {
+            console.log("Filter request");
+            $scope.filterApplied = true;
+            filterTrucks();
+            drawTruckMarkers();
+            cleanupTruckMarkers();
+        };
+
+        $scope.clearFilter = function () {
+            console.log("Clear Filter");
+
+            $scope.filterApplied = false;
+            $scope.allFiltersChecked = true;
+            $scope.onPatrolChecked = true;
+            $scope.driverLoggedOnChecked = true;
+            $scope.onAssistChecked = true;
+            $scope.onBreakLunchChecked = true;
+            $scope.onRollOutInChecked = true;
+            $scope.notLoggedOnChecked = true;
+            $scope.contractorNameFilter = "";
+
+            getTrucks();
         };
 
         angular.element($window).bind('resize', function () {
