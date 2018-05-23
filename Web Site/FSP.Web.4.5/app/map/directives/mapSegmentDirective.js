@@ -32,7 +32,8 @@
                 scope.segments = [];
                 scope.polygons = [];
                 scope.markers = [];
-                scope.selectedSegment = "";
+                scope.selectedBeatSegmentID = "";
+                scope.selectedBeatSegment = "";
 
                 function buildDetailsContent(segment) {
                     var content = "<table>";
@@ -49,20 +50,22 @@
                 }
 
                 function buildPolygons(segment) {
+
+                    if (!segment) return;
+                    if (!segment.PolygonData) return;
+                    if (!segment.PolygonData.Coordinates) return;
+
                     var cleanLatLng = [];
-                    if (segment.BeatSegmentExtent !== null) {
-                        var beatSegmentExtentArray = segment.BeatSegmentExtent.split(",");
-                        beatSegmentExtentArray.forEach(function (beatSegmentExtent) {
-                            var latLon = beatSegmentExtent.split(" ");
-                            cleanLatLng.push({
-                                lat: Number(latLon[0]),
-                                lng: Number(latLon[1])
-                            });
+
+                    segment.PolygonData.Coordinates.forEach(function (coordinate) {
+                        cleanLatLng.push({
+                            lat: coordinate.Lat,
+                            lng: coordinate.Lon
                         });
-                    }
+                    });
 
                     var segmentPolygon = new google.maps.Polygon({
-                        id: "segmentPolygon" + segment.segmentID,
+                        id: "segmentPolygon" + segment.BeatSegmentID,
                         paths: cleanLatLng,
                         strokeColor: segment.Color || "#000000",
                         strokeOpacity: 0.8,
@@ -71,7 +74,6 @@
                         fillOpacity: 0.35,
                         editable: false
                     });
-
                     scope.polygons.push(segmentPolygon);
                 }
 
@@ -160,43 +162,39 @@
                                 scope.triggerDisplayMapData();
                             }
                         } else {
-                            scope.selectedSegment = "";
+                            scope.selectedBeatSegment = "";
                         }
                     }
                 });
 
-                scope.setSelectedSegment = function () {
-                    console.log(scope.selectedSegment);
-
-                    if (scope.selectedSegment) {
-                        if (scope.selectedSegment === null) {
-                            scope.triggerResetMap();
-                            return;
-                        }
-
-                        selectedSegmentId = scope.selectedSegment.ID;
-                        var latDelta = (scope.selectedSegment.maxLat - scope.selectedSegment.minLat) / 2;
-                        var middleLat = scope.selectedSegment.minLat + latDelta;
-                        var lonDelta = (scope.selectedSegment.maxLon - scope.selectedSegment.minLon) / 2;
-                        var middleLon = scope.selectedSegment.minLon + lonDelta;
-
-                        scope.triggerSetMapLocation(middleLat, middleLon, 16);
-
-                    } else {
+                scope.setSelectedBeatSegment = function () {
+                    scope.selectedBeatSegment = utilService.findArrayElement(scope.segments, "BeatSegmentID", scope.selectedBeatSegmentID);
+                    if (!scope.selectedBeatSegment) {
                         scope.triggerHideMapData();
                         scope.triggerResetMap();
+                        return;
                     }
+                    console.log(scope.selectedBeatSegment);
 
+                    if (!scope.selectedBeatSegment.PolygonData) return;
+                    if (!scope.selectedBeatSegment.PolygonData.MiddleLat || !scope.selectedBeatSegment.PolygonData.MiddleLon) return;
+
+                    //var latDelta = (scope.selectedBeatSegment.maxLat - scope.selectedBeatSegment.minLat) / 2;
+                    //var middleLat = scope.selectedBeatSegment.minLat + latDelta;
+                    //var lonDelta = (scope.selectedBeatSegment.maxLon - scope.selectedBeatSegment.minLon) / 2;
+                    //var middleLon = scope.selectedBeatSegment.minLon + lonDelta;
+
+                    scope.triggerSetMapLocation(scope.selectedBeatSegment.PolygonData.MiddleLat, scope.selectedBeatSegment.PolygonData.MiddleLon, 16);
                 };
 
                 scope.getSegments = function (triggerMapUpdate) {
                     scope.isBusyGettingSegments = true;
-                    mapService.getSegmentPolygons().then(function (result) {
-                        scope.isBusyGettingSegments = false;                        
-                        if (!result) {
+                    mapService.getSegmentPolygons().then(function (rawSegments) {
+                        scope.isBusyGettingSegments = false;
+                        if (!rawSegments) {
                             toastr.error('Failed to retrieve Segments', 'Error');
-                        } else {                            
-                            scope.segments = result;
+                        } else {
+                            scope.segments = rawSegments;
                             console.log('%i segments found %O', scope.segments.length, scope.segments);
                             scope.polygons = [];
                             scope.markers = [];
@@ -205,8 +203,8 @@
                                 //buildMarkers(segment);
                             });
 
-                            if (selectedSegmentId)
-                                scope.selectedSegment = utilService.findArrayElement(scope.segments, "ID", selectedSegmentId);
+                            //if (selectedSegmentId)
+                            //    scope.selectedBeatSegment = utilService.findArrayElement(scope.segments, "ID", selectedSegmentId);
 
                             if (triggerMapUpdate)
                                 scope.triggerDisplayMapData();
@@ -217,23 +215,23 @@
 
                 scope.setEdit = function () {
                     scope.isEditing = true;
-                    console.log("Edit segment %s", scope.selectedSegment.segmentID);
-                    scope.triggerSetEditPolygon("segmentPolygon" + scope.selectedSegment.segmentID);
+                    console.log("Edit segment %s", scope.selectedBeatSegment.BeatSegmentID);
+                    scope.triggerSetEditPolygon("segmentPolygon" + scope.selectedBeatSegment.BeatSegmentID);
                 };
 
                 scope.cancelEdit = function () {
                     scope.isEditing = false;
-                    console.log("Cancel edit segment %s", scope.selectedSegment.segmentID);
-                    scope.triggerSetCancelEditPolygon("segmentPolygon" + scope.selectedSegment.segmentID, scope.selectedSegment.Color);
+                    console.log("Cancel edit segment %s", scope.selectedBeatSegment.BeatSegmentID);
+                    scope.triggerSetCancelEditPolygon("segmentPolygon" + scope.selectedBeatSegment.BeatSegmentID, scope.selectedBeatSegment.Color);
                 };
 
                 scope.save = function () {
                     console.log("Saving segment...");
                     if (scope.selectedPolygon)
-                        scope.selectedSegment.geoFence = utilService.getPolygonCoords(scope.selectedPolygon);
+                        scope.selectedBeatSegment.geoFence = utilService.getPolygonCoords(scope.selectedPolygon);
 
                     scope.isBusySaving = true;
-                    mapService.saveSegment(scope.selectedSegment).then(function (result) {
+                    mapService.saveSegment(scope.selectedBeatSegment).then(function (result) {
                         scope.isBusySaving = false;
                         if (!result) {
                             console.error("Save Segment");
@@ -247,16 +245,10 @@
                     });
                 };
 
-                scope.reduceSegmentPolygonPoints = function () {
-                    var selectedSegmentPolygon = utilService.findArrayElement(scope.polygons, "id", "segmentPolygon" + scope.selectedSegment.segmentID);
-                    if (!selectedSegmentPolygon) return;
-                    utilService.clearPolygonCoords(selectedSegmentPolygon);
-                };
-
                 scope.delete = function () {
                     if (confirm("Ok to delete this Segment?")) {
                         scope.isBusyDeleting = true;
-                        mapService.deleteSegment(scope.selectedSegment.ID).then(function (result) {
+                        mapService.deleteSegment(scope.selectedBeatSegment.ID).then(function (result) {
                             scope.isBusyDeleting = false;
                             scope.isEditing = false;
                             if (!result) {
@@ -266,7 +258,7 @@
                                 console.log("Delete Segment Success");
                                 toastr.success('Segment Deleted', 'Success');
                                 selectedSegmentId = 0;
-                                scope.selectedSegment = "";
+                                scope.selectedBeatSegment = "";
                                 scope.triggerMakeAllPolygonsUneditable();
                                 scope.triggerHideMapData();
                                 scope.getSegments(true);
@@ -276,18 +268,18 @@
                 };
 
                 scope.prepareNew = function () {
-                    scope.selectedSegment = {
-                        BeatID: "",
+                    scope.selectedBeatSegment = {
+                        BeatSegmentID: "",
                         Color: "#000000",
                         geoFence: []
                     };
                     scope.isAdding = true;
-                    scope.triggerSetNewPolygon(scope.selectedSegment.color);
+                    scope.triggerSetNewPolygon(scope.selectedBeatSegment.color);
                 };
 
                 scope.cancelAdd = function () {
                     scope.isAdding = false;
-                    scope.selectedSegment = "";
+                    scope.selectedBeatSegment = "";
                     scope.triggerHideMapData();
                     scope.triggerDisplayMapData();
                 };
@@ -295,10 +287,10 @@
                 scope.add = function () {
                     console.log("Adding Segment...");
                     if (scope.selectedPolygon)
-                        scope.selectedSegment.geoFence = utilService.getPolygonCoords(scope.selectedPolygon);
+                        scope.selectedBeatSegment.geoFence = utilService.getPolygonCoords(scope.selectedPolygon);
 
                     scope.isBusyAdding = true;
-                    mapService.addSegment(scope.selectedSegment).then(function (result) {
+                    mapService.addSegment(scope.selectedBeatSegment).then(function (result) {
                         scope.isBusyAdding = false;
                         scope.isAdding = false;
                         if (!result) {

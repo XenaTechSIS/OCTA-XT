@@ -5,30 +5,39 @@
     </div>
     <div class="form-group"
          ng-hide="isBusyGettingSegments">
-        <select class="form-control"
-                ng-model="selectedSegment"
-                ng-options="a as a.BeatSegmentNumber for a in segments"
+        <!--<select class="form-control"
+                ng-model="selectedBeatSegment"
+                ng-options="segment as segment.BeatSegmentNumber for segment in segments"
                 ng-change="setSelectedSegment()"
+                ng-disabled="segments.length === 0 || isEditing">
+        <option value="">
+            --Select Segment--
+        </option>
+    </select>-->
+        <select class="form-control"
+                ng-model="selectedBeatSegmentID"               
+                ng-change="setSelectedBeatSegment()"
                 ng-disabled="segments.length === 0 || isEditing">
             <option value="">
                 --Select Segment--
             </option>
+            <option ng-repeat="segment in segments" value="{{segment.BeatSegmentID}}">{{segment.BeatSegmentNumber}}</option>
         </select>
     </div>
 </div>
 
-
-<div ng-show="selectedSegment">
+<!--input form-->
+<div ng-show="selectedBeatSegment">
     <div class="form-group">
         Name
-        <input ng-model="selectedSegment.BeatSegmentNumber"
+        <input ng-model="selectedBeatSegment.BeatSegmentNumber"
                type="text"
                class="form-control"
                ng-disabled="!isEditing && !isAdding" />
     </div>
     <div class="form-group">
         Description
-        <textarea ng-model="selectedSegment.BeatSegmentDescription"
+        <textarea ng-model="selectedBeatSegment.BeatSegmentDescription"
                   class="form-control"
                   ng-disabled="!isEditing && !isAdding"></textarea>
     </div>
@@ -36,14 +45,15 @@
         Color
         <input type="text"
                minicolors="colorPickerSettings"
-               ng-model="selectedSegment.Color"
+               ng-model="selectedBeatSegment.Color"
                class="form-control"
                ng-disabled="!isEditing && !isAdding" />
     </div>
 </div>
 
+<!--edit existing-->
 <div class="form-group"
-     ng-show="selectedSegment && !isAdding">
+     ng-show="selectedBeatSegment && !isAdding">
     <button ng-show="!isEditing"
             ng-click="setEdit()"
             class="btn btn-primary btn-sm">
@@ -79,20 +89,15 @@
             class="btn btn-default btn-sm">
         Cancel
     </button>
-    <button ng-show="isEditing"
-            ng-click="reduceSegmentPolygonPoints()"
-            class="btn btn-default btn-sm"
-            title="Will remove every other vertex">
-        <i class="fa fa-eraser"></i>
-    </button>
 </div>
 
+<!--add new-->
 <div class="form-group"
      ng-show="!isEditing">
-    <button ng-show="!selectedSegment"
+    <button ng-hide="selectedBeatSegment"
             ng-click="prepareNew()"
             class="btn btn-success btn-sm">
-        <i class="fa fa-plus"></i> New Segment
+        <i class="fa fa-plus"></i> Add Segment
     </button>
     <button ng-show="!isEditing && isAdding"
             ng-click="add()"

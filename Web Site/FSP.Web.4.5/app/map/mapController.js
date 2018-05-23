@@ -197,10 +197,10 @@
             $scope.isBusyGettingTrucks = true;
             trucksService.getTrucks().then(function (rawTrucks) {
                 $scope.isBusyGettingTrucks = false;
-                console.group("Truck Request");
+                //console.group("Truck Request");
 
                 try {
-                    console.log("%c Raw Trucks %O (%s)", "color:green", rawTrucks, new Date());
+                    //console.log("%c Raw Trucks %O (%s)", "color:green", rawTrucks, new Date());
 
                     rawTrucks.forEach(function (rawTruck) {
                         var existingTruck = utilService.findArrayElement($scope.trucks, "truckNumber", rawTruck.TruckNumber);
@@ -208,15 +208,15 @@
                         else existingTruck.update(rawTruck);
                     });
 
-                    console.log("%c Trucks %O", "color:blue", $scope.trucks);
+                    //console.log("%c Trucks %O", "color:blue", $scope.trucks);
 
                 } catch (e) {
 
                 }
 
-                console.groupEnd();
+                //console.groupEnd();
 
-                console.group("Map Trucks");
+                //console.group("Map Trucks");
 
                 try {
 
@@ -231,7 +231,7 @@
 
                 }
 
-                console.groupEnd();
+                //console.groupEnd();
             });
         }
 
@@ -242,15 +242,15 @@
         }
 
         function cleanupTruckMarkers() {
-            console.group("Remove Trucks");
+            //console.group("Remove Trucks");
             $scope.truckMarkers.forEach(function (truckMarker) {
                 var truck = utilService.findArrayElement($scope.trucks, "id", truckMarker.id);
                 if (!truck) {
-                    console.log("Removing truck marker for %s", truckMarker.id);
+                    //console.log("Removing truck marker for %s", truckMarker.id);
                     truckMarker.setMap(null);
                 }
             });
-            console.groupEnd();
+            //console.groupEnd();
         }
 
         function buildDetailsContent(truck) {
@@ -352,7 +352,7 @@
         function removeAllMapEvents() {
             google.maps.event.clearListeners($scope.map, 'dblclick');
             google.maps.event.clearListeners($scope.map, 'click');
-            $scope.polygons.forEach(function(polygon) {
+            $scope.polygons.forEach(function (polygon) {
                 polygon.setEditable(false);
                 google.maps.event.clearListeners(polygon, 'dblclick');
             });
@@ -425,18 +425,18 @@
 
             getTrucks();
         };
-        
-        $('#segments').on('show.bs.collapse', function() {
+
+        $('#segments').on('show.bs.collapse', function () {
             console.log("segments visible");
             //$scope.hideMapData();
             //$scope.resetMap();
-            setTimeout(function() {
+            setTimeout(function () {
                 $scope.segmentsVisible = true;
                 $scope.$apply();
             }, 250);
         });
 
-        $('#segments').on('hidden.bs.collapse', function() {
+        $('#segments').on('hidden.bs.collapse', function () {
             console.log("segments invisible");
             $scope.segmentsVisible = false;
             $scope.$apply();
@@ -444,37 +444,37 @@
             // $scope.resetMap();            
         });
 
-        $scope.resetMap = function() {
+        $scope.resetMap = function () {
             console.log("resetMap");
             removeAllMapEvents();
             updateMap(new google.maps.LatLng(DEFAULT_MAP_CENTER_LAT, DEFAULT_MAP_CENTER_LON), ZOOM_11);
         };
 
-        $scope.displayMapData = function(polygons, markers) {
+        $scope.displayMapData = function (polygons, markers) {
             console.log("displayMapData, number of polygons: %i, number of markers: %i", polygons.length, markers.length);
 
             if (polygons) {
                 $scope.polygons = polygons;
-                $scope.polygons.forEach(function(polygon) {
+                $scope.polygons.forEach(function (polygon) {
                     polygon.setMap($scope.map);
                 });
             }
             if (markers) {
                 $scope.markers = markers;
-                $scope.markers.forEach(function(marker) {
+                $scope.markers.forEach(function (marker) {
                     marker.setMap($scope.map);
                 });
                 //markerClusterer = new MarkerClusterer($scope.map, $scope.markers, markerClusterOptions);
             }
         };
 
-        $scope.hideMapData = function() {
+        $scope.hideMapData = function () {
             console.log("hideMapData");
             removeAllMapEvents();
-            $scope.polygons.forEach(function(polygon) {
+            $scope.polygons.forEach(function (polygon) {
                 polygon.setMap(null);
             });
-            $scope.markers.forEach(function(marker) {
+            $scope.markers.forEach(function (marker) {
                 marker.setMap(null);
             });
             // if (markerClusterer !== null && markerClusterer !== undefined)
@@ -483,6 +483,85 @@
             $scope.polygons = [];
             $scope.markers = [];
             $scope.selectedPolygon = {};
+        };
+
+        $scope.setMapLocation = function (lat, lon, zoom) {
+            console.log("setMapLocation");
+            updateMap(new google.maps.LatLng(lat, lon), zoom);
+        };
+
+        $scope.setEditPolygon = function (id) {
+            console.log("setEditPolygon");
+            $scope.selectedPolygon = utilService.findArrayElement($scope.polygons, "id", id);
+            if (!$scope.selectedPolygon) return;
+
+            google.maps.event.addListener($scope.selectedPolygon, 'dblclick', function (e) {
+                if (e.vertex === undefined) {
+                    return;
+                }
+                $scope.selectedPolygon.getPath().removeAt(e.vertex);
+            });
+            google.maps.event.addListener($scope.map, 'click', function (e) {
+                var path = $scope.selectedPolygon.getPath();
+                if (path === undefined)
+                    path = [];
+                path.push(e.latLng);
+            });
+
+            $scope.selectedPolygon.setEditable(true);
+            $scope.selectedPolygon.setOptions({
+                strokeColor: IS_EDITING_COLOR,
+                fillColor: IS_EDITING_COLOR
+            });
+        };
+
+        $scope.setCancelEditPolygon = function (id, color) {
+            console.log("setCancelEditPolygon");
+            $scope.selectedPolygon = utilService.findArrayElement($scope.polygons, "id", id);
+            if (!$scope.selectedPolygon) return;
+            $scope.selectedPolygon.setEditable(false);
+            $scope.selectedPolygon.setOptions({
+                strokeColor: color,
+                fillColor: color
+            });
+            var polygon = $scope.selectedPolygon;
+            removeAllMapEvents();
+        };
+
+        $scope.setNewPolygon = function (color) {
+            console.log("setNewPolygon");
+            $scope.hideMapData();
+            $scope.selectedPolygon = {};
+
+            $scope.selectedPolygon = new google.maps.Polygon({
+                strokeColor: color,
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: color,
+                fillOpacity: 0.35,
+                editable: true
+            });
+            $scope.selectedPolygon.setMap($scope.map);
+
+            google.maps.event.addListener($scope.selectedPolygon, 'dblclick', function (e) {
+                if (e.vertex === undefined) {
+                    return;
+                }
+                $scope.selectedPolygon.getPath().removeAt(e.vertex);
+            });
+            google.maps.event.addListener($scope.map, 'click', function (e) {
+                var path = $scope.selectedPolygon.getPath();
+                path.push(e.latLng);
+            });
+
+            $scope.polygons.push($scope.selectedPolygon);
+        };
+
+        $scope.makeAllPolygonsUneditable = function () {
+            console.log("makeAllPolygonsUneditable");
+            $scope.polygons.forEach(function (polygon) {
+                polygon.setEditable(false);
+            });
         };
 
         angular.element($window).bind('resize', function () {
