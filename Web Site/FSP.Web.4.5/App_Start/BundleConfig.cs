@@ -19,7 +19,8 @@ namespace FSP.Web
                 "~/app/filters/*.js",
                 "~/app/services/*.js",
                 "~/app/map/map.module.js",
-                "~/app/map/*.js"
+                "~/app/map/*.js",
+                "~/app/map/directives/*.js"
             ));
 
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(

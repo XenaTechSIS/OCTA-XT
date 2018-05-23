@@ -5,6 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Reflection;
+using System.Threading;
+using System.Web;
 using System.Web.Security;
 using FSP.Domain.Model;
 using FSP.Web.Models;
@@ -163,20 +166,85 @@ namespace FSP.Web.Helpers
 
         public static void WriteToLog(string message, string logName)
         {
-            if (ConfigurationManager.AppSettings["IsLoggingEnabled"] == "true")
-                try
-                {
-                    var sLogFilePath = ConfigurationManager.AppSettings["LogFileLocation"] + logName;                    
-                    var sw = !File.Exists(sLogFilePath) ? File.CreateText(sLogFilePath) : File.AppendText(sLogFilePath);
-                    sw.WriteLine(DateTime.Now + " " + message);
-                    sw.Close();
-                }
-                catch
-                {
-                    // ignored
-                }
+            Console.WriteLine(message);
+            try
+            {
+                WriteToFile(message, logName);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(@"ERROR WriteToFile: " + ex.Message);
+            }
 
-            Debug.WriteLine(message);
+            //if (ConfigurationManager.AppSettings["IsLoggingEnabled"] == "true")
+            //    try
+            //    {
+            //        var sLogFilePath = ConfigurationManager.AppSettings["LogFileLocation"] + logName;                    
+            //        var sw = !File.Exists(sLogFilePath) ? File.CreateText(sLogFilePath) : File.AppendText(sLogFilePath);
+            //        sw.WriteLine(DateTime.Now + " " + message);
+            //        sw.Close();
+            //    }
+            //    catch
+            //    {
+            //        // ignored
+            //    }
+
+        }
+
+        private static readonly ReaderWriterLock Locker = new ReaderWriterLock();
+        public static void WriteToFile(string input, string fileName)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(input) || string.IsNullOrEmpty(fileName)) return;
+                Locker.AcquireWriterLock(int.MaxValue);
+                using (var w = File.AppendText(fileName))
+                {
+                    Debug.WriteLine(input);
+                    w.WriteLine(input);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                Locker.ReleaseWriterLock();
+            }
+        }
+
+        private static string _logsPath;
+        public static string LogsPath
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(_logsPath)) return _logsPath;
+                var binDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                if (binDirectory == null) return _logsPath;
+                _logsPath = Path.Combine(binDirectory, @"..\");
+
+                var webServerExecutionPath = HttpContext.Current?.Server.MapPath("~");
+                if (!string.IsNullOrEmpty(webServerExecutionPath))
+                    _logsPath = webServerExecutionPath;
+
+                return _logsPath;
+            }
+            set { _logsPath = value; }
+        }
+
+        public static void LogInfo(string message)
+        {
+            var messageEntry = $"{DateTime.UtcNow} {message}";
+            var logFilePath = LogsPath + "\\Logs.txt";
+            WriteToLog(messageEntry, logFilePath);
+        }
+
+        public static void LogError(string message)
+        {
+            var messageEntry = $"{DateTime.UtcNow} {message}";
+            var logFilePath = LogsPath + "\\Errors.txt";
+            WriteToLog(messageEntry, logFilePath);
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
+using FSP.Domain.Model;
 
 namespace FSP.Web.Helpers
 {
@@ -28,5 +30,32 @@ namespace FSP.Web.Helpers
         }
 
         public string UsersContractorCompanyName { get; set; }
+
+        [OutputCache(Duration = 5)]
+        public ActionResult GetBeatNumbers()
+        {
+            using (var db = new FSPDataContext())
+            {
+                if (!string.IsNullOrEmpty(UsersContractorCompanyName))
+                {
+                    //HOW DO I FITER BY CONTACTOR?
+                    var data = db.vBeats.OrderBy(p => p.BeatNumber).Select(q => new
+                    {
+                        Id = q.BeatNumber,
+                        Name = q.BeatNumber
+                    }).ToList();
+                    return Json(data, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var data = db.vBeats.OrderBy(p => p.BeatNumber).Select(q => new
+                    {
+                        Id = q.BeatNumber,
+                        Name = q.BeatNumber
+                    }).ToList();
+                    return Json(data.OrderBy(p => p.Name), JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
     }
 }

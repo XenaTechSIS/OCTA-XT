@@ -4979,6 +4979,416 @@ namespace FSP.Web.TowTruckServiceRef {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BeatSegment_New", Namespace="http://schemas.datacontract.org/2004/07/FPSService")]
+    [System.SerializableAttribute()]
+    public partial class BeatSegment_New : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ActiveField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BeatSegmentDescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BeatSegmentExtentField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid BeatSegmentIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BeatSegmentNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CHPDescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CHPDescription2Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LastUpdateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LastUpdateByField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PIMSIDField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Active {
+            get {
+                return this.ActiveField;
+            }
+            set {
+                if ((this.ActiveField.Equals(value) != true)) {
+                    this.ActiveField = value;
+                    this.RaisePropertyChanged("Active");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BeatSegmentDescription {
+            get {
+                return this.BeatSegmentDescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BeatSegmentDescriptionField, value) != true)) {
+                    this.BeatSegmentDescriptionField = value;
+                    this.RaisePropertyChanged("BeatSegmentDescription");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BeatSegmentExtent {
+            get {
+                return this.BeatSegmentExtentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BeatSegmentExtentField, value) != true)) {
+                    this.BeatSegmentExtentField = value;
+                    this.RaisePropertyChanged("BeatSegmentExtent");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid BeatSegmentID {
+            get {
+                return this.BeatSegmentIDField;
+            }
+            set {
+                if ((this.BeatSegmentIDField.Equals(value) != true)) {
+                    this.BeatSegmentIDField = value;
+                    this.RaisePropertyChanged("BeatSegmentID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BeatSegmentNumber {
+            get {
+                return this.BeatSegmentNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BeatSegmentNumberField, value) != true)) {
+                    this.BeatSegmentNumberField = value;
+                    this.RaisePropertyChanged("BeatSegmentNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CHPDescription {
+            get {
+                return this.CHPDescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CHPDescriptionField, value) != true)) {
+                    this.CHPDescriptionField = value;
+                    this.RaisePropertyChanged("CHPDescription");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CHPDescription2 {
+            get {
+                return this.CHPDescription2Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CHPDescription2Field, value) != true)) {
+                    this.CHPDescription2Field = value;
+                    this.RaisePropertyChanged("CHPDescription2");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LastUpdate {
+            get {
+                return this.LastUpdateField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LastUpdateField, value) != true)) {
+                    this.LastUpdateField = value;
+                    this.RaisePropertyChanged("LastUpdate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LastUpdateBy {
+            get {
+                return this.LastUpdateByField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LastUpdateByField, value) != true)) {
+                    this.LastUpdateByField = value;
+                    this.RaisePropertyChanged("LastUpdateBy");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PIMSID {
+            get {
+                return this.PIMSIDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PIMSIDField, value) != true)) {
+                    this.PIMSIDField = value;
+                    this.RaisePropertyChanged("PIMSID");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Beats_New", Namespace="http://schemas.datacontract.org/2004/07/FPSService")]
+    [System.SerializableAttribute()]
+    public partial class Beats_New : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ActiveField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BeatColorField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BeatDescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BeatExtentField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid BeatIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BeatNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EndDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int FreewayIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsTemporaryField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime LastUpdateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LastUpdateByField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime StartDateField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Active {
+            get {
+                return this.ActiveField;
+            }
+            set {
+                if ((this.ActiveField.Equals(value) != true)) {
+                    this.ActiveField = value;
+                    this.RaisePropertyChanged("Active");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BeatColor {
+            get {
+                return this.BeatColorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BeatColorField, value) != true)) {
+                    this.BeatColorField = value;
+                    this.RaisePropertyChanged("BeatColor");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BeatDescription {
+            get {
+                return this.BeatDescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BeatDescriptionField, value) != true)) {
+                    this.BeatDescriptionField = value;
+                    this.RaisePropertyChanged("BeatDescription");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BeatExtent {
+            get {
+                return this.BeatExtentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BeatExtentField, value) != true)) {
+                    this.BeatExtentField = value;
+                    this.RaisePropertyChanged("BeatExtent");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid BeatID {
+            get {
+                return this.BeatIDField;
+            }
+            set {
+                if ((this.BeatIDField.Equals(value) != true)) {
+                    this.BeatIDField = value;
+                    this.RaisePropertyChanged("BeatID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BeatNumber {
+            get {
+                return this.BeatNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BeatNumberField, value) != true)) {
+                    this.BeatNumberField = value;
+                    this.RaisePropertyChanged("BeatNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string EndDate {
+            get {
+                return this.EndDateField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EndDateField, value) != true)) {
+                    this.EndDateField = value;
+                    this.RaisePropertyChanged("EndDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int FreewayID {
+            get {
+                return this.FreewayIDField;
+            }
+            set {
+                if ((this.FreewayIDField.Equals(value) != true)) {
+                    this.FreewayIDField = value;
+                    this.RaisePropertyChanged("FreewayID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsTemporary {
+            get {
+                return this.IsTemporaryField;
+            }
+            set {
+                if ((this.IsTemporaryField.Equals(value) != true)) {
+                    this.IsTemporaryField = value;
+                    this.RaisePropertyChanged("IsTemporary");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime LastUpdate {
+            get {
+                return this.LastUpdateField;
+            }
+            set {
+                if ((this.LastUpdateField.Equals(value) != true)) {
+                    this.LastUpdateField = value;
+                    this.RaisePropertyChanged("LastUpdate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LastUpdateBy {
+            get {
+                return this.LastUpdateByField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LastUpdateByField, value) != true)) {
+                    this.LastUpdateByField = value;
+                    this.RaisePropertyChanged("LastUpdateBy");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime StartDate {
+            get {
+                return this.StartDateField;
+            }
+            set {
+                if ((this.StartDateField.Equals(value) != true)) {
+                    this.StartDateField = value;
+                    this.RaisePropertyChanged("StartDate");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="TowTruckServiceRef.ITowTruckService")]
     public interface ITowTruckService {
@@ -5048,6 +5458,27 @@ namespace FSP.Web.TowTruckServiceRef {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/ResetAlarm", ReplyAction="http://tempuri.org/ITowTruckService/ResetAlarmResponse")]
         void ResetAlarm(string _vehicleNumber, string _alarm);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveAllSegments", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveAllSegmentsResponse")]
+        FSP.Web.TowTruckServiceRef.BeatSegment_New[] RetreiveAllSegments();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetrieveSegment", ReplyAction="http://tempuri.org/ITowTruckService/RetrieveSegmentResponse")]
+        FSP.Web.TowTruckServiceRef.BeatSegment_New RetrieveSegment(System.Guid SegmentID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/CreateSegment", ReplyAction="http://tempuri.org/ITowTruckService/CreateSegmentResponse")]
+        string CreateSegment(FSP.Web.TowTruckServiceRef.BeatSegment_New segment);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/UpdateSegment", ReplyAction="http://tempuri.org/ITowTruckService/UpdateSegmentResponse")]
+        string UpdateSegment(FSP.Web.TowTruckServiceRef.BeatSegment_New segment);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/DeleteSegment", ReplyAction="http://tempuri.org/ITowTruckService/DeleteSegmentResponse")]
+        string DeleteSegment(System.Guid segmentid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveAllBeats", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveAllBeatsResponse")]
+        FSP.Web.TowTruckServiceRef.Beats_New[] RetreiveAllBeats();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveBeat", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveBeatResponse")]
+        FSP.Web.TowTruckServiceRef.Beats_New RetreiveBeat(System.Guid BeatID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -5163,6 +5594,34 @@ namespace FSP.Web.TowTruckServiceRef {
         
         public void ResetAlarm(string _vehicleNumber, string _alarm) {
             base.Channel.ResetAlarm(_vehicleNumber, _alarm);
+        }
+        
+        public FSP.Web.TowTruckServiceRef.BeatSegment_New[] RetreiveAllSegments() {
+            return base.Channel.RetreiveAllSegments();
+        }
+        
+        public FSP.Web.TowTruckServiceRef.BeatSegment_New RetrieveSegment(System.Guid SegmentID) {
+            return base.Channel.RetrieveSegment(SegmentID);
+        }
+        
+        public string CreateSegment(FSP.Web.TowTruckServiceRef.BeatSegment_New segment) {
+            return base.Channel.CreateSegment(segment);
+        }
+        
+        public string UpdateSegment(FSP.Web.TowTruckServiceRef.BeatSegment_New segment) {
+            return base.Channel.UpdateSegment(segment);
+        }
+        
+        public string DeleteSegment(System.Guid segmentid) {
+            return base.Channel.DeleteSegment(segmentid);
+        }
+        
+        public FSP.Web.TowTruckServiceRef.Beats_New[] RetreiveAllBeats() {
+            return base.Channel.RetreiveAllBeats();
+        }
+        
+        public FSP.Web.TowTruckServiceRef.Beats_New RetreiveBeat(System.Guid BeatID) {
+            return base.Channel.RetreiveBeat(BeatID);
         }
     }
 }

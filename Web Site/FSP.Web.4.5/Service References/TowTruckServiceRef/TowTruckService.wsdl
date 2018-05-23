@@ -2,10 +2,10 @@
 <wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="TowTruckService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
-      <xsd:import schemaLocation="http://38.124.164.212:9007/TowTruckService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
-      <xsd:import schemaLocation="http://38.124.164.212:9007/TowTruckService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://38.124.164.212:9007/TowTruckService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/FPSService" />
-      <xsd:import schemaLocation="http://38.124.164.212:9007/TowTruckService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://38.124.164.213:9007/TowTruckService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://38.124.164.213:9007/TowTruckService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://38.124.164.213:9007/TowTruckService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/FPSService" />
+      <xsd:import schemaLocation="http://38.124.164.213:9007/TowTruckService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="ITowTruckService_CurrentTrucks_InputMessage">
@@ -140,6 +140,48 @@
   <wsdl:message name="ITowTruckService_ResetAlarm_OutputMessage">
     <wsdl:part name="parameters" element="tns:ResetAlarmResponse" />
   </wsdl:message>
+  <wsdl:message name="ITowTruckService_RetreiveAllSegments_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetreiveAllSegments" />
+  </wsdl:message>
+  <wsdl:message name="ITowTruckService_RetreiveAllSegments_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetreiveAllSegmentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITowTruckService_RetrieveSegment_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveSegment" />
+  </wsdl:message>
+  <wsdl:message name="ITowTruckService_RetrieveSegment_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveSegmentResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITowTruckService_CreateSegment_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateSegment" />
+  </wsdl:message>
+  <wsdl:message name="ITowTruckService_CreateSegment_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateSegmentResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITowTruckService_UpdateSegment_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateSegment" />
+  </wsdl:message>
+  <wsdl:message name="ITowTruckService_UpdateSegment_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateSegmentResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITowTruckService_DeleteSegment_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteSegment" />
+  </wsdl:message>
+  <wsdl:message name="ITowTruckService_DeleteSegment_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteSegmentResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITowTruckService_RetreiveAllBeats_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetreiveAllBeats" />
+  </wsdl:message>
+  <wsdl:message name="ITowTruckService_RetreiveAllBeats_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetreiveAllBeatsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITowTruckService_RetreiveBeat_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetreiveBeat" />
+  </wsdl:message>
+  <wsdl:message name="ITowTruckService_RetreiveBeat_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetreiveBeatResponse" />
+  </wsdl:message>
   <wsdl:portType name="ITowTruckService">
     <wsdl:operation name="CurrentTrucks">
       <wsdl:input wsaw:Action="http://tempuri.org/ITowTruckService/CurrentTrucks" message="tns:ITowTruckService_CurrentTrucks_InputMessage" />
@@ -228,6 +270,34 @@
     <wsdl:operation name="ResetAlarm">
       <wsdl:input wsaw:Action="http://tempuri.org/ITowTruckService/ResetAlarm" message="tns:ITowTruckService_ResetAlarm_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ITowTruckService/ResetAlarmResponse" message="tns:ITowTruckService_ResetAlarm_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetreiveAllSegments">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITowTruckService/RetreiveAllSegments" message="tns:ITowTruckService_RetreiveAllSegments_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITowTruckService/RetreiveAllSegmentsResponse" message="tns:ITowTruckService_RetreiveAllSegments_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveSegment">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITowTruckService/RetrieveSegment" message="tns:ITowTruckService_RetrieveSegment_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITowTruckService/RetrieveSegmentResponse" message="tns:ITowTruckService_RetrieveSegment_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateSegment">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITowTruckService/CreateSegment" message="tns:ITowTruckService_CreateSegment_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITowTruckService/CreateSegmentResponse" message="tns:ITowTruckService_CreateSegment_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSegment">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITowTruckService/UpdateSegment" message="tns:ITowTruckService_UpdateSegment_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITowTruckService/UpdateSegmentResponse" message="tns:ITowTruckService_UpdateSegment_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteSegment">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITowTruckService/DeleteSegment" message="tns:ITowTruckService_DeleteSegment_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITowTruckService/DeleteSegmentResponse" message="tns:ITowTruckService_DeleteSegment_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetreiveAllBeats">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITowTruckService/RetreiveAllBeats" message="tns:ITowTruckService_RetreiveAllBeats_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITowTruckService/RetreiveAllBeatsResponse" message="tns:ITowTruckService_RetreiveAllBeats_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetreiveBeat">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITowTruckService/RetreiveBeat" message="tns:ITowTruckService_RetreiveBeat_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITowTruckService/RetreiveBeatResponse" message="tns:ITowTruckService_RetreiveBeat_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ITowTruckService" type="tns:ITowTruckService">
@@ -430,10 +500,73 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="RetreiveAllSegments">
+      <soap:operation soapAction="http://tempuri.org/ITowTruckService/RetreiveAllSegments" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveSegment">
+      <soap:operation soapAction="http://tempuri.org/ITowTruckService/RetrieveSegment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateSegment">
+      <soap:operation soapAction="http://tempuri.org/ITowTruckService/CreateSegment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSegment">
+      <soap:operation soapAction="http://tempuri.org/ITowTruckService/UpdateSegment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteSegment">
+      <soap:operation soapAction="http://tempuri.org/ITowTruckService/DeleteSegment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetreiveAllBeats">
+      <soap:operation soapAction="http://tempuri.org/ITowTruckService/RetreiveAllBeats" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetreiveBeat">
+      <soap:operation soapAction="http://tempuri.org/ITowTruckService/RetreiveBeat" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="TowTruckService">
     <wsdl:port name="BasicHttpBinding_ITowTruckService" binding="tns:BasicHttpBinding_ITowTruckService">
-      <soap:address location="http://38.124.164.212:9007/TowTruckService.svc" />
+      <soap:address location="http://38.124.164.213:9007/TowTruckService.svc" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

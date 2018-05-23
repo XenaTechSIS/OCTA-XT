@@ -15,33 +15,7 @@ namespace FSP.Web.Controllers
         {
             return View();
         }
-
-        [OutputCache(Duration = 5)]
-        public ActionResult GetBeatNumbers()
-        {
-            if (!string.IsNullOrEmpty(UsersContractorCompanyName))
-            {
-                //HOW DO I FITER BY CONTACTOR?
-                var query = from q in dc.vBeats
-                    select new
-                    {
-                        Id = q.BeatNumber,
-                        Name = q.BeatNumber
-                    };
-                return Json(query.OrderBy(p => p.Name), JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                var query = from q in dc.vBeats
-                    select new
-                    {
-                        Id = q.BeatNumber,
-                        Name = q.BeatNumber
-                    };
-                return Json(query.OrderBy(p => p.Name), JsonRequestBehavior.AllowGet);
-            }
-        }
-
+       
         //[OutputCache(Duration = 5)]
         public ActionResult GetContractors()
         {

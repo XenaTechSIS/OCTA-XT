@@ -203,10 +203,13 @@
     <Compile Include="Areas\AdminArea\ViewModels\ContractCreateViewModel.cs" />
     <Compile Include="Areas\AdminArea\ViewModels\ContractIndexViewModel.cs" />
     <Compile Include="Areas\AdminArea\ViewModels\UsersViewModel.cs" />
+    <Compile Include="Controllers\MapController.cs" />
     <Compile Include="Helpers\HtmlExtensions.cs" />
     <Compile Include="Startup.cs" />
     <Content Include="app\app.js" />
     <Content Include="app\core\app.config.js" />
+    <Content Include="app\map\directives\mapSegmentDirective.js" />
+    <Content Include="app\map\directives\mapSegmentTemplate.html" />
     <Content Include="app\map\map.module.config.js" />
     <Content Include="app\map\map.module.js" />
     <Content Include="app\map\mapController.js" />
@@ -1348,12 +1351,18 @@
     <Content Include="Service References\TowTruckServiceRef\FSP.Web.TowTruckServiceRef.TowTruckData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Service References\TowTruckServiceRef\FSP.Web.TowTruckServiceRef.BeatSegment_New.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TowTruckServiceRef\FSP.Web.TowTruckServiceRef.Beats_New.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Service References\TowTruckServiceRef\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Service References\TowTruckServiceRef\TowTruckService1.disco" />
     <Content Include="Scripts\sortable.js" />
+    <None Include="Service References\TowTruckServiceRef\TowTruckService.disco" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1386,19 +1395,6 @@
     <Content Include="Views\Shared\_TruckListColumnConfig.cshtml" />
     <Content Include="Views\AssistAdmin\Create.cshtml" />
     <Content Include="Views\AlertMessages\Alerts.cshtml" />
-    <None Include="Service References\TowTruckServiceRef\TowTruckService1.wsdl" />
-    <None Include="Service References\TowTruckServiceRef\TowTruckService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\TowTruckServiceRef\TowTruckService21.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\TowTruckServiceRef\TowTruckService22.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\TowTruckServiceRef\TowTruckService23.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <Content Include="Views\AlertMessages\History.cshtml" />
     <Content Include="Views\AlertMessages\DriversAlertComments.cshtml" />
     <Content Include="Views\EmailReport\Index.cshtml" />
@@ -1406,6 +1402,19 @@
     <Content Include="Views\EmailReport\Edit.cshtml" />
     <Content Include="Views\EmailReport\Delete.cshtml" />
     <Content Include="Views\Truck\MapOld.cshtml" />
+    <None Include="Service References\TowTruckServiceRef\TowTruckService.wsdl" />
+    <None Include="Service References\TowTruckServiceRef\TowTruckService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TowTruckServiceRef\TowTruckService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TowTruckServiceRef\TowTruckService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TowTruckServiceRef\TowTruckService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.Acceptance.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1421,6 +1430,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\AdminArea\Models\" />
+    <Folder Include="Views\Map\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

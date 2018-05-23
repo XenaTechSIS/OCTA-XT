@@ -73,6 +73,11 @@
             $scope.contractorNameFilter = "";
         }
 
+        $scope.segmentsVisible = false;
+        $scope.polygons = [];
+        $scope.selectedPolygon = {};
+        $scope.markers = [];
+
         function sizeMap() {
 
             var wHeight = ($window.innerHeight - mapTopOffset) + 'px';
@@ -344,6 +349,15 @@
             }
         }
 
+        function removeAllMapEvents() {
+            google.maps.event.clearListeners($scope.map, 'dblclick');
+            google.maps.event.clearListeners($scope.map, 'click');
+            $scope.polygons.forEach(function(polygon) {
+                polygon.setEditable(false);
+                google.maps.event.clearListeners(polygon, 'dblclick');
+            });
+        }
+
         function initMap() {
             console.log("Initializing Map...");
 
@@ -410,6 +424,65 @@
             $scope.contractorNameFilter = "";
 
             getTrucks();
+        };
+        
+        $('#segments').on('show.bs.collapse', function() {
+            console.log("segments visible");
+            //$scope.hideMapData();
+            //$scope.resetMap();
+            setTimeout(function() {
+                $scope.segmentsVisible = true;
+                $scope.$apply();
+            }, 250);
+        });
+
+        $('#segments').on('hidden.bs.collapse', function() {
+            console.log("segments invisible");
+            $scope.segmentsVisible = false;
+            $scope.$apply();
+            // $scope.hideMapData();
+            // $scope.resetMap();            
+        });
+
+        $scope.resetMap = function() {
+            console.log("resetMap");
+            removeAllMapEvents();
+            updateMap(new google.maps.LatLng(DEFAULT_MAP_CENTER_LAT, DEFAULT_MAP_CENTER_LON), ZOOM_11);
+        };
+
+        $scope.displayMapData = function(polygons, markers) {
+            console.log("displayMapData, number of polygons: %i, number of markers: %i", polygons.length, markers.length);
+
+            if (polygons) {
+                $scope.polygons = polygons;
+                $scope.polygons.forEach(function(polygon) {
+                    polygon.setMap($scope.map);
+                });
+            }
+            if (markers) {
+                $scope.markers = markers;
+                $scope.markers.forEach(function(marker) {
+                    marker.setMap($scope.map);
+                });
+                //markerClusterer = new MarkerClusterer($scope.map, $scope.markers, markerClusterOptions);
+            }
+        };
+
+        $scope.hideMapData = function() {
+            console.log("hideMapData");
+            removeAllMapEvents();
+            $scope.polygons.forEach(function(polygon) {
+                polygon.setMap(null);
+            });
+            $scope.markers.forEach(function(marker) {
+                marker.setMap(null);
+            });
+            // if (markerClusterer !== null && markerClusterer !== undefined)
+            //     markerClusterer.clearMarkers();
+
+            $scope.polygons = [];
+            $scope.markers = [];
+            $scope.selectedPolygon = {};
         };
 
         angular.element($window).bind('resize', function () {
