@@ -420,6 +420,7 @@
       <xs:element minOccurs="0" name="BeatSegmentNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CHPDescription" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CHPDescription2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Color" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="LastUpdate" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="LastUpdateBy" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PIMSID" nillable="true" type="xs:string" />
@@ -440,7 +441,8 @@
       <xs:element minOccurs="0" name="BeatExtent" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BeatID" type="ser:guid" />
       <xs:element minOccurs="0" name="BeatNumber" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="EndDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BeatSegments" nillable="true" type="tns:ArrayOfBeatSegment_Cond" />
+      <xs:element minOccurs="0" name="EndDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="FreewayID" type="xs:int" />
       <xs:element minOccurs="0" name="IsTemporary" type="xs:boolean" />
       <xs:element minOccurs="0" name="LastUpdate" type="xs:dateTime" />
@@ -449,4 +451,76 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Beats_New" nillable="true" type="tns:Beats_New" />
+  <xs:complexType name="ArrayOfBeatSegment_Cond">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BeatSegment_Cond" nillable="true" type="tns:BeatSegment_Cond" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBeatSegment_Cond" nillable="true" type="tns:ArrayOfBeatSegment_Cond" />
+  <xs:complexType name="BeatSegment_Cond">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BeatSegmentDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BeatSegmentID" type="ser:guid" />
+      <xs:element minOccurs="0" name="BeatSegmentNumber" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BeatSegment_Cond" nillable="true" type="tns:BeatSegment_Cond" />
+  <xs:complexType name="ArrayOfYard_New">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Yard_New" nillable="true" type="tns:Yard_New" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfYard_New" nillable="true" type="tns:ArrayOfYard_New" />
+  <xs:complexType name="Yard_New">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Comments" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Location" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Position" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TowTruckCompanyName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TowTruckCompanyPhoneNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="YardDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="YardID" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Yard_New" nillable="true" type="tns:Yard_New" />
+  <xs:complexType name="ArrayOfDropZone_New">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DropZone_New" nillable="true" type="tns:DropZone_New" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDropZone_New" nillable="true" type="tns:ArrayOfDropZone_New" />
+  <xs:complexType name="DropZone_New">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Capacity" type="xs:int" />
+      <xs:element minOccurs="0" name="City" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Comments" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DropZoneDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DropZoneID" type="ser:guid" />
+      <xs:element minOccurs="0" name="DropZoneNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Location" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PDPhoneNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Position" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Restrictions" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DropZone_New" nillable="true" type="tns:DropZone_New" />
+  <xs:complexType name="ArrayOfCallBoxes_New">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CallBoxes_New" nillable="true" type="tns:CallBoxes_New" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCallBoxes_New" nillable="true" type="tns:ArrayOfCallBoxes_New" />
+  <xs:complexType name="CallBoxes_New">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CallBoxID" type="ser:guid" />
+      <xs:element minOccurs="0" name="Comments" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FreewayID" type="xs:int" />
+      <xs:element minOccurs="0" name="Location" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Position" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SignNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SiteType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TelephoneNumber" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CallBoxes_New" nillable="true" type="tns:CallBoxes_New" />
 </xs:schema>

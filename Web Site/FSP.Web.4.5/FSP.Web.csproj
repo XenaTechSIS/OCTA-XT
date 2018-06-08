@@ -1357,6 +1357,15 @@
     <Content Include="Service References\TowTruckServiceRef\FSP.Web.TowTruckServiceRef.Beats_New.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Service References\TowTruckServiceRef\FSP.Web.TowTruckServiceRef.CallBoxes_New.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TowTruckServiceRef\FSP.Web.TowTruckServiceRef.DropZone_New.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TowTruckServiceRef\FSP.Web.TowTruckServiceRef.Yard_New.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Service References\TowTruckServiceRef\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>

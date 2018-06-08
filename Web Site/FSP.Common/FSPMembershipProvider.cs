@@ -1,99 +1,77 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.Configuration;
 using System.Collections.Specialized;
 using System.Configuration;
 using System.Configuration.Provider;
-using System.Web.Security;
-using System.Data.Odbc;
-using System.Security.Cryptography;
 using System.Data;
+using System.Data.Odbc;
 using System.Diagnostics;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Web.Configuration;
+using System.Web.Hosting;
+using System.Web.Security;
 using FSP.Domain.Model;
-
 
 namespace FSP.Common
 {
-    public class FSPMembershipProvider : System.Web.Security.MembershipProvider
+    public class FSPMembershipProvider : MembershipProvider
     {
-        private int newPasswordLength = 8;
-        private string connectionString;
-        private MachineKeySection machineKey;
+        private string _connectionString;
+        private MachineKeySection _machineKey;
+        private readonly int newPasswordLength = 8;
 
         #region properties
-        private bool pWriteExceptionsToEventLog;
-        public bool WriteExceptionsToEventLog
-        {
-            get { return pWriteExceptionsToEventLog; }
-            set { pWriteExceptionsToEventLog = value; }
-        }
 
-        private string pApplicationName;
-        private bool pEnablePasswordReset;
-        private bool pEnablePasswordRetrieval;
-        private bool pRequiresQuestionAndAnswer;
-        private bool pRequiresUniqueEmail;
-        private int pMaxInvalidPasswordAttempts;
-        private int pPasswordAttemptWindow;
-        private MembershipPasswordFormat pPasswordFormat;
+        public bool WriteExceptionsToEventLog { get; set; }
+
+        private string _pApplicationName;
+        private bool _pEnablePasswordReset;
+        private bool _pEnablePasswordRetrieval;
+        private bool _pRequiresQuestionAndAnswer;
+        private bool _pRequiresUniqueEmail;
+        private int _pMaxInvalidPasswordAttempts;
+        private int _pPasswordAttemptWindow;
+        private MembershipPasswordFormat _pPasswordFormat;
 
         public override string ApplicationName
         {
-            get { return pApplicationName; }
-            set { pApplicationName = value; }
+            get => _pApplicationName;
+            set => _pApplicationName = value;
         }
-        public override bool EnablePasswordReset
-        {
-            get { return pEnablePasswordReset; }
-        }
-        public override bool EnablePasswordRetrieval
-        {
-            get { return pEnablePasswordRetrieval; }
-        }
-        public override bool RequiresQuestionAndAnswer
-        {
-            get { return pRequiresQuestionAndAnswer; }
-        }
-        public override bool RequiresUniqueEmail
-        {
-            get { return pRequiresUniqueEmail; }
-        }
-        public override int MaxInvalidPasswordAttempts
-        {
-            get { return pMaxInvalidPasswordAttempts; }
-        }
-        public override int PasswordAttemptWindow
-        {
-            get { return pPasswordAttemptWindow; }
-        }
-        public override MembershipPasswordFormat PasswordFormat
-        {
-            get { return pPasswordFormat; }
-        }
-        private int pMinRequiredNonAlphanumericCharacters;
-        public override int MinRequiredNonAlphanumericCharacters
-        {
-            get { return pMinRequiredNonAlphanumericCharacters; }
-        }
-        private int pMinRequiredPasswordLength;
-        public override int MinRequiredPasswordLength
-        {
-            get { return pMinRequiredPasswordLength; }
-        }
-        private string pPasswordStrengthRegularExpression;
-        public override string PasswordStrengthRegularExpression
-        {
-            get { return pPasswordStrengthRegularExpression; }
-        }
+
+        public override bool EnablePasswordReset => _pEnablePasswordReset;
+
+        public override bool EnablePasswordRetrieval => _pEnablePasswordRetrieval;
+
+        public override bool RequiresQuestionAndAnswer => _pRequiresQuestionAndAnswer;
+
+        public override bool RequiresUniqueEmail => _pRequiresUniqueEmail;
+
+        public override int MaxInvalidPasswordAttempts => _pMaxInvalidPasswordAttempts;
+
+        public override int PasswordAttemptWindow => _pPasswordAttemptWindow;
+
+        public override MembershipPasswordFormat PasswordFormat => _pPasswordFormat;
+
+        private int _pMinRequiredNonAlphanumericCharacters;
+
+        public override int MinRequiredNonAlphanumericCharacters => _pMinRequiredNonAlphanumericCharacters;
+
+        private int _pMinRequiredPasswordLength;
+
+        public override int MinRequiredPasswordLength => _pMinRequiredPasswordLength;
+
+        private string _pPasswordStrengthRegularExpression;
+
+        public override string PasswordStrengthRegularExpression => _pPasswordStrengthRegularExpression;
 
         #endregion
 
         #region methods
 
         /// <summary>
-        /// Initialize
+        ///     Initialize
         /// </summary>
         /// <param name="name"></param>
         /// <param name="config"></param>
@@ -101,34 +79,34 @@ namespace FSP.Common
         {
             base.Initialize(name, config);
 
-            pApplicationName = GetConfigValue(config["applicationName"], System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath);
-            pMaxInvalidPasswordAttempts = Convert.ToInt32(GetConfigValue(config["maxInvalidPasswordAttempts"], "5"));
-            pPasswordAttemptWindow = Convert.ToInt32(GetConfigValue(config["passwordAttemptWindow"], "10"));
-            pMinRequiredNonAlphanumericCharacters = Convert.ToInt32(GetConfigValue(config["minRequiredNonAlphanumericCharacters"], "1"));
-            pMinRequiredPasswordLength = Convert.ToInt32(GetConfigValue(config["minRequiredPasswordLength"], "7"));
-            pPasswordStrengthRegularExpression = Convert.ToString(GetConfigValue(config["passwordStrengthRegularExpression"], ""));
-            pEnablePasswordReset = Convert.ToBoolean(GetConfigValue(config["enablePasswordReset"], "true"));
-            pEnablePasswordRetrieval = Convert.ToBoolean(GetConfigValue(config["enablePasswordRetrieval"], "true"));
-            pRequiresQuestionAndAnswer = Convert.ToBoolean(GetConfigValue(config["requiresQuestionAndAnswer"], "false"));
-            pRequiresUniqueEmail = Convert.ToBoolean(GetConfigValue(config["requiresUniqueEmail"], "true"));
-            pWriteExceptionsToEventLog = Convert.ToBoolean(GetConfigValue(config["writeExceptionsToEventLog"], "true"));
+            _pApplicationName = GetConfigValue(config["applicationName"], HostingEnvironment.ApplicationVirtualPath);
+            _pMaxInvalidPasswordAttempts = Convert.ToInt32(GetConfigValue(config["maxInvalidPasswordAttempts"], "5"));
+            _pPasswordAttemptWindow = Convert.ToInt32(GetConfigValue(config["passwordAttemptWindow"], "10"));
+            _pMinRequiredNonAlphanumericCharacters =
+                Convert.ToInt32(GetConfigValue(config["minRequiredNonAlphanumericCharacters"], "1"));
+            _pMinRequiredPasswordLength = Convert.ToInt32(GetConfigValue(config["minRequiredPasswordLength"], "7"));
+            _pPasswordStrengthRegularExpression =
+                Convert.ToString(GetConfigValue(config["passwordStrengthRegularExpression"], ""));
+            _pEnablePasswordReset = Convert.ToBoolean(GetConfigValue(config["enablePasswordReset"], "true"));
+            _pEnablePasswordRetrieval = Convert.ToBoolean(GetConfigValue(config["enablePasswordRetrieval"], "true"));
+            _pRequiresQuestionAndAnswer =
+                Convert.ToBoolean(GetConfigValue(config["requiresQuestionAndAnswer"], "false"));
+            _pRequiresUniqueEmail = Convert.ToBoolean(GetConfigValue(config["requiresUniqueEmail"], "true"));
+            WriteExceptionsToEventLog = Convert.ToBoolean(GetConfigValue(config["writeExceptionsToEventLog"], "true"));
 
-            string temp_format = config["passwordFormat"];
-            if (temp_format == null)
-            {
-                temp_format = "Hashed";
-            }
+            var tempFormat = config["passwordFormat"];
+            if (tempFormat == null) tempFormat = "Hashed";
 
-            switch (temp_format)
+            switch (tempFormat)
             {
                 case "Hashed":
-                    pPasswordFormat = MembershipPasswordFormat.Hashed;
+                    _pPasswordFormat = MembershipPasswordFormat.Hashed;
                     break;
                 case "Encrypted":
-                    pPasswordFormat = MembershipPasswordFormat.Encrypted;
+                    _pPasswordFormat = MembershipPasswordFormat.Encrypted;
                     break;
                 case "Clear":
-                    pPasswordFormat = MembershipPasswordFormat.Clear;
+                    _pPasswordFormat = MembershipPasswordFormat.Clear;
                     break;
                 default:
                     throw new ProviderException("Password format not supported.");
@@ -138,57 +116,40 @@ namespace FSP.Common
             // Initialize OdbcConnection.
             //
 
-            ConnectionStringSettings ConnectionStringSettings = ConfigurationManager.ConnectionStrings[config["connectionStringName"]];
+            var connectionStringSettings = ConfigurationManager.ConnectionStrings[config["connectionStringName"]];
 
-            if (ConnectionStringSettings == null || ConnectionStringSettings.ConnectionString.Trim() == "")
-            {
+            if (connectionStringSettings == null || connectionStringSettings.ConnectionString.Trim() == "")
                 throw new ProviderException("Connection string cannot be blank.");
-            }
 
-            connectionString = ConnectionStringSettings.ConnectionString;
+            _connectionString = connectionStringSettings.ConnectionString;
 
 
             // Get encryption and decryption key information from the configuration.
-            Configuration cfg = WebConfigurationManager.OpenWebConfiguration(System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath);
-            machineKey = (MachineKeySection)cfg.GetSection("system.web/machineKey");
-            if (machineKey.ValidationKey.Contains("AutoGenerate"))
-                if (PasswordFormat != MembershipPasswordFormat.Clear)
-                    throw new ProviderException("Hashed or Encrypted passwords " +
-                                                "are not supported with auto-generated keys.");
-
-
+            var cfg = WebConfigurationManager.OpenWebConfiguration(HostingEnvironment.ApplicationVirtualPath);
+            _machineKey = (MachineKeySection)cfg.GetSection("system.web/machineKey");
+            if (!_machineKey.ValidationKey.Contains("AutoGenerate")) return;
+            if (PasswordFormat != MembershipPasswordFormat.Clear)
+                throw new ProviderException("Hashed or Encrypted passwords " +
+                                            "are not supported with auto-generated keys.");
         }
+
         private string GetConfigValue(string configValue, string defaultValue)
         {
-            if (String.IsNullOrEmpty(configValue))
-                return defaultValue;
-
-            return configValue;
+            return string.IsNullOrEmpty(configValue) ? defaultValue : configValue;
         }
 
-        /// <summary>
-        /// Create User
-        /// </summary>
-        /// <param name="firstName"></param>
-        /// <param name="password"></param>
-        /// <param name="email"></param>
-        /// <param name="lastName"></param>
-        /// <param name="nothing"></param>
-        /// <param name="isApproved"></param>
-        /// <param name="providerUserKey"></param>
-        /// <param name="status"></param>
-        /// <returns></returns>
+
         public override MembershipUser CreateUser(string username,
-                 string password,
-                 string email,
-                 string passwordQuestion,
-                 string passwordAnswer,
-                 bool isApproved,
-                 object providerUserKey,
-                 out MembershipCreateStatus status)
+            string password,
+            string email,
+            string passwordQuestion,
+            string passwordAnswer,
+            bool isApproved,
+            object providerUserKey,
+            out MembershipCreateStatus status)
         {
-            ValidatePasswordEventArgs args =
-              new ValidatePasswordEventArgs(email, password, true);
+            var args =
+                new ValidatePasswordEventArgs(email, password, true);
 
             OnValidatingPassword(args);
 
@@ -199,14 +160,13 @@ namespace FSP.Common
             }
 
 
-
             if (RequiresUniqueEmail && GetUserNameByEmail(email) != "")
             {
                 status = MembershipCreateStatus.DuplicateEmail;
                 return null;
             }
 
-            MembershipUser u = GetUser(email, false);
+            var u = GetUser(email, false);
 
             if (u == null)
             {
@@ -225,21 +185,18 @@ namespace FSP.Common
 
                 try
                 {
-
-                    using (FSPDataContext db = new FSPDataContext())
+                    using (var db = new FSPDataContext())
                     {
-                        User user = new User();
+                        var user = new User();
                         user.Email = email;
-                        user.Password = this.EncodePassword(password);
+                        user.Password = EncodePassword(password);
                         user.DateCreated = DateTime.Now;
                         user.IsApproved = isApproved;
                         db.Users.InsertOnSubmit(user);
                         db.SubmitChanges();
 
                         status = MembershipCreateStatus.Success;
-
                     }
-
                 }
                 catch
                 {
@@ -248,21 +205,21 @@ namespace FSP.Common
 
                 return GetUser(email, false);
             }
-            else
-            {
-                status = MembershipCreateStatus.DuplicateUserName;
-            }
+
+            status = MembershipCreateStatus.DuplicateUserName;
 
 
             return null;
         }
 
 
-        public MembershipUser CreateFSPUser(Guid userId, String email, String password, Guid roleId, bool isApproved, out MembershipCreateStatus status,
-            String firstName = "", String lastName = "", String address = "", String city = "", String state = "", String zip = "", String phoneNumber = "")
+        public MembershipUser CreateFSPUser(Guid userId, string email, string password, Guid roleId, bool isApproved,
+            out MembershipCreateStatus status,
+            string firstName = "", string lastName = "", string address = "", string city = "", string state = "",
+            string zip = "", string phoneNumber = "")
         {
-            ValidatePasswordEventArgs args =
-             new ValidatePasswordEventArgs(email, password, true);
+            var args =
+                new ValidatePasswordEventArgs(email, password, true);
 
             OnValidatingPassword(args);
 
@@ -273,54 +230,47 @@ namespace FSP.Common
             }
 
 
-
             if (RequiresUniqueEmail && GetUserNameByEmail(email) != "")
             {
                 status = MembershipCreateStatus.DuplicateEmail;
                 return null;
             }
 
-            MembershipUser u = GetUser(email, false);
+            var u = GetUser(email, false);
 
             if (u == null)
             {
-                if (userId == null)
-                {
-                    userId = Guid.NewGuid();
-                }
-
                 try
                 {
-
-                    using (FSPDataContext db = new FSPDataContext())
+                    using (var db = new FSPDataContext())
                     {
                         if (roleId == Guid.Empty)
-                            roleId = db.Roles.Where(p => p.RoleName == "Viewer").FirstOrDefault().RoleID;
+                            roleId = db.Roles.FirstOrDefault(p => p.RoleName == "Viewer").RoleID;
 
-                        User user = new User();
-                        user.RoleID = roleId;
-                        user.UserID = userId;
-                        user.Email = email;
-                        user.FirstName = firstName;
-                        user.LastName = lastName;
-                        user.Password = this.EncodePassword(password);
-                        user.DateCreated = DateTime.Now;
-                        user.IsApproved = isApproved;
-                        user.Address = address;
-                        user.City = city;
-                        user.State = state;
-                        user.Zip = zip;
-                        user.PhoneNumber = phoneNumber;
-                        user.WantsNotification = true;
+                        var user = new User
+                        {
+                            RoleID = roleId,
+                            UserID = userId,
+                            Email = email,
+                            FirstName = firstName,
+                            LastName = lastName,
+                            Password = EncodePassword(password),
+                            DateCreated = DateTime.Now,
+                            IsApproved = isApproved,
+                            Address = address,
+                            City = city,
+                            State = state,
+                            Zip = zip,
+                            PhoneNumber = phoneNumber,
+                            WantsNotification = true
+                        };
 
                         db.Users.InsertOnSubmit(user);
                         db.SubmitChanges();
 
 
                         status = MembershipCreateStatus.Success;
-
                     }
-
                 }
                 catch
                 {
@@ -329,37 +279,29 @@ namespace FSP.Common
 
                 return GetUser(email, false);
             }
-            else
-            {
-                status = MembershipCreateStatus.DuplicateUserName;
-            }
+
+            status = MembershipCreateStatus.DuplicateUserName;
 
 
             return null;
         }
 
-        /// <summary>
-        /// Get Current User Context
-        /// </summary>
-        /// <param name="email"></param>
-        /// <param name="userIsOnline"></param>
-        /// <returns></returns>
         public override MembershipUser GetUser(string email, bool userIsOnline)
         {
             MembershipUser u = null;
 
             try
             {
-                using (FSPDataContext db = new FSPDataContext())
+                using (var db = new FSPDataContext())
                 {
                     var users = from q in db.Users
                                 where q.Email.Equals(email) && q.IsApproved == true
                                 select q;
 
 
-                    if (users.Count() > 0)
+                    if (users.Any())
                     {
-                        User user = users.FirstOrDefault();
+                        var user = users.FirstOrDefault();
 
                         u = GetUserFromReader(user);
 
@@ -369,142 +311,111 @@ namespace FSP.Common
                             db.SubmitChanges();
                         }
                     }
-
                 }
-
             }
-            catch { }
+            catch
+            {
+            }
 
 
             return u;
         }
 
-        /// <summary>
-        /// Membership User Context
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
         private MembershipUser GetUserFromReader(User user)
         {
             object userId = user.UserID;
-            string email = user.Email;
-            string firstName = user.FirstName;
-            string lastName = user.LastName;
+            var email = user.Email;
+            var firstName = user.FirstName;
+            var lastName = user.LastName;
 
-            DateTime creationDate = Convert.ToDateTime(user.DateCreated);
+            var creationDate = Convert.ToDateTime(user.DateCreated);
 
-            DateTime lastLoginDate = new DateTime();
+            var lastLoginDate = new DateTime();
             if (user.LastLoginDate != null)
                 lastLoginDate = Convert.ToDateTime(user.LastLoginDate);
 
-            DateTime lastActivityDate = new DateTime();
+            var lastActivityDate = new DateTime();
             if (user.LastActivityDate != null)
                 lastActivityDate = Convert.ToDateTime(user.LastActivityDate);
 
-            MembershipUser u = new MembershipUser(this.Name,
-                                                  email,
-                                                  userId,
-                                                  email,
-                                                  "",
-                                                  "",
-                                                  true,
-                                                  false,
-                                                  creationDate,
-                                                  lastLoginDate,
-                                                  lastActivityDate,
-                                                  DateTime.MinValue,
-                                                  DateTime.MinValue);
+            var u = new MembershipUser(Name,
+                email,
+                userId,
+                email,
+                "",
+                "",
+                true,
+                false,
+                creationDate,
+                lastLoginDate,
+                lastActivityDate,
+                DateTime.MinValue,
+                DateTime.MinValue);
 
             return u;
         }
 
-        /// <summary>
-        /// Get User By Email/userName
-        /// </summary>
-        /// <param name="email"></param>
-        /// <returns></returns>
+
         public override string GetUserNameByEmail(string email)
         {
-            String UserFullName = String.Empty;
+            var userFullName = string.Empty;
 
             try
             {
-                using (FSPDataContext db = new FSPDataContext())
+                using (var db = new FSPDataContext())
                 {
                     var users = from q in db.Users
                                 where q.Email.Equals(email)
                                 select q;
 
-                    if (users.Count() > 0)
+                    if (users.Any())
                     {
-                        User user = users.FirstOrDefault();
-                        UserFullName = user.FirstName + " " + user.LastName;
+                        var user = users.FirstOrDefault();
+                        userFullName = user.FirstName + " " + user.LastName;
                     }
                 }
-
             }
-            catch { }
+            catch
+            {
+            }
 
-            if (UserFullName == null)
-                UserFullName = String.Empty;
-
-            return UserFullName;
+            return userFullName;
         }
 
-        /// <summary>
-        /// When user logs in
-        /// </summary>
-        /// <param name="email"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
         public override bool ValidateUser(string email, string password)
         {
-            bool isValid = false;
-            String pwd = String.Empty;
+
             try
             {
-                using (FSPDataContext db = new FSPDataContext())
+                using (var db = new FSPDataContext())
                 {
-                    //check all APPROVED users
-                    var users = from q in db.Users
-                                where q.Email.Equals(email) && q.IsApproved == true
-                                select q;
 
-                    if (users.Count() > 0)
-                    {
-                        User user = users.FirstOrDefault();
+                    var user = db.Users.FirstOrDefault(p => p.Email.Equals(email) && p.IsApproved == true);
 
-                        pwd = user.Password;
+                    if (user == null) return false;
 
-                        if (CheckPassword(password, pwd))
-                        {
-                            isValid = true;
+                    if (!CheckPassword(password, user.Password)) return false;
 
-                            user.LastLoginDate = DateTime.Now;
-                            db.SubmitChanges();
-                        }
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    user.LastLoginDate = DateTime.Now;
+                    db.SubmitChanges();
+                    return true;
 
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"ValidateUser failed {ex.Message}");
+                return false;
+            }
 
-
-            return isValid;
         }
 
 
         #region password
+
         public override string ResetPassword(string username, string answer)
         {
-            if (!EnablePasswordReset)
-            {
-                throw new NotSupportedException("Password reset is not enabled.");
-            }
+            if (!EnablePasswordReset) throw new NotSupportedException("Password reset is not enabled.");
 
             if (answer == null && RequiresQuestionAndAnswer)
             {
@@ -513,12 +424,12 @@ namespace FSP.Common
                 throw new ProviderException("Password answer required for password reset.");
             }
 
-            string newPassword =
-              System.Web.Security.Membership.GeneratePassword(newPasswordLength, MinRequiredNonAlphanumericCharacters);
+            var newPassword =
+                Membership.GeneratePassword(newPasswordLength, MinRequiredNonAlphanumericCharacters);
 
 
-            ValidatePasswordEventArgs args =
-              new ValidatePasswordEventArgs(username, newPassword, true);
+            var args =
+                new ValidatePasswordEventArgs(username, newPassword, true);
 
             OnValidatingPassword(args);
 
@@ -526,18 +437,19 @@ namespace FSP.Common
                 if (args.FailureInformation != null)
                     throw args.FailureInformation;
                 else
-                    throw new MembershipPasswordException("Reset password canceled due to password validation failure.");
+                    throw new MembershipPasswordException(
+                        "Reset password canceled due to password validation failure.");
 
 
-            OdbcConnection conn = new OdbcConnection(connectionString);
-            OdbcCommand cmd = new OdbcCommand("SELECT PasswordAnswer, IsLockedOut FROM Users " +
-                  " WHERE Username = ? AND ApplicationName = ?", conn);
+            var conn = new OdbcConnection(_connectionString);
+            var cmd = new OdbcCommand("SELECT PasswordAnswer, IsLockedOut FROM Users " +
+                                      " WHERE Username = ? AND ApplicationName = ?", conn);
 
             cmd.Parameters.Add("@Username", OdbcType.VarChar, 255).Value = username;
-            cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = pApplicationName;
+            cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = _pApplicationName;
 
-            int rowsAffected = 0;
-            string passwordAnswer = "";
+            var rowsAffected = 0;
+            var passwordAnswer = "";
             OdbcDataReader reader = null;
 
             try
@@ -567,14 +479,15 @@ namespace FSP.Common
                     throw new MembershipPasswordException("Incorrect password answer.");
                 }
 
-                OdbcCommand updateCmd = new OdbcCommand("UPDATE Users " +
-                    " SET Password = ?, LastPasswordChangedDate = ?" +
-                    " WHERE Username = ? AND ApplicationName = ? AND IsLockedOut = False", conn);
+                var updateCmd = new OdbcCommand("UPDATE Users " +
+                                                " SET Password = ?, LastPasswordChangedDate = ?" +
+                                                " WHERE Username = ? AND ApplicationName = ? AND IsLockedOut = False",
+                    conn);
 
                 updateCmd.Parameters.Add("@Password", OdbcType.VarChar, 255).Value = EncodePassword(newPassword);
                 updateCmd.Parameters.Add("@LastPasswordChangedDate", OdbcType.DateTime).Value = DateTime.Now;
                 updateCmd.Parameters.Add("@Username", OdbcType.VarChar, 255).Value = username;
-                updateCmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = pApplicationName;
+                updateCmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = _pApplicationName;
 
                 rowsAffected = updateCmd.ExecuteNonQuery();
             }
@@ -593,40 +506,31 @@ namespace FSP.Common
             }
             finally
             {
-                if (reader != null) { reader.Close(); }
+                if (reader != null) reader.Close();
                 conn.Close();
             }
 
             if (rowsAffected > 0)
-            {
                 return newPassword;
-            }
-            else
-            {
-                throw new MembershipPasswordException("User not found, or user is locked out. Password not Reset.");
-            }
+            throw new MembershipPasswordException("User not found, or user is locked out. Password not Reset.");
         }
+
         public override string GetPassword(string username, string answer)
         {
-            if (!EnablePasswordRetrieval)
-            {
-                throw new ProviderException("Password Retrieval Not Enabled.");
-            }
+            if (!EnablePasswordRetrieval) throw new ProviderException("Password Retrieval Not Enabled.");
 
             if (PasswordFormat == MembershipPasswordFormat.Hashed)
-            {
                 throw new ProviderException("Cannot retrieve Hashed passwords.");
-            }
 
-            OdbcConnection conn = new OdbcConnection(connectionString);
-            OdbcCommand cmd = new OdbcCommand("SELECT Password, PasswordAnswer, IsLockedOut FROM Users " +
-                  " WHERE Username = ? AND ApplicationName = ?", conn);
+            var conn = new OdbcConnection(_connectionString);
+            var cmd = new OdbcCommand("SELECT Password, PasswordAnswer, IsLockedOut FROM Users " +
+                                      " WHERE Username = ? AND ApplicationName = ?", conn);
 
             cmd.Parameters.Add("@Username", OdbcType.VarChar, 255).Value = username;
-            cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = pApplicationName;
+            cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = _pApplicationName;
 
-            string password = "";
-            string passwordAnswer = "";
+            var password = "";
+            var passwordAnswer = "";
             OdbcDataReader reader = null;
 
             try
@@ -665,7 +569,7 @@ namespace FSP.Common
             }
             finally
             {
-                if (reader != null) { reader.Close(); }
+                if (reader != null) reader.Close();
                 conn.Close();
             }
 
@@ -678,21 +582,11 @@ namespace FSP.Common
             }
 
 
-            if (PasswordFormat == MembershipPasswordFormat.Encrypted)
-            {
-                password = UnEncodePassword(password);
-            }
+            if (PasswordFormat == MembershipPasswordFormat.Encrypted) password = UnEncodePassword(password);
 
             return password;
         }
 
-        /// <summary>
-        /// Change User Password
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="oldPwd"></param>
-        /// <param name="newPwd"></param>
-        /// <returns></returns>
         public override bool ChangePassword(string email, string oldPwd, string newPwd)
         {
             try
@@ -701,8 +595,8 @@ namespace FSP.Common
                     return false;
 
 
-                ValidatePasswordEventArgs args =
-                  new ValidatePasswordEventArgs(email, newPwd, true);
+                var args =
+                    new ValidatePasswordEventArgs(email, newPwd, true);
 
                 OnValidatingPassword(args);
 
@@ -710,9 +604,10 @@ namespace FSP.Common
                     if (args.FailureInformation != null)
                         throw args.FailureInformation;
                     else
-                        throw new MembershipPasswordException("Change password canceled due to new password validation failure.");
+                        throw new MembershipPasswordException(
+                            "Change password canceled due to new password validation failure.");
 
-                using (FSPDataContext db = new FSPDataContext())
+                using (var db = new FSPDataContext())
                 {
                     var users = from q in db.Users
                                 where q.Email.Equals(email) && q.Password.Equals(EncodePassword(oldPwd))
@@ -720,44 +615,42 @@ namespace FSP.Common
 
                     if (users.Count() > 0)
                     {
-                        User user = users.FirstOrDefault();
+                        var user = users.FirstOrDefault();
                         user.Password = EncodePassword(newPwd);
                         db.SubmitChanges();
 
                         return true;
-
-                    }
-                    else
-                    {
-                        return false;
                     }
 
+                    return false;
                 }
             }
-            catch { return false; }
-
+            catch
+            {
+                return false;
+            }
         }
 
         public override bool ChangePasswordQuestionAndAnswer(string username,
-                      string password,
-                      string newPwdQuestion,
-                      string newPwdAnswer)
+            string password,
+            string newPwdQuestion,
+            string newPwdAnswer)
         {
             if (!ValidateUser(username, password))
                 return false;
 
-            OdbcConnection conn = new OdbcConnection(connectionString);
-            OdbcCommand cmd = new OdbcCommand("UPDATE Users " +
-                    " SET PasswordQuestion = ?, PasswordAnswer = ?" +
-                    " WHERE Username = ? AND ApplicationName = ?", conn);
+            var conn = new OdbcConnection(_connectionString);
+            var cmd = new OdbcCommand("UPDATE Users " +
+                                      " SET PasswordQuestion = ?, PasswordAnswer = ?" +
+                                      " WHERE Username = ? AND ApplicationName = ?", conn);
 
             cmd.Parameters.Add("@Question", OdbcType.VarChar, 255).Value = newPwdQuestion;
             cmd.Parameters.Add("@Answer", OdbcType.VarChar, 255).Value = EncodePassword(newPwdAnswer);
             cmd.Parameters.Add("@Username", OdbcType.VarChar, 255).Value = username;
-            cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = pApplicationName;
+            cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = _pApplicationName;
 
 
-            int rowsAffected = 0;
+            var rowsAffected = 0;
 
             try
             {
@@ -782,18 +675,15 @@ namespace FSP.Common
                 conn.Close();
             }
 
-            if (rowsAffected > 0)
-            {
-                return true;
-            }
+            if (rowsAffected > 0) return true;
 
             return false;
         }
 
         private bool CheckPassword(string password, string dbpassword)
         {
-            string pass1 = password;
-            string pass2 = dbpassword;
+            var pass1 = password;
+            var pass2 = dbpassword;
 
             switch (PasswordFormat)
             {
@@ -807,16 +697,14 @@ namespace FSP.Common
                     break;
             }
 
-            if (pass1 == pass2)
-            {
-                return true;
-            }
+            if (pass1 == pass2) return true;
 
             return false;
         }
+
         public string EncodePassword(string password)
         {
-            string encodedPassword = password;
+            var encodedPassword = password;
 
             switch (PasswordFormat)
             {
@@ -824,13 +712,13 @@ namespace FSP.Common
                     break;
                 case MembershipPasswordFormat.Encrypted:
                     encodedPassword =
-                      Convert.ToBase64String(EncryptPassword(Encoding.Unicode.GetBytes(password)));
+                        Convert.ToBase64String(EncryptPassword(Encoding.Unicode.GetBytes(password)));
                     break;
                 case MembershipPasswordFormat.Hashed:
-                    HMACSHA1 hash = new HMACSHA1();
-                    hash.Key = HexToByte(machineKey.ValidationKey);
+                    var hash = new HMACSHA1();
+                    hash.Key = HexToByte(_machineKey.ValidationKey);
                     encodedPassword =
-                      Convert.ToBase64String(hash.ComputeHash(Encoding.Unicode.GetBytes(password)));
+                        Convert.ToBase64String(hash.ComputeHash(Encoding.Unicode.GetBytes(password)));
                     break;
                 default:
                     throw new ProviderException("Unsupported password format.");
@@ -838,9 +726,10 @@ namespace FSP.Common
 
             return encodedPassword;
         }
+
         public string UnEncodePassword(string encodedPassword)
         {
-            string password = encodedPassword;
+            var password = encodedPassword;
 
             switch (PasswordFormat)
             {
@@ -848,7 +737,7 @@ namespace FSP.Common
                     break;
                 case MembershipPasswordFormat.Encrypted:
                     password =
-                      Encoding.Unicode.GetString(DecryptPassword(Convert.FromBase64String(password)));
+                        Encoding.Unicode.GetString(DecryptPassword(Convert.FromBase64String(password)));
                     break;
                 case MembershipPasswordFormat.Hashed:
                     throw new ProviderException("Cannot unencode a hashed password.");
@@ -858,16 +747,19 @@ namespace FSP.Common
 
             return password;
         }
+
         private byte[] HexToByte(string hexString)
         {
-            byte[] returnBytes = new byte[hexString.Length / 2];
-            for (int i = 0; i < returnBytes.Length; i++)
+            var returnBytes = new byte[hexString.Length / 2];
+            for (var i = 0; i < returnBytes.Length; i++)
                 returnBytes[i] = Convert.ToByte(hexString.Substring(i * 2, 2), 16);
             return returnBytes;
         }
+
         #endregion
 
         #region un-used
+
         public override MembershipUser GetUser(object userId, bool userIsOnline)
         {
             //SqlConnection conn = new SqlConnection(connectionString);
@@ -922,18 +814,19 @@ namespace FSP.Common
 
             return u;
         }
+
         public override bool UnlockUser(string username)
         {
-            OdbcConnection conn = new OdbcConnection(connectionString);
-            OdbcCommand cmd = new OdbcCommand("UPDATE Users " +
-                                              " SET IsLockedOut = False, LastLockedOutDate = ? " +
-                                              " WHERE Username = ? AND ApplicationName = ?", conn);
+            var conn = new OdbcConnection(_connectionString);
+            var cmd = new OdbcCommand("UPDATE Users " +
+                                      " SET IsLockedOut = False, LastLockedOutDate = ? " +
+                                      " WHERE Username = ? AND ApplicationName = ?", conn);
 
             cmd.Parameters.Add("@LastLockedOutDate", OdbcType.DateTime).Value = DateTime.Now;
             cmd.Parameters.Add("@Username", OdbcType.VarChar, 255).Value = username;
-            cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = pApplicationName;
+            cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = _pApplicationName;
 
-            int rowsAffected = 0;
+            var rowsAffected = 0;
 
             try
             {
@@ -964,19 +857,20 @@ namespace FSP.Common
 
             return false;
         }
+
         public override void UpdateUser(MembershipUser user)
         {
-            OdbcConnection conn = new OdbcConnection(connectionString);
-            OdbcCommand cmd = new OdbcCommand("UPDATE Users " +
-                    " SET Email = ?, Comment = ?," +
-                    " IsApproved = ?" +
-                    " WHERE Username = ? AND ApplicationName = ?", conn);
+            var conn = new OdbcConnection(_connectionString);
+            var cmd = new OdbcCommand("UPDATE Users " +
+                                      " SET Email = ?, Comment = ?," +
+                                      " IsApproved = ?" +
+                                      " WHERE Username = ? AND ApplicationName = ?", conn);
 
             cmd.Parameters.Add("@Email", OdbcType.VarChar, 128).Value = user.Email;
             cmd.Parameters.Add("@Comment", OdbcType.VarChar, 255).Value = user.Comment;
             cmd.Parameters.Add("@IsApproved", OdbcType.Bit).Value = user.IsApproved;
             cmd.Parameters.Add("@Username", OdbcType.VarChar, 255).Value = user.UserName;
-            cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = pApplicationName;
+            cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = _pApplicationName;
 
 
             try
@@ -1003,22 +897,23 @@ namespace FSP.Common
                 conn.Close();
             }
         }
+
         private void UpdateFailureCount(string username, string failureType)
         {
-            OdbcConnection conn = new OdbcConnection(connectionString);
-            OdbcCommand cmd = new OdbcCommand("SELECT FailedPasswordAttemptCount, " +
-                                              "  FailedPasswordAttemptWindowStart, " +
-                                              "  FailedPasswordAnswerAttemptCount, " +
-                                              "  FailedPasswordAnswerAttemptWindowStart " +
-                                              "  FROM Users " +
-                                              "  WHERE Username = ? AND ApplicationName = ?", conn);
+            var conn = new OdbcConnection(_connectionString);
+            var cmd = new OdbcCommand("SELECT FailedPasswordAttemptCount, " +
+                                      "  FailedPasswordAttemptWindowStart, " +
+                                      "  FailedPasswordAnswerAttemptCount, " +
+                                      "  FailedPasswordAnswerAttemptWindowStart " +
+                                      "  FROM Users " +
+                                      "  WHERE Username = ? AND ApplicationName = ?", conn);
 
             cmd.Parameters.Add("@Username", OdbcType.VarChar, 255).Value = username;
-            cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = pApplicationName;
+            cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = _pApplicationName;
 
             OdbcDataReader reader = null;
-            DateTime windowStart = new DateTime();
-            int failureCount = 0;
+            var windowStart = new DateTime();
+            var failureCount = 0;
 
             try
             {
@@ -1045,7 +940,7 @@ namespace FSP.Common
 
                 reader.Close();
 
-                DateTime windowEnd = windowStart.AddMinutes(PasswordAttemptWindow);
+                var windowEnd = windowStart.AddMinutes(PasswordAttemptWindow);
 
                 if (failureCount == 0 || DateTime.Now > windowEnd)
                 {
@@ -1069,7 +964,7 @@ namespace FSP.Common
                     cmd.Parameters.Add("@Count", OdbcType.Int).Value = 1;
                     cmd.Parameters.Add("@WindowStart", OdbcType.DateTime).Value = DateTime.Now;
                     cmd.Parameters.Add("@Username", OdbcType.VarChar, 255).Value = username;
-                    cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = pApplicationName;
+                    cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = _pApplicationName;
 
                     if (cmd.ExecuteNonQuery() < 0)
                         throw new ProviderException("Unable to update failure count and window start.");
@@ -1090,7 +985,7 @@ namespace FSP.Common
                         cmd.Parameters.Add("@IsLockedOut", OdbcType.Bit).Value = true;
                         cmd.Parameters.Add("@LastLockedOutDate", OdbcType.DateTime).Value = DateTime.Now;
                         cmd.Parameters.Add("@Username", OdbcType.VarChar, 255).Value = username;
-                        cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = pApplicationName;
+                        cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = _pApplicationName;
 
                         if (cmd.ExecuteNonQuery() < 0)
                             throw new ProviderException("Unable to lock out user.");
@@ -1114,7 +1009,7 @@ namespace FSP.Common
 
                         cmd.Parameters.Add("@Count", OdbcType.Int).Value = failureCount;
                         cmd.Parameters.Add("@Username", OdbcType.VarChar, 255).Value = username;
-                        cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = pApplicationName;
+                        cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = _pApplicationName;
 
                         if (cmd.ExecuteNonQuery() < 0)
                             throw new ProviderException("Unable to update failure count.");
@@ -1136,20 +1031,21 @@ namespace FSP.Common
             }
             finally
             {
-                if (reader != null) { reader.Close(); }
+                if (reader != null) reader.Close();
                 conn.Close();
             }
         }
+
         public override bool DeleteUser(string username, bool deleteAllRelatedData)
         {
-            OdbcConnection conn = new OdbcConnection(connectionString);
-            OdbcCommand cmd = new OdbcCommand("DELETE FROM Users " +
-                    " WHERE Username = ? AND Applicationname = ?", conn);
+            var conn = new OdbcConnection(_connectionString);
+            var cmd = new OdbcCommand("DELETE FROM Users " +
+                                      " WHERE Username = ? AND Applicationname = ?", conn);
 
             cmd.Parameters.Add("@Username", OdbcType.VarChar, 255).Value = username;
-            cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = pApplicationName;
+            cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = _pApplicationName;
 
-            int rowsAffected = 0;
+            var rowsAffected = 0;
 
             try
             {
@@ -1185,11 +1081,12 @@ namespace FSP.Common
 
             return false;
         }
+
         public override MembershipUserCollection GetAllUsers(int pageIndex, int pageSize, out int totalRecords)
         {
             //SqlConnection conn = new SqlConnection(connectionString);
             //SqlCommand cmd = new SqlCommand("SELECT Count(*) FROM ApplicationUsers", conn);
-            MembershipUserCollection users = new MembershipUserCollection();
+            var users = new MembershipUserCollection();
 
             //SqlDataReader reader = null;
             //totalRecords = 0;
@@ -1197,7 +1094,7 @@ namespace FSP.Common
             //try
             //{
             //    conn.Open();
-            totalRecords = 5;// (int)cmd.ExecuteScalar();
+            totalRecords = 5; // (int)cmd.ExecuteScalar();
 
             //    if (totalRecords <= 0) { return users; }
 
@@ -1247,20 +1144,20 @@ namespace FSP.Common
 
             return users;
         }
+
         public override int GetNumberOfUsersOnline()
         {
+            var onlineSpan = new TimeSpan(0, Membership.UserIsOnlineTimeWindow, 0);
+            var compareTime = DateTime.Now.Subtract(onlineSpan);
 
-            TimeSpan onlineSpan = new TimeSpan(0, System.Web.Security.Membership.UserIsOnlineTimeWindow, 0);
-            DateTime compareTime = DateTime.Now.Subtract(onlineSpan);
-
-            OdbcConnection conn = new OdbcConnection(connectionString);
-            OdbcCommand cmd = new OdbcCommand("SELECT Count(*) FROM Users " +
-                    " WHERE LastActivityDate > ? AND ApplicationName = ?", conn);
+            var conn = new OdbcConnection(_connectionString);
+            var cmd = new OdbcCommand("SELECT Count(*) FROM Users " +
+                                      " WHERE LastActivityDate > ? AND ApplicationName = ?", conn);
 
             cmd.Parameters.Add("@CompareDate", OdbcType.DateTime).Value = compareTime;
-            cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = pApplicationName;
+            cmd.Parameters.Add("@ApplicationName", OdbcType.VarChar, 255).Value = _pApplicationName;
 
-            int numOnline = 0;
+            var numOnline = 0;
 
             try
             {
@@ -1289,12 +1186,12 @@ namespace FSP.Common
             return numOnline;
         }
 
-        public override MembershipUserCollection FindUsersByName(string emailToMatch, int pageIndex, int pageSize, out int totalRecords)
+        public override MembershipUserCollection FindUsersByName(string emailToMatch, int pageIndex, int pageSize,
+            out int totalRecords)
         {
-
             //SqlConnection conn = new SqlConnection(connectionString);
             //SqlCommand cmd = new SqlCommand("SELECT Count(*) FROM ApplicationUsers WHERE Username LIKE '" + emailToMatch + "'", conn);
-            MembershipUserCollection users = new MembershipUserCollection();
+            var users = new MembershipUserCollection();
 
             //SqlDataReader reader = null;
 
@@ -1353,12 +1250,14 @@ namespace FSP.Common
 
             return users;
         }
-        public override MembershipUserCollection FindUsersByEmail(string emailToMatch, int pageIndex, int pageSize, out int totalRecords)
+
+        public override MembershipUserCollection FindUsersByEmail(string emailToMatch, int pageIndex, int pageSize,
+            out int totalRecords)
         {
             //SqlConnection conn = new SqlConnection(connectionString);
             //SqlCommand cmd = new SqlCommand("SELECT Count(*) FROM ApplicationUsers " +
             //                                  "WHERE Email LIKE '" + emailToMatch + "'", conn);
-            MembershipUserCollection users = new MembershipUserCollection();
+            var users = new MembershipUserCollection();
 
             //SqlDataReader reader = null;
             //totalRecords = 0;

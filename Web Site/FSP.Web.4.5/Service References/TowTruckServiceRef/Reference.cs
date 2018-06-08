@@ -5010,6 +5010,9 @@ namespace FSP.Web.TowTruckServiceRef {
         private string CHPDescription2Field;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ColorField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string LastUpdateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -5120,6 +5123,19 @@ namespace FSP.Web.TowTruckServiceRef {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Color {
+            get {
+                return this.ColorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ColorField, value) != true)) {
+                    this.ColorField = value;
+                    this.RaisePropertyChanged("Color");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string LastUpdate {
             get {
                 return this.LastUpdateField;
@@ -5196,7 +5212,10 @@ namespace FSP.Web.TowTruckServiceRef {
         private string BeatNumberField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string EndDateField;
+        private FSP.Web.TowTruckServiceRef.BeatSegment_Cond[] BeatSegmentsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime EndDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int FreewayIDField;
@@ -5302,12 +5321,25 @@ namespace FSP.Web.TowTruckServiceRef {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string EndDate {
+        public FSP.Web.TowTruckServiceRef.BeatSegment_Cond[] BeatSegments {
+            get {
+                return this.BeatSegmentsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BeatSegmentsField, value) != true)) {
+                    this.BeatSegmentsField = value;
+                    this.RaisePropertyChanged("BeatSegments");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime EndDate {
             get {
                 return this.EndDateField;
             }
             set {
-                if ((object.ReferenceEquals(this.EndDateField, value) != true)) {
+                if ((this.EndDateField.Equals(value) != true)) {
                     this.EndDateField = value;
                     this.RaisePropertyChanged("EndDate");
                 }
@@ -5375,6 +5407,570 @@ namespace FSP.Web.TowTruckServiceRef {
                 if ((this.StartDateField.Equals(value) != true)) {
                     this.StartDateField = value;
                     this.RaisePropertyChanged("StartDate");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BeatSegment_Cond", Namespace="http://schemas.datacontract.org/2004/07/FPSService")]
+    [System.SerializableAttribute()]
+    public partial class BeatSegment_Cond : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BeatSegmentDescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid BeatSegmentIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BeatSegmentNumberField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BeatSegmentDescription {
+            get {
+                return this.BeatSegmentDescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BeatSegmentDescriptionField, value) != true)) {
+                    this.BeatSegmentDescriptionField = value;
+                    this.RaisePropertyChanged("BeatSegmentDescription");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid BeatSegmentID {
+            get {
+                return this.BeatSegmentIDField;
+            }
+            set {
+                if ((this.BeatSegmentIDField.Equals(value) != true)) {
+                    this.BeatSegmentIDField = value;
+                    this.RaisePropertyChanged("BeatSegmentID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BeatSegmentNumber {
+            get {
+                return this.BeatSegmentNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BeatSegmentNumberField, value) != true)) {
+                    this.BeatSegmentNumberField = value;
+                    this.RaisePropertyChanged("BeatSegmentNumber");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Yard_New", Namespace="http://schemas.datacontract.org/2004/07/FPSService")]
+    [System.SerializableAttribute()]
+    public partial class Yard_New : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CommentsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LocationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PositionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TowTruckCompanyNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TowTruckCompanyPhoneNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string YardDescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid YardIDField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Comments {
+            get {
+                return this.CommentsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CommentsField, value) != true)) {
+                    this.CommentsField = value;
+                    this.RaisePropertyChanged("Comments");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Location {
+            get {
+                return this.LocationField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LocationField, value) != true)) {
+                    this.LocationField = value;
+                    this.RaisePropertyChanged("Location");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Position {
+            get {
+                return this.PositionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PositionField, value) != true)) {
+                    this.PositionField = value;
+                    this.RaisePropertyChanged("Position");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TowTruckCompanyName {
+            get {
+                return this.TowTruckCompanyNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TowTruckCompanyNameField, value) != true)) {
+                    this.TowTruckCompanyNameField = value;
+                    this.RaisePropertyChanged("TowTruckCompanyName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TowTruckCompanyPhoneNumber {
+            get {
+                return this.TowTruckCompanyPhoneNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TowTruckCompanyPhoneNumberField, value) != true)) {
+                    this.TowTruckCompanyPhoneNumberField = value;
+                    this.RaisePropertyChanged("TowTruckCompanyPhoneNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string YardDescription {
+            get {
+                return this.YardDescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.YardDescriptionField, value) != true)) {
+                    this.YardDescriptionField = value;
+                    this.RaisePropertyChanged("YardDescription");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid YardID {
+            get {
+                return this.YardIDField;
+            }
+            set {
+                if ((this.YardIDField.Equals(value) != true)) {
+                    this.YardIDField = value;
+                    this.RaisePropertyChanged("YardID");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DropZone_New", Namespace="http://schemas.datacontract.org/2004/07/FPSService")]
+    [System.SerializableAttribute()]
+    public partial class DropZone_New : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int CapacityField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CityField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CommentsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DropZoneDescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid DropZoneIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DropZoneNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LocationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PDPhoneNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PositionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RestrictionsField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Capacity {
+            get {
+                return this.CapacityField;
+            }
+            set {
+                if ((this.CapacityField.Equals(value) != true)) {
+                    this.CapacityField = value;
+                    this.RaisePropertyChanged("Capacity");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string City {
+            get {
+                return this.CityField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CityField, value) != true)) {
+                    this.CityField = value;
+                    this.RaisePropertyChanged("City");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Comments {
+            get {
+                return this.CommentsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CommentsField, value) != true)) {
+                    this.CommentsField = value;
+                    this.RaisePropertyChanged("Comments");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DropZoneDescription {
+            get {
+                return this.DropZoneDescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DropZoneDescriptionField, value) != true)) {
+                    this.DropZoneDescriptionField = value;
+                    this.RaisePropertyChanged("DropZoneDescription");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid DropZoneID {
+            get {
+                return this.DropZoneIDField;
+            }
+            set {
+                if ((this.DropZoneIDField.Equals(value) != true)) {
+                    this.DropZoneIDField = value;
+                    this.RaisePropertyChanged("DropZoneID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DropZoneNumber {
+            get {
+                return this.DropZoneNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DropZoneNumberField, value) != true)) {
+                    this.DropZoneNumberField = value;
+                    this.RaisePropertyChanged("DropZoneNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Location {
+            get {
+                return this.LocationField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LocationField, value) != true)) {
+                    this.LocationField = value;
+                    this.RaisePropertyChanged("Location");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PDPhoneNumber {
+            get {
+                return this.PDPhoneNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PDPhoneNumberField, value) != true)) {
+                    this.PDPhoneNumberField = value;
+                    this.RaisePropertyChanged("PDPhoneNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Position {
+            get {
+                return this.PositionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PositionField, value) != true)) {
+                    this.PositionField = value;
+                    this.RaisePropertyChanged("Position");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Restrictions {
+            get {
+                return this.RestrictionsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RestrictionsField, value) != true)) {
+                    this.RestrictionsField = value;
+                    this.RaisePropertyChanged("Restrictions");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CallBoxes_New", Namespace="http://schemas.datacontract.org/2004/07/FPSService")]
+    [System.SerializableAttribute()]
+    public partial class CallBoxes_New : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid CallBoxIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CommentsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int FreewayIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LocationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PositionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SignNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SiteTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TelephoneNumberField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid CallBoxID {
+            get {
+                return this.CallBoxIDField;
+            }
+            set {
+                if ((this.CallBoxIDField.Equals(value) != true)) {
+                    this.CallBoxIDField = value;
+                    this.RaisePropertyChanged("CallBoxID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Comments {
+            get {
+                return this.CommentsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CommentsField, value) != true)) {
+                    this.CommentsField = value;
+                    this.RaisePropertyChanged("Comments");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int FreewayID {
+            get {
+                return this.FreewayIDField;
+            }
+            set {
+                if ((this.FreewayIDField.Equals(value) != true)) {
+                    this.FreewayIDField = value;
+                    this.RaisePropertyChanged("FreewayID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Location {
+            get {
+                return this.LocationField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LocationField, value) != true)) {
+                    this.LocationField = value;
+                    this.RaisePropertyChanged("Location");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Position {
+            get {
+                return this.PositionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PositionField, value) != true)) {
+                    this.PositionField = value;
+                    this.RaisePropertyChanged("Position");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SignNumber {
+            get {
+                return this.SignNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SignNumberField, value) != true)) {
+                    this.SignNumberField = value;
+                    this.RaisePropertyChanged("SignNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SiteType {
+            get {
+                return this.SiteTypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SiteTypeField, value) != true)) {
+                    this.SiteTypeField = value;
+                    this.RaisePropertyChanged("SiteType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TelephoneNumber {
+            get {
+                return this.TelephoneNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TelephoneNumberField, value) != true)) {
+                    this.TelephoneNumberField = value;
+                    this.RaisePropertyChanged("TelephoneNumber");
                 }
             }
         }
@@ -5479,6 +6075,60 @@ namespace FSP.Web.TowTruckServiceRef {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveBeat", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveBeatResponse")]
         FSP.Web.TowTruckServiceRef.Beats_New RetreiveBeat(System.Guid BeatID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/CreateBeat", ReplyAction="http://tempuri.org/ITowTruckService/CreateBeatResponse")]
+        string CreateBeat(FSP.Web.TowTruckServiceRef.Beats_New beat);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/UpdateBeat", ReplyAction="http://tempuri.org/ITowTruckService/UpdateBeatResponse")]
+        string UpdateBeat(FSP.Web.TowTruckServiceRef.Beats_New beat);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/DeleteBeat", ReplyAction="http://tempuri.org/ITowTruckService/DeleteBeatResponse")]
+        string DeleteBeat(System.Guid BeatID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveAllYards", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveAllYardsResponse")]
+        FSP.Web.TowTruckServiceRef.Yard_New[] RetreiveAllYards();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveYard", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveYardResponse")]
+        FSP.Web.TowTruckServiceRef.Yard_New RetreiveYard(System.Guid TowTruckYardID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/CreateYard", ReplyAction="http://tempuri.org/ITowTruckService/CreateYardResponse")]
+        string CreateYard(FSP.Web.TowTruckServiceRef.Yard_New Yard);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/UpdateYard", ReplyAction="http://tempuri.org/ITowTruckService/UpdateYardResponse")]
+        string UpdateYard(FSP.Web.TowTruckServiceRef.Yard_New Yard);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/DeleteYard", ReplyAction="http://tempuri.org/ITowTruckService/DeleteYardResponse")]
+        string DeleteYard(System.Guid YardID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveAllDZs", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveAllDZsResponse")]
+        FSP.Web.TowTruckServiceRef.DropZone_New[] RetreiveAllDZs();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveDZ", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveDZResponse")]
+        FSP.Web.TowTruckServiceRef.DropZone_New RetreiveDZ(System.Guid DropZoneID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/CreateDropZone", ReplyAction="http://tempuri.org/ITowTruckService/CreateDropZoneResponse")]
+        string CreateDropZone(FSP.Web.TowTruckServiceRef.DropZone_New Yard);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/UpdateDropZone", ReplyAction="http://tempuri.org/ITowTruckService/UpdateDropZoneResponse")]
+        string UpdateDropZone(FSP.Web.TowTruckServiceRef.DropZone_New Yard);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/DeleteDropZone", ReplyAction="http://tempuri.org/ITowTruckService/DeleteDropZoneResponse")]
+        string DeleteDropZone(System.Guid DropZoneID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveCallBoxes", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveCallBoxesResponse")]
+        FSP.Web.TowTruckServiceRef.CallBoxes_New[] RetreiveCallBoxes();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveCallBox", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveCallBoxResponse")]
+        FSP.Web.TowTruckServiceRef.CallBoxes_New RetreiveCallBox(System.Guid CallBoxID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/CreateCallBox", ReplyAction="http://tempuri.org/ITowTruckService/CreateCallBoxResponse")]
+        string CreateCallBox(FSP.Web.TowTruckServiceRef.CallBoxes_New Yard);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/UpdateCallBox", ReplyAction="http://tempuri.org/ITowTruckService/UpdateCallBoxResponse")]
+        string UpdateCallBox(FSP.Web.TowTruckServiceRef.CallBoxes_New Yard);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/DeleteCallBox", ReplyAction="http://tempuri.org/ITowTruckService/DeleteCallBoxResponse")]
+        string DeleteCallBox(System.Guid DropZoneID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -5622,6 +6272,78 @@ namespace FSP.Web.TowTruckServiceRef {
         
         public FSP.Web.TowTruckServiceRef.Beats_New RetreiveBeat(System.Guid BeatID) {
             return base.Channel.RetreiveBeat(BeatID);
+        }
+        
+        public string CreateBeat(FSP.Web.TowTruckServiceRef.Beats_New beat) {
+            return base.Channel.CreateBeat(beat);
+        }
+        
+        public string UpdateBeat(FSP.Web.TowTruckServiceRef.Beats_New beat) {
+            return base.Channel.UpdateBeat(beat);
+        }
+        
+        public string DeleteBeat(System.Guid BeatID) {
+            return base.Channel.DeleteBeat(BeatID);
+        }
+        
+        public FSP.Web.TowTruckServiceRef.Yard_New[] RetreiveAllYards() {
+            return base.Channel.RetreiveAllYards();
+        }
+        
+        public FSP.Web.TowTruckServiceRef.Yard_New RetreiveYard(System.Guid TowTruckYardID) {
+            return base.Channel.RetreiveYard(TowTruckYardID);
+        }
+        
+        public string CreateYard(FSP.Web.TowTruckServiceRef.Yard_New Yard) {
+            return base.Channel.CreateYard(Yard);
+        }
+        
+        public string UpdateYard(FSP.Web.TowTruckServiceRef.Yard_New Yard) {
+            return base.Channel.UpdateYard(Yard);
+        }
+        
+        public string DeleteYard(System.Guid YardID) {
+            return base.Channel.DeleteYard(YardID);
+        }
+        
+        public FSP.Web.TowTruckServiceRef.DropZone_New[] RetreiveAllDZs() {
+            return base.Channel.RetreiveAllDZs();
+        }
+        
+        public FSP.Web.TowTruckServiceRef.DropZone_New RetreiveDZ(System.Guid DropZoneID) {
+            return base.Channel.RetreiveDZ(DropZoneID);
+        }
+        
+        public string CreateDropZone(FSP.Web.TowTruckServiceRef.DropZone_New Yard) {
+            return base.Channel.CreateDropZone(Yard);
+        }
+        
+        public string UpdateDropZone(FSP.Web.TowTruckServiceRef.DropZone_New Yard) {
+            return base.Channel.UpdateDropZone(Yard);
+        }
+        
+        public string DeleteDropZone(System.Guid DropZoneID) {
+            return base.Channel.DeleteDropZone(DropZoneID);
+        }
+        
+        public FSP.Web.TowTruckServiceRef.CallBoxes_New[] RetreiveCallBoxes() {
+            return base.Channel.RetreiveCallBoxes();
+        }
+        
+        public FSP.Web.TowTruckServiceRef.CallBoxes_New RetreiveCallBox(System.Guid CallBoxID) {
+            return base.Channel.RetreiveCallBox(CallBoxID);
+        }
+        
+        public string CreateCallBox(FSP.Web.TowTruckServiceRef.CallBoxes_New Yard) {
+            return base.Channel.CreateCallBox(Yard);
+        }
+        
+        public string UpdateCallBox(FSP.Web.TowTruckServiceRef.CallBoxes_New Yard) {
+            return base.Channel.UpdateCallBox(Yard);
+        }
+        
+        public string DeleteCallBox(System.Guid DropZoneID) {
+            return base.Channel.DeleteCallBox(DropZoneID);
         }
     }
 }
