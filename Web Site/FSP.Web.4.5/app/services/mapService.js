@@ -70,6 +70,7 @@
                     });
             },
             saveSegment: function (segment) {
+                console.log("Save Segment %O", segment);
                 return $http({
                     method: 'POST',
                     data: segment,

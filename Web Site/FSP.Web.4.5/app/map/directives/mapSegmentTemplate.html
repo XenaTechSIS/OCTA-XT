@@ -6,16 +6,16 @@
     <div class="form-group"
          ng-hide="isBusyGettingSegments">
         <!--<select class="form-control"
-                ng-model="selectedBeatSegment"
-                ng-options="segment as segment.BeatSegmentNumber for segment in segments"
-                ng-change="setSelectedSegment()"
-                ng-disabled="segments.length === 0 || isEditing">
-        <option value="">
-            --Select Segment--
-        </option>
-    </select>-->
+                    ng-model="selectedBeatSegment"
+                    ng-options="segment as segment.BeatSegmentNumber for segment in segments"
+                    ng-change="setSelectedSegment()"
+                    ng-disabled="segments.length === 0 || isEditing">
+            <option value="">
+                --Select Segment--
+            </option>
+        </select>-->
         <select class="form-control"
-                ng-model="selectedBeatSegmentID"               
+                ng-model="selectedBeatSegmentID"
                 ng-change="setSelectedBeatSegment()"
                 ng-disabled="segments.length === 0 || isEditing">
             <option value="">
@@ -38,6 +38,18 @@
     <div class="form-group">
         Description
         <textarea ng-model="selectedBeatSegment.BeatSegmentDescription"
+                  class="form-control"
+                  ng-disabled="!isEditing && !isAdding"></textarea>
+    </div>
+    <div class="form-group">
+        CHP Description
+        <textarea ng-model="selectedBeatSegment.CHPDescription"
+                  class="form-control"
+                  ng-disabled="!isEditing && !isAdding"></textarea>
+    </div>
+    <div class="form-group">
+        CHP Description 2
+        <textarea ng-model="selectedBeatSegment.CHPDescription2"
                   class="form-control"
                   ng-disabled="!isEditing && !isAdding"></textarea>
     </div>

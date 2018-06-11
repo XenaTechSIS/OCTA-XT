@@ -3,8 +3,11 @@ using FSP.Web.TowTruckServiceRef;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
+using Newtonsoft.Json.Linq;
 
 namespace FSP.Web.Controllers
 {
@@ -20,11 +23,14 @@ namespace FSP.Web.Controllers
                 Util.LogInfo("segments requested");
                 using (var service = new TowTruckServiceClient())
                 {
-                    var segments = service.RetreiveAllSegments().OrderBy(p => p.BeatSegmentNumber).ToList().Select(s => new
+                    var rawSegments = service.RetreiveAllSegments();
+                    var segments = rawSegments.OrderBy(p => p.BeatSegmentNumber).ToList().Select(s => new
                     {
                         s.BeatSegmentID,
                         s.BeatSegmentNumber,
                         s.BeatSegmentDescription,
+                        s.CHPDescription,
+                        s.CHPDescription2,
                         PolygonData = new PolygonData(s.BeatSegmentExtent)
                         //BeatSegmentPolygonCoordinates = this.CreatePolygon(s.BeatSegmentExtent)
                     }).ToList();
@@ -47,10 +53,16 @@ namespace FSP.Web.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(data.BeatSegmentExtent))
+                    return Json("false", JsonRequestBehavior.AllowGet);
+
+                data.LastUpdate = DateTime.Now.ToString(CultureInfo.InvariantCulture);
+                data.LastUpdateBy = HttpContext.User.Identity.Name;
+
                 using (var service = new TowTruckServiceClient())
                 {
-                    service.UpdateSegment(data);
-                    return Json("true", JsonRequestBehavior.AllowGet);
+                    var updateSegmentResult = service.UpdateSegment(data);
+                    return Json(updateSegmentResult == "success", JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
@@ -104,7 +116,6 @@ namespace FSP.Web.Controllers
 
         #endregion
 
-
     }
 
     public class PolygonData
@@ -116,7 +127,7 @@ namespace FSP.Web.Controllers
             get
             {
                 if (!this.Coordinates.Any()) return 0;
-                return this.Coordinates.Max(p => p.Lat);
+                return this.Coordinates.Max(p => p.lat);
             }
         }
 
@@ -125,7 +136,7 @@ namespace FSP.Web.Controllers
             get
             {
                 if (!this.Coordinates.Any()) return 0;
-                return this.Coordinates.Min(p => p.Lat);
+                return this.Coordinates.Min(p => p.lat);
             }
         }
 
@@ -134,7 +145,7 @@ namespace FSP.Web.Controllers
             get
             {
                 if (!this.Coordinates.Any()) return 0;
-                return this.Coordinates.Max(p => p.Lon);
+                return this.Coordinates.Max(p => p.lng);
             }
         }
 
@@ -143,7 +154,7 @@ namespace FSP.Web.Controllers
             get
             {
                 if (!this.Coordinates.Any()) return 0;
-                return this.Coordinates.Min(p => p.Lon);
+                return this.Coordinates.Min(p => p.lng);
             }
         }
 
@@ -169,27 +180,34 @@ namespace FSP.Web.Controllers
         {
             var returnList = new List<Coordinate>();
 
-            var pointsArray = _beatExtent.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (var s in pointsArray)
+            try
             {
-                var coord = s.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                if (coord.Length != 2) continue;
-
-                returnList.Add(new Coordinate
-                {
-                    Lat = Convert.ToDouble(coord[1]),
-                    Lon = Convert.ToDouble(coord[0])
-                });
+                Debug.WriteLine(this._beatExtent);
+                returnList = JsonConvert.DeserializeObject<List<Coordinate>>(this._beatExtent);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
             }
 
-            return returnList;
+            //until JON is fixing the LAT/LNG switch
+
+            var newReturnList = new List<Coordinate>();
+            foreach (var coordinate in returnList)
+            {
+                newReturnList.Add(new Coordinate
+                {
+                    lat = coordinate.lng,
+                    lng = coordinate.lat
+                });
+            }
+            return newReturnList;
         }
     }
 
     public class Coordinate
     {
-        public double Lat { get; set; }
-        public double Lon { get; set; }
+        public double lat { get; set; }
+        public double lng { get; set; }
     }
 }

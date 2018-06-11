@@ -24,13 +24,13 @@
                 var len = polygon.getPath().getLength();
                 for (var i = 0; i < len; i++) {
                     var xy = polygon.getPath().getAt(i);
-                    var coord = {
-                        ExtensionData: {},
+                    var coord = {                      
                         lat: xy.lat(),
-                        lon: xy.lng()
+                        lng: xy.lng()
                     };
                     coords.push(coord);
                 }
+                console.log('Polygon coords %O', coords);
 
                 return coords;
             },

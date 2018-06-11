@@ -56,11 +56,11 @@
                     if (!segment.PolygonData.Coordinates) return;
 
                     var cleanLatLng = [];
-
+                                       
                     segment.PolygonData.Coordinates.forEach(function (coordinate) {
                         cleanLatLng.push({
-                            lat: coordinate.Lat,
-                            lng: coordinate.Lon
+                            lat: coordinate.lat,
+                            lng: coordinate.lng
                         });
                     });
 
@@ -125,6 +125,7 @@
                 };
 
                 scope.triggerSetMapLocation = function (lat, lon, zoom) {
+                    console.log("New Segment Map Location %s, %s", lat, lon);
                     scope.setMapLocation({
                         lat: lat,
                         lon: lon,
@@ -179,11 +180,6 @@
                     if (!scope.selectedBeatSegment.PolygonData) return;
                     if (!scope.selectedBeatSegment.PolygonData.MiddleLat || !scope.selectedBeatSegment.PolygonData.MiddleLon) return;
 
-                    //var latDelta = (scope.selectedBeatSegment.maxLat - scope.selectedBeatSegment.minLat) / 2;
-                    //var middleLat = scope.selectedBeatSegment.minLat + latDelta;
-                    //var lonDelta = (scope.selectedBeatSegment.maxLon - scope.selectedBeatSegment.minLon) / 2;
-                    //var middleLon = scope.selectedBeatSegment.minLon + lonDelta;
-
                     scope.triggerSetMapLocation(scope.selectedBeatSegment.PolygonData.MiddleLat, scope.selectedBeatSegment.PolygonData.MiddleLon, 16);
                 };
 
@@ -227,13 +223,14 @@
 
                 scope.save = function () {
                     console.log("Saving segment...");
-                    if (scope.selectedPolygon)
-                        scope.selectedBeatSegment.geoFence = utilService.getPolygonCoords(scope.selectedPolygon);
-
+                    if (scope.selectedPolygon) {
+                        var polygonCoords = utilService.getPolygonCoords(scope.selectedPolygon);
+                        scope.selectedBeatSegment.BeatSegmentExtent = JSON.stringify(polygonCoords);
+                    }                        
                     scope.isBusySaving = true;
                     mapService.saveSegment(scope.selectedBeatSegment).then(function (result) {
                         scope.isBusySaving = false;
-                        if (!result) {
+                        if (result === false || result === "false") {
                             console.error("Save Segment");
                             toastr.error('Failed to save Segment', 'Error');
                         } else {
