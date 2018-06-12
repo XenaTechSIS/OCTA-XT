@@ -208,7 +208,9 @@
     <Compile Include="Startup.cs" />
     <Content Include="app\app.js" />
     <Content Include="app\core\app.config.js" />
+    <Content Include="app\map\directives\mapBeatDirective.js" />
     <Content Include="app\map\directives\mapSegmentDirective.js" />
+    <Content Include="app\map\directives\mapBeatTemplate.html" />
     <Content Include="app\map\directives\mapSegmentTemplate.html" />
     <Content Include="app\map\map.module.config.js" />
     <Content Include="app\map\map.module.js" />

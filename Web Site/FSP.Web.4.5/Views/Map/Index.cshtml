@@ -89,7 +89,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="headingBeats">
                         <h4 class="panel-title">
-                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#beats" aria-expanded="false" aria-controls="collapseThree">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#beats" aria-expanded="false" aria-controls="beats">
                                 Beats
                             </a>
                         </h4>
@@ -99,8 +99,8 @@
                             <map-beat reset-map="resetMap()"
                                       display-map-data="displayMapData(polygons, markers)"
                                       set-map-location="setMapLocation(lat, lon, zoom)"
-                                      set-edit-polygons="setEditPolygons()"
-                                      set-cancel-edit-polygons="setCancelEditPolygons()"
+                                      set-edit-polygon="setEditPolygon(id)"
+                                      set-cancel-edit-polygon="setCancelEditPolygon(id, color)"
                                       hide-map-data="hideMapData()"
                                       hide-map-markers="hideMapMarkers()"
                                       visible="beatsVisible"

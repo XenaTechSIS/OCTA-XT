@@ -3,20 +3,11 @@
     angular.module("octaApp").factory("mapService", ["$http", mapService]);
 
     function mapService($http) {
-        return {
-            getBeats: function () {
+        return {           
+            getBeatPolygons: function () {
                 return $http({
                     method: 'GET',
-                    url: $(".websiteUrl").text().trim() + '/Map/GetBeats'
-                }).
-                    then(function (response) {
-                        return response.data;
-                    });
-            },
-            getBeatSegmentPolygons: function (beatId) {
-                return $http({
-                    method: 'GET',
-                    url: $(".websiteUrl").text().trim() + '/Map/GetBeatSegmentPolygons?beatId=' + beatId
+                    url: $(".websiteUrl").text().trim() + '/Map/GetBeatPolygons'
                 }).
                     then(function (response) {
                         return response.data;
@@ -49,7 +40,7 @@
                         return response.data;
                     });
             },
-            getCallSigns: function () {
+            getCallSignPolygons: function () {
                 return $http({
                     method: 'GET',
                     url: $(".websiteUrl").text().trim() + '/Map/GetCallSignLocations'
@@ -84,7 +75,7 @@
                 return $http({
                     method: 'POST',
                     data: beat,
-                    url: $(".websiteUrl").text().trim() + '/Map/SaveBeat'
+                    url: $(".websiteUrl").text().trim() + '/Map/SaveBeatPolygon'
                 }).
                     then(function (response) {
                         return response.data;
@@ -100,38 +91,6 @@
                         return response.data;
                     });
             },
-
-            addYard: function (yard) {
-                return $http({
-                    method: 'POST',
-                    data: yard,
-                    url: $(".websiteUrl").text().trim() + '/Map/AddYardPolygon'
-                }).
-                    then(function (response) {
-                        return response.data;
-                    });
-            },            
-            addBeat: function (beat) {
-                return $http({
-                    method: 'POST',
-                    data: beat,
-                    url: $(".websiteUrl").text().trim() + '/Map/AddBeat'
-                }).
-                    then(function (response) {
-                        return response.data;
-                    });
-            },
-            addDropSite: function (dropSite) {
-                return $http({
-                    method: 'POST',
-                    data: dropSite,
-                    url: $(".websiteUrl").text().trim() + '/Map/AddDropSitePolygon'
-                }).
-                    then(function (response) {
-                        return response.data;
-                    });
-            },
-
 
             deleteYard: function (yardId) {
                 return $http({

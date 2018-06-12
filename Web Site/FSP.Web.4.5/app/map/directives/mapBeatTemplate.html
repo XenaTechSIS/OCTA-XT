@@ -1,46 +1,34 @@
 ﻿<div ng-show="!isAdding">
     <div class="form-group"
          ng-show="isBusyGetting">
-        Loading Segments...<i class="fa fa-refresh fa-spin"></i>
+        Loading Beats...<i class="fa fa-refresh fa-spin"></i>
     </div>
     <div class="form-group"
-         ng-hide="isBusyGetting">       
+         ng-hide="isBusyGetting">
         <select class="form-control"
-                ng-model="selectedBeatSegmentID"
-                ng-change="setSelectedBeatSegment()"
-                ng-disabled="segments.length === 0 || isEditing">
+                ng-model="selectedBeatID"
+                ng-change="setSelectedBeat()"
+                ng-disabled="beats.length === 0 || isEditing">
             <option value="">
-                --Select Segment--
+                --Select Beat--
             </option>
-            <option ng-repeat="segment in segments" value="{{segment.BeatSegmentID}}">{{segment.BeatSegmentNumber}}</option>
+            <option ng-repeat="beat in beats" value="{{beat.BeatID}}">{{beat.BeatNumber}}</option>
         </select>
     </div>
 </div>
 
 <!--input form-->
-<div ng-show="selectedBeatSegment">
+<div ng-show="selectedBeat">
     <div class="form-group">
         Name
-        <input ng-model="selectedBeatSegment.BeatSegmentNumber"
+        <input ng-model="selectedBeat.BeatNumber"
                type="text"
                class="form-control"
                ng-disabled="!isEditing && !isAdding" />
     </div>
     <div class="form-group">
         Description
-        <textarea ng-model="selectedBeatSegment.BeatSegmentDescription"
-                  class="form-control"
-                  ng-disabled="!isEditing && !isAdding"></textarea>
-    </div>
-    <div class="form-group">
-        CHP Description
-        <textarea ng-model="selectedBeatSegment.CHPDescription"
-                  class="form-control"
-                  ng-disabled="!isEditing && !isAdding"></textarea>
-    </div>
-    <div class="form-group">
-        CHP Description 2
-        <textarea ng-model="selectedBeatSegment.CHPDescription2"
+        <textarea ng-model="selectedBeat.BeatDescription"
                   class="form-control"
                   ng-disabled="!isEditing && !isAdding"></textarea>
     </div>
@@ -48,7 +36,7 @@
         Color
         <input type="text"
                minicolors="colorPickerSettings"
-               ng-model="selectedBeatSegment.Color"
+               ng-model="selectedBeat.BeatColor"
                class="form-control"
                ng-disabled="!isEditing && !isAdding" />
     </div>
@@ -56,12 +44,12 @@
 
 <!--edit existing-->
 <div class="form-group"
-     ng-show="selectedBeatSegment && !isAdding">
+     ng-show="selectedBeat && !isAdding">
     <button ng-show="!isEditing"
             ng-click="setEdit()"
             class="btn btn-primary btn-sm">
         <i class="fa fa-pencil">
-        </i> Edit Segment
+        </i> Edit Beat
     </button>
     <button ng-show="isEditing"
             ng-click="save()"
@@ -97,10 +85,10 @@
 <!--add new-->
 <div class="form-group"
      ng-show="!isEditing">
-    <button ng-hide="selectedBeatSegment"
+    <button ng-hide="selectedBeat"
             ng-click="prepareNew()"
             class="btn btn-success btn-sm">
-        <i class="fa fa-plus"></i> Add Segment
+        <i class="fa fa-plus"></i> Add Beat
     </button>
     <button ng-show="!isEditing && isAdding"
             ng-click="add()"

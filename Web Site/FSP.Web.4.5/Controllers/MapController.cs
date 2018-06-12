@@ -111,7 +111,7 @@ namespace FSP.Web.Controllers
                 using (var service = new TowTruckServiceClient())
                 {
                     var rawBeats = service.RetreiveAllBeats();
-                    var segments = rawBeats.OrderBy(p => p.BeatID).ToList().Select(s => new
+                    var beats = rawBeats.OrderBy(p => p.BeatNumber).ToList().Select(s => new
                     {
                         s.BeatID,
                         s.BeatDescription,
@@ -120,7 +120,7 @@ namespace FSP.Web.Controllers
                         PolygonData = new PolygonData(s.BeatExtent)
                     }).ToList();
 
-                    var jsonResult = Json(segments, JsonRequestBehavior.AllowGet);
+                    var jsonResult = Json(beats, JsonRequestBehavior.AllowGet);
                     jsonResult.MaxJsonLength = int.MaxValue;
                     Util.LogInfo("beat polygons returned");
                     return jsonResult;
@@ -141,13 +141,41 @@ namespace FSP.Web.Controllers
                 if (string.IsNullOrEmpty(data.BeatExtent))
                     return Json("false", JsonRequestBehavior.AllowGet);
 
-                data.LastUpdate = DateTime.Now;
-                data.LastUpdateBy = HttpContext.User.Identity.Name;
-
                 using (var service = new TowTruckServiceClient())
                 {
-                    var updateSResult = service.UpdateBeat(data);
-                    return Json(updateSResult == "success", JsonRequestBehavior.AllowGet);
+                    if (data.BeatID != Guid.Empty)
+                    {
+                        var dbBeat = service.RetreiveAllBeats().FirstOrDefault(p => p.BeatID == data.BeatID);
+                        if (dbBeat != null)
+                        {
+                            dbBeat.BeatNumber = data.BeatNumber;
+                            dbBeat.BeatDescription = data.BeatDescription;
+                            dbBeat.BeatColor = data.BeatColor;
+                            dbBeat.BeatExtent = data.BeatExtent;
+
+                            dbBeat.LastUpdate = DateTime.Now;
+                            dbBeat.LastUpdateBy = HttpContext.User.Identity.Name;
+
+                            if (dbBeat.StartDate == DateTime.MinValue)
+                                dbBeat.StartDate = DateTime.Now;
+
+                            if (dbBeat.EndDate == DateTime.MinValue)
+                                dbBeat.EndDate = DateTime.Now;
+
+                            var updateResult = service.UpdateBeat(dbBeat);
+                            return Json(updateResult == "success", JsonRequestBehavior.AllowGet);
+                        }
+                    }
+
+                    data.StartDate = DateTime.Now;
+                    data.EndDate = DateTime.Now;
+                    data.LastUpdate = DateTime.Now;
+                    data.LastUpdateBy = HttpContext.User.Identity.Name;
+                    data.FreewayID = 0;
+                    data.BeatSegments = new BeatSegment_Cond[0];
+
+                    var createResult = service.UpdateBeat(data);
+                    return Json(createResult == "success", JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)

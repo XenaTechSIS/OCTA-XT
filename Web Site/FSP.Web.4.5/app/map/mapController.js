@@ -428,8 +428,8 @@
 
         $('#segments').on('show.bs.collapse', function () {
             console.log("segments visible");
-            //$scope.hideMapData();
-            //$scope.resetMap();
+            $scope.hideMapData();
+            $scope.resetMap();
             setTimeout(function () {
                 $scope.segmentsVisible = true;
                 $scope.$apply();
@@ -440,8 +440,26 @@
             console.log("segments invisible");
             $scope.segmentsVisible = false;
             $scope.$apply();
-            // $scope.hideMapData();
-            // $scope.resetMap();            
+            $scope.hideMapData();
+            $scope.resetMap();
+        });
+
+        $('#beats').on('show.bs.collapse', function () {
+            console.log("beats visible");
+            $scope.hideMapData();
+            $scope.resetMap();
+            setTimeout(function () {
+                $scope.beatsVisible = true;
+                $scope.$apply();
+            }, 250);
+        });
+
+        $('#beats').on('hidden.bs.collapse', function () {
+            console.log("beats invisible");
+            $scope.beatsVisible = false;
+            $scope.$apply();
+            $scope.hideMapData();
+            $scope.resetMap();
         });
 
         $scope.resetMap = function () {
