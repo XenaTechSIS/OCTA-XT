@@ -18,22 +18,11 @@ namespace FSP.Web.Controllers
     [CustomAuthorization]
     public class TruckController : MyController
     {
-
         public ActionResult Grid()
         {
             return View();
         }
-
-        public ActionResult Map()
-        {
-            return View();
-        }
-
-        public ActionResult MapOld()
-        {
-            return View();
-        }
-
+      
         [OutputCache(Duration = 10)]
         [AllowAnonymous]
         [HttpGet]

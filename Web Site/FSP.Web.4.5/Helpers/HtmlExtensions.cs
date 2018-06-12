@@ -48,7 +48,7 @@ namespace FSP.Web.Helpers
             sb.Append($"<li class='{(currentControllerName == "Home" ? "active" : "")}'><a href='{applicationPath}/Home/Index'>Home</a></li>");
 
             //Map
-            sb.Append($"<li class='{(currentControllerName == "Truck" && currentActionName == "Map" ? "active" : "")}'><a href='{applicationPath}/Truck/Map'>Mapping</a></li>");
+            sb.Append($"<li class='{(currentControllerName == "Map" && currentActionName == "Index" ? "active" : "")}'><a href='{applicationPath}/Map/Index'>Mapping</a></li>");
 
             //Dispatch
             sb.Append($"<li class='{(currentControllerName == "Dispatch" && currentActionName == "Index" ? "active" : "")}'><a href='{applicationPath}/Dispatch/Index'>Dispatch</a></li>");

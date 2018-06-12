@@ -7,12 +7,177 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
-using Newtonsoft.Json.Linq;
 
 namespace FSP.Web.Controllers
 {
     public class MapController : Controller
     {
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult IndexOld()
+        {
+            return View();
+        }
+
+        #region yards
+
+        [HttpGet]
+        public ActionResult GetYardPolygons()
+        {
+            try
+            {
+                Util.LogInfo("yard polygons requested");
+                using (var service = new TowTruckServiceClient())
+                {
+                    var rawYards = service.RetreiveAllYards();
+                    var segments = rawYards.OrderBy(p => p.YardID).ToList().Select(s => new
+                    {
+                        s.YardID,
+                        s.YardDescription,
+                        s.Comments,
+                        s.Location,
+                        s.Position,
+                        s.TowTruckCompanyName,
+                        s.TowTruckCompanyPhoneNumber,
+                        //PolygonData = new PolygonData(s.ExtensionData)
+                    }).ToList();
+
+                    var jsonResult = Json(segments, JsonRequestBehavior.AllowGet);
+                    jsonResult.MaxJsonLength = int.MaxValue;
+                    Util.LogInfo("yard polygons returned");
+                    return jsonResult;
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.LogError($"Get Yard Polygons Error: {ex.Message}");
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult SaveYardPolygon(Yard_New data)
+        {
+            try
+            {
+                //if (string.IsNullOrEmpty(data.ExtensionData))
+                //    return Json("false", JsonRequestBehavior.AllowGet);
+
+                using (var service = new TowTruckServiceClient())
+                {
+                    var updateResult = service.UpdateYard(data);
+                    return Json(updateResult == "success", JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.LogError($"Save Yard Polygon Error: {ex.Message}");
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteYard(Guid id)
+        {
+            try
+            {
+                using (var service = new TowTruckServiceClient())
+                {
+                    var deleteSResult = service.DeleteYard(id);
+                    return Json(deleteSResult == "success", JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.LogError($"Delete Yard Error: {ex.Message}, {ex.Message}");
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        #endregion
+
+        #region beats
+
+        [HttpGet]
+        public ActionResult GetBeatPolygons()
+        {
+            try
+            {
+                Util.LogInfo("beat polygons requested");
+                using (var service = new TowTruckServiceClient())
+                {
+                    var rawBeats = service.RetreiveAllBeats();
+                    var segments = rawBeats.OrderBy(p => p.BeatID).ToList().Select(s => new
+                    {
+                        s.BeatID,
+                        s.BeatDescription,
+                        s.BeatNumber,
+                        s.BeatColor,
+                        PolygonData = new PolygonData(s.BeatExtent)
+                    }).ToList();
+
+                    var jsonResult = Json(segments, JsonRequestBehavior.AllowGet);
+                    jsonResult.MaxJsonLength = int.MaxValue;
+                    Util.LogInfo("beat polygons returned");
+                    return jsonResult;
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.LogError($"Get Beat Polygons Error: {ex.Message}");
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult SaveBeatPolygon(Beats_New data)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(data.BeatExtent))
+                    return Json("false", JsonRequestBehavior.AllowGet);
+
+                data.LastUpdate = DateTime.Now;
+                data.LastUpdateBy = HttpContext.User.Identity.Name;
+
+                using (var service = new TowTruckServiceClient())
+                {
+                    var updateSResult = service.UpdateBeat(data);
+                    return Json(updateSResult == "success", JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.LogError($"Save Beat Error: {ex.Message}");
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteBeat(Guid id)
+        {
+            try
+            {
+                using (var service = new TowTruckServiceClient())
+                {
+                    var deleteResult = service.DeleteBeat(id);
+                    return Json(deleteResult == "success", JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.LogError($"Delete Beat Error: {ex.Message}, {ex.Message}");
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        #endregion
+
         #region segments
 
         [HttpGet]
@@ -20,7 +185,7 @@ namespace FSP.Web.Controllers
         {
             try
             {
-                Util.LogInfo("segments requested");
+                Util.LogInfo("segment polygons requested");
                 using (var service = new TowTruckServiceClient())
                 {
                     var rawSegments = service.RetreiveAllSegments();
@@ -31,19 +196,19 @@ namespace FSP.Web.Controllers
                         s.BeatSegmentDescription,
                         s.CHPDescription,
                         s.CHPDescription2,
+                        s.Color,
                         PolygonData = new PolygonData(s.BeatSegmentExtent)
-                        //BeatSegmentPolygonCoordinates = this.CreatePolygon(s.BeatSegmentExtent)
                     }).ToList();
 
                     var jsonResult = Json(segments, JsonRequestBehavior.AllowGet);
                     jsonResult.MaxJsonLength = int.MaxValue;
-                    Util.LogInfo("segments returned");
+                    Util.LogInfo("segments polygons returned");
                     return jsonResult;
                 }
             }
             catch (Exception ex)
             {
-                Util.LogError($"GetSegments Error: {ex.Message}");
+                Util.LogError($"Get Segment Polygons Error: {ex.Message}");
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
         }
@@ -58,11 +223,14 @@ namespace FSP.Web.Controllers
 
                 data.LastUpdate = DateTime.Now.ToString(CultureInfo.InvariantCulture);
                 data.LastUpdateBy = HttpContext.User.Identity.Name;
-
+                if (string.IsNullOrEmpty(data.CHPDescription))
+                    data.CHPDescription = "";
+                if (string.IsNullOrEmpty(data.CHPDescription2))
+                    data.CHPDescription2 = "";
                 using (var service = new TowTruckServiceClient())
                 {
-                    var updateSegmentResult = service.UpdateSegment(data);
-                    return Json(updateSegmentResult == "success", JsonRequestBehavior.AllowGet);
+                    var updateResult = service.UpdateSegment(data);
+                    return Json(updateResult == "success", JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
@@ -70,29 +238,6 @@ namespace FSP.Web.Controllers
                 Util.LogError($"SaveSegment Error: {ex.Message}");
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
-
-        }
-
-        [HttpPost]
-        public ActionResult AddSegmentPolygon(BeatSegment_New data)
-        {
-            try
-            {
-                var stringData = JsonConvert.SerializeObject(data);
-
-                using (var service = new TowTruckServiceClient())
-                {
-                    //data.ID = Guid.NewGuid();
-                    service.UpdateSegment(data);
-                    return Json(true, JsonRequestBehavior.AllowGet);
-                }
-            }
-            catch (Exception ex)
-            {
-                Util.LogError($"AddSegment Error: {ex.Message}");
-                return Json(false, JsonRequestBehavior.AllowGet);
-            }
-
         }
 
         [HttpPost]
@@ -102,13 +247,169 @@ namespace FSP.Web.Controllers
             {
                 using (var service = new TowTruckServiceClient())
                 {
-                    service.DeleteSegment(id);
-                    return Json(true, JsonRequestBehavior.AllowGet);
+                    var deleteSResult = service.DeleteSegment(id);
+                    return Json(deleteSResult == "success", JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
             {
                 Util.LogError($"DeleteSegment Error: {ex.Message}, {ex.Message}");
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        #endregion
+
+        #region call boxes
+
+        [HttpGet]
+        public ActionResult GetCallBoxPolygons()
+        {
+            try
+            {
+                Util.LogInfo("call box polygons requested");
+                using (var service = new TowTruckServiceClient())
+                {
+                    var rawCallBoxes = service.RetreiveCallBoxes();
+                    var segments = rawCallBoxes.OrderBy(p => p.CallBoxID).ToList().Select(s => new
+                    {
+                        s.CallBoxID,
+                        s.Comments,
+                        s.FreewayID,
+                        s.Location,
+                        s.Position,
+                        s.SignNumber,
+                        s.SiteType,
+                        s.TelephoneNumber,
+                        //PolygonData = new PolygonData(s.ExtensionData)
+                    }).ToList();
+
+                    var jsonResult = Json(segments, JsonRequestBehavior.AllowGet);
+                    jsonResult.MaxJsonLength = int.MaxValue;
+                    Util.LogInfo("segments returned");
+                    return jsonResult;
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.LogError($"Get CallBox Polygons Error: {ex.Message}");
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult SaveCallBoxPolygon(CallBoxes_New data)
+        {
+            try
+            {
+                //if (string.IsNullOrEmpty(data.BeatSegmentExtent))
+                //    return Json("false", JsonRequestBehavior.AllowGet);
+
+                using (var service = new TowTruckServiceClient())
+                {
+                    var updateResult = service.UpdateCallBox(data);
+                    return Json(updateResult == "success", JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.LogError($"Save CallBox Error: {ex.Message}");
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteCallBox(Guid id)
+        {
+            try
+            {
+                using (var service = new TowTruckServiceClient())
+                {
+                    var deleteResult = service.DeleteCallBox(id);
+                    return Json(deleteResult == "success", JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.LogError($"Delete CallBox Error: {ex.Message}, {ex.Message}");
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        #endregion
+
+        #region drop zones
+
+        [HttpGet]
+        public ActionResult GetDropZonePolygons()
+        {
+            try
+            {
+                Util.LogInfo("dropzone polygons requested");
+                using (var service = new TowTruckServiceClient())
+                {
+                    var rawDropZones = service.RetreiveAllDZs();
+                    var segments = rawDropZones.OrderBy(p => p.DropZoneID).ToList().Select(s => new
+                    {
+                        s.DropZoneID,
+                        s.DropZoneDescription,
+                        s.Comments,
+                        s.Location,
+                        s.Position,
+                        s.DropZoneNumber,
+                        //PolygonData = new PolygonData(s.ExtensionData)
+                    }).ToList();
+
+                    var jsonResult = Json(segments, JsonRequestBehavior.AllowGet);
+                    jsonResult.MaxJsonLength = int.MaxValue;
+                    Util.LogInfo("dropzone polygons returned");
+                    return jsonResult;
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.LogError($"Get Dropzone Polygons Error: {ex.Message}");
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult SaveDropZonePolygon(DropZone_New data)
+        {
+            try
+            {
+                //if (string.IsNullOrEmpty(data.ExtensionData))
+                //    return Json("false", JsonRequestBehavior.AllowGet);
+
+                using (var service = new TowTruckServiceClient())
+                {
+                    var updateResult = service.UpdateDropZone(data);
+                    return Json(updateResult == "success", JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.LogError($"Save Dropzone Polygon Error: {ex.Message}");
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteDropZone(Guid id)
+        {
+            try
+            {
+                using (var service = new TowTruckServiceClient())
+                {
+                    var deleteResult = service.DeleteDropZone(id);
+                    return Json(deleteResult == "success", JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.LogError($"Delete DropZone Error: {ex.Message}, {ex.Message}");
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
 
@@ -190,18 +491,7 @@ namespace FSP.Web.Controllers
                 Debug.WriteLine(e);
             }
 
-            //until JON is fixing the LAT/LNG switch
-
-            var newReturnList = new List<Coordinate>();
-            foreach (var coordinate in returnList)
-            {
-                newReturnList.Add(new Coordinate
-                {
-                    lat = coordinate.lng,
-                    lng = coordinate.lat
-                });
-            }
-            return newReturnList;
+            return returnList;
         }
     }
 

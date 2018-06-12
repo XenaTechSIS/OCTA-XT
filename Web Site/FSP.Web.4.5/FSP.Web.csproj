@@ -1392,7 +1392,7 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\CHPInformation\Index.cshtml" />
     <Content Include="Views\Truck\Grid.cshtml" />
-    <Content Include="Views\Truck\Map.cshtml" />
+    <Content Include="Views\Map\Index.cshtml" />
     <Content Include="Views\Incident\Index.cshtml" />
     <Content Include="Views\Assist\Index.cshtml" />
     <Content Include="Views\Shared\Unauthorized.cshtml" />
@@ -1410,7 +1410,7 @@
     <Content Include="Views\EmailReport\Create.cshtml" />
     <Content Include="Views\EmailReport\Edit.cshtml" />
     <Content Include="Views\EmailReport\Delete.cshtml" />
-    <Content Include="Views\Truck\MapOld.cshtml" />
+    <Content Include="Views\Map\IndexOld.cshtml" />
     <None Include="Service References\TowTruckServiceRef\TowTruckService.wsdl" />
     <None Include="Service References\TowTruckServiceRef\TowTruckService.xsd">
       <SubType>Designer</SubType>
@@ -1439,7 +1439,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\AdminArea\Models\" />
-    <Folder Include="Views\Map\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

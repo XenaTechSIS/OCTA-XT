@@ -56,7 +56,7 @@
                     if (!segment.PolygonData.Coordinates) return;
 
                     var cleanLatLng = [];
-                                       
+
                     segment.PolygonData.Coordinates.forEach(function (coordinate) {
                         cleanLatLng.push({
                             lat: coordinate.lat,
@@ -154,7 +154,6 @@
 
                 scope.$watch("visible", function (isVisible) {
                     if (isVisible !== undefined) {
-
                         if (isVisible) {
                             if (scope.segments.length === 0) {
                                 scope.getSegments(true);
@@ -226,7 +225,7 @@
                     if (scope.selectedPolygon) {
                         var polygonCoords = utilService.getPolygonCoords(scope.selectedPolygon);
                         scope.selectedBeatSegment.BeatSegmentExtent = JSON.stringify(polygonCoords);
-                    }                        
+                    }
                     scope.isBusySaving = true;
                     mapService.saveSegment(scope.selectedBeatSegment).then(function (result) {
                         scope.isBusySaving = false;
@@ -245,10 +244,10 @@
                 scope.delete = function () {
                     if (confirm("Ok to delete this Segment?")) {
                         scope.isBusyDeleting = true;
-                        mapService.deleteSegment(scope.selectedBeatSegment.ID).then(function (result) {
+                        mapService.deleteSegment(scope.selectedBeatSegment.BeatSegmentID).then(function (result) {
                             scope.isBusyDeleting = false;
                             scope.isEditing = false;
-                            if (!result) {
+                            if (result === false || result === "false") {
                                 console.error("Delete Segment");
                                 toastr.error('Failed to delete Segment', 'Error');
                             } else {
@@ -258,7 +257,12 @@
                                 scope.selectedBeatSegment = "";
                                 scope.triggerMakeAllPolygonsUneditable();
                                 scope.triggerHideMapData();
-                                scope.getSegments(true);
+
+                                setTimeout(function () {
+                                    scope.getSegments(true);
+                                    scope.getBeats();
+                                }, 500);
+
                             }
                         });
                     }
@@ -268,10 +272,12 @@
                     scope.selectedBeatSegment = {
                         BeatSegmentID: "",
                         Color: "#000000",
-                        geoFence: []
+                        BeatSegmentExtent: "",
+                        CHPDescription: "",
+                        CHPDescription2: ""
                     };
                     scope.isAdding = true;
-                    scope.triggerSetNewPolygon(scope.selectedBeatSegment.color);
+                    scope.triggerSetNewPolygon(scope.selectedBeatSegment.Color);
                 };
 
                 scope.cancelAdd = function () {
@@ -283,14 +289,15 @@
 
                 scope.add = function () {
                     console.log("Adding Segment...");
-                    if (scope.selectedPolygon)
-                        scope.selectedBeatSegment.geoFence = utilService.getPolygonCoords(scope.selectedPolygon);
-
+                    if (scope.selectedPolygon) {
+                        var polygonCoords = utilService.getPolygonCoords(scope.selectedPolygon);
+                        scope.selectedBeatSegment.BeatSegmentExtent = JSON.stringify(polygonCoords);
+                    }
                     scope.isBusyAdding = true;
-                    mapService.addSegment(scope.selectedBeatSegment).then(function (result) {
+                    mapService.saveSegment(scope.selectedBeatSegment).then(function (result) {
                         scope.isBusyAdding = false;
                         scope.isAdding = false;
-                        if (!result) {
+                        if (result === false || result === "false") {
                             console.error("Add Segment");
                             toastr.error('Failed to add Segment', 'Error');
                         } else {

@@ -110,17 +110,7 @@
                     then(function (response) {
                         return response.data;
                     });
-            },
-            addSegment: function (segment) {
-                return $http({
-                    method: 'POST',
-                    data: segment,
-                    url: $(".websiteUrl").text().trim() + '/Map/AddSegmentPolygon'
-                }).
-                    then(function (response) {
-                        return response.data;
-                    });
-            },
+            },            
             addBeat: function (beat) {
                 return $http({
                     method: 'POST',
