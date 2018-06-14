@@ -462,6 +462,24 @@
             $scope.resetMap();
         });
 
+        $('#towTruckYards').on('show.bs.collapse', function () {
+            console.log("towTruckYards visible");
+            $scope.hideMapData();
+            $scope.resetMap();
+            setTimeout(function () {
+                $scope.towTruckYardsVisible = true;
+                $scope.$apply();
+            }, 250);
+        });
+
+        $('#towTruckYards').on('hidden.bs.collapse', function () {
+            console.log("towTruckYards invisible");
+            $scope.towTruckYardsVisible = false;
+            $scope.$apply();
+            $scope.hideMapData();
+            $scope.resetMap();
+        });
+
         $scope.resetMap = function () {
             console.log("resetMap");
             removeAllMapEvents();

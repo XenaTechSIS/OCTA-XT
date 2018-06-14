@@ -208,6 +208,8 @@
     <Compile Include="Startup.cs" />
     <Content Include="app\app.js" />
     <Content Include="app\core\app.config.js" />
+    <Content Include="app\map\directives\mapTowYardTemplate.html" />
+    <Content Include="app\map\directives\mapTowYardDirective.js" />
     <Content Include="app\map\directives\mapBeatDirective.js" />
     <Content Include="app\map\directives\mapSegmentDirective.js" />
     <Content Include="app\map\directives\mapBeatTemplate.html" />

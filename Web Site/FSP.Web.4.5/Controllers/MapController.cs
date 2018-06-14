@@ -33,19 +33,18 @@ namespace FSP.Web.Controllers
                 using (var service = new TowTruckServiceClient())
                 {
                     var rawYards = service.RetreiveAllYards();
-                    var segments = rawYards.OrderBy(p => p.YardID).ToList().Select(s => new
+                    var yards = rawYards.OrderBy(p => p.YardID).ToList().Select(s => new
                     {
-                        s.YardID,
+                        s.YardID,                        
                         s.YardDescription,
                         s.Comments,
-                        s.Location,
-                        s.Position,
+                        s.Location,    
                         s.TowTruckCompanyName,
                         s.TowTruckCompanyPhoneNumber,
-                        //PolygonData = new PolygonData(s.ExtensionData)
+                        PolygonData = new PolygonData(s.Position)
                     }).ToList();
 
-                    var jsonResult = Json(segments, JsonRequestBehavior.AllowGet);
+                    var jsonResult = Json(yards, JsonRequestBehavior.AllowGet);
                     jsonResult.MaxJsonLength = int.MaxValue;
                     Util.LogInfo("yard polygons returned");
                     return jsonResult;
