@@ -35,10 +35,10 @@ namespace FSP.Web.Controllers
                     var rawYards = service.RetreiveAllYards();
                     var yards = rawYards.OrderBy(p => p.YardID).ToList().Select(s => new
                     {
-                        s.YardID,                        
+                        s.YardID,
                         s.YardDescription,
                         s.Comments,
-                        s.Location,    
+                        s.Location,
                         s.TowTruckCompanyName,
                         s.TowTruckCompanyPhoneNumber,
                         PolygonData = new PolygonData(s.Position)
@@ -299,22 +299,21 @@ namespace FSP.Web.Controllers
                 using (var service = new TowTruckServiceClient())
                 {
                     var rawCallBoxes = service.RetreiveCallBoxes();
-                    var segments = rawCallBoxes.OrderBy(p => p.CallBoxID).ToList().Select(s => new
+                    var callBoxes = rawCallBoxes.OrderBy(p => p.CallBoxID).ToList().Select(s => new
                     {
-                        s.CallBoxID,
+                        s.CallBoxID,                        
                         s.Comments,
                         s.FreewayID,
-                        s.Location,
-                        s.Position,
+                        s.Location,                        
                         s.SignNumber,
                         s.SiteType,
                         s.TelephoneNumber,
-                        //PolygonData = new PolygonData(s.ExtensionData)
+                        PolygonData = new PolygonData(s.Position)
                     }).ToList();
 
-                    var jsonResult = Json(segments, JsonRequestBehavior.AllowGet);
+                    var jsonResult = Json(callBoxes, JsonRequestBehavior.AllowGet);
                     jsonResult.MaxJsonLength = int.MaxValue;
-                    Util.LogInfo("segments returned");
+                    Util.LogInfo("callboxes returned");
                     return jsonResult;
                 }
             }
@@ -329,10 +328,7 @@ namespace FSP.Web.Controllers
         public ActionResult SaveCallBoxPolygon(CallBoxes_New data)
         {
             try
-            {
-                //if (string.IsNullOrEmpty(data.BeatSegmentExtent))
-                //    return Json("false", JsonRequestBehavior.AllowGet);
-
+            {              
                 using (var service = new TowTruckServiceClient())
                 {
                     var updateResult = service.UpdateCallBox(data);
@@ -378,15 +374,18 @@ namespace FSP.Web.Controllers
                 using (var service = new TowTruckServiceClient())
                 {
                     var rawDropZones = service.RetreiveAllDZs();
-                    var segments = rawDropZones.OrderBy(p => p.DropZoneID).ToList().Select(s => new
+                    var segments = rawDropZones.OrderBy(p => p.DropZoneNumber).ToList().Select(s => new
                     {
                         s.DropZoneID,
                         s.DropZoneDescription,
+                        s.DropZoneNumber,
                         s.Comments,
                         s.Location,
-                        s.Position,
-                        s.DropZoneNumber,
-                        //PolygonData = new PolygonData(s.ExtensionData)
+                        s.Restrictions,
+                        s.Capacity,
+                        s.City,
+                        s.PDPhoneNumber,
+                        PolygonData = new PolygonData(s.Position)
                     }).ToList();
 
                     var jsonResult = Json(segments, JsonRequestBehavior.AllowGet);

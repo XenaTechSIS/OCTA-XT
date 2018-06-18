@@ -1,11 +1,11 @@
 ﻿(function () {
    "use strict";
-   angular.module("octaApp.map").directive("mapBeat", ["utilService", 'mapService', mapBeat]);
+   angular.module("octaApp.map").directive("mapCallBox", ["utilService", 'mapService', mapCallBox]);
 
-   function mapBeat(utilService, mapService) {
+   function mapCallBox(utilService, mapService) {
       return {
          restrict: 'E',
-         templateUrl: $(".websiteUrl").text().trim() + '/app/map/directives/mapBeatTemplate.html',
+         templateUrl: $(".websiteUrl").text().trim() + '/app/map/directives/mapCallBoxTemplate.html',
          scope: {
             resetMap: "&",
             setMapLocation: "&",
@@ -21,7 +21,7 @@
          },
          link: function (scope) {
 
-            var selectedSegmentId = 0;
+            var selectedYardId = 0;
 
             scope.isEditing = false;
             scope.isAdding = false;
@@ -29,84 +29,82 @@
             scope.isBusySaving = false;
             scope.isBusyDeleting = false;
 
-            scope.beats = [];
+            scope.callBoxs = [];
             scope.polygons = [];
             scope.markers = [];
 
-            scope.selectedBeatID = "";
-            scope.selectedBeat = "";
+            scope.selectedCallBoxID = "";
+            scope.selectedCallBox = "";
             scope.selectedPolygon = "";
 
-            function buildDetailsContent(beat) {
+            function buildDetailsContent(callBox) {
                var content = "<table>";
                content += "<tr>";
-               content += "<td>ID:</td>";
-               content += "<td><strong>" + beat.BeatID + "</strong></td>";
+               content += "<td>Number:</td>";
+               content += "<td><strong>" + callBox.SignNumber + "</strong></td>";
                content += "</tr>";
                content += "<tr>";
-               content += "<td>Beat Number:</td>";
-               content += "<td><strong>" + beat.BeatNumber + "</strong></td>";
-               content += "</tr>";
-               content += "<tr>";
-               content += "<td>Description:</td>";
-               content += "<td><strong>" + beat.BeatDescription + "</strong></td>";
-               content += "</tr>";
+               content += "<td>Comments:</td>";
+               content += "<td><strong>" + callBox.Comments + "</strong></td>";
+               content += "</tr>";              
                content += "</table>";
                return content;
             }
 
-            function buildPolygons(beat) {
+            function buildPolygons(callBox) {
 
-               if (!beat) return;
-               if (!beat.PolygonData) return;
-               if (!beat.PolygonData.Coordinates) return;
+               if (!callBox) return;
+               if (!callBox.PolygonData) return;
+               if (!callBox.PolygonData.Coordinates) return;
 
                var cleanLatLng = [];
 
-               beat.PolygonData.Coordinates.forEach(function (coordinate) {
+               callBox.PolygonData.Coordinates.forEach(function (coordinate) {
                   cleanLatLng.push({
                      lat: coordinate.lat,
                      lng: coordinate.lng
                   });
                });
 
-               var beatPolygon = new google.maps.Polygon({
-                  id: "beatPolygon" + beat.BeatID,
+               var callBoxPolygon = new google.maps.Polygon({
+                  id: "callBoxPolygon" + callBox.CallBoxID,
                   paths: cleanLatLng,
-                  strokeColor: beat.BeatColor || "#000000",
+                  strokeColor: callBox.Color || "#000000",
                   strokeOpacity: 0.8,
                   strokeWeight: 2,
-                  fillColor: beat.BeatColor || "#000000",
+                  fillColor: callBox.Color || "#000000",
                   fillOpacity: 0.35,
                   editable: false
                });
-               scope.polygons.push(beatPolygon);
+               scope.polygons.push(callBoxPolygon);
             }
 
-            function buildMarkers(beat) {
+            function buildMarkers(callBox) {
 
-               if (!beat) return;
-               if (!beat.PolygonData) return;
+               if (!callBox) return;
+               if (!callBox.PolygonData) return;
+               if (!callBox.PolygonData.Coordinates) return;
+               var coor = callBox.PolygonData.Coordinates[0];
 
-               var beatMarker = new MarkerWithLabel({
-                  id: "beatMarker" + beat.BeatID,
+               var callBoxMarker = new MarkerWithLabel({
+                  id: "callBoxMarker" + callBox.CallBoxID,
                   animation: google.maps.Animation.DROP,
-                  position: new google.maps.LatLng(beat.PolygonData.MiddleLat, beat.PolygonData.MiddleLon),
+                  position: new google.maps.LatLng(coor.lat, coor.lng),
                   draggable: false,
-                  labelContent: beat.BeatID,
+                  labelContent: callBox.SignNumber,
                   labelAnchor: new google.maps.Point(25, 40),
                   labelClass: "googleMapMarkerLabel", // the CSS class for the label
                   labelStyle: { opacity: 0.75 }
                });
 
                var infowindow = new google.maps.InfoWindow({
-                  title: "Beat Details",
-                  content: buildDetailsContent(beat)
+                  title: "Call Box Details",
+                  content: buildDetailsContent(callBox)
                });
-               beatMarker.addListener('click', function () {
-                  infowindow.open(scope.map, beatMarker);
+               callBoxMarker.addListener('click', function () {
+                  infowindow.open(scope.map, callBoxMarker);
                });
-               scope.markers.push(beatMarker);
+               scope.markers.push(callBoxMarker);
             }
 
             scope.triggerDisplayMapData = function () {
@@ -129,7 +127,7 @@
             };
 
             scope.triggerSetMapLocation = function (lat, lon, zoom) {
-               console.log("New Beat Map Location %s, %s", lat, lon);
+               console.log("New CallBox Map Location %s, %s", lat, lon);
                scope.setMapLocation({
                   lat: lat,
                   lon: lon,
@@ -160,7 +158,7 @@
                if (isVisible !== undefined) {
                   if (isVisible) {
                      if (scope.polygons.length === 0) {
-                        scope.getBeatPolygons(true);
+                        scope.getCallBoxPolygons(true);
                      } else {
                         scope.triggerDisplayMapData();
                      }
@@ -170,35 +168,35 @@
                }
             });
 
-            scope.setSelectedBeat = function () {
-               scope.selectedBeat = utilService.findArrayElement(scope.beats, "BeatID", scope.selectedBeatID);
-               if (!scope.selectedBeat) {
+            scope.setSelectedCallBox = function () {
+               scope.selectedCallBox = utilService.findArrayElement(scope.callBoxs, "CallBoxID", scope.selectedCallBoxID);
+               if (!scope.selectedCallBox) {
                   scope.triggerHideMapData();
                   scope.triggerResetMap();
                   return;
                }
-               console.log(scope.selectedBeat);
+               console.log(scope.selectedCallBox);
 
-               if (!scope.selectedBeat.PolygonData) return;
-               if (!scope.selectedBeat.PolygonData.MiddleLat || !scope.selectedBeat.PolygonData.MiddleLon) return;
+               if (!scope.selectedCallBox.PolygonData) return;
+               if (!scope.selectedCallBox.PolygonData.MiddleLat || !scope.selectedCallBox.PolygonData.MiddleLon) return;
 
-               scope.triggerSetMapLocation(scope.selectedBeat.PolygonData.MiddleLat, scope.selectedBeat.PolygonData.MiddleLon, 16);
+               scope.triggerSetMapLocation(scope.selectedCallBox.PolygonData.MiddleLat, scope.selectedCallBox.PolygonData.MiddleLon, 16);
             };
 
-            scope.getBeatPolygons = function (triggerMapUpdate) {
+            scope.getCallBoxPolygons = function (triggerMapUpdate) {
                scope.isBusyGetting = true;
-               mapService.getBeatPolygons().then(function (rawBeats) {
+               mapService.getCallBoxPolygons().then(function (rawCallBoxs) {
                   scope.isBusyGetting = false;
-                  if (!rawBeats) {
-                     toastr.error('Failed to retrieve beat polygons', 'Error');
+                  if (!rawCallBoxs) {
+                     toastr.error('Failed to retrieve callbox polygons', 'Error');
                   } else {
-                     scope.beats = rawBeats;
-                     console.log('%i beats found %O', scope.beats.length, scope.beats);
+                     scope.callBoxs = rawCallBoxs;
+                     console.log('%i callboxes found %O', scope.callBoxs.length, scope.callBoxs);
                      scope.polygons = [];
                      scope.markers = [];
-                     scope.beats.forEach(function (beat) {
-                        buildPolygons(beat);
-                        //buildMarkers(segment);
+                     scope.callBoxs.forEach(function (callBox) {
+                        //buildPolygons(callBox);
+                        buildMarkers(callBox);
                      });
 
                      //if (selectedSegmentId)
@@ -213,31 +211,31 @@
 
             scope.setEdit = function () {
                scope.isEditing = true;
-               console.log("Edit beat %s", scope.selectedBeat.BeatID);
-               scope.triggerSetEditPolygon("beatPolygon" + scope.selectedBeat.BeatID);
+               console.log("Edit callBox %s", scope.selectedCallBox.CallBoxID);
+               scope.triggerSetEditPolygon("callBoxPolygon" + scope.selectedCallBox.CallBoxID);
             };
 
             scope.cancelEdit = function () {
                scope.isEditing = false;
-               console.log("Cancel edit beat %s", scope.selectedBeat.BeatID);
-               scope.triggerSetCancelEditPolygon("beatPolygon" + scope.selectedBeat.BeatID, scope.selectedBeat.BeatColor);
+               console.log("Cancel edit callBox %s", scope.selectedCallBox.CallBoxID);
+               scope.triggerSetCancelEditPolygon("callBoxPolygon" + scope.selectedCallBox.CallBoxID, scope.selectedCallBox.Color);
             };
 
             scope.save = function () {
-               console.log("Saving beat...");
+               console.log("Saving callBox...");
                if (scope.selectedPolygon) {
                   var polygonCoords = utilService.getPolygonCoords(scope.selectedPolygon);
-                  scope.selectedBeat.BeatExtent = JSON.stringify(polygonCoords);
+                  scope.selectedCallBox.Position = JSON.stringify(polygonCoords);
                }
                scope.isBusySaving = true;
-               mapService.saveBeat(scope.selectedBeat).then(function (result) {
+               mapService.saveCallBox(scope.selectedCallBox).then(function (result) {
                   scope.isBusySaving = false;
                   if (result === false || result === "false") {
-                     console.error("Save Beat");
-                     toastr.error('Failed to save Beat', 'Error');
+                     console.error("Save Call Box");
+                     toastr.error('Failed to save Call Box', 'Error');
                   } else {
-                     console.log("Save Beat Success");
-                     toastr.success('Beat Saved', 'Success');
+                     console.log("Save Call Box Success");
+                     toastr.success('Call Box Saved', 'Success');
                      scope.cancelEdit();
                      scope.triggerMakeAllPolygonsUneditable();
                   }
@@ -245,51 +243,55 @@
             };
 
             scope.delete = function () {
-               if (confirm("Ok to delete this Beat?")) {
+               if (confirm("Ok to delete this Call Box?")) {
                   scope.isBusyDeleting = true;
-                  mapService.deleteBeat(scope.selectedBeat.BeatID).then(function (result) {
+                  mapService.deleteYard(scope.selectedCallBox.CallBoxID).then(function (result) {
                      scope.isBusyDeleting = false;
                      scope.isEditing = false;
                      if (result === false || result === "false") {
-                        console.error("Delete Beat");
-                        toastr.error('Failed to delete Beat', 'Error');
+                        console.error("Delete CallBox");
+                        toastr.error('Failed to delete CallBox', 'Error');
                      } else {
-                        console.log("Delete Beat Success");
-                        toastr.success('Beat Deleted', 'Success');
+                        console.log("Delete CallBox Success");
+                        toastr.success('CallBox Deleted', 'Success');
 
-                        scope.selectedBeatID = "";
-                        scope.selectedBeat = "";
+                        scope.selectedYardID = "";
+                        scope.selectedCallBox = "";
                         scope.selectedPolygon = "";
 
                         scope.triggerMakeAllPolygonsUneditable();
                         scope.triggerHideMapData();
 
                         setTimeout(function () {
-                           scope.getBeatPolygons(true);
+                           scope.getCallBoxPolygons(true);
                         }, 500);
-
                      }
                   });
                }
             };
 
             scope.prepareNew = function () {
-               scope.selectedBeat = {
-                  BeatID: "",
-                  BeatColor: "#000000",
-                  BeatExtent: "",
-                  BeatNumber: "",
-                  BeatDescription: ""
+               scope.selectedCallBox = {
+                  CallBoxID: "",
+                  CallBoxDescription: "",
+                  CallBoxNumber: "",
+                  Location: "",
+                  Restrictions: "",
+                  Capacity: 0,
+                  City: "",
+                  PDPhoneNumber: "",
+                  Position: "",
+                  Color: "#000000"
                };
                scope.isAdding = true;
-               scope.triggerSetNewPolygon(scope.selectedBeat.BeatColor);
+               scope.triggerSetNewPolygon(scope.selectedCallBox.Color);
             };
 
             scope.cancelAdd = function () {
                scope.isAdding = false;
 
-               scope.selectedBeatID = "";
-               scope.selectedBeat = "";
+               scope.selectedYardID = "";
+               scope.selectedCallBox = "";
                scope.selectedPolygon = "";
 
                scope.triggerHideMapData();
@@ -297,25 +299,25 @@
             };
 
             scope.add = function () {
-               console.log("Adding Beat...");
+               console.log("Adding CallBox...");
                if (scope.selectedPolygon) {
                   var polygonCoords = utilService.getPolygonCoords(scope.selectedPolygon);
-                  scope.selectedBeat.BeatExtent = JSON.stringify(polygonCoords);
+                  scope.selectedCallBox.Position = JSON.stringify(polygonCoords);
                }
                scope.isBusyAdding = true;
-               mapService.saveBeat(scope.selectedBeat).then(function (result) {
+               mapService.saveYard(scope.selectedCallBox).then(function (result) {
                   scope.isBusyAdding = false;
                   scope.isAdding = false;
                   if (result === false || result === "false") {
-                     console.error("Add Beat");
-                     toastr.error('Failed to add Beat', 'Error');
+                     console.error("Add CallBox");
+                     toastr.error('Failed to add CallBox', 'Error');
                   } else {
-                     console.log("Add Beat Success");
-                     toastr.success('Beat Added', 'Success');
+                     console.log("Add CallBox Success");
+                     toastr.success('CallBox Added', 'Success');
                      scope.triggerMakeAllPolygonsUneditable();
                      scope.triggerHideMapData();
 
-                     scope.getBeatPolygons(true);
+                     scope.getCallBoxPolygons(true);
                   }
                });
             };

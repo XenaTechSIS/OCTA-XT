@@ -1,11 +1,11 @@
 ﻿(function () {
    "use strict";
-   angular.module("octaApp.map").directive("mapBeat", ["utilService", 'mapService', mapBeat]);
+   angular.module("octaApp.map").directive("mapDropZone", ["utilService", 'mapService', mapDropZone]);
 
-   function mapBeat(utilService, mapService) {
+   function mapDropZone(utilService, mapService) {
       return {
          restrict: 'E',
-         templateUrl: $(".websiteUrl").text().trim() + '/app/map/directives/mapBeatTemplate.html',
+         templateUrl: $(".websiteUrl").text().trim() + '/app/map/directives/mapDropZoneTemplate.html',
          scope: {
             resetMap: "&",
             setMapLocation: "&",
@@ -21,7 +21,7 @@
          },
          link: function (scope) {
 
-            var selectedSegmentId = 0;
+            var selectedYardId = 0;
 
             scope.isEditing = false;
             scope.isAdding = false;
@@ -29,84 +29,84 @@
             scope.isBusySaving = false;
             scope.isBusyDeleting = false;
 
-            scope.beats = [];
+            scope.dropZones = [];
             scope.polygons = [];
             scope.markers = [];
 
-            scope.selectedBeatID = "";
-            scope.selectedBeat = "";
+            scope.selectedDropZoneID = "";
+            scope.selectedDropZone = "";
             scope.selectedPolygon = "";
 
-            function buildDetailsContent(beat) {
+            function buildDetailsContent(dropZone) {
                var content = "<table>";
                content += "<tr>";
                content += "<td>ID:</td>";
-               content += "<td><strong>" + beat.BeatID + "</strong></td>";
+               content += "<td><strong>" + dropZone.DropZoneID + "</strong></td>";
                content += "</tr>";
                content += "<tr>";
-               content += "<td>Beat Number:</td>";
-               content += "<td><strong>" + beat.BeatNumber + "</strong></td>";
+               content += "<td>Number:</td>";
+               content += "<td><strong>" + dropZone.DropZoneNumber + "</strong></td>";
                content += "</tr>";
                content += "<tr>";
                content += "<td>Description:</td>";
-               content += "<td><strong>" + beat.BeatDescription + "</strong></td>";
+               content += "<td><strong>" + dropZone.DropZoneDescription + "</strong></td>";
                content += "</tr>";
                content += "</table>";
                return content;
             }
 
-            function buildPolygons(beat) {
+            function buildPolygons(dropZone) {
 
-               if (!beat) return;
-               if (!beat.PolygonData) return;
-               if (!beat.PolygonData.Coordinates) return;
+               if (!dropZone) return;
+               if (!dropZone.PolygonData) return;
+               if (!dropZone.PolygonData.Coordinates) return;
 
                var cleanLatLng = [];
 
-               beat.PolygonData.Coordinates.forEach(function (coordinate) {
+               dropZone.PolygonData.Coordinates.forEach(function (coordinate) {
                   cleanLatLng.push({
                      lat: coordinate.lat,
                      lng: coordinate.lng
                   });
                });
 
-               var beatPolygon = new google.maps.Polygon({
-                  id: "beatPolygon" + beat.BeatID,
+               var dropZonePolygon = new google.maps.Polygon({
+                  id: "dropZonePolygon" + dropZone.DropZoneID,
                   paths: cleanLatLng,
-                  strokeColor: beat.BeatColor || "#000000",
+                  strokeColor: dropZone.Color || "#000000",
                   strokeOpacity: 0.8,
                   strokeWeight: 2,
-                  fillColor: beat.BeatColor || "#000000",
+                  fillColor: dropZone.Color || "#000000",
                   fillOpacity: 0.35,
                   editable: false
                });
-               scope.polygons.push(beatPolygon);
+               scope.polygons.push(dropZonePolygon);
             }
 
-            function buildMarkers(beat) {
+            function buildMarkers(dropZone) {
 
-               if (!beat) return;
-               if (!beat.PolygonData) return;
+               if (!dropZone) return;
+               if (!dropZone.PolygonData) return;
 
-               var beatMarker = new MarkerWithLabel({
-                  id: "beatMarker" + beat.BeatID,
+               var dropZoneMarker = new MarkerWithLabel({
+                  id: "dropZoneMarker" + dropZone.DropZoneID,
                   animation: google.maps.Animation.DROP,
-                  position: new google.maps.LatLng(beat.PolygonData.MiddleLat, beat.PolygonData.MiddleLon),
+                  position: new google.maps.LatLng(dropZone.PolygonData.MiddleLat, dropZone.PolygonData.MiddleLon),
                   draggable: false,
-                  labelContent: beat.BeatID,
+                  labelContent: dropZone.DropZoneNumber,
                   labelAnchor: new google.maps.Point(25, 40),
                   labelClass: "googleMapMarkerLabel", // the CSS class for the label
                   labelStyle: { opacity: 0.75 }
                });
 
                var infowindow = new google.maps.InfoWindow({
-                  title: "Beat Details",
-                  content: buildDetailsContent(beat)
+                  title: "Drop Zone Details",
+                  content: buildDetailsContent(dropZone)
                });
-               beatMarker.addListener('click', function () {
-                  infowindow.open(scope.map, beatMarker);
+               dropZoneMarker.addListener('click', function () {
+                  infowindow.open(scope.map, dropZoneMarker);
                });
-               scope.markers.push(beatMarker);
+               scope.markers.push(dropZoneMarker);
             }
 
             scope.triggerDisplayMapData = function () {
@@ -129,7 +129,7 @@
             };
 
             scope.triggerSetMapLocation = function (lat, lon, zoom) {
-               console.log("New Beat Map Location %s, %s", lat, lon);
+               console.log("New DropZone Map Location %s, %s", lat, lon);
                scope.setMapLocation({
                   lat: lat,
                   lon: lon,
@@ -160,7 +160,7 @@
                if (isVisible !== undefined) {
                   if (isVisible) {
                      if (scope.polygons.length === 0) {
-                        scope.getBeatPolygons(true);
+                        scope.getDropZonePolygons(true);
                      } else {
                         scope.triggerDisplayMapData();
                      }
@@ -170,34 +170,34 @@
                }
             });
 
-            scope.setSelectedBeat = function () {
-               scope.selectedBeat = utilService.findArrayElement(scope.beats, "BeatID", scope.selectedBeatID);
-               if (!scope.selectedBeat) {
+            scope.setSelectedDropZone = function () {
+               scope.selectedDropZone = utilService.findArrayElement(scope.dropZones, "DropZoneID", scope.selectedDropZoneID);
+               if (!scope.selectedDropZone) {
                   scope.triggerHideMapData();
                   scope.triggerResetMap();
                   return;
                }
-               console.log(scope.selectedBeat);
+               console.log(scope.selectedDropZone);
 
-               if (!scope.selectedBeat.PolygonData) return;
-               if (!scope.selectedBeat.PolygonData.MiddleLat || !scope.selectedBeat.PolygonData.MiddleLon) return;
+               if (!scope.selectedDropZone.PolygonData) return;
+               if (!scope.selectedDropZone.PolygonData.MiddleLat || !scope.selectedDropZone.PolygonData.MiddleLon) return;
 
-               scope.triggerSetMapLocation(scope.selectedBeat.PolygonData.MiddleLat, scope.selectedBeat.PolygonData.MiddleLon, 16);
+               scope.triggerSetMapLocation(scope.selectedDropZone.PolygonData.MiddleLat, scope.selectedDropZone.PolygonData.MiddleLon, 16);
             };
 
-            scope.getBeatPolygons = function (triggerMapUpdate) {
+            scope.getDropZonePolygons = function (triggerMapUpdate) {
                scope.isBusyGetting = true;
-               mapService.getBeatPolygons().then(function (rawBeats) {
+               mapService.getDropZonePolygons().then(function (rawDropZones) {
                   scope.isBusyGetting = false;
-                  if (!rawBeats) {
-                     toastr.error('Failed to retrieve beat polygons', 'Error');
+                  if (!rawDropZones) {
+                     toastr.error('Failed to retrieve dropzone polygons', 'Error');
                   } else {
-                     scope.beats = rawBeats;
-                     console.log('%i beats found %O', scope.beats.length, scope.beats);
+                     scope.dropZones = rawDropZones;
+                     console.log('%i dropzones found %O', scope.dropZones.length, scope.dropZones);
                      scope.polygons = [];
                      scope.markers = [];
-                     scope.beats.forEach(function (beat) {
-                        buildPolygons(beat);
+                     scope.dropZones.forEach(function (dropZone) {
+                        buildPolygons(dropZone);
                         //buildMarkers(segment);
                      });
 
@@ -213,31 +213,31 @@
 
             scope.setEdit = function () {
                scope.isEditing = true;
-               console.log("Edit beat %s", scope.selectedBeat.BeatID);
-               scope.triggerSetEditPolygon("beatPolygon" + scope.selectedBeat.BeatID);
+               console.log("Edit dropzone %s", scope.selectedDropZone.DropZoneID);
+               scope.triggerSetEditPolygon("dropZonePolygon" + scope.selectedDropZone.DropZoneID);
             };
 
             scope.cancelEdit = function () {
                scope.isEditing = false;
-               console.log("Cancel edit beat %s", scope.selectedBeat.BeatID);
-               scope.triggerSetCancelEditPolygon("beatPolygon" + scope.selectedBeat.BeatID, scope.selectedBeat.BeatColor);
+               console.log("Cancel edit dropZone %s", scope.selectedDropZone.DropZoneID);
+               scope.triggerSetCancelEditPolygon("dropZonePolygon" + scope.selectedDropZone.DropZoneID, scope.selectedDropZone.Color);
             };
 
             scope.save = function () {
-               console.log("Saving beat...");
+               console.log("Saving dropZone...");
                if (scope.selectedPolygon) {
                   var polygonCoords = utilService.getPolygonCoords(scope.selectedPolygon);
-                  scope.selectedBeat.BeatExtent = JSON.stringify(polygonCoords);
+                  scope.selectedDropZone.Position = JSON.stringify(polygonCoords);
                }
                scope.isBusySaving = true;
-               mapService.saveBeat(scope.selectedBeat).then(function (result) {
+               mapService.saveDropZone(scope.selectedDropZone).then(function (result) {
                   scope.isBusySaving = false;
                   if (result === false || result === "false") {
-                     console.error("Save Beat");
-                     toastr.error('Failed to save Beat', 'Error');
+                     console.error("Save Drop Zone");
+                     toastr.error('Failed to save Drop Zone', 'Error');
                   } else {
-                     console.log("Save Beat Success");
-                     toastr.success('Beat Saved', 'Success');
+                     console.log("Save Drop Zone Success");
+                     toastr.success('Drop Zone Saved', 'Success');
                      scope.cancelEdit();
                      scope.triggerMakeAllPolygonsUneditable();
                   }
@@ -245,51 +245,56 @@
             };
 
             scope.delete = function () {
-               if (confirm("Ok to delete this Beat?")) {
+               if (confirm("Ok to delete this Drop Zone?")) {
                   scope.isBusyDeleting = true;
-                  mapService.deleteBeat(scope.selectedBeat.BeatID).then(function (result) {
+                  mapService.deleteYard(scope.selectedDropZone.DropZoneID).then(function (result) {
                      scope.isBusyDeleting = false;
                      scope.isEditing = false;
                      if (result === false || result === "false") {
-                        console.error("Delete Beat");
-                        toastr.error('Failed to delete Beat', 'Error');
+                        console.error("Delete DropZone");
+                        toastr.error('Failed to delete Drop Zone', 'Error');
                      } else {
-                        console.log("Delete Beat Success");
-                        toastr.success('Beat Deleted', 'Success');
+                        console.log("Delete DropZone Success");
+                        toastr.success('Drop Zone Deleted', 'Success');
 
-                        scope.selectedBeatID = "";
-                        scope.selectedBeat = "";
+                        scope.selectedYardID = "";
+                        scope.selectedDropZone = "";
                         scope.selectedPolygon = "";
 
                         scope.triggerMakeAllPolygonsUneditable();
                         scope.triggerHideMapData();
 
                         setTimeout(function () {
-                           scope.getBeatPolygons(true);
+                           scope.getDropZonePolygons(true);
                         }, 500);
-
                      }
                   });
                }
             };
 
             scope.prepareNew = function () {
-               scope.selectedBeat = {
-                  BeatID: "",
-                  BeatColor: "#000000",
-                  BeatExtent: "",
-                  BeatNumber: "",
-                  BeatDescription: ""
+               scope.selectedDropZone = {
+                  DropZoneID: "",
+                  DropZoneDescription: "",
+                  DropZoneNumber: "",
+                  Comments: "",
+                  Location: "",
+                  Restrictions: "",
+                  Capacity: 0,
+                  City: "",
+                  PDPhoneNumber: "",
+                  Position: "",
+                  Color: "#000000"
                };
                scope.isAdding = true;
-               scope.triggerSetNewPolygon(scope.selectedBeat.BeatColor);
+               scope.triggerSetNewPolygon(scope.selectedDropZone.Color);
             };
 
             scope.cancelAdd = function () {
                scope.isAdding = false;
 
-               scope.selectedBeatID = "";
-               scope.selectedBeat = "";
+               scope.selectedYardID = "";
+               scope.selectedDropZone = "";
                scope.selectedPolygon = "";
 
                scope.triggerHideMapData();
@@ -297,25 +302,25 @@
             };
 
             scope.add = function () {
-               console.log("Adding Beat...");
+               console.log("Adding DropZone...");
                if (scope.selectedPolygon) {
                   var polygonCoords = utilService.getPolygonCoords(scope.selectedPolygon);
-                  scope.selectedBeat.BeatExtent = JSON.stringify(polygonCoords);
+                  scope.selectedDropZone.Position = JSON.stringify(polygonCoords);
                }
                scope.isBusyAdding = true;
-               mapService.saveBeat(scope.selectedBeat).then(function (result) {
+               mapService.saveDropZone(scope.selectedDropZone).then(function (result) {
                   scope.isBusyAdding = false;
                   scope.isAdding = false;
                   if (result === false || result === "false") {
-                     console.error("Add Beat");
-                     toastr.error('Failed to add Beat', 'Error');
+                     console.error("Add DropZone");
+                     toastr.error('Failed to add DropZone', 'Error');
                   } else {
-                     console.log("Add Beat Success");
-                     toastr.success('Beat Added', 'Success');
+                     console.log("Add DropZone Success");
+                     toastr.success('DropZone Added', 'Success');
                      scope.triggerMakeAllPolygonsUneditable();
                      scope.triggerHideMapData();
 
-                     scope.getBeatPolygons(true);
+                     scope.getDropZonePolygons(true);
                   }
                });
             };

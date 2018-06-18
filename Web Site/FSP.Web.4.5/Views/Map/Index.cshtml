@@ -40,16 +40,31 @@
         </div>
 
         <div class="mapSideNavigation">
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
+            <div class="panel-group"
+                 id="accordion"
+                 role="tablist"
+                 aria-multiselectable="false">
+                @*tow yards*@
                 <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingTowTruckYards">
+                    <div class="panel-heading"
+                         role="tab"
+                         id="headingTowTruckYards">
                         <h4 class="panel-title">
-                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#towTruckYards" aria-expanded="false" aria-controls="towTruckYards">
+                            <a class="collapsed"
+                               role="button"
+                               data-toggle="collapse"
+                               data-parent="#accordion"
+                               href="#towTruckYards"
+                               aria-expanded="false"
+                               aria-controls="towTruckYards">
                                 Tow Truck Yards
                             </a>
                         </h4>
                     </div>
-                    <div id="towTruckYards" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTowTruckYards">
+                    <div id="towTruckYards"
+                         class="panel-collapse collapse"
+                         role="tabpanel"
+                         aria-labelledby="headingTowTruckYards">
                         <div class="panel-body">
                             <map-tow-yard reset-map="resetMap()"
                                           display-map-data="displayMapData(polygons, markers)"
@@ -63,15 +78,28 @@
                         </div>
                     </div>
                 </div>
+
+                @*segments*@
                 <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingSegment">
+                    <div class="panel-heading"
+                         role="tab"
+                         id="headingSegment">
                         <h4 class="panel-title">
-                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#segments" aria-expanded="false" aria-controls="segments">
+                            <a class="collapsed"
+                               role="button"
+                               data-toggle="collapse"
+                               data-parent="#accordion"
+                               href="#segments"
+                               aria-expanded="false"
+                               aria-controls="segments">
                                 Segments
                             </a>
                         </h4>
                     </div>
-                    <div id="segments" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSegment">
+                    <div id="segments"
+                         class="panel-collapse collapse"
+                         role="tabpanel"
+                         aria-labelledby="headingSegment">
                         <div class="panel-body">
                             <map-segment reset-map="resetMap()"
                                          display-map-data="displayMapData(polygons, markers)"
@@ -86,15 +114,28 @@
                         </div>
                     </div>
                 </div>
+
+                @*beats*@
                 <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingBeats">
+                    <div class="panel-heading"
+                         role="tab"
+                         id="headingBeats">
                         <h4 class="panel-title">
-                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#beats" aria-expanded="false" aria-controls="beats">
+                            <a class="collapsed"
+                               role="button"
+                               data-toggle="collapse"
+                               data-parent="#accordion"
+                               href="#beats"
+                               aria-expanded="false"
+                               aria-controls="beats">
                                 Beats
                             </a>
                         </h4>
                     </div>
-                    <div id="beats" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingBeats">
+                    <div id="beats"
+                         class="panel-collapse collapse"
+                         role="tabpanel"
+                         aria-labelledby="headingBeats">
                         <div class="panel-body">
                             <map-beat reset-map="resetMap()"
                                       display-map-data="displayMapData(polygons, markers)"
@@ -110,25 +151,73 @@
                         </div>
                     </div>
                 </div>
+
+                @*dropZones*@
                 <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingDropSites">
+                    <div class="panel-heading"
+                         role="tab"
+                         id="headingDropZones">
                         <h4 class="panel-title">
-                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#dropSites" aria-expanded="false" aria-controls="collapseThree">
-                                Drop Sites
+                            <a class="collapsed"
+                               role="button"
+                               data-toggle="collapse"
+                               data-parent="#accordion"
+                               href="#dropZones"
+                               aria-expanded="false"
+                               aria-controls="headingDropZones">
+                                Drop Zones
                             </a>
                         </h4>
                     </div>
-                    <div id="dropSites" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingDropSites">
+                    <div id="dropZones"
+                         class="panel-collapse collapse"
+                         role="tabpanel"
+                         aria-labelledby="headingDropZones">
                         <div class="panel-body">
-                            <map-drop-site reset-map="resetMap()"
+                            <map-drop-zone reset-map="resetMap()"
                                            display-map-data="displayMapData(polygons, markers)"
                                            set-map-location="setMapLocation(lat, lon, zoom)"
                                            set-edit-polygon="setEditPolygon(id)"
                                            set-cancel-edit-polygon="setCancelEditPolygon(id, color)"
                                            hide-map-data="hideMapData()"
-                                           visible="dropSitesVisible"
+                                           visible="dropZonesVisible"
                                            selected-polygon="selectedPolygon"
-                                           set-new-polygon="setNewPolygon(color)"></map-drop-site>
+                                           set-new-polygon="setNewPolygon(color)"></map-drop-zone>
+                        </div>
+                    </div>
+                </div>
+                
+                @*callBoxes*@
+                <div class="panel panel-default">
+                    <div class="panel-heading"
+                         role="tab"
+                         id="headingCallBoxes">
+                        <h4 class="panel-title">
+                            <a class="collapsed"
+                               role="button"
+                               data-toggle="collapse"
+                               data-parent="#accordion"
+                               href="#callBoxes"
+                               aria-expanded="false"
+                               aria-controls="headingCallBoxes">
+                                Call Boxes
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="callBoxes"
+                         class="panel-collapse collapse"
+                         role="tabpanel"
+                         aria-labelledby="headingCallBoxes">
+                        <div class="panel-body">
+                            <map-call-box reset-map="resetMap()"
+                                           display-map-data="displayMapData(polygons, markers)"
+                                           set-map-location="setMapLocation(lat, lon, zoom)"
+                                           set-edit-polygon="setEditPolygon(id)"
+                                           set-cancel-edit-polygon="setCancelEditPolygon(id, color)"
+                                           hide-map-data="hideMapData()"
+                                           visible="callBoxesVisible"
+                                           selected-polygon="selectedPolygon"
+                                           set-new-polygon="setNewPolygon(color)"></map-call-box>
                         </div>
                     </div>
                 </div>

@@ -208,6 +208,10 @@
     <Compile Include="Startup.cs" />
     <Content Include="app\app.js" />
     <Content Include="app\core\app.config.js" />
+    <Content Include="app\map\directives\mapCallBoxDirective.js" />
+    <Content Include="app\map\directives\mapDropZoneDirective.js" />
+    <Content Include="app\map\directives\mapCallBoxTemplate.html" />
+    <Content Include="app\map\directives\mapDropZoneTemplate.html" />
     <Content Include="app\map\directives\mapTowYardTemplate.html" />
     <Content Include="app\map\directives\mapTowYardDirective.js" />
     <Content Include="app\map\directives\mapBeatDirective.js" />

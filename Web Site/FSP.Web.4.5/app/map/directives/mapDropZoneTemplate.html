@@ -1,0 +1,152 @@
+﻿<div ng-show="!isAdding">
+   <div class="form-group"
+      ng-show="isBusyGetting">
+      Loading Drop Zones...
+      <i class="fa fa-refresh fa-spin"></i>
+   </div>
+   <div class="form-group"
+      ng-hide="isBusyGetting">
+      <select class="form-control"
+         ng-model="selectedDropZoneID"
+         ng-change="setSelectedDropZone()"
+         ng-disabled="dropZones.length === 0 || isEditing">
+         <option value="">
+            --Select Drop Zone--
+         </option>
+         <option ng-repeat="dropZone in dropZones"
+            value="{{dropZone.DropZoneID}}">{{dropZone.DropZoneNumber}}</option>
+      </select>
+   </div>
+</div>
+
+<!--input form-->
+<div ng-show="selectedDropZone">
+   <div class="form-group">
+      Number
+      <input ng-model="selectedDropZone.DropZoneNumber"
+         type="text"
+         class="form-control"
+         ng-disabled="!isEditing && !isAdding" />
+   </div>
+   <div class="form-group">
+      Description
+      <textarea ng-model="selectedDropZone.DropZoneDescription"
+         class="form-control"
+         ng-disabled="!isEditing && !isAdding"></textarea>
+   </div>
+   <div class="form-group">
+      Comments
+      <textarea ng-model="selectedDropZone.Comments"
+         class="form-control"
+         ng-disabled="!isEditing && !isAdding"></textarea>
+   </div>
+   <div class="form-group">
+      Location
+      <textarea ng-model="selectedDropZone.Location"
+         class="form-control"
+         ng-disabled="!isEditing && !isAdding"></textarea>
+   </div>
+   <div class="form-group">
+      Restrictions
+      <input ng-model="selectedDropZone.Restrictions"
+         type="text"
+         class="form-control"
+         ng-disabled="!isEditing && !isAdding" />
+   </div>
+   <div class="form-group">
+      PD Phone #
+      <input ng-model="selectedDropZone.PDPhoneNumber"
+         type="text"
+         class="form-control"
+         ng-disabled="!isEditing && !isAdding" />
+   </div>
+   <div class="form-group">
+      Capacity
+      <input ng-model="selectedDropZone.Capacity"
+         type="text"
+         class="form-control"
+         ng-disabled="!isEditing && !isAdding" />
+   </div>
+   <div class="form-group">
+      City
+      <input ng-model="selectedDropZone.City"
+         type="text"
+         class="form-control"
+         ng-disabled="!isEditing && !isAdding" />
+   </div>
+   <div class="form-group">
+      Color
+      <input type="text"
+         minicolors="colorPickerSettings"
+         ng-model="setSelectedDropZone.Color"
+         class="form-control"
+         ng-disabled="!isEditing && !isAdding" />
+   </div>
+</div>
+
+<!--edit existing-->
+<div class="form-group"
+   ng-show="selectedDropZone && !isAdding">
+   <button ng-show="!isEditing"
+      ng-click="setEdit()"
+      class="btn btn-primary btn-sm">
+      <i class="fa fa-pencil">
+      </i> Edit Drop Zone
+   </button>
+   <button ng-show="isEditing"
+      ng-click="save()"
+      ng-disabled="isBusySaving || isBusyDeleting"
+      class="btn btn-primary btn-sm">
+      <i class="fa fa-check"
+         ng-hide="isBusySaving">
+      </i>
+      <i class="fa fa-refresh fa-spin"
+         ng-show="isBusySaving">
+      </i>
+      Save
+   </button>
+   <button ng-show="isEditing"
+      ng-disabled="isBusySaving || isBusyDeleting"
+      ng-click="delete()"
+      class="btn btn-danger btn-sm">
+      <i class="fa fa-trash"
+         ng-hide="isBusyDeleting">
+      </i>
+      <i class="fa fa-refresh fa-spin"
+         ng-show="isBusyDeleting">
+      </i>
+      Delete
+   </button>
+   <button ng-show="isEditing"
+      ng-click="cancelEdit()"
+      class="btn btn-default btn-sm">
+      Cancel
+   </button>
+</div>
+
+<!--add new-->
+<div class="form-group"
+   ng-show="!isEditing">
+   <button ng-hide="selectedDropZone"
+      ng-click="prepareNew()"
+      class="btn btn-success btn-sm">
+      <i class="fa fa-plus"></i> Add Drop Zone
+   </button>
+   <button ng-show="!isEditing && isAdding"
+      ng-click="add()"
+      ng-disabled="isBusyAdding"
+      class="btn btn-success btn-sm">
+      <i class="fa fa-check"
+         ng-hide="isBusyAdding">
+      </i>
+      <i class="fa fa-refresh fa-spin"
+         ng-show="isBusyAdding">
+      </i>
+      Save
+   </button>
+   <button ng-show="!isEditing && isAdding"
+      ng-click="cancelAdd()"
+      class="btn btn-default btn-sm">
+      Cancel
+   </button>
+</div>
