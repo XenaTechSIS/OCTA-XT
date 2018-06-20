@@ -29,14 +29,13 @@ C:\GitHub\OCTA-XT\FPSService\FPSService\bin\SqlServerTypes\x64\msvcr120.dll
 C:\GitHub\OCTA-XT\FPSService\FPSService\bin\SqlServerTypes\x64\SqlServerSpatial140.dll
 C:\GitHub\OCTA-XT\FPSService\FPSService\bin\SqlServerTypes\x86\msvcr120.dll
 C:\GitHub\OCTA-XT\FPSService\FPSService\bin\SqlServerTypes\x86\SqlServerSpatial140.dll
-C:\GitHub\OCTA-XT\FPSService\FPSService\bin\FPSService.dll.config
-C:\GitHub\OCTA-XT\FPSService\FPSService\bin\FPSService.dll
-C:\GitHub\OCTA-XT\FPSService\FPSService\bin\FPSService.pdb
 C:\GitHub\OCTA-XT\FPSService\FPSService\bin\Microsoft.SqlServer.Types.dll
 C:\GitHub\OCTA-XT\FPSService\FPSService\bin\Newtonsoft.Json.dll
 C:\GitHub\OCTA-XT\FPSService\FPSService\bin\System.Data.Entity.dll
-C:\GitHub\OCTA-XT\FPSService\FPSService\obj\Debug\FPSService.csprojAssemblyReference.cache
 C:\GitHub\OCTA-XT\FPSService\FPSService\obj\Debug\FPSService.csproj.CoreCompileInputs.cache
 C:\GitHub\OCTA-XT\FPSService\FPSService\obj\Debug\FPSService.csproj.CopyComplete
 C:\GitHub\OCTA-XT\FPSService\FPSService\obj\Debug\FPSService.dll
 C:\GitHub\OCTA-XT\FPSService\FPSService\obj\Debug\FPSService.pdb
+C:\GitHub\OCTA-XT\FPSService\FPSService\bin\FPSService.dll.config
+C:\GitHub\OCTA-XT\FPSService\FPSService\bin\FPSService.dll
+C:\GitHub\OCTA-XT\FPSService\FPSService\bin\FPSService.pdb

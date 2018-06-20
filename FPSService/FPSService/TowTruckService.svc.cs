@@ -700,6 +700,11 @@ namespace FPSService
                 }
                 JSON += "]";
                 bn.BeatSegmentExtent = JSON;
+
+                if(bn.Color == null || bn.Color == "")
+                {
+                    bn.Color = "#000000";
+                }
             }
 
             return Segments;
@@ -726,6 +731,12 @@ namespace FPSService
             }
             JSON += "]";
             Beat.BeatSegmentExtent = JSON;
+
+            if (Beat.Color == null || Beat.Color == "")
+            {
+                Beat.Color = "#000000";
+            }
+
             return Beat;
         }
 
@@ -745,6 +756,10 @@ namespace FPSService
 
         public string CreateBeat(Beats_New beat)
         {
+            beat.StartDate = DateTime.Now;
+            beat.EndDate = DateTime.Now.AddYears(25);
+            beat.FreewayID = 0;
+
             string extstring = "";
             SQL.SQLCode sql = new SQL.SQLCode();
             List<latLng> ext = JsonConvert.DeserializeObject<List<latLng>>(beat.BeatExtent);
@@ -768,6 +783,10 @@ namespace FPSService
 
         public string UpdateBeat(Beats_New beat)
         {
+            beat.StartDate = DateTime.Now;
+            beat.EndDate = DateTime.Now.AddYears(25);
+            beat.FreewayID = 0;
+
             string extstring = "";
             SQL.SQLCode sql = new SQL.SQLCode();
             List<latLng> ext = JsonConvert.DeserializeObject<List<latLng>>(beat.BeatExtent);
@@ -813,6 +832,10 @@ namespace FPSService
                 JSON += "]";
                 bn.BeatExtent = JSON;
                 bn.BeatSegments = new List<BeatSegment_Cond>();
+                if(bn.BeatColor == null || bn.BeatColor == "")
+                {
+                    bn.BeatColor = "#000000";
+                }
                 bn.BeatSegments = sql.RetrieveBeatSegments(bn.BeatID);
             }
 
@@ -840,6 +863,10 @@ namespace FPSService
             }
             JSON += "]";
             Beat.BeatExtent = JSON;
+            if (Beat.BeatColor == null || Beat.BeatColor == "")
+            {
+                Beat.BeatColor = "#000000";
+            }
             Beat.BeatSegments = new List<BeatSegment_Cond>();
             Beat.BeatSegments = sql.RetrieveBeatSegments(Beat.BeatID);
 
