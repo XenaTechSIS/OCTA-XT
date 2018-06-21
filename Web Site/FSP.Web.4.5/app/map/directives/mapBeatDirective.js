@@ -38,11 +38,7 @@
             scope.selectedPolygon = "";
 
             function buildDetailsContent(beat) {
-               var content = "<table>";
-               content += "<tr>";
-               content += "<td>ID:</td>";
-               content += "<td><strong>" + beat.BeatID + "</strong></td>";
-               content += "</tr>";
+               var content = "<table>";               
                content += "<tr>";
                content += "<td>Beat Number:</td>";
                content += "<td><strong>" + beat.BeatNumber + "</strong></td>";
@@ -93,8 +89,8 @@
                   animation: google.maps.Animation.DROP,
                   position: new google.maps.LatLng(beat.PolygonData.MiddleLat, beat.PolygonData.MiddleLon),
                   draggable: false,
-                  labelContent: beat.BeatID,
-                  labelAnchor: new google.maps.Point(25, 40),
+                  labelContent: beat.BeatNumber,
+                  labelAnchor: new google.maps.Point(35, 40),
                   labelClass: "googleMapMarkerLabel", // the CSS class for the label
                   labelStyle: { opacity: 0.75 }
                });
@@ -198,7 +194,7 @@
                      scope.markers = [];
                      scope.beats.forEach(function (beat) {
                         buildPolygons(beat);
-                        //buildMarkers(segment);
+                        buildMarkers(beat);
                      });
 
                      //if (selectedSegmentId)

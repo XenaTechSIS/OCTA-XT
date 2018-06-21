@@ -50,35 +50,7 @@
                content += "</table>";
                return content;
             }
-
-            function buildPolygons(callBox) {
-
-               if (!callBox) return;
-               if (!callBox.PolygonData) return;
-               if (!callBox.PolygonData.Coordinates) return;
-
-               var cleanLatLng = [];
-
-               callBox.PolygonData.Coordinates.forEach(function (coordinate) {
-                  cleanLatLng.push({
-                     lat: coordinate.lat,
-                     lng: coordinate.lng
-                  });
-               });
-
-               var callBoxPolygon = new google.maps.Polygon({
-                  id: "callBoxPolygon" + callBox.CallBoxID,
-                  paths: cleanLatLng,
-                  strokeColor: callBox.Color || "#000000",
-                  strokeOpacity: 0.8,
-                  strokeWeight: 2,
-                  fillColor: callBox.Color || "#000000",
-                  fillOpacity: 0.35,
-                  editable: false
-               });
-               scope.polygons.push(callBoxPolygon);
-            }
-
+           
             function buildMarkers(callBox) {
 
                if (!callBox) return;
@@ -92,7 +64,7 @@
                   position: new google.maps.LatLng(coor.lat, coor.lng),
                   draggable: false,
                   labelContent: callBox.SignNumber,
-                  labelAnchor: new google.maps.Point(25, 40),
+                  labelAnchor: new google.maps.Point(35, 40),
                   labelClass: "googleMapMarkerLabel", // the CSS class for the label
                   labelStyle: { opacity: 0.75 }
                });
@@ -194,8 +166,7 @@
                      console.log('%i callboxes found %O', scope.callBoxs.length, scope.callBoxs);
                      scope.polygons = [];
                      scope.markers = [];
-                     scope.callBoxs.forEach(function (callBox) {
-                        //buildPolygons(callBox);
+                     scope.callBoxs.forEach(function (callBox) {                       
                         buildMarkers(callBox);
                      });
 
@@ -280,8 +251,7 @@
                   Capacity: 0,
                   City: "",
                   PDPhoneNumber: "",
-                  Position: "",
-                  Color: "#000000"
+                  Position: ""               
                };
                scope.isAdding = true;
                scope.triggerSetNewPolygon(scope.selectedCallBox.Color);

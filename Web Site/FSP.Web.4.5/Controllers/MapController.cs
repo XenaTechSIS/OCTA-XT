@@ -7,9 +7,11 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
+using FSP.Web.Filters;
 
 namespace FSP.Web.Controllers
 {
+    [CustomAuthorization]
     public class MapController : Controller
     {
         public ActionResult Index()
@@ -301,13 +303,14 @@ namespace FSP.Web.Controllers
                     var rawCallBoxes = service.RetreiveCallBoxes();
                     var callBoxes = rawCallBoxes.OrderBy(p => p.CallBoxID).ToList().Select(s => new
                     {
-                        s.CallBoxID,                        
+                        s.CallBoxID,
                         s.Comments,
                         s.FreewayID,
-                        s.Location,                        
+                        s.Location,
                         s.SignNumber,
                         s.SiteType,
                         s.TelephoneNumber,
+                        s.Position,
                         PolygonData = new PolygonData(s.Position)
                     }).ToList();
 
@@ -328,7 +331,7 @@ namespace FSP.Web.Controllers
         public ActionResult SaveCallBoxPolygon(CallBoxes_New data)
         {
             try
-            {              
+            {
                 using (var service = new TowTruckServiceClient())
                 {
                     var updateResult = service.UpdateCallBox(data);
@@ -406,9 +409,6 @@ namespace FSP.Web.Controllers
         {
             try
             {
-                //if (string.IsNullOrEmpty(data.ExtensionData))
-                //    return Json("false", JsonRequestBehavior.AllowGet);
-
                 using (var service = new TowTruckServiceClient())
                 {
                     var updateResult = service.UpdateDropZone(data);
