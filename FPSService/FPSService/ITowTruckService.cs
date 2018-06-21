@@ -84,6 +84,80 @@ namespace FPSService
         [OperationContract]
         void ResetAlarm(string _vehicleNumber, string _alarm);
 
+        [OperationContract]
+        List<BeatSegment_New> RetreiveAllSegments();
+
+        [OperationContract]
+        BeatSegment_New RetrieveSegment(Guid SegmentID);
+
+        [OperationContract]
+        string CreateSegment(BeatSegment_New segment);
+
+        [OperationContract]
+        string UpdateSegment(BeatSegment_New segment);
+
+        [OperationContract]
+        string DeleteSegment(Guid segmentid);
+
+        [OperationContract]
+        List<Beats_New> RetreiveAllBeats();
+
+        [OperationContract]
+        Beats_New RetreiveBeat(Guid BeatID);
+
+        [OperationContract]
+        string CreateBeat(Beats_New beat);
+
+        [OperationContract]
+        string UpdateBeat(Beats_New beat);
+
+        [OperationContract]
+        string DeleteBeat(Guid BeatID);
+
+        [OperationContract]
+        List<Yard_New> RetreiveAllYards();
+
+        [OperationContract]
+        Yard_New RetreiveYard(Guid TowTruckYardID);
+
+        [OperationContract]
+        string CreateYard(Yard_New Yard);
+
+        [OperationContract]
+        string UpdateYard(Yard_New Yard);
+
+        [OperationContract]
+        string DeleteYard(Guid YardID);
+
+        [OperationContract]
+        List<DropZone_New> RetreiveAllDZs();
+
+        [OperationContract]
+        DropZone_New RetreiveDZ(Guid DropZoneID);
+
+        [OperationContract]
+        string CreateDropZone(DropZone_New Yard);
+
+        [OperationContract]
+        string UpdateDropZone(DropZone_New Yard);
+
+        [OperationContract]
+        string DeleteDropZone(Guid DropZoneID);
+
+        [OperationContract]
+        List<CallBoxes_New> RetreiveCallBoxes();
+
+        [OperationContract]
+        CallBoxes_New RetreiveCallBox(Guid CallBoxID);
+
+        [OperationContract]
+        string CreateCallBox(CallBoxes_New Yard);
+
+        [OperationContract]
+        string UpdateCallBox(CallBoxes_New Yard);
+
+        [OperationContract]
+        string DeleteCallBox(Guid DropZoneID);
     }
 
     #endregion
@@ -536,7 +610,7 @@ namespace FPSService
 
     #endregion
 
-#region  " Other Server Classes "
+    #region  " Other Server Classes "
 
     [DataContract]
     public class CopyTruck
@@ -738,5 +812,169 @@ namespace FPSService
         [DataMember]
         public Guid FleetVehicleID { get; set; }
     }
-#endregion
+    #endregion
+
+    #region "Geo Object Data Models"
+
+    [DataContract]
+    public class BeatSegment_New
+    {
+
+        [DataMember]
+        public Guid BeatSegmentID { get; set; }
+        [DataMember]
+        public string CHPDescription { get; set; }
+        [DataMember]
+        public string PIMSID { get; set; }
+        [DataMember]
+        public string BeatSegmentExtent { get; set; }
+        [DataMember]
+        public string BeatSegmentNumber { get; set; }
+        [DataMember]
+        public string BeatSegmentDescription { get; set; }
+        [DataMember]
+        public string CHPDescription2 { get; set; }
+        [DataMember]
+        public string LastUpdate { get; set; }
+        [DataMember]
+        public string LastUpdateBy { get; set; }
+        [DataMember]
+        public bool Active { get; set; }
+        [DataMember]
+        public string Color { get; set; }
+    }
+
+    [DataContract]
+    public class BeatSegment_Cond
+    {
+        [DataMember]
+        public Guid BeatSegmentID { get; set; }
+
+        [DataMember]
+        public string BeatSegmentNumber { get; set; }
+
+        [DataMember]
+        public string BeatSegmentDescription { get; set; }
+    }
+
+    [DataContract]
+    public class Beats_New
+    {
+        [DataMember]
+        public Guid BeatID { get; set; }
+
+        [DataMember]
+        public bool Active { get; set; }
+
+        [DataMember]
+        public string BeatExtent { get; set; }
+
+        [DataMember]
+        public int FreewayID { get; set; }
+
+        [DataMember]
+        public string BeatDescription { get; set; }
+
+        [DataMember]
+        public string BeatNumber { get; set; }
+
+        [DataMember]
+        public DateTime LastUpdate { get; set; }
+
+        [DataMember]
+        public string LastUpdateBy { get; set; }
+
+        [DataMember]
+        public bool IsTemporary { get; set; }
+
+        [DataMember]
+        public string BeatColor { get; set; }
+
+        [DataMember]
+        public DateTime StartDate { get; set; }
+
+        [DataMember]
+        public DateTime EndDate { get; set; }
+
+        [DataMember]
+        public List<BeatSegment_Cond> BeatSegments { get; set; }
+    }
+
+    [DataContract]
+    public class latLng
+    {
+
+        [DataMember]
+        public string lat { get; set; }
+
+        [DataMember]
+        public string lng { get; set; }
+    }
+
+    [DataContract]
+    public class Yard_New
+    {
+        [DataMember]
+        public Guid YardID { get; set; }
+        [DataMember]
+        public string Location { get; set; }
+        [DataMember]
+        public string Comments { get; set; }
+        [DataMember]
+        public string TowTruckCompanyName { get; set; }
+        [DataMember]
+        public string Position { get; set; }
+        [DataMember]
+        public string YardDescription { get; set; }
+        [DataMember]
+        public string TowTruckCompanyPhoneNumber { get; set; }
+    }
+
+    [DataContract]
+    public class DropZone_New
+    {
+        [DataMember]
+        public Guid DropZoneID { get; set; }
+        [DataMember]
+        public string Location { get; set; }
+        [DataMember]
+        public string Comments { get; set; }
+        [DataMember]
+        public string Restrictions { get; set; }
+        [DataMember]
+        public string DropZoneNumber { get; set; }
+        [DataMember]
+        public string DropZoneDescription { get; set; }
+        [DataMember]
+        public string City { get; set; }
+        [DataMember]
+        public string PDPhoneNumber { get; set; }
+        [DataMember]
+        public int Capacity { get; set; }
+        [DataMember]
+        public string Position { get; set; }
+    }
+
+    [DataContract]
+    public class CallBoxes_New
+    {
+        [DataMember]
+        public Guid CallBoxID { get; set; }
+        [DataMember]
+        public string TelephoneNumber { get; set; }
+        [DataMember]
+        public string Location { get; set; }
+        [DataMember]
+        public int FreewayID { get; set; }
+        [DataMember]
+        public string SiteType { get; set; }
+        [DataMember]
+        public string Comments { get; set; }
+        [DataMember]
+        public string Position { get; set; }
+        [DataMember]
+        public string SignNumber { get; set; }
+    }
+    #endregion
+
 }

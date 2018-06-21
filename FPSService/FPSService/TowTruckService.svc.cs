@@ -7,6 +7,7 @@ using System.Text;
 using System.ServiceModel.Activation;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
+using FPSService.MiscData;
 
 namespace FPSService
 {
@@ -26,7 +27,7 @@ namespace FPSService
         {
             try
             {
-                TowTruck.TowTruck fTruck = DataClasses.GlobalData.currentTrucks.Find(delegate(TowTruck.TowTruck dTruck) { return dTruck.Identifier == t.Identifier; });
+                TowTruck.TowTruck fTruck = DataClasses.GlobalData.currentTrucks.Find(delegate (TowTruck.TowTruck dTruck) { return dTruck.Identifier == t.Identifier; });
                 if (fTruck == null)
                 {
                     //if no data is being forwarded, the truck could be destroyed by the target service, we don't
@@ -145,7 +146,7 @@ namespace FPSService
             {
                 foreach (CopyTruck t in trucks)
                 {
-                    TowTruck.TowTruck fTruck = DataClasses.GlobalData.currentTrucks.Find(delegate(TowTruck.TowTruck truck){return truck.Identifier == t.Identifier;});
+                    TowTruck.TowTruck fTruck = DataClasses.GlobalData.currentTrucks.Find(delegate (TowTruck.TowTruck truck) { return truck.Identifier == t.Identifier; });
                     if (fTruck == null)
                     {
                         //if no data is being forwarded, the truck could be destroyed by the target service, we don't
@@ -264,12 +265,12 @@ namespace FPSService
             try
             {
                 JsonSerializer des = new JsonSerializer();
-                
+
                 //List<TowTruck.TowTruck> trucks = des.Deserialize<List<TowTruck.TowTruck>>(truckList);
                 List<TowTruck.TowTruck> trucks = JsonConvert.DeserializeObject<List<TowTruck.TowTruck>>(truckList);
                 foreach (TowTruck.TowTruck t in trucks)
                 {
-                    TowTruck.TowTruck thisFoundTruck = DataClasses.GlobalData.currentTrucks.Find(delegate(TowTruck.TowTruck truck) { return truck.Identifier == t.Identifier; });
+                    TowTruck.TowTruck thisFoundTruck = DataClasses.GlobalData.currentTrucks.Find(delegate (TowTruck.TowTruck truck) { return truck.Identifier == t.Identifier; });
                     if (thisFoundTruck == null)
                     {
                         DataClasses.GlobalData.currentTrucks.Add(t);
@@ -316,7 +317,8 @@ namespace FPSService
                 {
                     foreach (MiscData.Assist thisAssist in theseAssists)
                     {
-                        AllIncidents.Add(new IncidentScreenData {
+                        AllIncidents.Add(new IncidentScreenData
+                        {
                             IncidentID = thisIncident.IncidentID,
                             Direction = thisIncident.Direction,
                             Location = thisIncident.Location,
@@ -337,7 +339,8 @@ namespace FPSService
                 }
                 else
                 {
-                    AllIncidents.Add(new IncidentScreenData {
+                    AllIncidents.Add(new IncidentScreenData
+                    {
                         IncidentID = thisIncident.IncidentID,
                         Direction = thisIncident.Direction,
                         Location = thisIncident.Location,
@@ -523,7 +526,8 @@ namespace FPSService
                     ServiceText = new string[1];
                     ServiceText[0] = "No Services Rendered";
                 }
-                AllAssists.Add(new AssistScreenData { 
+                AllAssists.Add(new AssistScreenData
+                {
                     AssistID = thisAssist.AssistID,
                     DriverName = mySQL.FindDriverNameByID(thisAssist.DriverID),
                     DispatchNumber = DataClasses.GlobalData.FindIncidentNumberByID(thisAssist.IncidentID),
@@ -562,7 +566,7 @@ namespace FPSService
             return AllAssists;
         }
 
-        
+
 
         /*
         public void AddTruckAssistRequest(string IPAddress, AssistReq thisReq, Guid IncidentID)
@@ -611,6 +615,603 @@ namespace FPSService
             }
         }
         */
+        #endregion
+
+        #region " Geo-Objects "
+
+        #region Segments CRUD
+
+        public string DeleteSegment(Guid segmentid)
+        {
+
+            SQL.SQLCode sql = new SQL.SQLCode();
+            string result = sql.DeleteSegment(segmentid);
+            BeatData.Beats.LoadBeatSegments();
+
+            return result;
+        }
+
+        public string CreateSegment(BeatSegment_New segment)
+        {
+            string extstring = "";
+            SQL.SQLCode sql = new SQL.SQLCode();
+            List<latLng> ext = JsonConvert.DeserializeObject<List<latLng>>(segment.BeatSegmentExtent);
+            for (int i = 0; i < ext.Count; i++)
+            {
+                if (i < ext.Count - 1)
+                {
+                    extstring += ext[i].lat + " " + ext[i].lng + ", ";
+                }
+                else
+                {
+                    extstring += ext[i].lat + " " + ext[i].lng;
+                }
+            }
+            segment.BeatSegmentExtent = extstring;
+            string result = sql.CreateSegment(segment);
+            BeatData.Beats.LoadBeatSegments();
+
+            return result;
+        }
+
+        public string UpdateSegment(BeatSegment_New segment)
+        {
+            string extstring = "";
+            SQL.SQLCode sql = new SQL.SQLCode();
+            List<latLng> ext = JsonConvert.DeserializeObject<List<latLng>>(segment.BeatSegmentExtent);
+            for (int i = 0; i < ext.Count; i++)
+            {
+                if (i < ext.Count - 1)
+                {
+                    extstring += ext[i].lat + " " + ext[i].lng + ", ";
+                }
+                else
+                {
+                    extstring += ext[i].lat + " " + ext[i].lng;
+                }
+            }
+            segment.BeatSegmentExtent = extstring;
+            string result = sql.UpdateSegment(segment);
+            BeatData.Beats.LoadBeatSegments();
+
+            return result;
+        }
+
+        public List<BeatSegment_New> RetreiveAllSegments()
+        {
+            List<BeatSegment_New> Segments = new List<BeatSegment_New>();
+            SQL.SQLCode sql = new SQL.SQLCode();
+            Segments = sql.RetrieveAllSegments();
+            foreach (BeatSegment_New bn in Segments)
+            {
+                string JSON = "[";
+                string[] extent = bn.BeatSegmentExtent.Split(',');
+                for (int i = 0; i < extent.Length; i++)
+                {
+                    string[] LL = extent[i].Trim().Split(' ');
+                    if (i == extent.Length - 1)
+                    {
+                        JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " }";
+                    }
+                    else
+                    {
+                        JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " },";
+                    }
+                }
+                JSON += "]";
+                bn.BeatSegmentExtent = JSON;
+
+                if(bn.Color == null || bn.Color == "")
+                {
+                    bn.Color = "#000000";
+                }
+            }
+
+            return Segments;
+        }
+
+        public BeatSegment_New RetrieveSegment(Guid SegmentID)
+        {
+            BeatSegment_New Beat = new BeatSegment_New();
+            SQL.SQLCode sql = new SQL.SQLCode();
+            Beat = sql.RetrieveSegment(SegmentID);
+            string JSON = "[";
+            string[] extent = Beat.BeatSegmentExtent.Split(',');
+            for (int i = 0; i < extent.Length; i++)
+            {
+                string[] LL = extent[i].Trim().Split(' ');
+                if (i == extent.Length - 1)
+                {
+                    JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " }";
+                }
+                else
+                {
+                    JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " },";
+                }
+            }
+            JSON += "]";
+            Beat.BeatSegmentExtent = JSON;
+
+            if (Beat.Color == null || Beat.Color == "")
+            {
+                Beat.Color = "#000000";
+            }
+
+            return Beat;
+        }
+
+        #endregion
+
+        #region Beats CRUD
+
+        public string DeleteBeat(Guid BeatID)
+        {
+
+            SQL.SQLCode sql = new SQL.SQLCode();
+            string result = sql.DeleteBeat(BeatID);
+            BeatData.Beats.LoadBeats();
+
+            return result;
+        }
+
+        public string CreateBeat(Beats_New beat)
+        {
+            beat.StartDate = DateTime.Now;
+            beat.EndDate = DateTime.Now.AddYears(25);
+            beat.FreewayID = 0;
+
+            string extstring = "";
+            SQL.SQLCode sql = new SQL.SQLCode();
+            List<latLng> ext = JsonConvert.DeserializeObject<List<latLng>>(beat.BeatExtent);
+            for (int i = 0; i < ext.Count; i++)
+            {
+                if (i < ext.Count - 1)
+                {
+                    extstring += ext[i].lat + " " + ext[i].lng + ", ";
+                }
+                else
+                {
+                    extstring += ext[i].lat + " " + ext[i].lng;
+                }
+            }
+            beat.BeatExtent = extstring;
+            string result = sql.CreateBeat(beat);
+            BeatData.Beats.LoadBeats();
+
+            return result;
+        }
+
+        public string UpdateBeat(Beats_New beat)
+        {
+            beat.StartDate = DateTime.Now;
+            beat.EndDate = DateTime.Now.AddYears(25);
+            beat.FreewayID = 0;
+
+            string extstring = "";
+            SQL.SQLCode sql = new SQL.SQLCode();
+            List<latLng> ext = JsonConvert.DeserializeObject<List<latLng>>(beat.BeatExtent);
+            for (int i = 0; i < ext.Count; i++)
+            {
+                if (i < ext.Count - 1)
+                {
+                    extstring += ext[i].lat + " " + ext[i].lng + ", ";
+                }
+                else
+                {
+                    extstring += ext[i].lat + " " + ext[i].lng;
+                }
+            }
+            beat.BeatExtent = extstring;
+            string result = sql.CreateBeat(beat);
+            BeatData.Beats.LoadBeats();
+
+            return result;
+        }
+
+        public List<Beats_New> RetreiveAllBeats()
+        {
+            List<Beats_New> Beats = new List<Beats_New>();
+            SQL.SQLCode sql = new SQL.SQLCode();
+            Beats = sql.RetrieveAllBeats();
+            foreach (Beats_New bn in Beats)
+            {
+                string JSON = "[";
+                string[] extent = bn.BeatExtent.Split(',');
+                for (int i = 0; i < extent.Length; i++)
+                {
+                    string[] LL = extent[i].Trim().Split(' ');
+                    if (i == extent.Length - 1)
+                    {
+                        JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " }";
+                    }
+                    else
+                    {
+                        JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " },";
+                    }
+                }
+                JSON += "]";
+                bn.BeatExtent = JSON;
+                bn.BeatSegments = new List<BeatSegment_Cond>();
+                if(bn.BeatColor == null || bn.BeatColor == "")
+                {
+                    bn.BeatColor = "#000000";
+                }
+                bn.BeatSegments = sql.RetrieveBeatSegments(bn.BeatID);
+            }
+
+            return Beats;
+        }
+
+        public Beats_New RetreiveBeat(Guid BeatID)
+        {
+            Beats_New Beat = new Beats_New();
+            SQL.SQLCode sql = new SQL.SQLCode();
+            Beat = sql.RetrieveBeat(BeatID);
+            string JSON = "[";
+            string[] extent = Beat.BeatExtent.Split(',');
+            for (int i = 0; i < extent.Length; i++)
+            {
+                string[] LL = extent[i].Trim().Split(' ');
+                if (i == extent.Length - 1)
+                {
+                    JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " }";
+                }
+                else
+                {
+                    JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " },";
+                }
+            }
+            JSON += "]";
+            Beat.BeatExtent = JSON;
+            if (Beat.BeatColor == null || Beat.BeatColor == "")
+            {
+                Beat.BeatColor = "#000000";
+            }
+            Beat.BeatSegments = new List<BeatSegment_Cond>();
+            Beat.BeatSegments = sql.RetrieveBeatSegments(Beat.BeatID);
+
+            return Beat;
+        }
+
+        #endregion
+
+        #region Tow Truck Yards
+
+        public string DeleteYard(Guid YardID)
+        {
+
+            SQL.SQLCode sql = new SQL.SQLCode();
+            string result = sql.DeleteYard(YardID);
+            BeatData.YardClass.LoadYards();
+
+            return result;
+        }
+
+        public string CreateYard(Yard_New yard)
+        {
+            string extstring = "";
+            SQL.SQLCode sql = new SQL.SQLCode();
+            List<latLng> ext = JsonConvert.DeserializeObject<List<latLng>>(yard.Position);
+            for (int i = 0; i < ext.Count; i++)
+            {
+                if (i < ext.Count - 1)
+                {
+                    extstring += ext[i].lat + " " + ext[i].lng + ", ";
+                }
+                else
+                {
+                    extstring += ext[i].lat + " " + ext[i].lng;
+                }
+            }
+            yard.Position = extstring;
+            string result = sql.UpdateYard(yard);
+            BeatData.YardClass.LoadYards();
+
+            return result;
+        }
+
+        public string UpdateYard(Yard_New yard)
+        {
+            string extstring = "";
+            SQL.SQLCode sql = new SQL.SQLCode();
+            List<latLng> ext = JsonConvert.DeserializeObject<List<latLng>>(yard.Position);
+            for (int i = 0; i < ext.Count; i++)
+            {
+                if (i < ext.Count - 1)
+                {
+                    extstring += ext[i].lat + " " + ext[i].lng + ", ";
+                }
+                else
+                {
+                    extstring += ext[i].lat + " " + ext[i].lng;
+                }
+            }
+            yard.Position = extstring;
+            string result = sql.UpdateYard(yard);
+            BeatData.YardClass.LoadYards();
+
+            return result;
+        }
+
+        public List<Yard_New> RetreiveAllYards()
+        {
+            List<Yard_New> Yards = new List<Yard_New>();
+            SQL.SQLCode sql = new SQL.SQLCode();
+            Yards = sql.RetrieveAllYards();
+            foreach (Yard_New yard in Yards)
+            {
+                string JSON = "[";
+                string[] extent = yard.Position.Split(',');
+                for (int i = 0; i < extent.Length; i++)
+                {
+                    string[] LL = extent[i].Trim().Split(' ');
+                    if (i == extent.Length - 1)
+                    {
+                        JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " }";
+                    }
+                    else
+                    {
+                        JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " },";
+                    }
+                }
+                JSON += "]";
+                yard.Position = JSON;
+            }
+
+            return Yards;
+        }
+
+        public Yard_New RetreiveYard(Guid TowTruckYardID)
+        {
+            Yard_New Yard = new Yard_New();
+            SQL.SQLCode sql = new SQL.SQLCode();
+            Yard = sql.RetrieveYard(TowTruckYardID);
+            string JSON = "[";
+            string[] extent = Yard.Position.Split(',');
+            for (int i = 0; i < extent.Length; i++)
+            {
+                string[] LL = extent[i].Trim().Split(' ');
+                if (i == extent.Length - 1)
+                {
+                    JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " }";
+                }
+                else
+                {
+                    JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " },";
+                }
+            }
+            JSON += "]";
+            Yard.Position = JSON;
+
+            return Yard;
+        }
+
+        #endregion
+
+        #region DropZones CRUD
+
+        public string DeleteDropZone(Guid DropZoneID)
+        {
+
+            SQL.SQLCode sql = new SQL.SQLCode();
+            string result = sql.DeleteDropZone(DropZoneID);
+            sql.LoadDropZones();
+
+            return result;
+        }
+
+        public string CreateDropZone(DropZone_New DropZone)
+        {
+            string extstring = "";
+            SQL.SQLCode sql = new SQL.SQLCode();
+            List<latLng> ext = JsonConvert.DeserializeObject<List<latLng>>(DropZone.Position);
+            for (int i = 0; i < ext.Count; i++)
+            {
+                if (i < ext.Count - 1)
+                {
+                    extstring += ext[i].lat + " " + ext[i].lng + ", ";
+                }
+                else
+                {
+                    extstring += ext[i].lat + " " + ext[i].lng;
+                }
+            }
+            DropZone.Position = extstring;
+            string result = sql.UpdateDropZone(DropZone);
+            sql.LoadDropZones();
+
+            return result;
+        }
+
+        public string UpdateDropZone(DropZone_New DropZone)
+        {
+            string extstring = "";
+            SQL.SQLCode sql = new SQL.SQLCode();
+            List<latLng> ext = JsonConvert.DeserializeObject<List<latLng>>(DropZone.Position);
+            for (int i = 0; i < ext.Count; i++)
+            {
+                if (i < ext.Count - 1)
+                {
+                    extstring += ext[i].lat + " " + ext[i].lng + ", ";
+                }
+                else
+                {
+                    extstring += ext[i].lat + " " + ext[i].lng;
+                }
+            }
+            DropZone.Position = extstring;
+            string result = sql.UpdateDropZone(DropZone);
+            sql.LoadDropZones();
+
+            return result;
+        }
+
+        public List<DropZone_New> RetreiveAllDZs()
+        {
+            List<DropZone_New> DZones = new List<DropZone_New>();
+            SQL.SQLCode sql = new SQL.SQLCode();
+            DZones = sql.RetreiveAllDZs();
+            foreach (DropZone_New zone in DZones)
+            {
+                string JSON = "[";
+                string[] extent = zone.Position.Split(',');
+                for (int i = 0; i < extent.Length; i++)
+                {
+                    string[] LL = extent[i].Trim().Split(' ');
+                    if (i == extent.Length - 1)
+                    {
+                        JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " }";
+                    }
+                    else
+                    {
+                        JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " },";
+                    }
+                }
+                JSON += "]";
+                zone.Position = JSON;
+            }
+
+            return DZones;
+        }
+
+        public DropZone_New RetreiveDZ(Guid DropZoneID)
+        {
+            DropZone_New DZ = new DropZone_New();
+            SQL.SQLCode sql = new SQL.SQLCode();
+            DZ = sql.RetreiveDropZone(DropZoneID);
+            string JSON = "[";
+            string[] extent = DZ.Position.Split(',');
+            for (int i = 0; i < extent.Length; i++)
+            {
+                string[] LL = extent[i].Trim().Split(' ');
+                if (i == extent.Length - 1)
+                {
+                    JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " }";
+                }
+                else
+                {
+                    JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " },";
+                }
+            }
+            JSON += "]";
+            DZ.Position = JSON;
+
+            return DZ;
+        }
+
+        #endregion
+
+        #region CallBoxes CRUD
+
+        public string DeleteCallBox(Guid CallBoxID)
+        {
+
+            SQL.SQLCode sql = new SQL.SQLCode();
+            string result = sql.DeleteCallBox(CallBoxID);
+            sql.LoadDropZones();
+
+            return result;
+        }
+
+        public string CreateCallBox(CallBoxes_New CallBox)
+        {
+            string extstring = "";
+            SQL.SQLCode sql = new SQL.SQLCode();
+            List<latLng> ext = JsonConvert.DeserializeObject<List<latLng>>(CallBox.Position);
+            for (int i = 0; i < ext.Count; i++)
+            {
+                if (i < ext.Count - 1)
+                {
+                    extstring += ext[i].lat + " " + ext[i].lng + ", ";
+                }
+                else
+                {
+                    extstring += ext[i].lat + " " + ext[i].lng;
+                }
+            }
+            CallBox.Position = extstring;
+            string result = sql.UpdateCallBox(CallBox);
+
+            return result;
+        }
+
+        public string UpdateCallBox(CallBoxes_New CallBox)
+        {
+            string extstring = "";
+            SQL.SQLCode sql = new SQL.SQLCode();
+            List<latLng> ext = JsonConvert.DeserializeObject<List<latLng>>(CallBox.Position);
+            for (int i = 0; i < ext.Count; i++)
+            {
+                if (i < ext.Count - 1)
+                {
+                    extstring += ext[i].lat + " " + ext[i].lng + ", ";
+                }
+                else
+                {
+                    extstring += ext[i].lat + " " + ext[i].lng;
+                }
+            }
+            CallBox.Position = extstring;
+            string result = sql.UpdateCallBox(CallBox);
+
+            return result;
+        }
+
+        public List<CallBoxes_New> RetreiveCallBoxes()
+        {
+            List<CallBoxes_New> CallBoxes = new List<CallBoxes_New>();
+            SQL.SQLCode sql = new SQL.SQLCode();
+            CallBoxes = sql.RetreiveCallBoxes();
+            foreach (CallBoxes_New callBox in CallBoxes)
+            {
+                string JSON = "[";
+                string[] extent = callBox.Position.Split(',');
+                for (int i = 0; i < extent.Length; i++)
+                {
+                    string[] LL = extent[i].Trim().Split(' ');
+                    if (i == extent.Length - 1)
+                    {
+                        JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " }";
+                    }
+                    else
+                    {
+                        JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " },";
+                    }
+                }
+                JSON += "]";
+                callBox.Position = JSON;
+            }
+
+            return CallBoxes;
+        }
+
+        public CallBoxes_New RetreiveCallBox(Guid CallBoxID)
+        {
+            CallBoxes_New CallBox = new CallBoxes_New();
+            SQL.SQLCode sql = new SQL.SQLCode();
+            CallBox = sql.RetreiveCallBox(CallBoxID);
+            string JSON = "[";
+            string[] extent = CallBox.Position.Split(',');
+            for (int i = 0; i < extent.Length; i++)
+            {
+                string[] LL = extent[i].Trim().Split(' ');
+                if (i == extent.Length - 1)
+                {
+                    JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " }";
+                }
+                else
+                {
+                    JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " },";
+                }
+            }
+            JSON += "]";
+            CallBox.Position = JSON;
+
+            return CallBox;
+        }
+
+        #endregion
+
         #endregion
 
         public int GetUsedBreakTime(string DriverID, string Type)
@@ -731,7 +1332,7 @@ namespace FPSService
             {
                 MiscData.Incident inc = DataClasses.GlobalData.FindIncidentByID(ta.IncidentID);
                 TowTruck.TowTruck tt = DataClasses.GlobalData.FindTowTruckByTruckID(ta.FleetVehicleID);
-                
+
                 string State = "Not Connected";
                 if (tt != null)
                 {
@@ -782,7 +1383,8 @@ namespace FPSService
                 }
                 if (thisTruck.Status.OutOfBoundsAlarm == true || thisTruck.Status.SpeedingAlarm == true)
                 { HasAlarms = true; }
-                myTrucks.Add(new TowTruckData {
+                myTrucks.Add(new TowTruckData
+                {
                     TruckNumber = thisTruck.TruckNumber,
                     IPAddress = thisTruck.Identifier,
                     Direction = thisTruck.GPSPosition.Head.ToString(),
@@ -1114,7 +1716,7 @@ namespace FPSService
             }
         }
 
-        public void ExcuseAlarm(string _vehicleNumber, string _beatNumber, string _alarm,string _driverName, string _comments = "NO COMMENT")
+        public void ExcuseAlarm(string _vehicleNumber, string _beatNumber, string _alarm, string _driverName, string _comments = "NO COMMENT")
         {
             try
             {
@@ -1357,7 +1959,8 @@ namespace FPSService
             List<ListDrivers> truckDrivers = new List<ListDrivers>();
             foreach (TowTruck.TowTruck thisTruck in DataClasses.GlobalData.currentTrucks)
             {
-                truckDrivers.Add(new ListDrivers { 
+                truckDrivers.Add(new ListDrivers
+                {
                     TruckID = thisTruck.Extended.FleetVehicleID,
                     TruckNumber = thisTruck.TruckNumber,
                     DriverID = thisTruck.Driver.DriverID,
