@@ -40,7 +40,7 @@
             function buildDetailsContent(callBox) {
                var content = "<table>";
                content += "<tr>";
-               content += "<td>Number:</td>";
+               content += "<td>Sign Number:</td>";
                content += "<td><strong>" + callBox.SignNumber + "</strong></td>";
                content += "</tr>";
                content += "<tr>";

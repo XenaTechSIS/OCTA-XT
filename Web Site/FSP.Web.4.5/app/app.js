@@ -14,10 +14,10 @@ $(function () {
     toastr.options = {
         closeButton: false,
         debug: false,
-        newestOnTop: false,
+        newestOnTop: true,
         progressBar: false,
-        positionClass: "toast-bottom-left",
-        preventDuplicates: false,
+        positionClass: "toast-bottom-right",
+        preventDuplicates: true,
         onclick: null,
         showDuration: 300,
         hideDuration: 1000,

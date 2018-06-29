@@ -18,6 +18,7 @@
    function appRun($rootScope) {
       $rootScope.applicationName = "OCTA Web 1.0";
       $rootScope.rootUrl = $(".websiteUrl").text().trim();
+      $rootScope.pageConfig = {};
       $rootScope.mtcTruck = function (dbTruck) {
          var self = this;
          self.id = "";

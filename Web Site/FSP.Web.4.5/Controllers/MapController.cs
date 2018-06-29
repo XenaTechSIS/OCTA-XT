@@ -301,7 +301,7 @@ namespace FSP.Web.Controllers
                 using (var service = new TowTruckServiceClient())
                 {
                     var rawCallBoxes = service.RetreiveCallBoxes();
-                    var callBoxes = rawCallBoxes.OrderBy(p => p.CallBoxID).ToList().Select(s => new
+                    var callBoxes = rawCallBoxes.OrderBy(p => p.SignNumber).ToList().Select(s => new
                     {
                         s.CallBoxID,
                         s.Comments,
@@ -377,7 +377,7 @@ namespace FSP.Web.Controllers
                 using (var service = new TowTruckServiceClient())
                 {
                     var rawDropZones = service.RetreiveAllDZs();
-                    var segments = rawDropZones.OrderBy(p => p.DropZoneNumber).ToList().Select(s => new
+                    var dropZones = rawDropZones.OrderBy(p => p.DropZoneNumber).ToList().Select(s => new
                     {
                         s.DropZoneID,
                         s.DropZoneDescription,
@@ -391,7 +391,7 @@ namespace FSP.Web.Controllers
                         PolygonData = new PolygonData(s.Position)
                     }).ToList();
 
-                    var jsonResult = Json(segments, JsonRequestBehavior.AllowGet);
+                    var jsonResult = Json(dropZones, JsonRequestBehavior.AllowGet);
                     jsonResult.MaxJsonLength = int.MaxValue;
                     Util.LogInfo("dropzone polygons returned");
                     return jsonResult;
@@ -409,6 +409,14 @@ namespace FSP.Web.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(data.Position))
+                {
+                    return Json(false, JsonRequestBehavior.AllowGet);
+                }
+
+                if (data.DropZoneID == Guid.Empty)
+                    data.DropZoneID = Guid.NewGuid();
+
                 using (var service = new TowTruckServiceClient())
                 {
                     var updateResult = service.UpdateDropZone(data);
