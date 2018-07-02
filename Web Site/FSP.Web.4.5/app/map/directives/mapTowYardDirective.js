@@ -21,8 +21,6 @@
          },
          link: function (scope) {
 
-            var selectedYardId = 0;
-
             scope.isEditing = false;
             scope.isAdding = false;
             scope.isBusyGetting = false;
@@ -40,12 +38,12 @@
             function buildDetailsContent(yard) {
                var content = "<table>";
                content += "<tr>";
-               content += "<td>ID:</td>";
-               content += "<td><strong>" + yard.YardID + "</strong></td>";
+               content += "<td>Location:</td>";
+               content += "<td><strong>" + yard.Location + "</strong></td>";
                content += "</tr>";
                content += "<tr>";
                content += "<td>Description:</td>";
-               content += "<td><strong>" + yard.Description + "</strong></td>";
+               content += "<td><strong>" + yard.YardDescription + "</strong></td>";
                content += "</tr>";
                content += "<tr>";
                content += "<td>Comments:</td>";
@@ -73,10 +71,10 @@
                var yardPolygon = new google.maps.Polygon({
                   id: "yardPolygon" + yard.YardID,
                   paths: cleanLatLng,
-                  strokeColor: yard.Color || "#000000",
+                  strokeColor: "#000000",
                   strokeOpacity: 0.8,
                   strokeWeight: 2,
-                  fillColor: yard.Color || "#000000",
+                  fillColor: "#000000",
                   fillOpacity: 0.35,
                   editable: false
                });
@@ -93,8 +91,8 @@
                   animation: google.maps.Animation.DROP,
                   position: new google.maps.LatLng(yard.PolygonData.MiddleLat, yard.PolygonData.MiddleLon),
                   draggable: false,
-                  labelContent: yard.Yard,
-                  labelAnchor: new google.maps.Point(25, 40),
+                  labelContent: yard.Location,
+                  labelAnchor: new google.maps.Point(35, 40),
                   labelClass: "googleMapMarkerLabel", // the CSS class for the label
                   labelStyle: { opacity: 0.75 }
                });
@@ -165,25 +163,16 @@
                         scope.triggerDisplayMapData();
                      }
                   } else {
+                     scope.yards = [];
+                     scope.polygons = [];
+                     scope.markers = [];
+
+                     scope.selectedYardID = "";
+                     scope.selectedYard = "";
                      scope.selectedPolygon = "";
                   }
                }
             });
-
-            scope.setSelectedYard = function () {
-               scope.selectedYard = utilService.findArrayElement(scope.yards, "YardID", scope.selectedYardID);
-               if (!scope.selectedYard) {
-                  scope.triggerHideMapData();
-                  scope.triggerResetMap();
-                  return;
-               }
-               console.log(scope.selectedYard);
-
-               if (!scope.selectedYard.PolygonData) return;
-               if (!scope.selectedYard.PolygonData.MiddleLat || !scope.selectedYard.PolygonData.MiddleLon) return;
-
-               scope.triggerSetMapLocation(scope.selectedYard.PolygonData.MiddleLat, scope.selectedYard.PolygonData.MiddleLon, 16);
-            };
 
             scope.getYardPolygons = function (triggerMapUpdate) {
                scope.isBusyGetting = true;
@@ -198,11 +187,11 @@
                      scope.markers = [];
                      scope.yards.forEach(function (yard) {
                         buildPolygons(yard);
-                        //buildMarkers(segment);
+                        buildMarkers(yard);
                      });
 
-                     //if (selectedSegmentId)
-                     //    scope.selectedBeatSegment = utilService.findArrayElement(scope.segments, "ID", selectedSegmentId);
+                     if (scope.selectedYardID)
+                        scope.selectedYard = utilService.findArrayElement(scope.yards, "YardID", scope.selectedYardID);
 
                      if (triggerMapUpdate)
                         scope.triggerDisplayMapData();
@@ -211,16 +200,35 @@
                });
             };
 
+            scope.setSelectedYard = function () {
+               var yard = utilService.findArrayElement(scope.yards, "YardID", scope.selectedYardID);
+               if (!yard) {
+                  scope.selectedYard = "";
+                  scope.triggerHideMapData();
+                  scope.triggerResetMap();
+                  return;
+               }
+               scope.selectedYard = angular.copy(yard);
+               console.log(scope.selectedYard);
+
+               if (!scope.selectedYard.PolygonData) return;
+               if (!scope.selectedYard.PolygonData.MiddleLat || !scope.selectedYard.PolygonData.MiddleLon) return;
+
+               scope.triggerSetMapLocation(scope.selectedYard.PolygonData.MiddleLat, scope.selectedYard.PolygonData.MiddleLon, 16);
+            };
+
             scope.setEdit = function () {
                scope.isEditing = true;
-               console.log("Edit yard %s", scope.selectedYard.YardID);
-               scope.triggerSetEditPolygon("yardPolygon" + scope.selectedYard.YardID);
+               console.log("Edit yard %s", scope.selectedYardID);
+               scope.triggerSetEditPolygon("yardPolygon" + scope.selectedYardID);
             };
 
             scope.cancelEdit = function () {
                scope.isEditing = false;
-               console.log("Cancel edit yard %s", scope.selectedYard.YardID);
-               scope.triggerSetCancelEditPolygon("yardPolygon" + scope.selectedYard.YardID, scope.selectedYard.Color);
+               var yard = utilService.findArrayElement(scope.yards, "YardID", scope.selectedYardID);
+               scope.selectedYard = angular.copy(yard);
+               console.log("Cancel edit %O", scope.selectedYard);
+               scope.triggerSetCancelEditPolygon("yardPolygon" + scope.selectedYardID, "#000000");
             };
 
             scope.save = function () {
@@ -239,7 +247,12 @@
                      console.log("Save Yard Success");
                      toastr.success('Yard Saved', 'Success');
                      scope.cancelEdit();
+                     scope.triggerSetCancelEditPolygon("yardPolygon" + scope.selectedYardID, "#000000");
                      scope.triggerMakeAllPolygonsUneditable();
+
+                     setTimeout(function () {
+                        scope.getYardPolygons(false);
+                     }, 500);
                   }
                });
             };
@@ -275,13 +288,13 @@
             scope.prepareNew = function () {
                scope.selectedYard = {
                   YardID: "",
-                  Color: "#000000",
+                  YardDescription: "",
                   Position: "",
                   Description: "",
                   Comment: ""
                };
                scope.isAdding = true;
-               scope.triggerSetNewPolygon(scope.selectedYard.Color);
+               scope.triggerSetNewPolygon("#000000");
             };
 
             scope.cancelAdd = function () {

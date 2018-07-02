@@ -64,8 +64,13 @@ namespace FSP.Web.Controllers
         {
             try
             {
-                //if (string.IsNullOrEmpty(data.ExtensionData))
-                //    return Json("false", JsonRequestBehavior.AllowGet);
+                if (string.IsNullOrEmpty(data.Position))
+                {
+                    return Json(false, JsonRequestBehavior.AllowGet);
+                }
+
+                if (data.YardID == Guid.Empty)
+                    data.YardID = Guid.NewGuid();
 
                 using (var service = new TowTruckServiceClient())
                 {
@@ -332,6 +337,14 @@ namespace FSP.Web.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(data.Position))
+                {
+                    return Json(false, JsonRequestBehavior.AllowGet);
+                }
+
+                if (data.CallBoxID == Guid.Empty)
+                    data.CallBoxID = Guid.NewGuid();
+
                 using (var service = new TowTruckServiceClient())
                 {
                     var updateResult = service.UpdateCallBox(data);

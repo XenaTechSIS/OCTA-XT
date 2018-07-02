@@ -46,6 +46,7 @@
       $scope.truckToBeFollowed = "";
       $scope.polygons = [];
       $scope.selectedPolygon = {};
+      $scope.selectedMarker = "";
 
       $scope.haveAlarms = false;
 
@@ -64,7 +65,6 @@
       $scope.polygons = [];
       $scope.selectedPolygon = {};
       $scope.markers = [];
-
 
       function sizeMap() {
 
@@ -334,6 +334,7 @@
       }
 
       function removeAllMapEvents() {
+         google.maps.event.clearListeners($scope.map, 'dragend');
          google.maps.event.clearListeners($scope.map, 'dblclick');
          google.maps.event.clearListeners($scope.map, 'click');
          $scope.polygons.forEach(function (polygon) {
@@ -585,6 +586,19 @@
          });
       };
 
+      $scope.setEditMarker = function (id) {
+         console.log("setEditMarker");
+         $scope.selectedMarker = utilService.findArrayElement($scope.markers, "id", id);
+         if (!$scope.selectedMarker) return;
+         $scope.selectedMarker.draggable = true;
+
+         google.maps.event.addListener($scope.selectedMarker, 'dragend', function () {
+            console.log($scope.selectedMarker.position);
+            // scope.selectedPosition.lat = $scope.selectedMarker.position.lat();
+            // scope.selectedPosition.lng = $scope.selectedMarker.position.lng();
+         });
+      };
+
       $scope.setCancelEditPolygon = function (id, color) {
          console.log("setCancelEditPolygon");
          $scope.selectedPolygon = utilService.findArrayElement($scope.polygons, "id", id);
@@ -595,6 +609,14 @@
             fillColor: color
          });
          var polygon = $scope.selectedPolygon;
+         removeAllMapEvents();
+      };
+
+      $scope.setCancelEditMarker = function (id) {
+         console.log("setCancelEditMarker");
+         $scope.selectedMarker = utilService.findArrayElement($scope.markers, "id", id);
+         if (!$scope.selectedMarker) return;
+         $scope.selectedMarker.draggable = false;
          removeAllMapEvents();
       };
 

@@ -1,130 +1,131 @@
 ﻿<div ng-show="!isAdding">
-    <div class="form-group"
-         ng-show="isBusyGetting">
-        Loading Tow Yards...<i class="fa fa-refresh fa-spin"></i>
-    </div>
-    <div class="form-group"
-         ng-hide="isBusyGetting">
-        <select class="form-control"
-                ng-model="selectedYardID"
-                ng-change="setSelectedYard()"
-                ng-disabled="yards.length === 0 || isEditing">
-            <option value="">
-                --Select Yard--
-            </option>
-            <option ng-repeat="yard in yards" value="{{yard.YardID}}">{{yard.Location}}</option>
-        </select>
-    </div>
+   <div class="form-group"
+      ng-show="isBusyGetting">
+      Loading Tow Yards...
+      <i class="fa fa-refresh fa-spin"></i>
+   </div>
+   <div class="form-group"
+      ng-hide="isBusyGetting">
+      <select class="form-control"
+         ng-model="selectedYardID"
+         ng-change="setSelectedYard()"
+         ng-disabled="yards.length === 0 || isEditing">
+         <option value="">
+            --Select Yard--
+         </option>
+         <option ng-repeat="yard in yards"
+            value="{{yard.YardID}}">{{yard.Location}}</option>
+      </select>
+   </div>
 </div>
 
 <!--input form-->
 <div ng-show="selectedYard">
-    <div class="form-group">
-        Location
-        <input ng-model="selectedYard.Location"
-               type="text"
-               class="form-control"
-               ng-disabled="!isEditing && !isAdding" />
-    </div>
-    <div class="form-group">
-        Description
-        <textarea ng-model="selectedYard.YardDescription"
-                  class="form-control"
-                  ng-disabled="!isEditing && !isAdding"></textarea>
-    </div>
-    <div class="form-group">
-        Comments
-        <textarea ng-model="selectedYard.Comments"
-                  class="form-control"
-                  ng-disabled="!isEditing && !isAdding"></textarea>
-    </div>
-    <div class="form-group">
-        Tow Truck Company Name
-        <input ng-model="selectedYard.TowTruckCompanyName"
-               type="text"
-               class="form-control"
-               ng-disabled="!isEditing && !isAdding" />
-    </div>
-    <div class="form-group">
-        Tow Truck Company Phone
-        <input ng-model="selectedYard.TowTruckCompanyPhoneNumber"
-               type="text"
-               class="form-control"
-               ng-disabled="!isEditing && !isAdding" />
-    </div>
-    <div class="form-group">
-        Color
-        <input type="text"
-               minicolors="colorPickerSettings"
-               ng-model="setSelectedYard.Color"
-               class="form-control"
-               ng-disabled="!isEditing && !isAdding" />
-    </div>
+   <div class="form-group">
+      Location
+      <input ng-model="selectedYard.Location"
+         type="text"
+         class="form-control"
+         ng-disabled="!isEditing && !isAdding" />
+   </div>
+   <div class="form-group">
+      Description
+      <textarea ng-model="selectedYard.YardDescription"
+         class="form-control"
+         ng-disabled="!isEditing && !isAdding"></textarea>
+   </div>
+   <div class="form-group">
+      Comments
+      <textarea ng-model="selectedYard.Comments"
+         class="form-control"
+         ng-disabled="!isEditing && !isAdding"></textarea>
+   </div>
+   <div class="form-group">
+      Tow Truck Company Name
+      <input ng-model="selectedYard.TowTruckCompanyName"
+         type="text"
+         class="form-control"
+         ng-disabled="!isEditing && !isAdding" />
+   </div>
+   <div class="form-group">
+      Tow Truck Company Phone
+      <input ng-model="selectedYard.TowTruckCompanyPhoneNumber"
+         type="text"
+         class="form-control"
+         ng-disabled="!isEditing && !isAdding" />
+   </div>
 </div>
 
 <!--edit existing-->
 <div class="form-group"
-     ng-show="selectedYard && !isAdding">
-    <button ng-show="!isEditing"
-            ng-click="setEdit()"
-            class="btn btn-primary btn-sm">
-        <i class="fa fa-pencil">
-        </i> Edit Yard
-    </button>
-    <button ng-show="isEditing"
-            ng-click="save()"
-            ng-disabled="isBusySaving || isBusyDeleting"
-            class="btn btn-primary btn-sm">
-        <i class="fa fa-check"
-           ng-hide="isBusySaving">
-        </i>
-        <i class="fa fa-refresh fa-spin"
-           ng-show="isBusySaving">
-        </i>
-        Save
-    </button>
-    <button ng-show="isEditing"
-            ng-disabled="isBusySaving || isBusyDeleting"
-            ng-click="delete()"
-            class="btn btn-danger btn-sm">
-        <i class="fa fa-trash"
-           ng-hide="isBusyDeleting">
-        </i>
-        <i class="fa fa-refresh fa-spin"
-           ng-show="isBusyDeleting">
-        </i>
-        Delete
-    </button>
-    <button ng-show="isEditing"
-            ng-click="cancelEdit()"
-            class="btn btn-default btn-sm">
-        Cancel
-    </button>
+   ng-show="selectedYard && !isAdding">
+   <button ng-show="!isEditing"
+      ng-click="setEdit()"
+      class="btn btn-primary btn-sm">
+      <i class="fa fa-pencil">
+      </i> Edit Yard
+   </button>
+   <button ng-show="isEditing"
+      ng-click="save()"
+      ng-disabled="isBusySaving || isBusyDeleting"
+      class="btn btn-primary btn-sm">
+      <i class="fa fa-check"
+         ng-hide="isBusySaving">
+      </i>
+      <i class="fa fa-refresh fa-spin"
+         ng-show="isBusySaving">
+      </i>
+      Save
+   </button>
+   <button ng-show="isEditing"
+      ng-disabled="isBusySaving || isBusyDeleting"
+      ng-click="delete()"
+      class="btn btn-danger btn-sm">
+      <i class="fa fa-trash"
+         ng-hide="isBusyDeleting">
+      </i>
+      <i class="fa fa-refresh fa-spin"
+         ng-show="isBusyDeleting">
+      </i>
+      Delete
+   </button>
+   <button ng-show="isEditing"
+      ng-click="cancelEdit()"
+      class="btn btn-default btn-sm">
+      Cancel
+   </button>
 </div>
 
 <!--add new-->
 <div class="form-group"
-     ng-show="!isEditing">
-    <button ng-hide="selectedYard"
-            ng-click="prepareNew()"
-            class="btn btn-success btn-sm">
-        <i class="fa fa-plus"></i> Add Yard
-    </button>
-    <button ng-show="!isEditing && isAdding"
-            ng-click="add()"
-            ng-disabled="isBusyAdding"
-            class="btn btn-success btn-sm">
-        <i class="fa fa-check"
-           ng-hide="isBusyAdding">
-        </i>
-        <i class="fa fa-refresh fa-spin"
-           ng-show="isBusyAdding">
-        </i>
-        Save
-    </button>
-    <button ng-show="!isEditing && isAdding"
-            ng-click="cancelAdd()"
-            class="btn btn-default btn-sm">
-        Cancel
-    </button>
+   ng-show="!isEditing">
+   <button ng-hide="selectedYard"
+      ng-click="prepareNew()"
+      class="btn btn-success btn-sm">
+      <i class="fa fa-plus"></i> Add Yard
+   </button>
+
+
+   <div ng-show="!isEditing && isAdding">
+      <div ng-hide="selectedPolygon.getPath().getLength() > 0"
+         class="alert alert-danger">
+         Polygon missing
+      </div>
+      <button ng-click="add()"
+         ng-disabled="isBusyAdding || selectedPolygon.getPath().getLength() === 0"
+         class="btn btn-success btn-sm">
+         <i class="fa fa-check"
+            ng-hide="isBusyAdding">
+         </i>
+         <i class="fa fa-refresh fa-spin"
+            ng-show="isBusyAdding">
+         </i>
+         Save
+      </button>
+      <button ng-click="cancelAdd()"
+         class="btn btn-default btn-sm">
+         Cancel
+      </button>
+   </div>
+
 </div>

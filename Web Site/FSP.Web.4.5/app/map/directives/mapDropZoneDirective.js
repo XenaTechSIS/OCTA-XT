@@ -92,7 +92,7 @@
                   position: new google.maps.LatLng(dropZone.PolygonData.MiddleLat, dropZone.PolygonData.MiddleLon),
                   draggable: false,
                   labelContent: dropZone.DropZoneNumber,
-                  labelAnchor: new google.maps.Point(25, 40),
+                  labelAnchor: new google.maps.Point(35, 40),
                   labelClass: "googleMapMarkerLabel", // the CSS class for the label
                   labelStyle: { opacity: 0.75 }
                });
@@ -155,6 +155,7 @@
             };
 
             scope.$watch("visible", function (isVisible) {
+               console.log("dropzone visibility changed, %s", isVisible);
                if (isVisible !== undefined) {
                   if (isVisible) {
                      if (scope.polygons.length === 0) {
@@ -163,6 +164,11 @@
                         scope.triggerDisplayMapData();
                      }
                   } else {
+                     scope.dropZones = [];
+                     scope.polygons = [];
+                     scope.markers = [];
+                     scope.selectedDropZoneID = "";
+                     scope.selectedDropZone = "";
                      scope.selectedPolygon = "";
                   }
                }
@@ -181,7 +187,7 @@
                      scope.markers = [];
                      scope.dropZones.forEach(function (dropZone) {
                         buildPolygons(dropZone);
-                        //buildMarkers(segment);
+                        buildMarkers(dropZone);
                      });
 
                      if (scope.selectedDropZoneID)
@@ -244,6 +250,10 @@
                      scope.isEditing = false;
                      scope.triggerSetCancelEditPolygon("dropZonePolygon" + scope.selectedDropZone.DropZoneID, scope.selectedDropZone.Color);
                      scope.triggerMakeAllPolygonsUneditable();
+
+                     setTimeout(function () {
+                        scope.getDropZonePolygons(false);
+                     }, 500);
                   }
                });
             };
@@ -253,11 +263,11 @@
                   scope.isBusyDeleting = true;
                   mapService.deleteDropZone(scope.selectedDropZone.DropZoneID).then(function (result) {
                      scope.isBusyDeleting = false;
-                     scope.isEditing = false;
                      if (result === false || result === "false") {
                         console.error("Delete DropZone");
                         toastr.error('Failed to delete Drop Zone', 'Error');
                      } else {
+                        scope.isEditing = false;
                         console.log("Delete DropZone Success");
                         toastr.success('Drop Zone Deleted', 'Success');
 
@@ -267,6 +277,7 @@
 
                         scope.triggerMakeAllPolygonsUneditable();
                         scope.triggerHideMapData();
+                        scope.triggerResetMap();
 
                         setTimeout(function () {
                            scope.getDropZonePolygons(true);

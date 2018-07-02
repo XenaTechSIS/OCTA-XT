@@ -92,6 +92,7 @@
                });
          },
          saveCallBox: function (callBox) {
+            console.log(callBox);
             return $http({
                method: 'POST',
                data: callBox,
