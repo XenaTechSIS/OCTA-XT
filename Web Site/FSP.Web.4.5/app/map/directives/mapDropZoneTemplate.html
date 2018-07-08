@@ -99,8 +99,15 @@
             ng-disabled="!isEditing && !isAdding" />
       </div>
       <div ng-show="isEditing || isAdding">
-         *required fields
+         <div>
+            *required fields
+         </div>
+         <div ng-hide="selectedPolygon.getPath().getLength() > 0"
+            class="alert alert-danger">
+            Polygon missing
+         </div>
       </div>
+
    </div>
 
    <!--buttons-->
@@ -114,7 +121,8 @@
       </button>
       <button ng-show="isEditing"
          ng-click="save()"
-         ng-disabled="pageConfig.dropZoneForm.$invalid || isBusySaving || isBusyDeleting || !selectedPolygon"
+         ng-disabled="pageConfig.dropZoneForm.$invalid || isBusySaving || isBusyDeleting || selectedPolygon.getPath().getLength() === 0"
+   
          class="btn btn-primary btn-sm">
          <i class="fa fa-check"
             ng-hide="isBusySaving">
@@ -151,13 +159,7 @@
          class="btn btn-success btn-sm">
          <i class="fa fa-plus"></i> Add Drop Zone
       </button>
-
       <div ng-show="!isEditing && isAdding">
-         <div ng-hide="selectedPolygon.getPath().getLength() > 0"
-            class="alert alert-danger">
-            Polygon missing
-         </div>
-
          <button ng-click="add()"
             ng-disabled="isBusyAdding || pageConfig.dropZoneForm.$invalid || selectedPolygon.getPath().getLength() === 0"
             class="btn btn-success btn-sm">
@@ -174,8 +176,6 @@
             Cancel
          </button>
       </div>
-
-
    </div>
 
 </form>

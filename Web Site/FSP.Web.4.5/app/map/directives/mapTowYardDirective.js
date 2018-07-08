@@ -204,7 +204,7 @@
                var yard = utilService.findArrayElement(scope.yards, "YardID", scope.selectedYardID);
                if (!yard) {
                   scope.selectedYard = "";
-                  scope.triggerHideMapData();
+                  //scope.triggerHideMapData();
                   scope.triggerResetMap();
                   return;
                }

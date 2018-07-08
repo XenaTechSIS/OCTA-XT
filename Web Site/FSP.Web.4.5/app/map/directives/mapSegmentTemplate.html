@@ -1,122 +1,145 @@
 ﻿<div ng-show="!isAdding">
-    <div class="form-group"
-         ng-show="isBusyGetting">
-        Loading Segments...<i class="fa fa-refresh fa-spin"></i>
-    </div>
-    <div class="form-group"
-         ng-hide="isBusyGetting">       
-        <select class="form-control"
-                ng-model="selectedBeatSegmentID"
-                ng-change="setSelectedBeatSegment()"
-                ng-disabled="segments.length === 0 || isEditing">
-            <option value="">
-                --Select Segment--
-            </option>
-            <option ng-repeat="segment in segments" value="{{segment.BeatSegmentID}}">{{segment.BeatSegmentNumber}}</option>
-        </select>
-    </div>
+   <div class="form-group"
+      ng-show="isBusyGetting">
+      Loading Segments...
+      <i class="fa fa-refresh fa-spin"></i>
+   </div>
+   <div class="form-group"
+      ng-hide="isBusyGetting">
+      <select class="form-control"
+         ng-model="selectedBeatSegmentID"
+         ng-change="setSelectedBeatSegment()"
+         ng-disabled="segments.length === 0 || isEditing">
+         <option value="">
+            --Select Segment--
+         </option>
+         <option ng-repeat="segment in segments"
+            value="{{segment.BeatSegmentID}}">{{segment.BeatSegmentNumber}}</option>
+      </select>
+   </div>
 </div>
 
 <!--input form-->
-<div ng-show="selectedBeatSegment">
-    <div class="form-group">
-        Name
-        <input ng-model="selectedBeatSegment.BeatSegmentNumber"
-               type="text"
-               class="form-control"
-               ng-disabled="!isEditing && !isAdding" />
-    </div>
-    <div class="form-group">
-        Description
-        <textarea ng-model="selectedBeatSegment.BeatSegmentDescription"
-                  class="form-control"
-                  ng-disabled="!isEditing && !isAdding"></textarea>
-    </div>
-    <div class="form-group">
-        CHP Description
-        <textarea ng-model="selectedBeatSegment.CHPDescription"
-                  class="form-control"
-                  ng-disabled="!isEditing && !isAdding"></textarea>
-    </div>
-    <div class="form-group">
-        CHP Description 2
-        <textarea ng-model="selectedBeatSegment.CHPDescription2"
-                  class="form-control"
-                  ng-disabled="!isEditing && !isAdding"></textarea>
-    </div>
-    <div class="form-group">
-        Color
-        <input type="text"
-               minicolors="colorPickerSettings"
-               ng-model="selectedBeatSegment.Color"
-               class="form-control"
-               ng-disabled="!isEditing && !isAdding" />
-    </div>
-</div>
+<form name="pageConfig.segmentForm"
+   novalidate>
 
-<!--edit existing-->
-<div class="form-group"
-     ng-show="selectedBeatSegment && !isAdding">
-    <button ng-show="!isEditing"
-            ng-click="setEdit()"
-            class="btn btn-primary btn-sm">
-        <i class="fa fa-pencil">
-        </i> Edit Segment
-    </button>
-    <button ng-show="isEditing"
-            ng-click="save()"
-            ng-disabled="isBusySaving || isBusyDeleting"
-            class="btn btn-primary btn-sm">
-        <i class="fa fa-check"
-           ng-hide="isBusySaving">
-        </i>
-        <i class="fa fa-refresh fa-spin"
-           ng-show="isBusySaving">
-        </i>
-        Save
-    </button>
-    <button ng-show="isEditing"
-            ng-disabled="isBusySaving || isBusyDeleting"
-            ng-click="delete()"
-            class="btn btn-danger btn-sm">
-        <i class="fa fa-trash"
-           ng-hide="isBusyDeleting">
-        </i>
-        <i class="fa fa-refresh fa-spin"
-           ng-show="isBusyDeleting">
-        </i>
-        Delete
-    </button>
-    <button ng-show="isEditing"
-            ng-click="cancelEdit()"
-            class="btn btn-default btn-sm">
-        Cancel
-    </button>
-</div>
+   <div ng-show="selectedBeatSegment">
+      <div class="form-group"
+         ng-class="{'has-error': pageConfig.segmentForm.BeatSegmentNumber.$invalid}">
+         Name *
+         <input ng-model="selectedBeatSegment.BeatSegmentNumber"
+            type="text"
+            name="BeatSegmentNumber"
+            required
+            class="form-control"
+            ng-disabled="!isEditing && !isAdding" />
+      </div>
+      <div class="form-group"
+         ng-class="{'has-error': pageConfig.segmentForm.BeatSegmentDescription.$invalid}">
+         Description *
+         <textarea ng-model="selectedBeatSegment.BeatSegmentDescription"
+            class="form-control"
+            required
+            name="BeatSegmentDescription"
+            ng-disabled="!isEditing && !isAdding"></textarea>
+      </div>
+      <div class="form-group">
+         CHP Description
+         <textarea ng-model="selectedBeatSegment.CHPDescription"
+            class="form-control"
+            ng-disabled="!isEditing && !isAdding"></textarea>
+      </div>
+      <div class="form-group">
+         CHP Description 2
+         <textarea ng-model="selectedBeatSegment.CHPDescription2"
+            class="form-control"
+            ng-disabled="!isEditing && !isAdding"></textarea>
+      </div>
+      <div class="form-group">
+         Color
+         <input type="text"
+            minicolors="colorPickerSettings"
+            ng-model="selectedBeatSegment.Color"
+            class="form-control"
+            ng-disabled="!isEditing && !isAdding" />
+      </div>
+      <div ng-show="isEditing || isAdding">
+         <div>
+            *required fields
+         </div>
 
-<!--add new-->
-<div class="form-group"
-     ng-show="!isEditing">
-    <button ng-hide="selectedBeatSegment"
-            ng-click="prepareNew()"
-            class="btn btn-success btn-sm">
-        <i class="fa fa-plus"></i> Add Segment
-    </button>
-    <button ng-show="!isEditing && isAdding"
-            ng-click="add()"
-            ng-disabled="isBusyAdding"
-            class="btn btn-success btn-sm">
-        <i class="fa fa-check"
-           ng-hide="isBusyAdding">
-        </i>
-        <i class="fa fa-refresh fa-spin"
-           ng-show="isBusyAdding">
-        </i>
-        Save
-    </button>
-    <button ng-show="!isEditing && isAdding"
-            ng-click="cancelAdd()"
-            class="btn btn-default btn-sm">
-        Cancel
-    </button>
-</div>
+         <div ng-hide="selectedPolygon.getPath().getLength() > 0"
+            class="alert alert-danger">
+            Polygon missing
+         </div>
+      </div>
+   </div>
+
+   <!--edit existing-->
+   <div class="form-group"
+      ng-show="selectedBeatSegment && !isAdding">
+      <button ng-show="!isEditing"
+         ng-click="setEdit()"
+         class="btn btn-primary btn-sm">
+         <i class="fa fa-pencil">
+         </i> Edit Segment
+      </button>
+      <button ng-show="isEditing"
+         ng-click="save()"
+         ng-disabled="isBusySaving || isBusyDeleting || pageConfig.segmentForm.$invalid"
+         class="btn btn-primary btn-sm">
+         <i class="fa fa-check"
+            ng-hide="isBusySaving">
+         </i>
+         <i class="fa fa-refresh fa-spin"
+            ng-show="isBusySaving">
+         </i>
+         Save
+      </button>
+      <button ng-show="isEditing"
+         ng-disabled="isBusySaving || isBusyDeleting"
+         ng-click="delete()"
+         class="btn btn-danger btn-sm">
+         <i class="fa fa-trash"
+            ng-hide="isBusyDeleting">
+         </i>
+         <i class="fa fa-refresh fa-spin"
+            ng-show="isBusyDeleting">
+         </i>
+         Delete
+      </button>
+      <button ng-show="isEditing"
+         ng-click="cancelEdit()"
+         class="btn btn-default btn-sm">
+         Cancel
+      </button>
+   </div>
+
+   <!--add new-->
+   <div class="form-group"
+      ng-show="!isEditing">
+      <button ng-hide="selectedBeatSegment"
+         ng-click="prepareNew()"
+         class="btn btn-success btn-sm">
+         <i class="fa fa-plus"></i> Add Segment
+      </button>
+      <button ng-show="!isEditing && isAdding"
+         ng-click="add()"
+         ng-disabled="isBusyAdding || pageConfig.segmentForm.$invalid || selectedPolygon.getPath().getLength() === 0"
+         class="btn btn-success btn-sm">
+         <i class="fa fa-check"
+            ng-hide="isBusyAdding">
+         </i>
+         <i class="fa fa-refresh fa-spin"
+            ng-show="isBusyAdding">
+         </i>
+         Save
+      </button>
+      <button ng-show="!isEditing && isAdding"
+         ng-click="cancelAdd()"
+         class="btn btn-default btn-sm">
+         Cancel
+      </button>
+   </div>
+
+</form>

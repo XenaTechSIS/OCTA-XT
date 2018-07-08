@@ -557,9 +557,16 @@
       };
 
       $scope.setMapLocation = function (lat, lon, zoom) {
-         console.log("setMapLocation");
+         console.log("setMapLocation to %s, %s, %s", lat, lon, zoom);
          updateMap(new google.maps.LatLng(lat, lon), zoom);
       };
+
+      $scope.setMarkerPosition = function (lat, lon) {
+         console.log("setMarkerLocation to %s, %s", lat, lon);
+         if (!$scope.selectedMarker) return;
+         var newLatLon = new google.maps.LatLng(lat, lon);
+         $scope.selectedMarker.setPosition(newLatLon);
+      }
 
       $scope.setEditPolygon = function (id) {
          console.log("setEditPolygon");
@@ -587,15 +594,13 @@
       };
 
       $scope.setEditMarker = function (id) {
-         console.log("setEditMarker");
+         console.log("Set edit marker: %s", id);
          $scope.selectedMarker = utilService.findArrayElement($scope.markers, "id", id);
          if (!$scope.selectedMarker) return;
          $scope.selectedMarker.draggable = true;
 
          google.maps.event.addListener($scope.selectedMarker, 'dragend', function () {
-            console.log($scope.selectedMarker.position);
-            // scope.selectedPosition.lat = $scope.selectedMarker.position.lat();
-            // scope.selectedPosition.lng = $scope.selectedMarker.position.lng();
+            console.log('New marker position: %O', $scope.selectedMarker.position);
          });
       };
 
@@ -613,7 +618,7 @@
       };
 
       $scope.setCancelEditMarker = function (id) {
-         console.log("setCancelEditMarker");
+         console.log("Set cancel edit marker: %s", id);
          $scope.selectedMarker = utilService.findArrayElement($scope.markers, "id", id);
          if (!$scope.selectedMarker) return;
          $scope.selectedMarker.draggable = false;

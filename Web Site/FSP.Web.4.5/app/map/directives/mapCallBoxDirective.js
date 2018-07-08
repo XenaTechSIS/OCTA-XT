@@ -13,7 +13,7 @@
             hideMapData: "&",
             setEditMarker: "&",
             setCancelEditMarker: "&",
-            setNewPolygon: "&",
+            setMarkerPosition: "&",
             makeAllPolygonsUneditable: "&",
 
             selectedMarker: "=",
@@ -126,9 +126,10 @@
                });
             };
 
-            scope.triggerSetNewPolygon = function (color) {
-               scope.setNewPolygon({
-                  color: color
+            scope.triggerSetMarkerPosition = function (lat, lon) {
+               scope.setMarkerPosition({
+                  lat: lat,
+                  lon: lon
                });
             };
 
@@ -184,7 +185,7 @@
                var cb = utilService.findArrayElement(scope.callBoxs, "CallBoxID", scope.selectedCallBoxID);
                if (!cb) {
                   scope.selectedCallBox = "";
-                  scope.triggerHideMapData();
+                  //scope.triggerHideMapData();
                   scope.triggerResetMap();
                   return;
                }
@@ -195,47 +196,38 @@
                scope.selectedPosition = scope.selectedCallBox.PolygonData.Coordinates[0];
                console.log(scope.selectedPosition);
 
-               scope.triggerSetMapLocation(scope.selectedPosition.lat, scope.selectedPosition.lng, 16);
+               scope.triggerSetMapLocation(scope.selectedPosition.lat, scope.selectedPosition.lng, 15);
             };
 
             scope.setEdit = function () {
                scope.isEditing = true;
                console.log("Edit callBox %s", scope.selectedCallBoxID);
                scope.triggerSetEditMarker("callBoxMarker" + scope.selectedCallBoxID);
-
-               // scope.selectedMarker = utilService.findArrayElement(scope.markers, "id", "callBoxMarker" + scope.selectedCallBoxID);
-               // if (!scope.selectedMarker) return;
-               // scope.selectedMarker.draggable = true;
-
-               // google.maps.event.addListener(scope.selectedMarker, 'dragend', function () {
-               //    console.log(scope.selectedMarker.position);
-               //    scope.selectedPosition.lat = scope.selectedMarker.position.lat();
-               //    scope.selectedPosition.lng = scope.selectedMarker.position.lng();
-               // });
             };
 
             scope.cancelEdit = function () {
                scope.isEditing = false;
+
                var cb = utilService.findArrayElement(scope.callBoxs, "CallBoxID", scope.selectedCallBoxID);
                scope.selectedCallBox = angular.copy(cb);
                console.log("Cancel edit callBox %s", scope.selectedCallBoxID);
+
                scope.selectedPosition = scope.selectedCallBox.PolygonData.Coordinates[0];
                console.log(scope.selectedPosition);
+               scope.triggerSetMapLocation(scope.selectedPosition.lat, scope.selectedPosition.lng, 15);
+
                scope.triggerSetCancelEditMarker("callBoxMarker" + scope.selectedCallBoxID);
-
-               // scope.selectedMarker = utilService.findArrayElement(scope.markers, "id", "callBoxMarker" + scope.selectedCallBoxID);
-               // if (!scope.selectedMarker) return;
-               // scope.selectedMarker.draggable = false;
-
-               // google.maps.event.clearListeners(scope.map, 'dragend');
+               scope.triggerSetMarkerPosition(scope.selectedPosition.lat, scope.selectedPosition.lng);
 
             };
 
-            scope.$watch("selectedMarker", function (newValue) {
-               if (newValue && newValue.position) {
-                  console.log(newValue.position);
-                  scope.selectedPosition.lat = newValue.position.lat();
-                  scope.selectedPosition.lng = newValue.position.lng();
+            //we need "selectedPosition" only becauase we also want to allow
+            //user to directly update LAT/LON
+            scope.$watch("selectedMarker.position", function (newValue) {
+               console.log(newValue);
+               if (newValue) {
+                  scope.selectedPosition.lat = newValue.lat();
+                  scope.selectedPosition.lng = newValue.lng();
                }
             });
 

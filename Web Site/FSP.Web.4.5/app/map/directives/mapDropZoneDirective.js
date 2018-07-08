@@ -205,7 +205,7 @@
                var dz = utilService.findArrayElement(scope.dropZones, "DropZoneID", scope.selectedDropZoneID);
                if (!dz) {
                   scope.selectedDropZone = "";
-                  scope.triggerHideMapData();
+                  //scope.triggerHideMapData();
                   scope.triggerResetMap();
                   return;
                }
@@ -230,6 +230,7 @@
                scope.selectedDropZone = angular.copy(dz);
                console.log("Cancel edit %O", scope.selectedDropZone);
                scope.triggerSetCancelEditPolygon("dropZonePolygon" + scope.selectedDropZone.DropZoneID, scope.selectedDropZone.Color);
+               scope.triggerSetMapLocation(scope.selectedDropZone.PolygonData.MiddleLat, scope.selectedDropZone.PolygonData.MiddleLon, 16);
             };
 
             scope.save = function () {
