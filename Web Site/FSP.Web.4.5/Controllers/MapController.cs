@@ -123,6 +123,7 @@ namespace FSP.Web.Controllers
                         s.BeatDescription,
                         s.BeatNumber,
                         s.BeatColor,
+                        s.BeatSegments,
                         PolygonData = new PolygonData(s.BeatExtent)
                     }).ToList();
 
@@ -172,6 +173,8 @@ namespace FSP.Web.Controllers
                             return Json(updateResult == "success", JsonRequestBehavior.AllowGet);
                         }
                     }
+
+                    //new beat
 
                     data.StartDate = DateTime.Now;
                     data.EndDate = DateTime.Now;

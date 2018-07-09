@@ -246,7 +246,7 @@
                   } else {
                      console.log("Save Yard Success");
                      toastr.success('Yard Saved', 'Success');
-                     scope.cancelEdit();
+                     scope.isEditing = false;
                      scope.triggerSetCancelEditPolygon("yardPolygon" + scope.selectedYardID, "#000000");
                      scope.triggerMakeAllPolygonsUneditable();
 

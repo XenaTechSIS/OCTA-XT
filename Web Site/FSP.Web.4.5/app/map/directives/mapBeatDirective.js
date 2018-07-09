@@ -21,8 +21,6 @@
          },
          link: function (scope) {
 
-            var selectedSegmentId = 0;
-
             scope.isEditing = false;
             scope.isAdding = false;
             scope.isBusyGetting = false;
@@ -38,7 +36,7 @@
             scope.selectedPolygon = "";
 
             function buildDetailsContent(beat) {
-               var content = "<table>";               
+               var content = "<table>";
                content += "<tr>";
                content += "<td>Beat Number:</td>";
                content += "<td><strong>" + beat.BeatNumber + "</strong></td>";
@@ -83,11 +81,14 @@
 
                if (!beat) return;
                if (!beat.PolygonData) return;
+               if (!beat.PolygonData.Coordinates) return;
+
+               var firstPolygon = beat.PolygonData.Coordinates[0];
 
                var beatMarker = new MarkerWithLabel({
                   id: "beatMarker" + beat.BeatID,
                   animation: google.maps.Animation.DROP,
-                  position: new google.maps.LatLng(beat.PolygonData.MiddleLat, beat.PolygonData.MiddleLon),
+                  position: new google.maps.LatLng(firstPolygon.lat, firstPolygon.lng),
                   draggable: false,
                   labelContent: beat.BeatNumber,
                   labelAnchor: new google.maps.Point(35, 40),
@@ -166,21 +167,6 @@
                }
             });
 
-            scope.setSelectedBeat = function () {
-               scope.selectedBeat = utilService.findArrayElement(scope.beats, "BeatID", scope.selectedBeatID);
-               if (!scope.selectedBeat) {
-                  scope.triggerHideMapData();
-                  scope.triggerResetMap();
-                  return;
-               }
-               console.log(scope.selectedBeat);
-
-               if (!scope.selectedBeat.PolygonData) return;
-               if (!scope.selectedBeat.PolygonData.MiddleLat || !scope.selectedBeat.PolygonData.MiddleLon) return;
-
-               scope.triggerSetMapLocation(scope.selectedBeat.PolygonData.MiddleLat, scope.selectedBeat.PolygonData.MiddleLon, 16);
-            };
-
             scope.getBeatPolygons = function (triggerMapUpdate) {
                scope.isBusyGetting = true;
                mapService.getBeatPolygons().then(function (rawBeats) {
@@ -197,8 +183,8 @@
                         buildMarkers(beat);
                      });
 
-                     //if (selectedSegmentId)
-                     //    scope.selectedBeatSegment = utilService.findArrayElement(scope.segments, "ID", selectedSegmentId);
+                     if (scope.selectedBeatID)
+                        scope.selectedBeat = utilService.findArrayElement(scope.beats, "BeatID", scope.selectedBeatID);
 
                      if (triggerMapUpdate)
                         scope.triggerDisplayMapData();
@@ -207,16 +193,42 @@
                });
             };
 
+            scope.setSelectedBeat = function () {
+               var beat = utilService.findArrayElement(scope.beats, "BeatID", scope.selectedBeatID);
+               if (!beat) {
+                  scope.selectedBeat = "";
+                  scope.triggerHideMapData();
+                  scope.triggerResetMap();
+                  return;
+               }
+               scope.selectedBeat = angular.copy(beat);
+               console.log(scope.selectedBeat);
+
+               if (!scope.selectedBeat.PolygonData) return;
+               if (!scope.selectedBeat.PolygonData.Coordinates) return;
+
+               var firstPolygon = scope.selectedBeat.PolygonData.Coordinates[0];
+               scope.triggerSetMapLocation(firstPolygon.lat, firstPolygon.lng, 15);
+            };
+
             scope.setEdit = function () {
                scope.isEditing = true;
-               console.log("Edit beat %s", scope.selectedBeat.BeatID);
-               scope.triggerSetEditPolygon("beatPolygon" + scope.selectedBeat.BeatID);
+               console.log("Edit beat %s", scope.selectedBeatID);
+               scope.triggerSetEditPolygon("beatPolygon" + scope.selectedBeatID);
             };
 
             scope.cancelEdit = function () {
                scope.isEditing = false;
-               console.log("Cancel edit beat %s", scope.selectedBeat.BeatID);
+               console.log("Cancel edit beat %s", scope.selectedBeatID);
+
+               var beat = utilService.findArrayElement(scope.beats, "BeatID", scope.selectedBeatID);
+               scope.selectedBeat = angular.copy(beat);
+
                scope.triggerSetCancelEditPolygon("beatPolygon" + scope.selectedBeat.BeatID, scope.selectedBeat.BeatColor);
+
+               var firstPolygon = scope.selectedBeat.PolygonData.Coordinates[0];
+               scope.triggerSetMapLocation(firstPolygon.lat, firstPolygon.lng, 15);
+
             };
 
             scope.save = function () {
@@ -234,8 +246,13 @@
                   } else {
                      console.log("Save Beat Success");
                      toastr.success('Beat Saved', 'Success');
-                     scope.cancelEdit();
+                     scope.isEditing = false;
+                     scope.triggerSetCancelEditPolygon("beatPolygon" + scope.selectedBeat.BeatID, scope.selectedBeat.BeatColor);
                      scope.triggerMakeAllPolygonsUneditable();
+
+                     setTimeout(function () {
+                        scope.getBeatPolygons(false);
+                     }, 500);
                   }
                });
             };
@@ -275,7 +292,8 @@
                   BeatColor: "#000000",
                   BeatExtent: "",
                   BeatNumber: "",
-                  BeatDescription: ""
+                  BeatDescription: "",
+                  BeatSegments: []
                };
                scope.isAdding = true;
                scope.triggerSetNewPolygon(scope.selectedBeat.BeatColor);
@@ -307,10 +325,10 @@
                      toastr.error('Failed to add Beat', 'Error');
                   } else {
                      console.log("Add Beat Success");
+                     scope.selectedBeat = "";
                      toastr.success('Beat Added', 'Success');
                      scope.triggerMakeAllPolygonsUneditable();
                      scope.triggerHideMapData();
-
                      scope.getBeatPolygons(true);
                   }
                });

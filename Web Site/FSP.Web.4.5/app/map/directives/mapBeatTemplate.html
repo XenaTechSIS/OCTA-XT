@@ -1,110 +1,133 @@
 ﻿<div ng-show="!isAdding">
-    <div class="form-group"
-         ng-show="isBusyGetting">
-        Loading Beats...<i class="fa fa-refresh fa-spin"></i>
-    </div>
-    <div class="form-group"
-         ng-hide="isBusyGetting">
-        <select class="form-control"
-                ng-model="selectedBeatID"
-                ng-change="setSelectedBeat()"
-                ng-disabled="beats.length === 0 || isEditing">
-            <option value="">
-                --Select Beat--
-            </option>
-            <option ng-repeat="beat in beats" value="{{beat.BeatID}}">{{beat.BeatNumber}}</option>
-        </select>
-    </div>
+   <div class="form-group"
+      ng-show="isBusyGetting">
+      Loading Beats...
+      <i class="fa fa-refresh fa-spin"></i>
+   </div>
+   <div class="form-group"
+      ng-hide="isBusyGetting">
+      <select class="form-control"
+         ng-model="selectedBeatID"
+         ng-change="setSelectedBeat()"
+         ng-disabled="beats.length === 0 || isEditing">
+         <option value="">
+            --Select Beat--
+         </option>
+         <option ng-repeat="beat in beats"
+            value="{{beat.BeatID}}">{{beat.BeatNumber}}</option>
+      </select>
+   </div>
 </div>
 
 <!--input form-->
-<div ng-show="selectedBeat">
-    <div class="form-group">
-        Name
-        <input ng-model="selectedBeat.BeatNumber"
-               type="text"
-               class="form-control"
-               ng-disabled="!isEditing && !isAdding" />
-    </div>
-    <div class="form-group">
-        Description
-        <textarea ng-model="selectedBeat.BeatDescription"
-                  class="form-control"
-                  ng-disabled="!isEditing && !isAdding"></textarea>
-    </div>
-    <div class="form-group">
-        Color
-        <input type="text"
-               minicolors="colorPickerSettings"
-               ng-model="selectedBeat.BeatColor"
-               class="form-control"
-               ng-disabled="!isEditing && !isAdding" />
-    </div>
-</div>
+<form name="pageConfig.beatForm"
+   novalidate>
+   <div ng-show="selectedBeat">
+      <div class="form-group"
+         ng-class="{'has-error': pageConfig.beatForm.BeatNumber.$invalid}">
+         Name *
+         <input ng-model="selectedBeat.BeatNumber"
+            type="text"
+            required
+            name="BeatNumber"
+            class="form-control"
+            ng-disabled="!isEditing && !isAdding" />
+      </div>
+      <div class="form-group"
+         ng-class="{'has-error': pageConfig.beatForm.BeatDescription.$invalid}">
+         Description *
+         <textarea ng-model="selectedBeat.BeatDescription"
+            class="form-control"
+            required
+            rows="5"
+            name="BeatDescription"
+            ng-disabled="!isEditing && !isAdding"></textarea>
+      </div>
+      <div class="form-group">
+         Color
+         <input type="text"
+            minicolors="colorPickerSettings"
+            ng-model="selectedBeat.BeatColor"
+            class="form-control"
+            ng-disabled="!isEditing && !isAdding" />
+      </div>
+      <div ng-show="isEditing || isAdding">
+         <div>
+            *required fields
+         </div>
 
-<!--edit existing-->
-<div class="form-group"
-     ng-show="selectedBeat && !isAdding">
-    <button ng-show="!isEditing"
-            ng-click="setEdit()"
-            class="btn btn-primary btn-sm">
-        <i class="fa fa-pencil">
-        </i> Edit Beat
-    </button>
-    <button ng-show="isEditing"
-            ng-click="save()"
-            ng-disabled="isBusySaving || isBusyDeleting"
-            class="btn btn-primary btn-sm">
-        <i class="fa fa-check"
-           ng-hide="isBusySaving">
-        </i>
-        <i class="fa fa-refresh fa-spin"
-           ng-show="isBusySaving">
-        </i>
-        Save
-    </button>
-    <button ng-show="isEditing"
-            ng-disabled="isBusySaving || isBusyDeleting"
-            ng-click="delete()"
-            class="btn btn-danger btn-sm">
-        <i class="fa fa-trash"
-           ng-hide="isBusyDeleting">
-        </i>
-        <i class="fa fa-refresh fa-spin"
-           ng-show="isBusyDeleting">
-        </i>
-        Delete
-    </button>
-    <button ng-show="isEditing"
-            ng-click="cancelEdit()"
-            class="btn btn-default btn-sm">
-        Cancel
-    </button>
-</div>
+         <div ng-hide="selectedPolygon.getPath().getLength() > 0"
+            class="alert alert-danger">
+            Polygon missing
+         </div>
+      </div>
+   </div>
 
-<!--add new-->
-<div class="form-group"
-     ng-show="!isEditing">
-    <button ng-hide="selectedBeat"
-            ng-click="prepareNew()"
-            class="btn btn-success btn-sm">
-        <i class="fa fa-plus"></i> Add Beat
-    </button>
-    <button ng-show="!isEditing && isAdding"
-            ng-click="add()"
-            ng-disabled="isBusyAdding"
-            class="btn btn-success btn-sm">
-        <i class="fa fa-check"
-           ng-hide="isBusyAdding">
-        </i>
-        <i class="fa fa-refresh fa-spin"
-           ng-show="isBusyAdding">
-        </i>
-        Save
-    </button>
-    <button ng-show="!isEditing && isAdding"
-            ng-click="cancelAdd()"
-            class="btn btn-default btn-sm">
-        Cancel
-    </button>
-</div>
+   <!--edit existing-->
+   <div class="form-group"
+      ng-show="selectedBeat && !isAdding">
+      <button ng-show="!isEditing"
+         ng-click="setEdit()"
+         class="btn btn-primary btn-sm">
+         <i class="fa fa-pencil">
+         </i> Edit Beat
+      </button>
+      <button ng-show="isEditing"
+         ng-click="save()"
+         ng-disabled="isBusySaving || isBusyDeleting || pageConfig.beatForm.$invalid"
+         class="btn btn-primary btn-sm">
+         <i class="fa fa-check"
+            ng-hide="isBusySaving">
+         </i>
+         <i class="fa fa-refresh fa-spin"
+            ng-show="isBusySaving">
+         </i>
+         Save
+      </button>
+      <button ng-show="isEditing"
+         ng-disabled="isBusySaving || isBusyDeleting"
+         ng-click="delete()"
+         class="btn btn-danger btn-sm">
+         <i class="fa fa-trash"
+            ng-hide="isBusyDeleting">
+         </i>
+         <i class="fa fa-refresh fa-spin"
+            ng-show="isBusyDeleting">
+         </i>
+         Delete
+      </button>
+      <button ng-show="isEditing"
+         ng-click="cancelEdit()"
+         class="btn btn-default btn-sm">
+         Cancel
+      </button>
+   </div>
+
+   <!--add new-->
+   <div class="form-group"
+      ng-show="!isEditing">
+      <button ng-hide="selectedBeat"
+         ng-click="prepareNew()"
+         class="btn btn-success btn-sm">
+         <i class="fa fa-plus"></i> Add Beat
+      </button>
+      <button ng-show="!isEditing && isAdding"
+         ng-click="add()"
+         ng-disabled="isBusyAdding || pageConfig.beatForm.$invalid"
+         class="btn btn-success btn-sm">
+         <i class="fa fa-check"
+            ng-hide="isBusyAdding">
+         </i>
+         <i class="fa fa-refresh fa-spin"
+            ng-show="isBusyAdding">
+         </i>
+         Save
+      </button>
+      <button ng-show="!isEditing && isAdding"
+         ng-click="cancelAdd()"
+         class="btn btn-default btn-sm">
+         Cancel
+      </button>
+   </div>
+
+</form>
