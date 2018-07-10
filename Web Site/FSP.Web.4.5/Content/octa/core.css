@@ -257,3 +257,7 @@ table .sorting_asc, table .sorting_desc {
     width: 35px;
     height: 35px;
 }
+
+.inline {
+    display: inline-block;
+}

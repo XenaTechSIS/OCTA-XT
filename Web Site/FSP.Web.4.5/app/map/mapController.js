@@ -1,11 +1,7 @@
 ﻿(function () {
    'use strict';
    angular.module("octaApp.map").controller("mapController", ['$scope', '$rootScope', '$window', '$interval', '$compile', 'trucksService', 'utilService', mapController]);
-   function mapController($scope, $rootScope, $window, $interval, $compile, trucksService, utilService) {
-      $scope.header = "Hello World!" + $rootScope.rootUrl;
-
-      console.log($scope.header);
-
+   function mapController($scope, $rootScope, $window, $interval, $compile, trucksService, utilService) {            
       var DEFAULT_MAP_CENTER_LAT = 33.739660;
       var DEFAULT_MAP_CENTER_LON = -117.832146;
       var ZOOM_9 = 9;

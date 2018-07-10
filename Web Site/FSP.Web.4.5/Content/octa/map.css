@@ -86,14 +86,12 @@ html, body {
     white-space: nowrap;
 }
 
-.beatSegmentsContainer {
-    overflow: hidden;
-    padding: 5px;
-    border: 1px solid lightgray;
+.beatSegmentsListContainer {
+    margin-bottom: 10px;
 }
 
-.beatSegment {
-    margin-bottom: 3px;
+.addBeatSegmentsContainer {
+    margin-bottom: 10px;
 }
 
 div#infoWindow {

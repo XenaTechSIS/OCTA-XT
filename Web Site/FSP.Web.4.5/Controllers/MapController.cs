@@ -117,13 +117,13 @@ namespace FSP.Web.Controllers
                 using (var service = new TowTruckServiceClient())
                 {
                     var rawBeats = service.RetreiveAllBeats();
-                    var beats = rawBeats.OrderBy(p => p.BeatNumber).ToList().Select(s => new
+                    var beats = rawBeats.Where(p => p.Active).OrderBy(p => p.BeatNumber).ToList().Select(s => new
                     {
                         s.BeatID,
                         s.BeatDescription,
                         s.BeatNumber,
                         s.BeatColor,
-                        s.BeatSegments,
+                        BeatSegments = s.BeatSegments.OrderBy(p => p.BeatSegmentNumber),
                         PolygonData = new PolygonData(s.BeatExtent)
                     }).ToList();
 
@@ -159,6 +159,7 @@ namespace FSP.Web.Controllers
                             dbBeat.BeatDescription = data.BeatDescription;
                             dbBeat.BeatColor = data.BeatColor;
                             dbBeat.BeatExtent = data.BeatExtent;
+                            dbBeat.BeatSegments = data.BeatSegments;
 
                             dbBeat.LastUpdate = DateTime.Now;
                             dbBeat.LastUpdateBy = HttpContext.User.Identity.Name;
@@ -176,12 +177,15 @@ namespace FSP.Web.Controllers
 
                     //new beat
 
+                    if (data.BeatID == Guid.Empty)
+                        data.BeatID = Guid.NewGuid();
+
                     data.StartDate = DateTime.Now;
                     data.EndDate = DateTime.Now;
                     data.LastUpdate = DateTime.Now;
                     data.LastUpdateBy = HttpContext.User.Identity.Name;
                     data.FreewayID = 0;
-                    data.BeatSegments = new BeatSegment_Cond[0];
+                    data.Active = true;
 
                     var createResult = service.UpdateBeat(data);
                     return Json(createResult == "success", JsonRequestBehavior.AllowGet);
@@ -216,6 +220,28 @@ namespace FSP.Web.Controllers
         #endregion
 
         #region segments
+
+        [HttpGet]
+        public ActionResult GetSegments()
+        {
+            try
+            {
+                Util.LogInfo("segment requested");
+                using (var service = new TowTruckServiceClient())
+                {                    
+                    var segments = service.RetreiveAllSegments().OrderBy(p => p.BeatSegmentNumber).ToList();
+                    var jsonResult = Json(segments, JsonRequestBehavior.AllowGet);
+                    jsonResult.MaxJsonLength = int.MaxValue;
+                    Util.LogInfo("segments polygons returned");
+                    return jsonResult;
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.LogError($"Get Segment Error: {ex.Message}");
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+        }
 
         [HttpGet]
         public ActionResult GetSegmentPolygons()
@@ -257,6 +283,9 @@ namespace FSP.Web.Controllers
             {
                 if (string.IsNullOrEmpty(data.BeatSegmentExtent))
                     return Json("false", JsonRequestBehavior.AllowGet);
+
+                if (data.BeatSegmentID == Guid.Empty)
+                    data.BeatSegmentID = Guid.NewGuid();
 
                 data.LastUpdate = DateTime.Now.ToString(CultureInfo.InvariantCulture);
                 data.LastUpdateBy = HttpContext.User.Identity.Name;

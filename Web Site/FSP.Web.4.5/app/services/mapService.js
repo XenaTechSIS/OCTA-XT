@@ -22,6 +22,15 @@
                   return response.data;
                });
          },
+         getSegments: function () {
+            return $http({
+               method: 'GET',
+               url: $(".websiteUrl").text().trim() + '/Map/GetSegments'
+            }).
+               then(function (response) {
+                  return response.data;
+               });
+         },
          getYardPolygons: function () {
             return $http({
                method: 'GET',

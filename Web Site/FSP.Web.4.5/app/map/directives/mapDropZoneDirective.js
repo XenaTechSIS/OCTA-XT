@@ -154,8 +154,7 @@
                });
             };
 
-            scope.$watch("visible", function (isVisible) {
-               console.log("dropzone visibility changed, %s", isVisible);
+            scope.$watch("visible", function (isVisible) {              
                if (isVisible !== undefined) {
                   if (isVisible) {
                      if (scope.polygons.length === 0) {

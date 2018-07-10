@@ -34,6 +34,7 @@
             scope.selectedBeatID = "";
             scope.selectedBeat = "";
             scope.selectedPolygon = "";
+            scope.selectedSegment = "";
 
             function buildDetailsContent(beat) {
                var content = "<table>";
@@ -167,6 +168,12 @@
                }
             });
 
+            scope.getSegments = function () {
+               mapService.getSegments().then(function (segments) {
+                  scope.allSegments = segments;
+               });
+            };
+
             scope.getBeatPolygons = function (triggerMapUpdate) {
                scope.isBusyGetting = true;
                mapService.getBeatPolygons().then(function (rawBeats) {
@@ -215,6 +222,17 @@
                scope.isEditing = true;
                console.log("Edit beat %s", scope.selectedBeatID);
                scope.triggerSetEditPolygon("beatPolygon" + scope.selectedBeatID);
+            };
+
+            scope.addSegment = function () {
+               if (!scope.selectedBeat) return;
+               if (!scope.selectedSegment) return;
+
+               var segment = utilService.findArrayElement(scope.selectedBeat.BeatSegments, "BeatSegmentID", scope.selectedSegment.BeatSegmentID);
+               if (segment) return;
+
+               scope.selectedBeat.BeatSegments.push(angular.copy(scope.selectedSegment));
+               scope.selectedSegment = "";
             };
 
             scope.cancelEdit = function () {
@@ -334,6 +352,7 @@
                });
             };
 
+            scope.getSegments();
          }
       };
    }

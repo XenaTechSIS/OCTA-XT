@@ -51,6 +51,41 @@
             class="form-control"
             ng-disabled="!isEditing && !isAdding" />
       </div>
+
+      <br>
+
+      <div>
+         Segments * ({{selectedBeat.BeatSegments.length}})
+      </div>
+      <div class="beatSegmentsListContainer">
+         <!-- existing segments -->
+         <div ng-repeat="seg in selectedBeat.BeatSegments track by $index"
+            class="panel panel-default">
+            <div class="panel-body">
+               {{$index+1}}. {{seg.BeatSegmentNumber}}
+               <i ng-show="$parent.isEditing"
+                  class="fa fa-trash pull-right idosomething"
+                  title="Remove Segment"
+                  ng-click="selectedBeat.BeatSegments.splice($index,1)"></i>
+            </div>
+         </div>
+      </div>
+
+      <div class="addBeatSegmentsContainer"
+         ng-show="isEditing || isAdding"
+         novalidate>
+         Add Segment
+         <select class="form-control input-sm"
+            ng-change="addSegment()"
+            ng-model="selectedSegment">
+            <option value="">
+               --Select Segment--
+            </option>
+            <option ng-repeat="segment in allSegments"
+               ng-value="{{segment}}">{{segment.BeatSegmentNumber}}</option>
+         </select>
+      </div>
+
       <div ng-show="isEditing || isAdding">
          <div>
             *required fields
@@ -66,7 +101,7 @@
    <!--edit existing-->
    <div class="form-group"
       ng-show="selectedBeat && !isAdding">
-      <button ng-show="!isEditing"
+      <button ng-hide="isEditing"
          ng-click="setEdit()"
          class="btn btn-primary btn-sm">
          <i class="fa fa-pencil">
@@ -74,7 +109,8 @@
       </button>
       <button ng-show="isEditing"
          ng-click="save()"
-         ng-disabled="isBusySaving || isBusyDeleting || pageConfig.beatForm.$invalid"
+         ng-disabled="isBusySaving || isBusyDeleting || pageConfig.beatForm.$invalid || selectedBeat.BeatSegments.length === 0"
+   
          class="btn btn-primary btn-sm">
          <i class="fa fa-check"
             ng-hide="isBusySaving">
