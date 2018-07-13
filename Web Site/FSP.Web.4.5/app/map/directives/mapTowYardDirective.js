@@ -326,7 +326,7 @@
                      toastr.success('Yard Added', 'Success');
                      scope.triggerMakeAllPolygonsUneditable();
                      scope.triggerHideMapData();
-
+                     scope.selectedYard = "";
                      scope.getYardPolygons(true);
                   }
                });

@@ -1,7 +1,7 @@
 ﻿(function () {
    'use strict';
    angular.module("octaApp.map").controller("mapController", ['$scope', '$rootScope', '$window', '$interval', '$compile', 'trucksService', 'utilService', mapController]);
-   function mapController($scope, $rootScope, $window, $interval, $compile, trucksService, utilService) {            
+   function mapController($scope, $rootScope, $window, $interval, $compile, trucksService, utilService) {
       var DEFAULT_MAP_CENTER_LAT = 33.739660;
       var DEFAULT_MAP_CENTER_LON = -117.832146;
       var ZOOM_9 = 9;
@@ -591,9 +591,13 @@
 
       $scope.setEditMarker = function (id) {
          console.log("Set edit marker: %s", id);
-         $scope.selectedMarker = utilService.findArrayElement($scope.markers, "id", id);
-         if (!$scope.selectedMarker) return;
+         var marker = utilService.findArrayElement($scope.markers, "id", id);
+         if (!marker) return;
+         $scope.selectedMarker = marker; //angular.copy(marker);
+         $scope.selectedMarker.labelContent = "Drag Me!";
          $scope.selectedMarker.draggable = true;
+
+         updateMap($scope.selectedMarker.position, 14);
 
          google.maps.event.addListener($scope.selectedMarker, 'dragend', function () {
             console.log('New marker position: %O', $scope.selectedMarker.position);
@@ -615,9 +619,12 @@
 
       $scope.setCancelEditMarker = function (id) {
          console.log("Set cancel edit marker: %s", id);
-         $scope.selectedMarker = utilService.findArrayElement($scope.markers, "id", id);
-         if (!$scope.selectedMarker) return;
+         var marker = utilService.findArrayElement($scope.markers, "id", id);
+         if (!marker) return;
+         $scope.selectedMarker = marker; //angular.copy(marker);
+         $scope.selectedMarker.labelContent = $scope.selectedMarker.signNumber;
          $scope.selectedMarker.draggable = false;
+         updateMap($scope.selectedMarker.position, 15);
          removeAllMapEvents();
       };
 
@@ -648,6 +655,31 @@
          });
 
          $scope.polygons.push($scope.selectedPolygon);
+      };
+
+      $scope.setNewMarker = function () {
+         console.log("setNewMarker");
+         $scope.hideMapData();
+
+         $scope.selectedMarker = new MarkerWithLabel({
+            id: "newMarker",
+            animation: google.maps.Animation.DROP,
+            position: new google.maps.LatLng(DEFAULT_MAP_CENTER_LAT, DEFAULT_MAP_CENTER_LON),
+            draggable: true,
+            raisedOnDrag: true,
+            labelContent: 'Drag Me!',
+            labelAnchor: new google.maps.Point(35, 50),
+            labelClass: "googleMapMarkerLabel",
+            labelStyle: { opacity: 0.75 }
+         });
+
+         google.maps.event.addListener($scope.selectedMarker, 'dragend', function () {
+            console.log('New marker position: %O', $scope.selectedMarker.position);
+         });
+
+         $scope.selectedMarker.setMap($scope.map);
+
+         $scope.markers.push($scope.selectedMarker);
       };
 
       $scope.makeAllPolygonsUneditable = function () {

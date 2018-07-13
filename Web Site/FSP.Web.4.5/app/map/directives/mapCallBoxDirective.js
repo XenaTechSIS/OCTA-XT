@@ -14,6 +14,7 @@
             setEditMarker: "&",
             setCancelEditMarker: "&",
             setMarkerPosition: "&",
+            setNewMarker: "&",
             makeAllPolygonsUneditable: "&",
 
             selectedMarker: "=",
@@ -70,6 +71,7 @@
 
                var callBoxMarker = new MarkerWithLabel({
                   id: "callBoxMarker" + callBox.CallBoxID,
+                  signNumber: callBox.SignNumber,
                   animation: google.maps.Animation.DROP,
                   position: new google.maps.LatLng(coor.lat, coor.lng),
                   draggable: false,
@@ -131,6 +133,10 @@
                   lat: lat,
                   lon: lon
                });
+            };
+
+            scope.triggerSetNewMarker = function () {
+               scope.setNewMarker();
             };
 
             scope.$watch("visible", function (isVisible) {
@@ -223,7 +229,7 @@
 
             //we need "selectedPosition" only becauase we also want to allow
             //user to directly update LAT/LON
-            scope.$watch("selectedMarker.position", function (newValue) {               
+            scope.$watch("selectedMarker.position", function (newValue) {
                if (newValue) {
                   scope.selectedPosition.lat = newValue.lat();
                   scope.selectedPosition.lng = newValue.lng();
@@ -247,10 +253,13 @@
                      console.log("Save Call Box Success");
                      toastr.success('Call Box Saved', 'Success');
                      scope.isEditing = false;
+                     scope.selectedCallBox = "";
+                     scope.selectedPosition = "";
+                     scope.triggerHideMapData();
 
                      setTimeout(function () {
-                        scope.getCallBoxPolygons(false);
-                     }, 500);
+                        scope.getCallBoxPolygons(true);
+                     }, 250);
                   }
                });
             };
@@ -298,6 +307,7 @@
                   lng: ""
                };
                scope.isAdding = true;
+               scope.triggerSetNewMarker();
             };
 
             scope.cancelAdd = function () {
@@ -326,6 +336,8 @@
                      toastr.error('Failed to add Call Box', 'Error');
                   } else {
                      scope.isAdding = false;
+                     scope.selectedCallBox = "";
+                     scope.selectedPosition = "";
                      console.log("Add CallBox Success");
                      toastr.success('Call Box Added', 'Success');
                      scope.triggerHideMapData();

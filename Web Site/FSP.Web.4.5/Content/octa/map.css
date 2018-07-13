@@ -73,17 +73,20 @@ html, body {
     }
 
 .googleMapMarkerLabel {
-    color: red;
+    color: black;
     background-color: white;
     font-family: "Lucida Grande", "Arial", sans-serif;
     font-size: 10px;
-    font-weight: bold;
+    padding: 2px;
+    font-weight: normal;
     text-align: center;
-    width: 70px;
-    height: 20px;
+    width: 70px;   
     vertical-align: middle !important;
-    border: 2px solid black;
+    border: 1px solid black;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0.9;
 }
 
 .beatSegmentsListContainer {

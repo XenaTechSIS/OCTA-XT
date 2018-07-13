@@ -20,9 +20,7 @@
             visible: "="
          },
          link: function (scope) {
-
-            var selectedSegmentId = 0;
-
+            
             scope.isEditing = false;
             scope.isAdding = false;
             scope.isBusyGetting = false;
