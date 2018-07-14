@@ -21,6 +21,8 @@
          },
          link: function (scope) {
 
+            var selectedZoomFactor = 15;
+
             scope.isEditing = false;
             scope.isAdding = false;
             scope.isBusyGetting = false;
@@ -154,7 +156,7 @@
                });
             };
 
-            scope.$watch("visible", function (isVisible) {              
+            scope.$watch("visible", function (isVisible) {
                if (isVisible !== undefined) {
                   if (isVisible) {
                      if (scope.polygons.length === 0) {
@@ -212,7 +214,7 @@
                console.log(scope.selectedDropZone);
                if (!scope.selectedDropZone.PolygonData) return;
                if (!scope.selectedDropZone.PolygonData.MiddleLat || !scope.selectedDropZone.PolygonData.MiddleLon) return;
-               scope.triggerSetMapLocation(scope.selectedDropZone.PolygonData.MiddleLat, scope.selectedDropZone.PolygonData.MiddleLon, 16);
+               scope.triggerSetMapLocation(scope.selectedDropZone.PolygonData.MiddleLat, scope.selectedDropZone.PolygonData.MiddleLon, selectedZoomFactor);
             };
 
             scope.setEdit = function () {
@@ -229,7 +231,7 @@
                scope.selectedDropZone = angular.copy(dz);
                console.log("Cancel edit %O", scope.selectedDropZone);
                scope.triggerSetCancelEditPolygon("dropZonePolygon" + scope.selectedDropZone.DropZoneID, scope.selectedDropZone.Color);
-               scope.triggerSetMapLocation(scope.selectedDropZone.PolygonData.MiddleLat, scope.selectedDropZone.PolygonData.MiddleLon, 16);
+               scope.triggerSetMapLocation(scope.selectedDropZone.PolygonData.MiddleLat, scope.selectedDropZone.PolygonData.MiddleLon, selectedZoomFactor);
             };
 
             scope.save = function () {
@@ -248,12 +250,17 @@
                      console.log("Save Drop Zone Success");
                      toastr.success('Drop Zone Saved', 'Success');
                      scope.isEditing = false;
-                     scope.triggerSetCancelEditPolygon("dropZonePolygon" + scope.selectedDropZone.DropZoneID, scope.selectedDropZone.Color);
-                     scope.triggerMakeAllPolygonsUneditable();
+                     scope.selectedDropZone = "";
+                     scope.selectedPolygon = "";
+
+                     // scope.triggerSetCancelEditPolygon("dropZonePolygon" + scope.selectedDropZone.DropZoneID, scope.selectedDropZone.Color);
+                     // scope.triggerMakeAllPolygonsUneditable();
+
+                     scope.triggerHideMapData();
 
                      setTimeout(function () {
-                        scope.getDropZonePolygons(false);
-                     }, 500);
+                        scope.getDropZonePolygons(true);
+                     }, 250);
                   }
                });
             };

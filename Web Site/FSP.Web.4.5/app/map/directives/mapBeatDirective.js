@@ -21,6 +21,8 @@
          },
          link: function (scope) {
 
+            var selectedZoomFactor = 15;
+
             scope.isEditing = false;
             scope.isAdding = false;
             scope.isBusyGetting = false;
@@ -215,7 +217,7 @@
                if (!scope.selectedBeat.PolygonData.Coordinates) return;
 
                var firstPolygon = scope.selectedBeat.PolygonData.Coordinates[0];
-               scope.triggerSetMapLocation(firstPolygon.lat, firstPolygon.lng, 15);
+               scope.triggerSetMapLocation(firstPolygon.lat, firstPolygon.lng, selectedZoomFactor);
             };
 
             scope.setEdit = function () {
@@ -231,6 +233,7 @@
                var segment = utilService.findArrayElement(scope.selectedBeat.BeatSegments, "BeatSegmentID", scope.selectedSegment.BeatSegmentID);
                if (segment) return;
 
+               scope.selectedSegment.BeatID = scope.selectedBeat.BeatID;
                scope.selectedBeat.BeatSegments.push(angular.copy(scope.selectedSegment));
                scope.selectedSegment = "";
             };
@@ -245,7 +248,7 @@
                scope.triggerSetCancelEditPolygon("beatPolygon" + scope.selectedBeat.BeatID, scope.selectedBeat.BeatColor);
 
                var firstPolygon = scope.selectedBeat.PolygonData.Coordinates[0];
-               scope.triggerSetMapLocation(firstPolygon.lat, firstPolygon.lng, 15);
+               scope.triggerSetMapLocation(firstPolygon.lat, firstPolygon.lng, selectedZoomFactor);
 
             };
 

@@ -20,7 +20,9 @@
             visible: "="
          },
          link: function (scope) {
-            
+
+            var selectedZoomFactor = 16;
+
             scope.isEditing = false;
             scope.isAdding = false;
             scope.isBusyGetting = false;
@@ -217,7 +219,7 @@
                console.log(scope.selectedBeatSegment);
                if (!scope.selectedBeatSegment.PolygonData) return;
                if (!scope.selectedBeatSegment.PolygonData.MiddleLat || !scope.selectedBeatSegment.PolygonData.MiddleLon) return;
-               scope.triggerSetMapLocation(scope.selectedBeatSegment.PolygonData.MiddleLat, scope.selectedBeatSegment.PolygonData.MiddleLon, 16);
+               scope.triggerSetMapLocation(scope.selectedBeatSegment.PolygonData.MiddleLat, scope.selectedBeatSegment.PolygonData.MiddleLon, selectedZoomFactor);
             };
 
             scope.setEdit = function () {
@@ -233,7 +235,7 @@
                scope.selectedBeatSegment = angular.copy(seg);
                console.log("Cancel edit %O", scope.selectedBeatSegment);
                scope.triggerSetCancelEditPolygon("segmentPolygon" + scope.selectedBeatSegment.BeatSegmentID, scope.selectedBeatSegment.Color);
-               scope.triggerSetMapLocation(scope.selectedBeatSegment.PolygonData.MiddleLat, scope.selectedBeatSegment.PolygonData.MiddleLon, 16);
+               scope.triggerSetMapLocation(scope.selectedBeatSegment.PolygonData.MiddleLat, scope.selectedBeatSegment.PolygonData.MiddleLon, selectedZoomFactor);
             };
 
             scope.save = function () {
@@ -252,12 +254,18 @@
                      console.log("Save Segment Success");
                      toastr.success('Segment Saved', 'Success');
                      scope.isEditing = false;
+
                      scope.triggerSetCancelEditPolygon("segmentPolygon" + scope.selectedBeatSegment.BeatSegmentID, scope.selectedBeatSegment.Color);
                      scope.triggerMakeAllPolygonsUneditable();
-
                      setTimeout(function () {
                         scope.getSegments(false);
-                     }, 500);
+                     }, 250);
+
+                     //scope.triggerHideMapData();
+                     // setTimeout(function () {
+                     //    scope.getSegments(true);
+                     // }, 250);
+
                   }
                });
             };

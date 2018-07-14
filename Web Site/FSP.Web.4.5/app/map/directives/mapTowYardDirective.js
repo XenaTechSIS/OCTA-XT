@@ -21,6 +21,8 @@
          },
          link: function (scope) {
 
+            var selectedZoomFactor = 15;
+
             scope.isEditing = false;
             scope.isAdding = false;
             scope.isBusyGetting = false;
@@ -214,7 +216,7 @@
                if (!scope.selectedYard.PolygonData) return;
                if (!scope.selectedYard.PolygonData.MiddleLat || !scope.selectedYard.PolygonData.MiddleLon) return;
 
-               scope.triggerSetMapLocation(scope.selectedYard.PolygonData.MiddleLat, scope.selectedYard.PolygonData.MiddleLon, 16);
+               scope.triggerSetMapLocation(scope.selectedYard.PolygonData.MiddleLat, scope.selectedYard.PolygonData.MiddleLon, selectedZoomFactor);
             };
 
             scope.setEdit = function () {
@@ -229,6 +231,7 @@
                scope.selectedYard = angular.copy(yard);
                console.log("Cancel edit %O", scope.selectedYard);
                scope.triggerSetCancelEditPolygon("yardPolygon" + scope.selectedYardID, "#000000");
+               scope.triggerSetMapLocation(scope.selectedYard.PolygonData.MiddleLat, scope.selectedYard.PolygonData.MiddleLon, selectedZoomFactor);
             };
 
             scope.save = function () {
@@ -247,12 +250,17 @@
                      console.log("Save Yard Success");
                      toastr.success('Yard Saved', 'Success');
                      scope.isEditing = false;
-                     scope.triggerSetCancelEditPolygon("yardPolygon" + scope.selectedYardID, "#000000");
-                     scope.triggerMakeAllPolygonsUneditable();
+                     scope.selectedYard = "";
+                     scope.selectedPolygon = "";
+
+                     // scope.triggerSetCancelEditPolygon("yardPolygon" + scope.selectedYardID, "#000000");
+                     // scope.triggerMakeAllPolygonsUneditable();
+
+                     scope.triggerHideMapData();
 
                      setTimeout(function () {
-                        scope.getYardPolygons(false);
-                     }, 500);
+                        scope.getYardPolygons(true);
+                     }, 250);
                   }
                });
             };

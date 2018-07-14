@@ -159,7 +159,25 @@ namespace FSP.Web.Controllers
                             dbBeat.BeatDescription = data.BeatDescription;
                             dbBeat.BeatColor = data.BeatColor;
                             dbBeat.BeatExtent = data.BeatExtent;
-                            dbBeat.BeatSegments = data.BeatSegments;
+
+                            //if (dbBeat.BeatSegments.Length != data.BeatSegments.Length)
+                            //{
+                            //    var allSegments = service.RetreiveAllSegments().ToList();
+                            //    dbBeat.BeatSegments = new BeatSegment_Cond[data.BeatSegments.Length];
+
+                            //    var counter = 0;
+                            //    foreach (var dataBeatSegment in data.BeatSegments)
+                            //    {
+                            //        var segment = allSegments.FirstOrDefault(p =>
+                            //            p.BeatSegmentID == dataBeatSegment.BeatSegmentID);
+
+                            //        if (segment == null) continue;
+
+                            //        dbBeat.BeatSegments[counter] = segment;
+                            //        counter++;
+                            //    }
+
+                            //}
 
                             dbBeat.LastUpdate = DateTime.Now;
                             dbBeat.LastUpdateBy = HttpContext.User.Identity.Name;
@@ -228,8 +246,21 @@ namespace FSP.Web.Controllers
             {
                 Util.LogInfo("segment requested");
                 using (var service = new TowTruckServiceClient())
-                {                    
-                    var segments = service.RetreiveAllSegments().OrderBy(p => p.BeatSegmentNumber).ToList();
+                {
+                    //var segments = service.RetreiveAllSegments().OrderBy(p => p.BeatSegmentNumber).ToList();
+
+                    var rawSegments = service.RetreiveAllSegments();
+                    var segments = rawSegments.OrderBy(p => p.BeatSegmentNumber).ToList().Select(s => new
+                    {
+                        s.BeatSegmentID,
+                        s.BeatSegmentNumber,
+                        s.BeatSegmentDescription,
+                        s.CHPDescription,
+                        s.CHPDescription2,
+                        s.Color,
+                        s.BeatSegmentExtent
+                    }).ToList();
+
                     var jsonResult = Json(segments, JsonRequestBehavior.AllowGet);
                     jsonResult.MaxJsonLength = int.MaxValue;
                     Util.LogInfo("segments polygons returned");

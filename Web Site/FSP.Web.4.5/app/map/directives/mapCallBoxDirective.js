@@ -22,6 +22,8 @@
          },
          link: function (scope) {
 
+            var selectedZoomFactor = 15;
+
             scope.isEditing = false;
             scope.isAdding = false;
             scope.isBusyGetting = false;
@@ -202,7 +204,7 @@
                scope.selectedPosition = scope.selectedCallBox.PolygonData.Coordinates[0];
                console.log(scope.selectedPosition);
 
-               scope.triggerSetMapLocation(scope.selectedPosition.lat, scope.selectedPosition.lng, 15);
+               scope.triggerSetMapLocation(scope.selectedPosition.lat, scope.selectedPosition.lng, selectedZoomFactor);
             };
 
             scope.setEdit = function () {
@@ -220,7 +222,7 @@
 
                scope.selectedPosition = scope.selectedCallBox.PolygonData.Coordinates[0];
                console.log(scope.selectedPosition);
-               scope.triggerSetMapLocation(scope.selectedPosition.lat, scope.selectedPosition.lng, 15);
+               scope.triggerSetMapLocation(scope.selectedPosition.lat, scope.selectedPosition.lng, selectedZoomFactor);
 
                scope.triggerSetCancelEditMarker("callBoxMarker" + scope.selectedCallBoxID);
                scope.triggerSetMarkerPosition(scope.selectedPosition.lat, scope.selectedPosition.lng);
