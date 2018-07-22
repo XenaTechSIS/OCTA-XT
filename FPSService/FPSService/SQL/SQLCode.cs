@@ -1149,9 +1149,9 @@ namespace FPSService.SQL
             return beat;
         }
 
-        public List<BeatSegment_Cond> RetrieveBeatSegments(Guid BeatID)
+        public List<BeatSegment_New> RetrieveBeatSegments(Guid BeatID)
         {
-            List<BeatSegment_Cond> segments = new List<BeatSegment_Cond>();
+            List<BeatSegment_New> segments = new List<BeatSegment_New>();
 
             try
             {
@@ -1164,10 +1164,18 @@ namespace FPSService.SQL
                     SqlDataReader rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        BeatSegment_Cond segment = new BeatSegment_Cond();
+                        BeatSegment_New segment = new BeatSegment_New();
+                        segment.Active = Convert.ToBoolean(rdr["Active"].ToString());
                         segment.BeatSegmentDescription = rdr["BeatSegmentDescription"].ToString();
+                        segment.BeatSegmentExtent = rdr["BeatSegmentExtent"].ToString();
                         segment.BeatSegmentID = new Guid(rdr["BeatSegmentID"].ToString());
                         segment.BeatSegmentNumber = rdr["BeatSegmentNumber"].ToString();
+                        segment.CHPDescription = rdr["CHPDescription"].ToString();
+                        segment.CHPDescription2 = rdr["CHPDescription2"].ToString();
+                        segment.Color = rdr["Color"].ToString();
+                        segment.LastUpdate = rdr["LastUpdate"].ToString();
+                        segment.LastUpdateBy = rdr["LastUpdateBy"].ToString();
+                        segment.PIMSID = rdr["PIMSID"].ToString();
                         segments.Add(segment);
                     }
                     conn.Close();
@@ -2011,7 +2019,7 @@ namespace FPSService.SQL
                     cmd.ExecuteNonQuery();
                     //Add beat segment associations
                     cmd = null;
-                    foreach (BeatSegment_Cond bs in beat.BeatSegments)
+                    foreach (BeatSegment_New bs in beat.BeatSegments)
                     {
                         cmd = new SqlCommand("AssociateBeatSegment", conn);
                         cmd.CommandType = CommandType.StoredProcedure;

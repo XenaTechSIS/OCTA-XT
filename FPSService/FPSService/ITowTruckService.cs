@@ -897,7 +897,7 @@ namespace FPSService
         public DateTime EndDate { get; set; }
 
         [DataMember]
-        public List<BeatSegment_Cond> BeatSegments { get; set; }
+        public List<BeatSegment_New> BeatSegments { get; set; }
     }
 
     [DataContract]
