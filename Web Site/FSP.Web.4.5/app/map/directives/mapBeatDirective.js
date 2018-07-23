@@ -55,16 +55,18 @@
             function buildPolygons(beat) {
 
                if (!beat) return;
-               if (!beat.PolygonData) return;
-               if (!beat.PolygonData.Coordinates) return;
-
+               if (!beat.BeatSegments) return;
                var cleanLatLng = [];
 
-               beat.PolygonData.Coordinates.forEach(function (coordinate) {
-                  cleanLatLng.push({
-                     lat: coordinate.lat,
-                     lng: coordinate.lng
-                  });
+               beat.BeatSegments.forEach(function (beatSegment) {
+                  if (beatSegment.PolygonData && beatSegment.PolygonData.Coordinates) {
+                     beatSegment.PolygonData.Coordinates.forEach(function (coordinate) {
+                        cleanLatLng.push({
+                           lat: coordinate.lat,
+                           lng: coordinate.lng
+                        });
+                     });
+                  }
                });
 
                var beatPolygon = new google.maps.Polygon({
@@ -83,15 +85,28 @@
             function buildMarkers(beat) {
 
                if (!beat) return;
-               if (!beat.PolygonData) return;
-               if (!beat.PolygonData.Coordinates) return;
+               if (!beat.BeatSegments) return;
 
-               var firstPolygon = beat.PolygonData.Coordinates[0];
+               var numberOfSegments = beat.BeatSegments.length;
+
+               if (numberOfSegments === 0) return;
+
+               var middleSegmentIndex = 0;
+               if (numberOfSegments > 2)
+                  middleSegmentIndex = Math.ceil(numberOfSegments / 2);
+
+               var segment = beat.BeatSegments[middleSegmentIndex];
+               if (!segment.PolygonData) return;
+               var segmentPolygon = segment.PolygonData;
+               if (!segmentPolygon.Coordinates) return;
+               if (segmentPolygon.Coordinates.length === 0) return;
+
+               var firstCoord = segmentPolygon.Coordinates[0];
 
                var beatMarker = new MarkerWithLabel({
                   id: "beatMarker" + beat.BeatID,
                   animation: google.maps.Animation.DROP,
-                  position: new google.maps.LatLng(firstPolygon.lat, firstPolygon.lng),
+                  position: new google.maps.LatLng(firstCoord.lat, firstCoord.lng),
                   draggable: false,
                   labelContent: beat.BeatNumber,
                   labelAnchor: new google.maps.Point(35, 40),
