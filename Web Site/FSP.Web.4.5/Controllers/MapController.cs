@@ -123,8 +123,13 @@ namespace FSP.Web.Controllers
                         s.BeatDescription,
                         s.BeatNumber,
                         s.BeatColor,
-                        BeatSegments = s.BeatSegments.OrderBy(p => p.BeatSegmentNumber),
-                        PolygonData = new PolygonData(s.BeatExtent)
+                        BeatSegments = s.BeatSegments.OrderBy(p => p.BeatSegmentNumber).Select(seg => new
+                        {
+                            seg.BeatSegmentID,
+                            seg.BeatSegmentNumber,
+                            seg.BeatSegmentDescription,
+                            PolygonData = new PolygonData(seg.BeatSegmentExtent)
+                        }).ToList()
                     }).ToList();
 
                     var jsonResult = Json(beats, JsonRequestBehavior.AllowGet);

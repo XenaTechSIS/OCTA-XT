@@ -5212,7 +5212,7 @@ namespace FSP.Web.TowTruckServiceRef {
         private string BeatNumberField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private FSP.Web.TowTruckServiceRef.BeatSegment_Cond[] BeatSegmentsField;
+        private FSP.Web.TowTruckServiceRef.BeatSegment_New[] BeatSegmentsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime EndDateField;
@@ -5321,7 +5321,7 @@ namespace FSP.Web.TowTruckServiceRef {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public FSP.Web.TowTruckServiceRef.BeatSegment_Cond[] BeatSegments {
+        public FSP.Web.TowTruckServiceRef.BeatSegment_New[] BeatSegments {
             get {
                 return this.BeatSegmentsField;
             }
@@ -5407,83 +5407,6 @@ namespace FSP.Web.TowTruckServiceRef {
                 if ((this.StartDateField.Equals(value) != true)) {
                     this.StartDateField = value;
                     this.RaisePropertyChanged("StartDate");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="BeatSegment_Cond", Namespace="http://schemas.datacontract.org/2004/07/FPSService")]
-    [System.SerializableAttribute()]
-    public partial class BeatSegment_Cond : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string BeatSegmentDescriptionField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Guid BeatSegmentIDField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string BeatSegmentNumberField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string BeatSegmentDescription {
-            get {
-                return this.BeatSegmentDescriptionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BeatSegmentDescriptionField, value) != true)) {
-                    this.BeatSegmentDescriptionField = value;
-                    this.RaisePropertyChanged("BeatSegmentDescription");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Guid BeatSegmentID {
-            get {
-                return this.BeatSegmentIDField;
-            }
-            set {
-                if ((this.BeatSegmentIDField.Equals(value) != true)) {
-                    this.BeatSegmentIDField = value;
-                    this.RaisePropertyChanged("BeatSegmentID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string BeatSegmentNumber {
-            get {
-                return this.BeatSegmentNumberField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BeatSegmentNumberField, value) != true)) {
-                    this.BeatSegmentNumberField = value;
-                    this.RaisePropertyChanged("BeatSegmentNumber");
                 }
             }
         }

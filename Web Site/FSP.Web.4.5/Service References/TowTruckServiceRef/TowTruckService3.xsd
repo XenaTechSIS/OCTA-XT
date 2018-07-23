@@ -441,7 +441,7 @@
       <xs:element minOccurs="0" name="BeatExtent" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BeatID" type="ser:guid" />
       <xs:element minOccurs="0" name="BeatNumber" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="BeatSegments" nillable="true" type="tns:ArrayOfBeatSegment_Cond" />
+      <xs:element minOccurs="0" name="BeatSegments" nillable="true" type="tns:ArrayOfBeatSegment_New" />
       <xs:element minOccurs="0" name="EndDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="FreewayID" type="xs:int" />
       <xs:element minOccurs="0" name="IsTemporary" type="xs:boolean" />
@@ -451,20 +451,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Beats_New" nillable="true" type="tns:Beats_New" />
-  <xs:complexType name="ArrayOfBeatSegment_Cond">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="BeatSegment_Cond" nillable="true" type="tns:BeatSegment_Cond" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfBeatSegment_Cond" nillable="true" type="tns:ArrayOfBeatSegment_Cond" />
-  <xs:complexType name="BeatSegment_Cond">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="BeatSegmentDescription" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="BeatSegmentID" type="ser:guid" />
-      <xs:element minOccurs="0" name="BeatSegmentNumber" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="BeatSegment_Cond" nillable="true" type="tns:BeatSegment_Cond" />
   <xs:complexType name="ArrayOfYard_New">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Yard_New" nillable="true" type="tns:Yard_New" />
