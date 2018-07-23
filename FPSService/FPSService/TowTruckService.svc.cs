@@ -837,7 +837,27 @@ namespace FPSService
                     bn.BeatColor = "#000000";
                 }
                 bn.BeatSegments = sql.RetrieveBeatSegments(bn.BeatID);
-                
+
+                //Get this into JSON object for Tolga
+                foreach (BeatSegment_New bsn in bn.BeatSegments)
+                {
+                    string JSON2 = "[";
+                    string[] extent2 = bsn.BeatSegmentExtent.Split(',');
+                    for (int x = 0; x < extent2.Length; x++)
+                    {
+                        if (x == extent.Length - 1)
+                        {
+                            JSON2 += "{ lat: " + extent2[0] + ", lng: " + extent2[1] + " }";
+                        }
+                        else
+                        {
+                            JSON2 += "{ lat: " + extent2[0] + ", lng: " + extent2[1] + " },";
+                        }
+                    }
+
+                    JSON2 += "]";
+                    bsn.BeatSegmentExtent = JSON2;
+                }
             }
 
             return Beats;
@@ -870,6 +890,27 @@ namespace FPSService
             }
             Beat.BeatSegments = new List<BeatSegment_New>();
             Beat.BeatSegments = sql.RetrieveBeatSegments(Beat.BeatID);
+
+            //Get this into JSON object for Tolga
+            foreach (BeatSegment_New bsn in Beat.BeatSegments)
+            {
+                string JSON2 = "[";
+                string[] extent2 = bsn.BeatSegmentExtent.Split(',');
+                for (int x = 0; x < extent2.Length; x++)
+                {
+                    if (x == extent.Length - 1)
+                    {
+                        JSON2 += "{ lat: " + extent2[0] + ", lng: " + extent2[1] + " }";
+                    }
+                    else
+                    {
+                        JSON2 += "{ lat: " + extent2[0] + ", lng: " + extent2[1] + " },";
+                    }
+                }
+
+                JSON2 += "]";
+                bsn.BeatSegmentExtent = JSON2;
+            }
 
             return Beat;
         }
