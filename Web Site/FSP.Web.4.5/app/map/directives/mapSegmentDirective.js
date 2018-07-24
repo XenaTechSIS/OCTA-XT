@@ -257,14 +257,14 @@
 
                      scope.triggerSetCancelEditPolygon("segmentPolygon" + scope.selectedBeatSegment.BeatSegmentID, scope.selectedBeatSegment.Color);
                      scope.triggerMakeAllPolygonsUneditable();
-                     setTimeout(function () {
-                        scope.getSegments(false);
-                     }, 250);
-
-                     //scope.triggerHideMapData();
                      // setTimeout(function () {
-                     //    scope.getSegments(true);
+                     //    scope.getSegments(false);
                      // }, 250);
+
+                     scope.triggerHideMapData();
+                     setTimeout(function () {
+                        scope.getSegments(true);
+                     }, 250);
 
                   }
                });

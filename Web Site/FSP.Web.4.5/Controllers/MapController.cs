@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web.Mvc;
 using FSP.Web.Filters;
 
@@ -128,6 +129,7 @@ namespace FSP.Web.Controllers
                             seg.BeatSegmentID,
                             seg.BeatSegmentNumber,
                             seg.BeatSegmentDescription,
+                            seg.Color,
                             PolygonData = new PolygonData(seg.BeatSegmentExtent)
                         }).ToList()
                     }).ToList();
@@ -150,9 +152,6 @@ namespace FSP.Web.Controllers
         {
             try
             {
-                if (string.IsNullOrEmpty(data.BeatExtent))
-                    return Json("false", JsonRequestBehavior.AllowGet);
-
                 using (var service = new TowTruckServiceClient())
                 {
                     if (data.BeatID != Guid.Empty)
@@ -163,27 +162,23 @@ namespace FSP.Web.Controllers
                             dbBeat.BeatNumber = data.BeatNumber;
                             dbBeat.BeatDescription = data.BeatDescription;
                             dbBeat.BeatColor = data.BeatColor;
-                            dbBeat.BeatExtent = data.BeatExtent;
 
-                            //if (dbBeat.BeatSegments.Length != data.BeatSegments.Length)
-                            //{
-                            //    var allSegments = service.RetreiveAllSegments().ToList();
-                            //    dbBeat.BeatSegments = new BeatSegment_Cond[data.BeatSegments.Length];
+                            if (data.BeatSegments != null)
+                            {
+                                dbBeat.BeatSegments = data.BeatSegments;
 
-                            //    var counter = 0;
-                            //    foreach (var dataBeatSegment in data.BeatSegments)
-                            //    {
-                            //        var segment = allSegments.FirstOrDefault(p =>
-                            //            p.BeatSegmentID == dataBeatSegment.BeatSegmentID);
-
-                            //        if (segment == null) continue;
-
-                            //        dbBeat.BeatSegments[counter] = segment;
-                            //        counter++;
-                            //    }
-
-                            //}
-
+                                foreach (var segment in dbBeat.BeatSegments)
+                                {
+                                    segment.Color = data.BeatColor;
+                                    segment.LastUpdate = DateTime.Now.ToString();
+                                    segment.LastUpdateBy = HttpContext.User.Identity.Name;
+                                }
+                            }
+                            else
+                            {
+                                dbBeat.BeatSegments = new BeatSegment_New[0];
+                            }
+                                                                                                             
                             dbBeat.LastUpdate = DateTime.Now;
                             dbBeat.LastUpdateBy = HttpContext.User.Identity.Name;
 
@@ -209,7 +204,8 @@ namespace FSP.Web.Controllers
                     data.LastUpdateBy = HttpContext.User.Identity.Name;
                     data.FreewayID = 0;
                     data.Active = true;
-
+                    data.BeatExtent = "";
+                    
                     var createResult = service.UpdateBeat(data);
                     return Json(createResult == "success", JsonRequestBehavior.AllowGet);
                 }

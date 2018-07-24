@@ -31,7 +31,7 @@
             required
             name="BeatNumber"
             class="form-control"
-            ng-disabled="!isEditing && !isAdding" />
+            ng-disabled="(!isEditing && !isAdding) || isBusySaving" />
       </div>
       <div class="form-group"
          ng-class="{'has-error': pageConfig.beatForm.BeatDescription.$invalid}">
@@ -41,7 +41,7 @@
             required
             rows="5"
             name="BeatDescription"
-            ng-disabled="!isEditing && !isAdding"></textarea>
+            ng-disabled="(!isEditing && !isAdding) || isBusySaving"></textarea>
       </div>
       <div class="form-group">
          Color
@@ -49,13 +49,11 @@
             minicolors="colorPickerSettings"
             ng-model="selectedBeat.BeatColor"
             class="form-control"
-            ng-disabled="!isEditing && !isAdding" />
+            ng-disabled="(!isEditing && !isAdding) || isBusySaving" />
       </div>
 
-      <br>
-
       <div>
-         Segments * ({{selectedBeat.BeatSegments.length}})
+         Segments ({{selectedBeat.BeatSegments.length}})
       </div>
       <div class="beatSegmentsListContainer">
          <!-- existing segments -->
@@ -74,9 +72,10 @@
       <div class="addBeatSegmentsContainer"
          ng-show="isEditing || isAdding"
          novalidate>
-         Add Segment
+         <i class="fa fa-plus-circle"></i> Add Segment
          <select class="form-control input-sm"
             ng-change="addSegment()"
+            ng-disabled="isBusyAdding || isBusySaving"
             ng-model="selectedSegment">
             <option value="">
                --Select Segment--
@@ -87,14 +86,7 @@
       </div>
 
       <div ng-show="isEditing || isAdding">
-         <div>
-            *required fields
-         </div>
-
-         <div ng-hide="selectedPolygon.getPath().getLength() > 0"
-            class="alert alert-danger">
-            Polygon missing
-         </div>
+         *required fields
       </div>
    </div>
 
@@ -109,7 +101,7 @@
       </button>
       <button ng-show="isEditing"
          ng-click="save()"
-         ng-disabled="isBusySaving || isBusyDeleting || pageConfig.beatForm.$invalid || selectedBeat.BeatSegments.length === 0"
+         ng-disabled="isBusySaving || isBusyDeleting || pageConfig.beatForm.$invalid"
    
          class="btn btn-primary btn-sm">
          <i class="fa fa-check"
