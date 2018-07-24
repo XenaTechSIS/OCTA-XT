@@ -837,7 +837,29 @@ namespace FPSService
                     bn.BeatColor = "#000000";
                 }
                 bn.BeatSegments = sql.RetrieveBeatSegments(bn.BeatID);
-                
+
+                //Get this into JSON object for Tolga
+                foreach (BeatSegment_New bsn in bn.BeatSegments)
+                {
+                    string JSON2 = "[";
+                    string[] extent2 = bsn.BeatSegmentExtent.Split(',');
+                    for (int x = 0; x < extent2.Length; x++)
+                    {
+
+                        string[] ex3 = extent2[x].Trim().Split(' ');
+                        if (x == extent2.Length - 1)
+                        {
+                            JSON2 += "{ lat: " + ex3[0] + ", lng: " + ex3[1] + " }";
+                        }
+                        else
+                        {
+                            JSON2 += "{ lat: " + ex3[0] + ", lng: " + ex3[1] + " },";
+                        }
+                    }
+
+                    JSON2 += "]";
+                    bsn.BeatSegmentExtent = JSON2;
+                }
             }
 
             return Beats;
@@ -870,6 +892,28 @@ namespace FPSService
             }
             Beat.BeatSegments = new List<BeatSegment_New>();
             Beat.BeatSegments = sql.RetrieveBeatSegments(Beat.BeatID);
+
+            //Get this into JSON object for Tolga
+            foreach (BeatSegment_New bsn in Beat.BeatSegments)
+            {
+                string JSON2 = "[";
+                string[] extent2 = bsn.BeatSegmentExtent.Split(',');
+                for (int x = 0; x < extent2.Length; x++)
+                {
+                    string[] ex3 = extent2[x].Trim().Split(' ');
+                    if (x == extent2.Length - 1)
+                    {
+                        JSON2 += "{ lat: " + ex3[0] + ", lng: " + ex3[1] + " }";
+                    }
+                    else
+                    {
+                        JSON2 += "{ lat: " + ex3[0] + ", lng: " + ex3[1] + " },";
+                    }
+                }
+
+                JSON2 += "]";
+                bsn.BeatSegmentExtent = JSON2;
+            }
 
             return Beat;
         }
