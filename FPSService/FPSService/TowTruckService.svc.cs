@@ -845,13 +845,15 @@ namespace FPSService
                     string[] extent2 = bsn.BeatSegmentExtent.Split(',');
                     for (int x = 0; x < extent2.Length; x++)
                     {
-                        if (x == extent.Length - 1)
+
+                        string[] ex3 = extent2[x].Trim().Split(' ');
+                        if (x == extent2.Length - 1)
                         {
-                            JSON2 += "{ lat: " + extent2[0] + ", lng: " + extent2[1] + " }";
+                            JSON2 += "{ lat: " + ex3[0] + ", lng: " + ex3[1] + " }";
                         }
                         else
                         {
-                            JSON2 += "{ lat: " + extent2[0] + ", lng: " + extent2[1] + " },";
+                            JSON2 += "{ lat: " + ex3[0] + ", lng: " + ex3[1] + " },";
                         }
                     }
 
@@ -898,13 +900,14 @@ namespace FPSService
                 string[] extent2 = bsn.BeatSegmentExtent.Split(',');
                 for (int x = 0; x < extent2.Length; x++)
                 {
-                    if (x == extent.Length - 1)
+                    string[] ex3 = extent2[x].Trim().Split(' ');
+                    if (x == extent2.Length - 1)
                     {
-                        JSON2 += "{ lat: " + extent2[0] + ", lng: " + extent2[1] + " }";
+                        JSON2 += "{ lat: " + ex3[0] + ", lng: " + ex3[1] + " }";
                     }
                     else
                     {
-                        JSON2 += "{ lat: " + extent2[0] + ", lng: " + extent2[1] + " },";
+                        JSON2 += "{ lat: " + ex3[0] + ", lng: " + ex3[1] + " },";
                     }
                 }
 

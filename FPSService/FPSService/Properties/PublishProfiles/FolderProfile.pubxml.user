@@ -61,10 +61,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/14/2018 09:25:02</publishTime>
     </File>
     <File Include="bin/FPSService.dll">
-      <publishTime>07/23/2018 11:52:20</publishTime>
+      <publishTime>07/23/2018 19:37:24</publishTime>
     </File>
     <File Include="bin/FPSService.pdb">
-      <publishTime>07/23/2018 11:52:20</publishTime>
+      <publishTime>07/23/2018 19:37:24</publishTime>
     </File>
     <File Include="bin/Microsoft.SqlServer.Types.dll">
       <publishTime>12/10/2016 15:26:34</publishTime>
