@@ -866,8 +866,8 @@ namespace FPSService
         [DataMember]
         public bool Active { get; set; }
 
-        [DataMember]
-        public string BeatExtent { get; set; }
+        //[DataMember]
+        //public string BeatExtent { get; set; }
 
         [DataMember]
         public int FreewayID { get; set; }

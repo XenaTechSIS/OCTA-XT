@@ -1088,7 +1088,7 @@ namespace FPSService.SQL
                     {
                         Beats_New beat = new Beats_New();
                         beat.Active = Convert.ToBoolean(rdr["Active"]);
-                        beat.BeatExtent = rdr["BeatExtent"].ToString();
+                        //beat.BeatExtent = rdr["BeatExtent"].ToString();
                         beat.BeatID = new Guid(rdr["BeatID"].ToString());
                         beat.BeatNumber = rdr["BeatNumber"].ToString();
                         beat.BeatDescription = rdr["BeatDescription"].ToString();
@@ -1126,9 +1126,10 @@ namespace FPSService.SQL
                     while (rdr.Read())
                     {
                         beat.Active = Convert.ToBoolean(rdr["Active"]);
-                        beat.BeatExtent = rdr["BeatExtent"].ToString();
+                        //beat.BeatExtent = rdr["BeatExtent"].ToString();
                         beat.BeatID = new Guid(rdr["BeatID"].ToString());
                         beat.BeatNumber = rdr["BeatNumber"].ToString();
+                        beat.BeatColor = rdr["BeatColor"].ToString();
                         beat.BeatDescription = rdr["BeatDescription"].ToString();
                         beat.IsTemporary = Convert.ToBoolean(rdr["IsTemporary"]);
                         beat.LastUpdate = Convert.ToDateTime(rdr["LastUpdate"].ToString());
@@ -2000,7 +2001,7 @@ namespace FPSService.SQL
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@BeatID", beat.BeatID);
                     cmd.Parameters.AddWithValue("@Active", beat.Active);
-                    cmd.Parameters.AddWithValue("@BeatExtent", beat.BeatExtent);
+                    //cmd.Parameters.AddWithValue("@BeatExtent", beat.BeatExtent);
                     cmd.Parameters.AddWithValue("@FreewayID", beat.FreewayID);
                     cmd.Parameters.AddWithValue("@BeatDescription", beat.BeatDescription);
                     cmd.Parameters.AddWithValue("@BeatNumber", beat.BeatNumber);

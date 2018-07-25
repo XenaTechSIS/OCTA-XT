@@ -21,10 +21,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/18/2018 11:52:54</publishTime>
     </File>
     <File Include="app/map/directives/mapBeatDirective.js">
-      <publishTime>07/18/2018 11:52:54</publishTime>
+      <publishTime>07/24/2018 05:48:43</publishTime>
     </File>
     <File Include="app/map/directives/mapBeatTemplate.html">
-      <publishTime>07/18/2018 11:52:54</publishTime>
+      <publishTime>07/24/2018 05:48:43</publishTime>
     </File>
     <File Include="app/map/directives/mapCallBoxDirective.js">
       <publishTime>07/18/2018 11:52:54</publishTime>
@@ -39,7 +39,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/18/2018 11:52:54</publishTime>
     </File>
     <File Include="app/map/directives/mapSegmentDirective.js">
-      <publishTime>07/18/2018 11:52:54</publishTime>
+      <publishTime>07/24/2018 05:48:43</publishTime>
     </File>
     <File Include="app/map/directives/mapSegmentTemplate.html">
       <publishTime>07/18/2018 11:52:54</publishTime>
@@ -432,19 +432,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/23/2017 13:15:20</publishTime>
     </File>
     <File Include="bin/FSP.Common.dll">
-      <publishTime>07/19/2018 08:59:49</publishTime>
+      <publishTime>07/24/2018 05:49:44</publishTime>
     </File>
     <File Include="bin/FSP.Common.pdb">
-      <publishTime>07/19/2018 08:59:49</publishTime>
+      <publishTime>07/24/2018 05:49:44</publishTime>
     </File>
     <File Include="bin/FSP.Domain.dll">
-      <publishTime>07/19/2018 08:59:49</publishTime>
+      <publishTime>07/24/2018 05:49:42</publishTime>
     </File>
     <File Include="bin/FSP.Domain.dll.config">
       <publishTime>07/18/2018 11:52:50</publishTime>
     </File>
     <File Include="bin/FSP.Domain.pdb">
-      <publishTime>07/19/2018 08:59:49</publishTime>
+      <publishTime>07/24/2018 05:49:42</publishTime>
     </File>
     <File Include="bin/FSP.Web.4.5.dll">
       <publishTime>03/22/2013 09:34:14</publishTime>
@@ -453,10 +453,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/22/2013 09:34:14</publishTime>
     </File>
     <File Include="bin/FSP.Web.dll">
-      <publishTime>07/19/2018 08:59:50</publishTime>
+      <publishTime>07/24/2018 05:49:45</publishTime>
     </File>
     <File Include="bin/FSP.Web.pdb">
-      <publishTime>07/19/2018 08:59:50</publishTime>
+      <publishTime>07/24/2018 05:49:45</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.Core.dll">
       <publishTime>04/03/2015 17:07:22</publishTime>
@@ -642,7 +642,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/18/2018 11:52:50</publishTime>
     </File>
     <File Include="Content/octa/core.css">
-      <publishTime>07/18/2018 11:52:50</publishTime>
+      <publishTime>07/24/2018 05:48:43</publishTime>
     </File>
     <File Include="Content/octa/home.css">
       <publishTime>07/18/2018 11:52:50</publishTime>
@@ -3837,7 +3837,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/14/2018 09:25:03</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>07/19/2018 08:59:51</publishTime>
+      <publishTime>07/24/2018 05:50:01</publishTime>
     </File>
   </ItemGroup>
 </Project>
