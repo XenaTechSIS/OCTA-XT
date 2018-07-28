@@ -1091,6 +1091,7 @@ namespace FPSService.SQL
                         //beat.BeatExtent = rdr["BeatExtent"].ToString();
                         beat.BeatID = new Guid(rdr["BeatID"].ToString());
                         beat.BeatNumber = rdr["BeatNumber"].ToString();
+                        beat.BeatColor = rdr["BeatColor"].ToString();
                         beat.BeatDescription = rdr["BeatDescription"].ToString();
                         beat.IsTemporary = Convert.ToBoolean(rdr["IsTemporary"]);
                         beat.LastUpdate = Convert.ToDateTime(rdr["LastUpdate"].ToString());
