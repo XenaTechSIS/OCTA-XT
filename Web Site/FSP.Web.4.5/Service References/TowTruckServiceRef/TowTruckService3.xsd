@@ -438,7 +438,6 @@
       <xs:element minOccurs="0" name="Active" type="xs:boolean" />
       <xs:element minOccurs="0" name="BeatColor" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BeatDescription" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="BeatExtent" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BeatID" type="ser:guid" />
       <xs:element minOccurs="0" name="BeatNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BeatSegments" nillable="true" type="tns:ArrayOfBeatSegment_New" />

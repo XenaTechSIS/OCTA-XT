@@ -72,10 +72,12 @@
       </div>
       <div class="form-group"
          ng-class="{'has-error': pageConfig.dropZoneForm.PDPhoneNumber.$invalid}">
-         PD Phone #
+         PD Phone # *
          <input ng-model="selectedDropZone.PDPhoneNumber"
             type="text"
             name="PDPhoneNumber"
+            mask="(999) 999-9999"
+            clean="false"
             class="form-control"
             required
             ng-disabled="!isEditing && !isAdding" />

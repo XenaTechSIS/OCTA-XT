@@ -203,8 +203,7 @@ namespace FSP.Web.Controllers
                     data.LastUpdate = DateTime.Now;
                     data.LastUpdateBy = HttpContext.User.Identity.Name;
                     data.FreewayID = 0;
-                    data.Active = true;
-                    data.BeatExtent = "";
+                    data.Active = true;                    
                     
                     var createResult = service.UpdateBeat(data);
                     return Json(createResult == "success", JsonRequestBehavior.AllowGet);

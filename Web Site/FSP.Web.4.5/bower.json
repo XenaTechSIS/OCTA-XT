@@ -1,0 +1,20 @@
+{
+  "name": "octageo",
+  "homepage": "https://github.com/XenaTechSIS/OCTA-XT",
+  "authors": [
+    "Tolga Koseoglu <tolga.k@outlook.com>"
+  ],
+  "description": "OCTA FSP",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ngMask": "angular-mask#^3.1.1"
+  }
+}

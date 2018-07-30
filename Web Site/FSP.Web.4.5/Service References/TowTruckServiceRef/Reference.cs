@@ -5203,9 +5203,6 @@ namespace FSP.Web.TowTruckServiceRef {
         private string BeatDescriptionField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string BeatExtentField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Guid BeatIDField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -5277,19 +5274,6 @@ namespace FSP.Web.TowTruckServiceRef {
                 if ((object.ReferenceEquals(this.BeatDescriptionField, value) != true)) {
                     this.BeatDescriptionField = value;
                     this.RaisePropertyChanged("BeatDescription");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string BeatExtent {
-            get {
-                return this.BeatExtentField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BeatExtentField, value) != true)) {
-                    this.BeatExtentField = value;
-                    this.RaisePropertyChanged("BeatExtent");
                 }
             }
         }

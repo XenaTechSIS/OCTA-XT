@@ -21,7 +21,7 @@
          },
          link: function (scope) {
 
-            var selectedZoomFactor = 15;
+            var selectedZoomFactor = 14;
 
             scope.isEditing = false;
             scope.isAdding = false;
@@ -137,6 +137,14 @@
                scope.markers.push(beatMarker);
             }
 
+            function setBeatMapLocation(beat) {
+               var centerCoord = getBeatCenterCoordinate(beat);
+               if (!centerCoord) return;
+               if (!centerCoord.lat && !centerCoord.lng) return;
+
+               scope.triggerSetMapLocation(centerCoord.lat, centerCoord.lng, selectedZoomFactor);
+            }
+
             scope.triggerDisplayMapData = function () {
                scope.displayMapData({
                   polygons: scope.polygons,
@@ -225,8 +233,10 @@
                         buildMarkers(beat);
                      });
 
-                     if (scope.selectedBeatID)
+                     if (scope.selectedBeatID) {
                         scope.selectedBeat = utilService.findArrayElement(scope.beats, "BeatID", scope.selectedBeatID);
+                        setBeatMapLocation(scope.selectedBeat);
+                     }
 
                      if (triggerMapUpdate)
                         scope.triggerDisplayMapData();
@@ -239,18 +249,15 @@
                var beat = utilService.findArrayElement(scope.beats, "BeatID", scope.selectedBeatID);
                if (!beat) {
                   scope.selectedBeat = "";
-                  scope.triggerHideMapData();
+                  //scope.triggerHideMapData();
                   scope.triggerResetMap();
                   return;
                }
                scope.selectedBeat = angular.copy(beat);
                console.log(scope.selectedBeat);
 
-               var centerCoord = getBeatCenterCoordinate(scope.selectedBeat);
-               if (!centerCoord) return;
-               if (!centerCoord.lat && !centerCoord.lng) return;
+               setBeatMapLocation(scope.selectedBeat);
 
-               scope.triggerSetMapLocation(centerCoord.lat, centerCoord.lng, selectedZoomFactor);
             };
 
             scope.setEdit = function () {
@@ -280,10 +287,7 @@
 
                scope.triggerSetCancelEditPolygon("beatSegmentPolygon_" + scope.selectedBeat.BeatID, scope.selectedBeat.BeatColor);
 
-               var centerCoord = getBeatCenterCoordinate(scope.selectedBeat);
-               if (!centerCoord) return;
-               if (!centerCoord.lat && !centerCoord.lng) return;
-               scope.triggerSetMapLocation(centerCoord.lat, centerCoord.lng, selectedZoomFactor);
+               setBeatMapLocation(scope.selectedBeat);
 
             };
 

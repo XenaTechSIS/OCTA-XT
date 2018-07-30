@@ -14,6 +14,7 @@ namespace FSP.Web
                 "~/Scripts/angular-ui/ui-bootstrap-tpls.js",
                 "~/Scripts/googleMap/jquery.minicolors.min.js",
                 "~/Scripts/googleMap/angular-minicolors.js",
+                "~/Scripts/googleMap/ngMask.min.js",
                 "~/app/app.js",
                 "~/app/core/*.js",
                 "~/app/filters/*.js",

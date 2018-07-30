@@ -67,6 +67,8 @@
          <input ng-model="selectedYard.TowTruckCompanyPhoneNumber"
             type="text"
             required
+            mask="(999) 999-9999"
+            clean="false"
             name="TowTruckCompanyPhoneNumber"
             class="form-control"
             ng-disabled="!isEditing && !isAdding" />

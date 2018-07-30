@@ -4,8 +4,9 @@
         'ngSanitize',
         'ui.bootstrap',
         'minicolors',
+        'ngMask',
         'octaApp.filters',
-        'octaApp.map'
+        'octaApp.map'        
     ]);
 
 $(function () {
