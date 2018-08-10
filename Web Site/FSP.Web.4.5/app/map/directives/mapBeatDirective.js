@@ -21,7 +21,7 @@
          },
          link: function (scope) {
 
-            var selectedZoomFactor = 14;
+            var selectedZoomFactor = 13;
 
             scope.isEditing = false;
             scope.isAdding = false;
@@ -226,16 +226,21 @@
                   } else {
                      scope.beats = rawBeats;
                      console.log('%i beats found %O', scope.beats.length, scope.beats);
+
                      scope.polygons = [];
                      scope.markers = [];
-                     scope.beats.forEach(function (beat) {
-                        buildPolygons(beat);
-                        buildMarkers(beat);
-                     });
 
                      if (scope.selectedBeatID) {
                         scope.selectedBeat = utilService.findArrayElement(scope.beats, "BeatID", scope.selectedBeatID);
+                        buildPolygons(scope.selectedBeat);
+                        buildMarkers(scope.selectedBeat);
                         setBeatMapLocation(scope.selectedBeat);
+                     }
+                     else {
+                        scope.beats.forEach(function (beat) {
+                           buildPolygons(beat);
+                           buildMarkers(beat);
+                        });
                      }
 
                      if (triggerMapUpdate)
@@ -247,23 +252,35 @@
 
             scope.setSelectedBeat = function () {
                var beat = utilService.findArrayElement(scope.beats, "BeatID", scope.selectedBeatID);
+               scope.triggerHideMapData();
+               scope.polygons = [];
+               scope.markers = [];
                if (!beat) {
                   scope.selectedBeat = "";
-                  //scope.triggerHideMapData();
-                  scope.triggerResetMap();
+                  scope.beats.forEach(function (beat) {
+                     buildPolygons(beat);
+                     buildMarkers(beat);
+                  });
+                  var self = scope;
+                  setTimeout(function () {
+                     self.triggerDisplayMapData();
+                     self.triggerResetMap();
+                  }, 200);
                   return;
                }
                scope.selectedBeat = angular.copy(beat);
-               console.log(scope.selectedBeat);
-
+               //08-09-2018
+               //When seleting a beat, only show that beat and its segments                         
+               buildPolygons(scope.selectedBeat);
+               buildMarkers(scope.selectedBeat);
+               scope.triggerDisplayMapData();
                setBeatMapLocation(scope.selectedBeat);
 
             };
 
             scope.setEdit = function () {
                scope.isEditing = true;
-               console.log("Edit beat %s", scope.selectedBeatID);
-               scope.triggerSetEditPolygon("beatSegmentPolygon_" + scope.selectedBeatID);
+               console.log("Edit beat %s", scope.selectedBeatID);               
             };
 
             scope.addSegment = function () {
@@ -281,22 +298,17 @@
             scope.cancelEdit = function () {
                scope.isEditing = false;
                console.log("Cancel edit beat %s", scope.selectedBeatID);
-
                var beat = utilService.findArrayElement(scope.beats, "BeatID", scope.selectedBeatID);
-               scope.selectedBeat = angular.copy(beat);
-
-               scope.triggerSetCancelEditPolygon("beatSegmentPolygon_" + scope.selectedBeat.BeatID, scope.selectedBeat.BeatColor);
-
+               scope.selectedBeat = angular.copy(beat);               
                setBeatMapLocation(scope.selectedBeat);
-
             };
 
             scope.save = function () {
                console.log("Saving beat...");
                scope.isBusySaving = true;
-               mapService.saveBeat(scope.selectedBeat).then(function (result) {
+               mapService.saveBeat(scope.selectedBeat).then(function (response) {
                   scope.isBusySaving = false;
-                  if (result === false || result === "false") {
+                  if (response.result === false || response.result === "false") {
                      console.error("Save Beat");
                      toastr.error('Failed to save Beat', 'Error');
                   } else {
@@ -374,13 +386,12 @@
             scope.add = function () {
                console.log("Adding Beat...");
                scope.isBusyAdding = true;
-               mapService.saveBeat(scope.selectedBeat).then(function (result) {
+               mapService.saveBeat(scope.selectedBeat).then(function (response) {
                   scope.isBusyAdding = false;
                   scope.isAdding = false;
-                  scope.selectedBeatID = "";
-                  scope.selectedBeat = "";
-                  scope.selectedPolygon = "";
-                  if (result === false || result === "false") {
+                  console.log(response);
+                  scope.selectedBeatID = response.record.BeatID;
+                  if (response.result === false || response.result === "false") {
                      console.error("Add Beat");
                      toastr.error('Failed to add Beat', 'Error');
                   } else {
@@ -388,6 +399,7 @@
                      toastr.success('Beat Added', 'Success');
                      scope.triggerMakeAllPolygonsUneditable();
                      scope.triggerHideMapData();
+                     scope.selectedBeat = "";
                      scope.getBeatPolygons(true);
                   }
                });

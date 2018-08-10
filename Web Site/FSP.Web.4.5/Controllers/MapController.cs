@@ -36,7 +36,7 @@ namespace FSP.Web.Controllers
                 using (var service = new TowTruckServiceClient())
                 {
                     var rawYards = service.RetreiveAllYards();
-                    var yards = rawYards.OrderBy(p => p.YardID).ToList().Select(s => new
+                    var yards = rawYards.OrderBy(p => p.Location).ToList().Select(s => new
                     {
                         s.YardID,
                         s.YardDescription,
@@ -76,7 +76,12 @@ namespace FSP.Web.Controllers
                 using (var service = new TowTruckServiceClient())
                 {
                     var updateResult = service.UpdateYard(data);
-                    return Json(updateResult == "success", JsonRequestBehavior.AllowGet);
+                    var response = new
+                    {
+                        result = updateResult == "success",
+                        record = data
+                    };
+                    return Json(response, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
@@ -107,137 +112,7 @@ namespace FSP.Web.Controllers
 
         #endregion
 
-        #region beats
-
-        [HttpGet]
-        public ActionResult GetBeatPolygons()
-        {
-            try
-            {
-                Util.LogInfo("beat polygons requested");
-                using (var service = new TowTruckServiceClient())
-                {
-                    var rawBeats = service.RetreiveAllBeats();
-                    var beats = rawBeats.Where(p => p.Active).OrderBy(p => p.BeatNumber).ToList().Select(s => new
-                    {
-                        s.BeatID,
-                        s.BeatDescription,
-                        s.BeatNumber,
-                        s.BeatColor,
-                        BeatSegments = s.BeatSegments.OrderBy(p => p.BeatSegmentNumber).Select(seg => new
-                        {
-                            seg.BeatSegmentID,
-                            seg.BeatSegmentNumber,
-                            seg.BeatSegmentDescription,
-                            seg.Color,
-                            PolygonData = new PolygonData(seg.BeatSegmentExtent)
-                        }).ToList()
-                    }).ToList();
-
-                    var jsonResult = Json(beats, JsonRequestBehavior.AllowGet);
-                    jsonResult.MaxJsonLength = int.MaxValue;
-                    Util.LogInfo("beat polygons returned");
-                    return jsonResult;
-                }
-            }
-            catch (Exception ex)
-            {
-                Util.LogError($"Get Beat Polygons Error: {ex.Message}");
-                return Json(false, JsonRequestBehavior.AllowGet);
-            }
-        }
-
-        [HttpPost]
-        public ActionResult SaveBeatPolygon(Beats_New data)
-        {
-            try
-            {
-                using (var service = new TowTruckServiceClient())
-                {
-                    if (data.BeatID != Guid.Empty)
-                    {
-                        var dbBeat = service.RetreiveAllBeats().FirstOrDefault(p => p.BeatID == data.BeatID);
-                        if (dbBeat != null)
-                        {
-                            dbBeat.BeatNumber = data.BeatNumber;
-                            dbBeat.BeatDescription = data.BeatDescription;
-                            dbBeat.BeatColor = data.BeatColor;
-
-                            if (data.BeatSegments != null)
-                            {
-                                dbBeat.BeatSegments = data.BeatSegments;
-
-                                foreach (var segment in dbBeat.BeatSegments)
-                                {
-                                    segment.Color = data.BeatColor;
-                                    segment.LastUpdate = DateTime.Now.ToString();
-                                    segment.LastUpdateBy = HttpContext.User.Identity.Name;
-                                }
-                            }
-                            else
-                            {
-                                dbBeat.BeatSegments = new BeatSegment_New[0];
-                            }
-                                                                                                             
-                            dbBeat.LastUpdate = DateTime.Now;
-                            dbBeat.LastUpdateBy = HttpContext.User.Identity.Name;
-
-                            if (dbBeat.StartDate == DateTime.MinValue)
-                                dbBeat.StartDate = DateTime.Now;
-
-                            if (dbBeat.EndDate == DateTime.MinValue)
-                                dbBeat.EndDate = DateTime.Now;
-
-                            var updateResult = service.UpdateBeat(dbBeat);
-                            return Json(updateResult == "success", JsonRequestBehavior.AllowGet);
-                        }
-                    }
-
-                    //new beat
-
-                    if (data.BeatID == Guid.Empty)
-                        data.BeatID = Guid.NewGuid();
-
-                    data.StartDate = DateTime.Now;
-                    data.EndDate = DateTime.Now;
-                    data.LastUpdate = DateTime.Now;
-                    data.LastUpdateBy = HttpContext.User.Identity.Name;
-                    data.FreewayID = 0;
-                    data.Active = true;                    
-                    
-                    var createResult = service.UpdateBeat(data);
-                    return Json(createResult == "success", JsonRequestBehavior.AllowGet);
-                }
-            }
-            catch (Exception ex)
-            {
-                Util.LogError($"Save Beat Error: {ex.Message}");
-                return Json(false, JsonRequestBehavior.AllowGet);
-            }
-        }
-
-        [HttpPost]
-        public ActionResult DeleteBeat(Guid id)
-        {
-            try
-            {
-                using (var service = new TowTruckServiceClient())
-                {
-                    var deleteResult = service.DeleteBeat(id);
-                    return Json(deleteResult == "success", JsonRequestBehavior.AllowGet);
-                }
-            }
-            catch (Exception ex)
-            {
-                Util.LogError($"Delete Beat Error: {ex.Message}, {ex.Message}");
-                return Json(false, JsonRequestBehavior.AllowGet);
-            }
-
-        }
-
-        #endregion
-
-        #region segments
+         #region segments
 
         [HttpGet]
         public ActionResult GetSegments()
@@ -327,7 +202,12 @@ namespace FSP.Web.Controllers
                 using (var service = new TowTruckServiceClient())
                 {
                     var updateResult = service.UpdateSegment(data);
-                    return Json(updateResult == "success", JsonRequestBehavior.AllowGet);
+                    var response = new
+                    {
+                        result = updateResult == "success",
+                        record = data
+                    };                    
+                    return Json(response, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
@@ -358,6 +238,152 @@ namespace FSP.Web.Controllers
 
         #endregion
 
+        #region beats
+
+        [HttpGet]
+        public ActionResult GetBeatPolygons()
+        {
+            try
+            {
+                Util.LogInfo("beat polygons requested");
+                using (var service = new TowTruckServiceClient())
+                {
+                    var rawBeats = service.RetreiveAllBeats();
+                    var beats = rawBeats.Where(p => p.Active).OrderBy(p => p.BeatNumber).ToList().Select(s => new
+                    {
+                        s.BeatID,
+                        s.BeatDescription,
+                        s.BeatNumber,
+                        s.BeatColor,
+                        BeatSegments = s.BeatSegments.OrderBy(p => p.BeatSegmentNumber).Select(seg => new
+                        {
+                            seg.BeatSegmentID,
+                            seg.BeatSegmentNumber,
+                            seg.BeatSegmentDescription,
+                            seg.Color,
+                            PolygonData = new PolygonData(seg.BeatSegmentExtent)
+                        }).ToList()
+                    }).ToList();
+
+                    var jsonResult = Json(beats, JsonRequestBehavior.AllowGet);
+                    jsonResult.MaxJsonLength = int.MaxValue;
+                    Util.LogInfo("beat polygons returned");
+                    return jsonResult;
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.LogError($"Get Beat Polygons Error: {ex.Message}");
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult SaveBeatPolygon(Beats_New data)
+        {
+            try
+            {
+                using (var service = new TowTruckServiceClient())
+                {
+                    if (data.BeatID != Guid.Empty)
+                    {
+                        var dbBeat = service.RetreiveAllBeats().FirstOrDefault(p => p.BeatID == data.BeatID);
+                        if (dbBeat != null)
+                        {
+                            dbBeat.BeatNumber = data.BeatNumber;
+                            dbBeat.BeatDescription = data.BeatDescription;
+                            dbBeat.BeatColor = data.BeatColor;
+
+                            if (data.BeatSegments != null)
+                            {
+                                dbBeat.BeatSegments = data.BeatSegments;
+
+                                foreach (var segment in dbBeat.BeatSegments)
+                                {
+                                    segment.Color = data.BeatColor;
+                                    segment.LastUpdate = DateTime.Now.ToString();
+                                    segment.LastUpdateBy = HttpContext.User.Identity.Name;
+                                }
+                            }
+                            else
+                            {
+                                dbBeat.BeatSegments = new BeatSegment_New[0];
+                            }
+
+                            dbBeat.LastUpdate = DateTime.Now;
+                            dbBeat.LastUpdateBy = HttpContext.User.Identity.Name;
+
+                            if (dbBeat.StartDate == DateTime.MinValue)
+                                dbBeat.StartDate = DateTime.Now;
+
+                            if (dbBeat.EndDate == DateTime.MinValue)
+                                dbBeat.EndDate = DateTime.Now;
+
+                            var updateResult = service.UpdateBeat(dbBeat);
+
+                            var response = new
+                            {
+                                result = updateResult == "success",
+                                record = dbBeat
+                            };     
+
+                            return Json(response, JsonRequestBehavior.AllowGet);
+                        }
+                    }
+
+                    //new beat
+
+                    if (data.BeatID == Guid.Empty)
+                        data.BeatID = Guid.NewGuid();
+
+                    data.StartDate = DateTime.Now;
+                    data.EndDate = DateTime.Now;
+                    data.LastUpdate = DateTime.Now;
+                    data.LastUpdateBy = HttpContext.User.Identity.Name;
+                    data.FreewayID = 0;
+                    data.Active = true;
+
+                    var createResult = service.UpdateBeat(data);
+
+                    var newBeat = service.RetreiveAllBeats().FirstOrDefault(p => p.BeatID == data.BeatID);
+
+                    var resp = new
+                    {
+                        result = createResult == "success",
+                        record = newBeat
+                    };     
+
+                    return Json(resp, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.LogError($"Save Beat Error: {ex.Message}");
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteBeat(Guid id)
+        {
+            try
+            {
+                using (var service = new TowTruckServiceClient())
+                {
+                    var deleteResult = service.DeleteBeat(id);
+                    return Json(deleteResult == "success", JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.LogError($"Delete Beat Error: {ex.Message}, {ex.Message}");
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        #endregion
+       
         #region call boxes
 
         [HttpGet]

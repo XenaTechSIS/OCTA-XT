@@ -75,9 +75,9 @@
       </div>
       <div ng-show="isEditing || isAdding">
          <div>
-               *required fields
+            *required fields
          </div>
-         
+
          <div ng-hide="selectedPolygon.getPath().getLength() > 0"
             class="alert alert-danger">
             Polygon missing
@@ -134,7 +134,7 @@
          class="btn btn-success btn-sm">
          <i class="fa fa-plus"></i> Add Yard
       </button>
-      <div ng-show="!isEditing && isAdding">       
+      <div ng-show="!isEditing && isAdding">
          <button ng-click="add()"
             ng-disabled="isBusyAdding  || pageConfig.towYardForm.$invalid || selectedPolygon.getPath().getLength() === 0"
             class="btn btn-success btn-sm">

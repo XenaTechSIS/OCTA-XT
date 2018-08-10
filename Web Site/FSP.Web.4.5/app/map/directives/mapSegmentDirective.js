@@ -111,6 +111,12 @@
                scope.markers.push(segmentMarker);
             }
 
+            function setSegmentMapLocation(segment) {
+               if (!segment.PolygonData) return;
+               if (!segment.PolygonData.MiddleLat || !segment.PolygonData.MiddleLon) return;
+               scope.triggerSetMapLocation(segment.PolygonData.MiddleLat, segment.PolygonData.MiddleLon, selectedZoomFactor);
+            }
+
             scope.triggerDisplayMapData = function () {
                scope.displayMapData({
                   polygons: scope.polygons,
@@ -189,16 +195,22 @@
                   } else {
                      scope.segments = rawSegments;
                      console.log('%i segment polygons found %O', scope.segments.length, scope.segments);
+
                      scope.polygons = [];
                      scope.markers = [];
-                     scope.segments.forEach(function (segment) {
-                        buildPolygons(segment);
-                        buildMarkers(segment);
-                     });
 
-                     if (scope.selectedBeatSegmentID)
+                     if (scope.selectedBeatSegmentID) {
                         scope.selectedBeatSegment = utilService.findArrayElement(scope.segments, "BeatSegmentID", scope.selectedBeatSegmentID);
-
+                        buildPolygons(scope.selectedBeatSegment);
+                        buildMarkers(scope.selectedBeatSegment);
+                        setSegmentMapLocation(scope.selectedBeatSegment);
+                     }
+                     else {
+                        scope.segments.forEach(function (segment) {
+                           buildPolygons(segment);
+                           buildMarkers(segment);
+                        });
+                     }
                      if (triggerMapUpdate)
                         scope.triggerDisplayMapData();
                   }
@@ -207,19 +219,30 @@
             };
 
             scope.setSelectedBeatSegment = function () {
-               console.log('Beat Segment ID %s', scope.selectedBeatSegmentID);
                var seg = utilService.findArrayElement(scope.segments, "BeatSegmentID", scope.selectedBeatSegmentID);
+               scope.triggerHideMapData();
+               scope.polygons = [];
+               scope.markers = [];
+
                if (!seg) {
                   scope.selectedBeatSegment = "";
-                  //scope.triggerHideMapData();
-                  scope.triggerResetMap();
+                  scope.segments.forEach(function (segment) {
+                     buildPolygons(segment);
+                     buildMarkers(segment);
+                  });
+                  var self = scope;
+                  setTimeout(function () {
+                     self.triggerDisplayMapData();
+                     self.triggerResetMap();
+                  }, 200);
                   return;
                }
+
                scope.selectedBeatSegment = angular.copy(seg);
-               console.log(scope.selectedBeatSegment);
-               if (!scope.selectedBeatSegment.PolygonData) return;
-               if (!scope.selectedBeatSegment.PolygonData.MiddleLat || !scope.selectedBeatSegment.PolygonData.MiddleLon) return;
-               scope.triggerSetMapLocation(scope.selectedBeatSegment.PolygonData.MiddleLat, scope.selectedBeatSegment.PolygonData.MiddleLon, selectedZoomFactor);
+               buildPolygons(scope.selectedBeatSegment);
+               buildMarkers(scope.selectedBeatSegment);
+               scope.triggerDisplayMapData();
+               setSegmentMapLocation(scope.selectedBeatSegment);
             };
 
             scope.setEdit = function () {
@@ -245,9 +268,9 @@
                   scope.selectedBeatSegment.BeatSegmentExtent = JSON.stringify(polygonCoords);
                }
                scope.isBusySaving = true;
-               mapService.saveSegment(scope.selectedBeatSegment).then(function (result) {
+               mapService.saveSegment(scope.selectedBeatSegment).then(function (response) {
                   scope.isBusySaving = false;
-                  if (result === false || result === "false") {
+                  if (response.result === false || response.result === "false") {
                      console.error("Save Segment");
                      toastr.error('Failed to save Segment', 'Error');
                   } else {
@@ -331,10 +354,11 @@
                   scope.selectedBeatSegment.BeatSegmentExtent = JSON.stringify(polygonCoords);
                }
                scope.isBusyAdding = true;
-               mapService.saveSegment(scope.selectedBeatSegment).then(function (result) {
+               mapService.saveSegment(scope.selectedBeatSegment).then(function (response) {
                   scope.isBusyAdding = false;
                   scope.isAdding = false;
-                  if (result === false || result === "false") {
+                  scope.selectedBeatSegmentID = response.record.BeatSegmentID;
+                  if (response.result === false || response.result === "false") {
                      console.error("Add Segment");
                      toastr.error('Failed to add Segment', 'Error');
                   } else {

@@ -241,9 +241,9 @@
                   scope.selectedYard.Position = JSON.stringify(polygonCoords);
                }
                scope.isBusySaving = true;
-               mapService.saveYard(scope.selectedYard).then(function (result) {
+               mapService.saveYard(scope.selectedYard).then(function (response) {                  
                   scope.isBusySaving = false;
-                  if (result === false || result === "false") {
+                  if (response.result === false || response.result === "false") {
                      console.error("Save Yard");
                      toastr.error('Failed to save Yard', 'Error');
                   } else {
@@ -323,10 +323,11 @@
                   scope.selectedYard.Position = JSON.stringify(polygonCoords);
                }
                scope.isBusyAdding = true;
-               mapService.saveYard(scope.selectedYard).then(function (result) {
+               mapService.saveYard(scope.selectedYard).then(function (response) {
                   scope.isBusyAdding = false;
                   scope.isAdding = false;
-                  if (result === false || result === "false") {
+                  scope.selectedYardID = response.record.YardID;
+                  if (response.result === false || response.result === "false") {
                      console.error("Add Yard");
                      toastr.error('Failed to add Yard', 'Error');
                   } else {
