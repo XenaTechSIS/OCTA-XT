@@ -187,11 +187,13 @@ namespace FSP.Common
                 {
                     using (var db = new FSPDataContext())
                     {
-                        var user = new User();
-                        user.Email = email;
-                        user.Password = EncodePassword(password);
-                        user.DateCreated = DateTime.Now;
-                        user.IsApproved = isApproved;
+                        var user = new User
+                        {
+                            Email = email,
+                            Password = EncodePassword(password),
+                            DateCreated = DateTime.Now,
+                            IsApproved = isApproved
+                        };
                         db.Users.InsertOnSubmit(user);
                         db.SubmitChanges();
 

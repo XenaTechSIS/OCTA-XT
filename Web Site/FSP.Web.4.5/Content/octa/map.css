@@ -80,7 +80,7 @@ html, body {
     padding: 2px;
     font-weight: normal;
     text-align: center;
-    width: 70px;   
+    width: 70px;
     vertical-align: middle !important;
     border: 1px solid black;
     white-space: nowrap;
@@ -100,4 +100,14 @@ html, body {
 div#infoWindow {
     height: 180px;
     width: 250px;
+}
+
+.selectedBeatContainer {
+    margin-bottom: 20px;
+}
+
+.segmentPickerList {
+    max-height: 500px;
+    overflow-y: auto;
+    padding: 0 10px;
 }

@@ -1,7 +1,8 @@
 ﻿(function () {
    'use strict';
-   angular.module("octaApp.map").controller("mapController", ['$scope', '$rootScope', '$window', '$interval', '$compile', 'trucksService', 'utilService', mapController]);
-   function mapController($scope, $rootScope, $window, $interval, $compile, trucksService, utilService) {
+   angular.module("octaApp.map").controller("mapController", ['$scope', '$rootScope', '$window', '$interval',
+      '$compile', 'trucksService', 'utilService', 'generalService', mapController]);
+   function mapController($scope, $rootScope, $window, $interval, $compile, trucksService, utilService, generalService) {
       var DEFAULT_MAP_CENTER_LAT = 33.739660;
       var DEFAULT_MAP_CENTER_LON = -117.832146;
       var ZOOM_9 = 9;
@@ -61,6 +62,8 @@
       $scope.polygons = [];
       $scope.selectedPolygon = {};
       $scope.markers = [];
+
+      $scope.currentUserIsAdmin = false;
 
       function sizeMap() {
 
@@ -357,6 +360,13 @@
 
          sizeMap();
          setMapControls();
+      };
+
+      $scope.checkIfUserIsAdmin = function () {
+         generalService.currentUserIsAdmin().then(function (result) {            
+            $scope.currentUserIsAdmin = result;
+            console.log('Current user is admin: %s', $scope.currentUserIsAdmin);
+         });
       };
 
       $scope.toggleAllFilters = function () {
@@ -696,6 +706,8 @@
       initMap();
       checkForAlarms();
       getTruckRefreshRate();
+
+      $scope.checkIfUserIsAdmin();
 
    }
 }());

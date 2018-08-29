@@ -5892,6 +5892,163 @@ namespace FSP.Web.TowTruckServiceRef {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Five11Signs", Namespace="http://schemas.datacontract.org/2004/07/FPSService")]
+    [System.SerializableAttribute()]
+    public partial class Five11Signs : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CommentsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid Five11SignIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int FreewayIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LocationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PositionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SignNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SiteTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TelephoneNumberField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Comments {
+            get {
+                return this.CommentsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CommentsField, value) != true)) {
+                    this.CommentsField = value;
+                    this.RaisePropertyChanged("Comments");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid Five11SignID {
+            get {
+                return this.Five11SignIDField;
+            }
+            set {
+                if ((this.Five11SignIDField.Equals(value) != true)) {
+                    this.Five11SignIDField = value;
+                    this.RaisePropertyChanged("Five11SignID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int FreewayID {
+            get {
+                return this.FreewayIDField;
+            }
+            set {
+                if ((this.FreewayIDField.Equals(value) != true)) {
+                    this.FreewayIDField = value;
+                    this.RaisePropertyChanged("FreewayID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Location {
+            get {
+                return this.LocationField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LocationField, value) != true)) {
+                    this.LocationField = value;
+                    this.RaisePropertyChanged("Location");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Position {
+            get {
+                return this.PositionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PositionField, value) != true)) {
+                    this.PositionField = value;
+                    this.RaisePropertyChanged("Position");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SignNumber {
+            get {
+                return this.SignNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SignNumberField, value) != true)) {
+                    this.SignNumberField = value;
+                    this.RaisePropertyChanged("SignNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SiteType {
+            get {
+                return this.SiteTypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SiteTypeField, value) != true)) {
+                    this.SiteTypeField = value;
+                    this.RaisePropertyChanged("SiteType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TelephoneNumber {
+            get {
+                return this.TelephoneNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TelephoneNumberField, value) != true)) {
+                    this.TelephoneNumberField = value;
+                    this.RaisePropertyChanged("TelephoneNumber");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="TowTruckServiceRef.ITowTruckService")]
     public interface ITowTruckService {
@@ -6036,6 +6193,21 @@ namespace FSP.Web.TowTruckServiceRef {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/DeleteCallBox", ReplyAction="http://tempuri.org/ITowTruckService/DeleteCallBoxResponse")]
         string DeleteCallBox(System.Guid DropZoneID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveFive11Signs", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveFive11SignsResponse")]
+        FSP.Web.TowTruckServiceRef.Five11Signs[] RetreiveFive11Signs();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveFive11Sign", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveFive11SignResponse")]
+        FSP.Web.TowTruckServiceRef.Five11Signs RetreiveFive11Sign(System.Guid Five11SignID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/CreateFive11Sign", ReplyAction="http://tempuri.org/ITowTruckService/CreateFive11SignResponse")]
+        string CreateFive11Sign(FSP.Web.TowTruckServiceRef.Five11Signs Five11Sign);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/UpdateFive11Sign", ReplyAction="http://tempuri.org/ITowTruckService/UpdateFive11SignResponse")]
+        string UpdateFive11Sign(FSP.Web.TowTruckServiceRef.Five11Signs Five11Sign);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/DeleteFive11Sign", ReplyAction="http://tempuri.org/ITowTruckService/DeleteFive11SignResponse")]
+        string DeleteFive11Sign(System.Guid Five11SignID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -6251,6 +6423,26 @@ namespace FSP.Web.TowTruckServiceRef {
         
         public string DeleteCallBox(System.Guid DropZoneID) {
             return base.Channel.DeleteCallBox(DropZoneID);
+        }
+        
+        public FSP.Web.TowTruckServiceRef.Five11Signs[] RetreiveFive11Signs() {
+            return base.Channel.RetreiveFive11Signs();
+        }
+        
+        public FSP.Web.TowTruckServiceRef.Five11Signs RetreiveFive11Sign(System.Guid Five11SignID) {
+            return base.Channel.RetreiveFive11Sign(Five11SignID);
+        }
+        
+        public string CreateFive11Sign(FSP.Web.TowTruckServiceRef.Five11Signs Five11Sign) {
+            return base.Channel.CreateFive11Sign(Five11Sign);
+        }
+        
+        public string UpdateFive11Sign(FSP.Web.TowTruckServiceRef.Five11Signs Five11Sign) {
+            return base.Channel.UpdateFive11Sign(Five11Sign);
+        }
+        
+        public string DeleteFive11Sign(System.Guid Five11SignID) {
+            return base.Channel.DeleteFive11Sign(Five11SignID);
         }
     }
 }

@@ -15,6 +15,7 @@ namespace FSP.Web
                 "~/Scripts/googleMap/jquery.minicolors.min.js",
                 "~/Scripts/googleMap/angular-minicolors.js",
                 "~/Scripts/googleMap/ngMask.min.js",
+                "~/Scripts/googleMap/checklist-model.js",
                 "~/app/app.js",
                 "~/app/core/*.js",
                 "~/app/filters/*.js",
@@ -104,13 +105,13 @@ namespace FSP.Web
             ));
 
 
-            //assit
+            //assist
             bundles.Add(new ScriptBundle("~/bundles/fspAssist").Include(
                 "~/MyScripts/fsp.constructor.js",
                 "~/MyScripts/fsp.assistViewModel.js"
             ));
 
-            //assit
+            //incident
             bundles.Add(new ScriptBundle("~/bundles/fspIncident").Include(
                 "~/MyScripts/fsp.constructor.js",
                 "~/MyScripts/fsp.incidentViewModel.js"

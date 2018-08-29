@@ -1,22 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
+using System.Web;
 
 namespace FSP.Common
 {
     public class FSPLogging
     {
-        public static void WriteToLogFile(String _value)
+        public static void WriteToLogFile(string _value)
         {
-            String sLogFilePath = String.Empty;
+            var sLogFilePath = string.Empty;
 
             try
             {
                 //check in web.config file is loggin is enabled
 
-                sLogFilePath = System.Web.HttpContext.Current.Server.MapPath("Log.txt");
+                sLogFilePath = HttpContext.Current.Server.MapPath("Log.txt");
                 StreamWriter sw = null;
                 if (!File.Exists(sLogFilePath))
                     sw = File.CreateText(sLogFilePath);
@@ -26,7 +24,9 @@ namespace FSP.Common
                 sw.WriteLine(DateTime.Now + " " + _value);
                 sw.Close();
             }
-            catch { }
+            catch
+            {
+            }
         }
     }
 }

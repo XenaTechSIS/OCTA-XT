@@ -3,7 +3,7 @@
    angular.module("octaApp").factory("mapService", ["$http", mapService]);
 
    function mapService($http) {
-      return {
+      return {         
          getBeatPolygons: function () {
             return $http({
                method: 'GET',

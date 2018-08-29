@@ -112,71 +112,74 @@
 
    </div>
 
-   <!--buttons-->
-   <div class="form-group"
-      ng-show="selectedDropZone && !isAdding">
-      <button ng-show="!isEditing"
-         ng-click="setEdit()"
-         class="btn btn-primary btn-sm">
-         <i class="fa fa-pencil">
-         </i> Edit Drop Zone
-      </button>
-      <button ng-show="isEditing"
-         ng-click="save()"
-         ng-disabled="pageConfig.dropZoneForm.$invalid || isBusySaving || isBusyDeleting || selectedPolygon.getPath().getLength() === 0"
-   
-         class="btn btn-primary btn-sm">
-         <i class="fa fa-check"
-            ng-hide="isBusySaving">
-         </i>
-         <i class="fa fa-refresh fa-spin"
-            ng-show="isBusySaving">
-         </i>
-         Save
-      </button>
-      <button ng-show="isEditing"
-         ng-disabled="isBusySaving || isBusyDeleting"
-         ng-click="delete()"
-         class="btn btn-danger btn-sm">
-         <i class="fa fa-trash"
-            ng-hide="isBusyDeleting">
-         </i>
-         <i class="fa fa-refresh fa-spin"
-            ng-show="isBusyDeleting">
-         </i>
-         Delete
-      </button>
-      <button ng-show="isEditing"
-         ng-click="cancelEdit()"
-         class="btn btn-default btn-sm">
-         Cancel
-      </button>
-   </div>
-
-   <!--add new-->
-   <div class="form-group"
-      ng-show="!isEditing">
-      <button ng-hide="selectedDropZone"
-         ng-click="prepareNew()"
-         class="btn btn-success btn-sm">
-         <i class="fa fa-plus"></i> Add Drop Zone
-      </button>
-      <div ng-show="!isEditing && isAdding">
-         <button ng-click="add()"
-            ng-disabled="isBusyAdding || pageConfig.dropZoneForm.$invalid || selectedPolygon.getPath().getLength() === 0"
-            class="btn btn-success btn-sm">
+   <div ng-show="canEdit">
+      <!--buttons-->
+      <div class="form-group"
+         ng-show="selectedDropZone && !isAdding">
+         <button ng-show="!isEditing"
+            ng-click="setEdit()"
+            class="btn btn-primary btn-sm">
+            <i class="fa fa-pencil">
+            </i> Edit Drop Zone
+         </button>
+         <button ng-show="isEditing"
+            ng-click="save()"
+            ng-disabled="pageConfig.dropZoneForm.$invalid || isBusySaving || isBusyDeleting || selectedPolygon.getPath().getLength() === 0"
+      
+            class="btn btn-primary btn-sm">
             <i class="fa fa-check"
-               ng-hide="isBusyAdding">
+               ng-hide="isBusySaving">
             </i>
             <i class="fa fa-refresh fa-spin"
-               ng-show="isBusyAdding">
+               ng-show="isBusySaving">
             </i>
             Save
          </button>
-         <button ng-click="cancelAdd()"
+         <button ng-show="isEditing"
+            ng-disabled="isBusySaving || isBusyDeleting"
+            ng-click="delete()"
+            class="btn btn-danger btn-sm">
+            <i class="fa fa-trash"
+               ng-hide="isBusyDeleting">
+            </i>
+            <i class="fa fa-refresh fa-spin"
+               ng-show="isBusyDeleting">
+            </i>
+            Delete
+         </button>
+         <button ng-show="isEditing"
+            ng-click="cancelEdit()"
             class="btn btn-default btn-sm">
             Cancel
          </button>
+      </div>
+
+      <!--add new-->
+      <div class="form-group"
+         ng-show="!isEditing">
+         <button ng-hide="selectedDropZone"
+            ng-click="prepareNew()"
+            class="btn btn-success btn-sm">
+            <i class="fa fa-plus"></i> Add Drop Zone
+         </button>
+         <div ng-show="!isEditing && isAdding">
+            <button ng-click="add()"
+               ng-disabled="isBusyAdding || pageConfig.dropZoneForm.$invalid || selectedPolygon.getPath().getLength() === 0"
+         
+               class="btn btn-success btn-sm">
+               <i class="fa fa-check"
+                  ng-hide="isBusyAdding">
+               </i>
+               <i class="fa fa-refresh fa-spin"
+                  ng-show="isBusyAdding">
+               </i>
+               Save
+            </button>
+            <button ng-click="cancelAdd()"
+               class="btn btn-default btn-sm">
+               Cancel
+            </button>
+         </div>
       </div>
    </div>
 

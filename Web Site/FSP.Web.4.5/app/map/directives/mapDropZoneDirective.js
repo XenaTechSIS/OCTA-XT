@@ -17,7 +17,8 @@
             makeAllPolygonsUneditable: "&",
 
             selectedPolygon: "=",
-            visible: "="
+            visible: "=",
+            canEdit: "="
          },
          link: function (scope) {
 

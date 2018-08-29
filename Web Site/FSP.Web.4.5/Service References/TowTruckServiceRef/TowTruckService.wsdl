@@ -290,6 +290,36 @@
   <wsdl:message name="ITowTruckService_DeleteCallBox_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteCallBoxResponse" />
   </wsdl:message>
+  <wsdl:message name="ITowTruckService_RetreiveFive11Signs_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetreiveFive11Signs" />
+  </wsdl:message>
+  <wsdl:message name="ITowTruckService_RetreiveFive11Signs_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetreiveFive11SignsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITowTruckService_RetreiveFive11Sign_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetreiveFive11Sign" />
+  </wsdl:message>
+  <wsdl:message name="ITowTruckService_RetreiveFive11Sign_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetreiveFive11SignResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITowTruckService_CreateFive11Sign_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateFive11Sign" />
+  </wsdl:message>
+  <wsdl:message name="ITowTruckService_CreateFive11Sign_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateFive11SignResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITowTruckService_UpdateFive11Sign_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateFive11Sign" />
+  </wsdl:message>
+  <wsdl:message name="ITowTruckService_UpdateFive11Sign_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateFive11SignResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITowTruckService_DeleteFive11Sign_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteFive11Sign" />
+  </wsdl:message>
+  <wsdl:message name="ITowTruckService_DeleteFive11Sign_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteFive11SignResponse" />
+  </wsdl:message>
   <wsdl:portType name="ITowTruckService">
     <wsdl:operation name="CurrentTrucks">
       <wsdl:input wsaw:Action="http://tempuri.org/ITowTruckService/CurrentTrucks" message="tns:ITowTruckService_CurrentTrucks_InputMessage" />
@@ -478,6 +508,26 @@
     <wsdl:operation name="DeleteCallBox">
       <wsdl:input wsaw:Action="http://tempuri.org/ITowTruckService/DeleteCallBox" message="tns:ITowTruckService_DeleteCallBox_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ITowTruckService/DeleteCallBoxResponse" message="tns:ITowTruckService_DeleteCallBox_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetreiveFive11Signs">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITowTruckService/RetreiveFive11Signs" message="tns:ITowTruckService_RetreiveFive11Signs_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITowTruckService/RetreiveFive11SignsResponse" message="tns:ITowTruckService_RetreiveFive11Signs_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetreiveFive11Sign">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITowTruckService/RetreiveFive11Sign" message="tns:ITowTruckService_RetreiveFive11Sign_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITowTruckService/RetreiveFive11SignResponse" message="tns:ITowTruckService_RetreiveFive11Sign_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateFive11Sign">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITowTruckService/CreateFive11Sign" message="tns:ITowTruckService_CreateFive11Sign_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITowTruckService/CreateFive11SignResponse" message="tns:ITowTruckService_CreateFive11Sign_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateFive11Sign">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITowTruckService/UpdateFive11Sign" message="tns:ITowTruckService_UpdateFive11Sign_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITowTruckService/UpdateFive11SignResponse" message="tns:ITowTruckService_UpdateFive11Sign_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFive11Sign">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITowTruckService/DeleteFive11Sign" message="tns:ITowTruckService_DeleteFive11Sign_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITowTruckService/DeleteFive11SignResponse" message="tns:ITowTruckService_DeleteFive11Sign_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ITowTruckService" type="tns:ITowTruckService">
@@ -898,6 +948,51 @@
     </wsdl:operation>
     <wsdl:operation name="DeleteCallBox">
       <soap:operation soapAction="http://tempuri.org/ITowTruckService/DeleteCallBox" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetreiveFive11Signs">
+      <soap:operation soapAction="http://tempuri.org/ITowTruckService/RetreiveFive11Signs" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetreiveFive11Sign">
+      <soap:operation soapAction="http://tempuri.org/ITowTruckService/RetreiveFive11Sign" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateFive11Sign">
+      <soap:operation soapAction="http://tempuri.org/ITowTruckService/CreateFive11Sign" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateFive11Sign">
+      <soap:operation soapAction="http://tempuri.org/ITowTruckService/UpdateFive11Sign" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFive11Sign">
+      <soap:operation soapAction="http://tempuri.org/ITowTruckService/DeleteFive11Sign" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -17,7 +17,8 @@
             makeAllPolygonsUneditable: "&",
 
             selectedPolygon: "=",
-            visible: "="
+            visible: "=",
+            canEdit: "="
          },
          link: function (scope) {
 
@@ -38,6 +39,8 @@
             scope.selectedPolygon = "";
             scope.selectedSegment = "";
 
+            scope.selectedSegmentIds = []
+
             function buildDetailsContent(beat) {
                var content = "<table>";
                content += "<tr>";
@@ -53,11 +56,8 @@
             }
 
             function buildPolygons(beat) {
-
                if (!beat) return;
                if (!beat.BeatSegments) return;
-
-
                beat.BeatSegments.forEach(function (beatSegment) {
                   if (beatSegment.PolygonData && beatSegment.PolygonData.Coordinates) {
 
@@ -84,8 +84,6 @@
 
                   }
                });
-
-
             }
 
             function getBeatCenterCoordinate(beat) {
@@ -214,7 +212,34 @@
             scope.getSegments = function () {
                mapService.getSegments().then(function (segments) {
                   scope.allSegments = segments;
+                  console.log('All segments %O', scope.allSegments);
                });
+            };
+
+            scope.prepareToAddSegments = function () {
+               $("#segmentPickerModal").modal("show");
+
+               scope.selectedSegmentIds = [];
+
+               scope.selectedBeat.BeatSegments.forEach(function (segment) {
+                  scope.selectedSegmentIds.push(segment.BeatSegmentID);
+               });
+
+               console.log('Selected SegmentIds: %O', scope.selectedSegmentIds);
+            };
+
+            scope.addSelectedSegments = function () {
+               console.log(scope.selectedSegmentIds);
+
+               scope.selectedBeat.BeatSegments = [];
+               scope.selectedSegmentIds.forEach(function (segmentId) {
+                  var segment = utilService.findArrayElement(scope.allSegments, "BeatSegmentID", segmentId);
+                  if (segment) {
+                     scope.selectedBeat.BeatSegments.push(segment);
+                  }
+               });
+
+               $("#segmentPickerModal").modal("hide");
             };
 
             scope.getBeatPolygons = function (triggerMapUpdate) {
@@ -275,31 +300,21 @@
                buildMarkers(scope.selectedBeat);
                scope.triggerDisplayMapData();
                setBeatMapLocation(scope.selectedBeat);
-
+               
             };
 
             scope.setEdit = function () {
                scope.isEditing = true;
-               console.log("Edit beat %s", scope.selectedBeatID);               
-            };
-
-            scope.addSegment = function () {
-               if (!scope.selectedBeat) return;
-               if (!scope.selectedSegment) return;
-
-               var segment = utilService.findArrayElement(scope.selectedBeat.BeatSegments, "BeatSegmentID", scope.selectedSegment.BeatSegmentID);
-               if (segment) return;
-
-               scope.selectedSegment.BeatID = scope.selectedBeat.BeatID;
-               scope.selectedBeat.BeatSegments.push(angular.copy(scope.selectedSegment));
-               scope.selectedSegment = "";
+               console.log("Edit beat %s", scope.selectedBeatID);
             };
 
             scope.cancelEdit = function () {
                scope.isEditing = false;
                console.log("Cancel edit beat %s", scope.selectedBeatID);
                var beat = utilService.findArrayElement(scope.beats, "BeatID", scope.selectedBeatID);
-               scope.selectedBeat = angular.copy(beat);               
+               scope.selectedBeat = angular.copy(beat);
+               console.log('Beat Segments %O', scope.selectedBeat.BeatSegments);
+               scope.selectedSegmentIds = [];
                setBeatMapLocation(scope.selectedBeat);
             };
 

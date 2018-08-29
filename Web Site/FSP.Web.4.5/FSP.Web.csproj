@@ -204,6 +204,7 @@
     <Compile Include="Areas\AdminArea\ViewModels\ContractIndexViewModel.cs" />
     <Compile Include="Areas\AdminArea\ViewModels\UsersViewModel.cs" />
     <Compile Include="Controllers\MapController.cs" />
+    <Compile Include="Controllers\UtilController.cs" />
     <Compile Include="Helpers\HtmlExtensions.cs" />
     <Compile Include="Startup.cs" />
     <Content Include="app\app.js" />
@@ -535,6 +536,7 @@
     <Content Include="bower.json" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\googleMap\angular-minicolors.js" />
+    <Content Include="Scripts\googleMap\checklist-model.js" />
     <Content Include="Scripts\googleMap\jquery.minicolors.js" />
     <Content Include="Scripts\googleMap\jquery.minicolors.min.js" />
     <Content Include="Scripts\googleMap\jQueryRotateCompressed.2.1.js" />
@@ -1376,6 +1378,9 @@
     <Content Include="Service References\TowTruckServiceRef\FSP.Web.TowTruckServiceRef.Yard_New.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Service References\TowTruckServiceRef\FSP.Web.TowTruckServiceRef.Five11Signs.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Service References\TowTruckServiceRef\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -1449,6 +1454,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\AdminArea\Models\" />
+    <Folder Include="Views\Util\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

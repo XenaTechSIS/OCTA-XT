@@ -13,7 +13,7 @@ using FSP.Web.Filters;
 namespace FSP.Web.Controllers
 {
     [CustomAuthorization]
-    public class MapController : Controller
+    public class MapController : MyController
     {
         public ActionResult Index()
         {
@@ -24,7 +24,7 @@ namespace FSP.Web.Controllers
         {
             return View();
         }
-
+       
         #region yards
 
         [HttpGet]
@@ -36,7 +36,7 @@ namespace FSP.Web.Controllers
                 using (var service = new TowTruckServiceClient())
                 {
                     var rawYards = service.RetreiveAllYards();
-                    var yards = rawYards.OrderBy(p => p.Location).ToList().Select(s => new
+                    var yards = rawYards.OrderBy(p => p.TowTruckCompanyName).ToList().Select(s => new
                     {
                         s.YardID,
                         s.YardDescription,
@@ -112,7 +112,7 @@ namespace FSP.Web.Controllers
 
         #endregion
 
-         #region segments
+        #region segments
 
         [HttpGet]
         public ActionResult GetSegments()
@@ -206,7 +206,7 @@ namespace FSP.Web.Controllers
                     {
                         result = updateResult == "success",
                         record = data
-                    };                    
+                    };
                     return Json(response, JsonRequestBehavior.AllowGet);
                 }
             }
@@ -325,7 +325,7 @@ namespace FSP.Web.Controllers
                             {
                                 result = updateResult == "success",
                                 record = dbBeat
-                            };     
+                            };
 
                             return Json(response, JsonRequestBehavior.AllowGet);
                         }
@@ -351,7 +351,7 @@ namespace FSP.Web.Controllers
                     {
                         result = createResult == "success",
                         record = newBeat
-                    };     
+                    };
 
                     return Json(resp, JsonRequestBehavior.AllowGet);
                 }
@@ -383,7 +383,7 @@ namespace FSP.Web.Controllers
         }
 
         #endregion
-       
+
         #region call boxes
 
         [HttpGet]
@@ -461,6 +461,90 @@ namespace FSP.Web.Controllers
             catch (Exception ex)
             {
                 Util.LogError($"Delete CallBox Error: {ex.Message}, {ex.Message}");
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        #endregion
+
+        #region 511
+
+        [HttpGet]
+        public ActionResult Get511Polygons()
+        {
+            try
+            {
+                Util.LogInfo("511 polygons requested");
+                using (var service = new TowTruckServiceClient())
+                {
+                    var rawCallBoxes = service.RetreiveFive11Signs();
+                    var callBoxes = rawCallBoxes.OrderBy(p => p.SignNumber).ToList().Select(s => new
+                    {
+                        s.Five11SignID,
+                        s.Comments,
+                        s.FreewayID,
+                        s.Location,
+                        s.SignNumber,
+                        s.SiteType,
+                        s.TelephoneNumber,
+                        s.Position,
+                        PolygonData = new PolygonData(s.Position)
+                    }).ToList();
+
+                    var jsonResult = Json(callBoxes, JsonRequestBehavior.AllowGet);
+                    jsonResult.MaxJsonLength = int.MaxValue;
+                    Util.LogInfo("511s returned");
+                    return jsonResult;
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.LogError($"Get 511 Polygons Error: {ex.Message}");
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Save511Polygon(Five11Signs data)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(data.Position))
+                {
+                    return Json(false, JsonRequestBehavior.AllowGet);
+                }
+
+                if (data.Five11SignID == Guid.Empty)
+                    data.Five11SignID = Guid.NewGuid();
+
+                using (var service = new TowTruckServiceClient())
+                {
+                    var updateResult = service.UpdateFive11Sign(data);
+                    return Json(updateResult == "success", JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.LogError($"Save 511 Error: {ex.Message}");
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Delete511(Guid id)
+        {
+            try
+            {
+                using (var service = new TowTruckServiceClient())
+                {
+                    var deleteResult = service.DeleteFive11Sign(id);
+                    return Json(deleteResult == "success", JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                Util.LogError($"Delete 511 Error: {ex.Message}, {ex.Message}");
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
 

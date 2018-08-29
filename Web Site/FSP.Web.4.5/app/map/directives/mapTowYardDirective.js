@@ -17,7 +17,8 @@
             makeAllPolygonsUneditable: "&",
 
             selectedPolygon: "=",
-            visible: "="
+            visible: "=",
+            canEdit: "="
          },
          link: function (scope) {
 
@@ -48,8 +49,8 @@
                content += "<td><strong>" + yard.YardDescription + "</strong></td>";
                content += "</tr>";
                content += "<tr>";
-               content += "<td>Comments:</td>";
-               content += "<td><strong>" + yard.Comments + "</strong></td>";
+               content += "<td>Phone #:</td>";
+               content += "<td><strong>" + yard.TowTruckCompanyPhoneNumber + "</strong></td>";
                content += "</tr>";
                content += "</table>";
                return content;

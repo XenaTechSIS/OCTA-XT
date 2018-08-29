@@ -81,69 +81,71 @@
    </div>
 </div>
 
-<!--edit existing-->
-<div class="form-group"
-   ng-show="selectedCallBox && !isAdding">
-   <button ng-show="!isEditing"
-      ng-click="setEdit()"
-      class="btn btn-primary btn-sm">
-      <i class="fa fa-pencil">
-      </i> Edit Call Box
-   </button>
-   <button ng-show="isEditing"
-      ng-click="save()"
-      ng-disabled="isBusySaving || isBusyDeleting"
-      class="btn btn-primary btn-sm">
-      <i class="fa fa-check"
-         ng-hide="isBusySaving">
-      </i>
-      <i class="fa fa-refresh fa-spin"
-         ng-show="isBusySaving">
-      </i>
-      Save
-   </button>
-   <button ng-show="isEditing"
-      ng-disabled="isBusySaving || isBusyDeleting"
-      ng-click="delete()"
-      class="btn btn-danger btn-sm">
-      <i class="fa fa-trash"
-         ng-hide="isBusyDeleting">
-      </i>
-      <i class="fa fa-refresh fa-spin"
-         ng-show="isBusyDeleting">
-      </i>
-      Delete
-   </button>
-   <button ng-show="isEditing"
-      ng-click="cancelEdit()"
-      class="btn btn-default btn-sm">
-      Cancel
-   </button>
-</div>
+<div ng-show="canEdit">
+   <!--edit existing-->
+   <div class="form-group"
+      ng-show="selectedCallBox && !isAdding">
+      <button ng-show="!isEditing"
+         ng-click="setEdit()"
+         class="btn btn-primary btn-sm">
+         <i class="fa fa-pencil">
+         </i> Edit Call Box
+      </button>
+      <button ng-show="isEditing"
+         ng-click="save()"
+         ng-disabled="isBusySaving || isBusyDeleting"
+         class="btn btn-primary btn-sm">
+         <i class="fa fa-check"
+            ng-hide="isBusySaving">
+         </i>
+         <i class="fa fa-refresh fa-spin"
+            ng-show="isBusySaving">
+         </i>
+         Save
+      </button>
+      <button ng-show="isEditing"
+         ng-disabled="isBusySaving || isBusyDeleting"
+         ng-click="delete()"
+         class="btn btn-danger btn-sm">
+         <i class="fa fa-trash"
+            ng-hide="isBusyDeleting">
+         </i>
+         <i class="fa fa-refresh fa-spin"
+            ng-show="isBusyDeleting">
+         </i>
+         Delete
+      </button>
+      <button ng-show="isEditing"
+         ng-click="cancelEdit()"
+         class="btn btn-default btn-sm">
+         Cancel
+      </button>
+   </div>
 
-<!--add new-->
-<div class="form-group"
-   ng-show="!isEditing">
-   <button ng-hide="selectedCallBox"
-      ng-click="prepareNew()"
-      class="btn btn-success btn-sm">
-      <i class="fa fa-plus"></i> Add Call Box
-   </button>
-   <button ng-show="!isEditing && isAdding"
-      ng-click="add()"
-      ng-disabled="isBusyAdding"
-      class="btn btn-success btn-sm">
-      <i class="fa fa-check"
-         ng-hide="isBusyAdding">
-      </i>
-      <i class="fa fa-refresh fa-spin"
-         ng-show="isBusyAdding">
-      </i>
-      Save
-   </button>
-   <button ng-show="!isEditing && isAdding"
-      ng-click="cancelAdd()"
-      class="btn btn-default btn-sm">
-      Cancel
-   </button>
+   <!--add new-->
+   <div class="form-group"
+      ng-show="!isEditing">
+      <button ng-hide="selectedCallBox"
+         ng-click="prepareNew()"
+         class="btn btn-success btn-sm">
+         <i class="fa fa-plus"></i> Add Call Box
+      </button>
+      <button ng-show="!isEditing && isAdding"
+         ng-click="add()"
+         ng-disabled="isBusyAdding"
+         class="btn btn-success btn-sm">
+         <i class="fa fa-check"
+            ng-hide="isBusyAdding">
+         </i>
+         <i class="fa fa-refresh fa-spin"
+            ng-show="isBusyAdding">
+         </i>
+         Save
+      </button>
+      <button ng-show="!isEditing && isAdding"
+         ng-click="cancelAdd()"
+         class="btn btn-default btn-sm">
+         Cancel
+      </button>
+   </div>
 </div>

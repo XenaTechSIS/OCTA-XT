@@ -22,7 +22,8 @@
 <!--input form-->
 <form name="pageConfig.beatForm"
    novalidate>
-   <div ng-show="selectedBeat">
+   <div ng-show="selectedBeat"
+      class="selectedBeatContainer">
       <div class="form-group"
          ng-class="{'has-error': pageConfig.beatForm.BeatNumber.$invalid}">
          Name *
@@ -39,7 +40,7 @@
          <textarea ng-model="selectedBeat.BeatDescription"
             class="form-control"
             required
-            rows="5"
+            rows="3"
             name="BeatDescription"
             ng-disabled="(!isEditing && !isAdding) || isBusySaving"></textarea>
       </div>
@@ -51,111 +52,142 @@
             class="form-control"
             ng-disabled="(!isEditing && !isAdding) || isBusySaving" />
       </div>
-
       <div>
          Segments ({{selectedBeat.BeatSegments.length}})
-      </div>
-      <div class="beatSegmentsListContainer">
-         <!-- existing segments -->
-         <div ng-repeat="seg in selectedBeat.BeatSegments track by $index"
-            class="panel panel-default">
-            <div class="panel-body">
-               {{$index+1}}. {{seg.BeatSegmentNumber}}
-               <i ng-show="$parent.isEditing"
-                  class="fa fa-trash pull-right idosomething"
-                  title="Remove Segment"
-                  ng-click="selectedBeat.BeatSegments.splice($index,1)"></i>
-            </div>
-         </div>
-      </div>
-
-      <div class="addBeatSegmentsContainer"
-         ng-show="isEditing || isAdding"
-         novalidate>
-         <i class="fa fa-plus-circle"></i> Add Segment
-         <select class="form-control input-sm"
-            ng-change="addSegment()"
-            ng-disabled="isBusyAdding || isBusySaving"
-            ng-model="selectedSegment">
-            <option value="">
-               --Select Segment--
-            </option>
-            <option ng-repeat="segment in allSegments"
-               ng-value="{{segment}}">{{segment.BeatSegmentNumber}}</option>
-         </select>
-      </div>
-
-      <div ng-show="isEditing || isAdding">
-         *required fields
+         <button ng-show="isEditing"
+            ng-click="prepareToAddSegments()"
+            class="btn btn-primary btn-sm">
+            <i class="fa fa-pencil"></i> Edit Segment List
+         </button>
       </div>
    </div>
 
-   <!--edit existing-->
-   <div class="form-group"
-      ng-show="selectedBeat && !isAdding">
-      <button ng-hide="isEditing"
-         ng-click="setEdit()"
-         class="btn btn-primary btn-sm">
-         <i class="fa fa-pencil">
-         </i> Edit Beat
-      </button>
-      <button ng-show="isEditing"
-         ng-click="save()"
-         ng-disabled="isBusySaving || isBusyDeleting || pageConfig.beatForm.$invalid"
-   
-         class="btn btn-primary btn-sm">
-         <i class="fa fa-check"
-            ng-hide="isBusySaving">
-         </i>
-         <i class="fa fa-refresh fa-spin"
-            ng-show="isBusySaving">
-         </i>
-         Save
-      </button>
-      <button ng-show="isEditing"
-         ng-disabled="isBusySaving || isBusyDeleting"
-         ng-click="delete()"
-         class="btn btn-danger btn-sm">
-         <i class="fa fa-trash"
-            ng-hide="isBusyDeleting">
-         </i>
-         <i class="fa fa-refresh fa-spin"
-            ng-show="isBusyDeleting">
-         </i>
-         Delete
-      </button>
-      <button ng-show="isEditing"
-         ng-click="cancelEdit()"
-         class="btn btn-default btn-sm">
-         Cancel
-      </button>
+
+   <div ng-show="isEditing || isAdding">
+      *required fields
    </div>
 
-   <!--add new-->
-   <div class="form-group"
-      ng-show="!isEditing">
-      <button ng-hide="selectedBeat"
-         ng-click="prepareNew()"
-         class="btn btn-success btn-sm">
-         <i class="fa fa-plus"></i> Add Beat
-      </button>
-      <button ng-show="!isEditing && isAdding"
-         ng-click="add()"
-         ng-disabled="isBusyAdding || pageConfig.beatForm.$invalid"
-         class="btn btn-success btn-sm">
-         <i class="fa fa-check"
-            ng-hide="isBusyAdding">
-         </i>
-         <i class="fa fa-refresh fa-spin"
-            ng-show="isBusyAdding">
-         </i>
-         Save
-      </button>
-      <button ng-show="!isEditing && isAdding"
-         ng-click="cancelAdd()"
-         class="btn btn-default btn-sm">
-         Cancel
-      </button>
+   <div ng-show="canEdit">
+      <!--edit existing-->
+      <div class="form-group"
+         ng-show="selectedBeat && !isAdding">
+         <button ng-hide="isEditing"
+            ng-click="setEdit()"
+            class="btn btn-primary btn-sm">
+            <i class="fa fa-pencil">
+            </i> Edit Beat
+         </button>
+         <button ng-show="isEditing"
+            ng-click="save()"
+            ng-disabled="isBusySaving || isBusyDeleting || pageConfig.beatForm.$invalid"
+            class="btn btn-primary btn-sm">
+            <i class="fa fa-check"
+               ng-hide="isBusySaving">
+            </i>
+            <i class="fa fa-refresh fa-spin"
+               ng-show="isBusySaving">
+            </i>
+            Save
+         </button>
+         <button ng-show="isEditing"
+            ng-disabled="isBusySaving || isBusyDeleting"
+            ng-click="delete()"
+            class="btn btn-danger btn-sm">
+            <i class="fa fa-trash"
+               ng-hide="isBusyDeleting">
+            </i>
+            <i class="fa fa-refresh fa-spin"
+               ng-show="isBusyDeleting">
+            </i>
+            Delete
+         </button>
+         <button ng-show="isEditing"
+            ng-click="cancelEdit()"
+            class="btn btn-default btn-sm">
+            Cancel
+         </button>
+      </div>
+
+      <!--add new-->
+      <div class="form-group"
+         ng-show="!isEditing">
+         <button ng-hide="selectedBeat"
+            ng-click="prepareNew()"
+            class="btn btn-success btn-sm">
+            <i class="fa fa-plus"></i> Add Beat
+         </button>
+         <button ng-show="!isEditing && isAdding"
+            ng-click="add()"
+            ng-disabled="isBusyAdding || pageConfig.beatForm.$invalid"
+            class="btn btn-success btn-sm">
+            <i class="fa fa-check"
+               ng-hide="isBusyAdding">
+            </i>
+            <i class="fa fa-refresh fa-spin"
+               ng-show="isBusyAdding">
+            </i>
+            Save
+         </button>
+         <button ng-show="!isEditing && isAdding"
+            ng-click="cancelAdd()"
+            class="btn btn-default btn-sm">
+            Cancel
+         </button>
+      </div>
    </div>
 
 </form>
+
+
+<div class="modal fade"
+   id="segmentPickerModal"
+   tabindex="-1"
+   role="dialog">
+
+   <div class="modal-dialog"
+      role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button"
+               class="close"
+               data-dismiss="modal"
+               aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title"
+               id="myModalLabel">
+               Add Segments
+            </h4>
+         </div>
+         <div class="modal-body">
+            <div class="segmentPickerList">
+               <input type="text"
+                  ng-model="segmentNameFilter"
+                  class="form-control"
+                  placeholder="Type to filter" />
+               <br>
+               <div class="checkbox checkbox-slider--b-flat"
+                  ng-repeat="segment in allSegments|filter:segmentNameFilter">
+                  <label>
+                     <input type="checkbox"
+                        checklist-model="selectedSegmentIds"
+                        checklist-value="segment.BeatSegmentID" /><span>{{segment.BeatSegmentNumber}}</span>
+                  </label>
+               </div>
+            </div>
+         </div>
+         <div class="modal-footer">
+            <button type="button"
+               class="btn btn-default pull-left"
+               data-dismiss="modal">
+               Cancel
+            </button>
+            <button type="button"
+               ng-click="addSelectedSegments()"
+               class="btn btn-primary">
+               Confirm
+            </button>
+         </div>
+      </div>
+   </div>
+</div>

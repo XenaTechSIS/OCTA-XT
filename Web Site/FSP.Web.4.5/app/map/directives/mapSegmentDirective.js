@@ -17,7 +17,8 @@
             makeAllPolygonsUneditable: "&",
 
             selectedPolygon: "=",
-            visible: "="
+            visible: "=",
+            canEdit: "="
          },
          link: function (scope) {
 
@@ -25,7 +26,7 @@
 
             scope.isEditing = false;
             scope.isAdding = false;
-            scope.isBusyGetting = false;
+            scope.isBusyGetting = true;
             scope.isBusySaving = false;
             scope.isBusyDeleting = false;
 
@@ -38,21 +39,12 @@
             function buildDetailsContent(segment) {
                var content = "<table>";
                content += "<tr>";
-               content += "<td>Number:</td>";
+               content += "<td>Segment Number/Name:</td>";
                content += "<td><strong>" + segment.BeatSegmentNumber + "</strong></td>";
-               content += "</tr>";
-               content += "<tr>";
-               content += "<td>Description:</td>";
-               content += "<td><strong>" + segment.BeatSegmentDescription + "</strong></td>";
-               content += "</tr>";
-               content += "<tr>";
+               content += "</tr>";              
                content += "<td>CHP Description:</td>";
                content += "<td><strong>" + segment.CHPDescription + "</strong></td>";
-               content += "</tr>";
-               content += "<tr>";
-               content += "<td>CHP Description 2:</td>";
-               content += "<td><strong>" + segment.CHPDescription2 + "</strong></td>";
-               content += "</tr>";
+               content += "</tr>";               
                content += "</table>";
                return content;
             }

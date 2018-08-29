@@ -15,6 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "ngMask": "angular-mask#^3.1.1"
+    "ngMask": "angular-mask#^3.1.1",
+    "checklist-model": "0.6.0"
   }
 }

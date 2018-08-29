@@ -276,6 +276,15 @@
                         return response.data;
                     });
             },
+            currentUserIsAdmin: function () {
+               return $http({
+                  method: 'GET',
+                  url: $(".websiteUrl").text().trim() + '/Util/CurrentUserIsAdmin'
+               }).
+                  then(function (response) {
+                     return response.data;
+                  });
+            },           
             getCanEdit: function (currentControllerName) {
                 console.time('Getting Can Edit');
                 return $http({

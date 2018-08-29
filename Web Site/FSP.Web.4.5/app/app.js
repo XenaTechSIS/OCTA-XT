@@ -4,6 +4,7 @@
         'ngSanitize',
         'ui.bootstrap',
         'minicolors',
+        'checklist-model',
         'ngMask',
         'octaApp.filters',
         'octaApp.map'        

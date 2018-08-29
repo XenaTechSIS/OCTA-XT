@@ -508,4 +508,23 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="CallBoxes_New" nillable="true" type="tns:CallBoxes_New" />
+  <xs:complexType name="ArrayOfFive11Signs">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Five11Signs" nillable="true" type="tns:Five11Signs" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFive11Signs" nillable="true" type="tns:ArrayOfFive11Signs" />
+  <xs:complexType name="Five11Signs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Comments" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Five11SignID" type="ser:guid" />
+      <xs:element minOccurs="0" name="FreewayID" type="xs:int" />
+      <xs:element minOccurs="0" name="Location" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Position" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SignNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SiteType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TelephoneNumber" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Five11Signs" nillable="true" type="tns:Five11Signs" />
 </xs:schema>

@@ -37,13 +37,12 @@ namespace FSP.Web.Helpers
             var applicationPath = HttpContext.Current.Request.ApplicationPath;
 
 #if(DEBUG)
-            //applicationPath = "http://" + HttpContext.Current.Request.Url.Authority;
-            applicationPath = "http://" + HttpContext.Current.Request.Url.Authority + "/octafsp/";
+            applicationPath = "http://" + HttpContext.Current.Request.Url.Authority;
+            //applicationPath = "http://" + HttpContext.Current.Request.Url.Authority + "/octafsp/";
 #endif
 
             var currentControllerName = (string)helper.ViewContext.RouteData.Values["controller"];
             var currentActionName = (string)helper.ViewContext.RouteData.Values["action"];
-
             
             //Home
             sb.Append($"<li class='{(currentControllerName == "Home" ? "active" : "")}'><a href='{applicationPath}/Home/Index'>Home</a></li>");

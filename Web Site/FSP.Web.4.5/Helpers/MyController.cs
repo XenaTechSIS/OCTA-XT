@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 using FSP.Domain.Model;
 
@@ -56,6 +55,12 @@ namespace FSP.Web.Helpers
                     return Json(data.OrderBy(p => p.Name), JsonRequestBehavior.AllowGet);
                 }
             }
+        }
+
+        public ActionResult CurrentUserIsAdmin()
+        {
+            var isAdmin = HttpContext.User.IsInRole("Admin");
+            return Json(isAdmin, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -18,7 +18,8 @@
             makeAllPolygonsUneditable: "&",
 
             selectedMarker: "=",
-            visible: "="
+            visible: "=",
+            canEdit: "="
          },
          link: function (scope) {
 

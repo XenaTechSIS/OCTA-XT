@@ -74,7 +74,8 @@
                                           hide-map-data="hideMapData()"
                                           visible="towTruckYardsVisible"
                                           selected-polygon="selectedPolygon"
-                                          set-new-polygon="setNewPolygon(color)"></map-tow-yard>
+                                          set-new-polygon="setNewPolygon(color)"
+                                          can-edit="currentUserIsAdmin"></map-tow-yard>
                         </div>
                     </div>
                 </div>
@@ -110,7 +111,8 @@
                                          visible="segmentsVisible"
                                          selected-polygon="selectedPolygon"
                                          make-all-polygons-uneditable="makeAllPolygonsUneditable()"
-                                         set-new-polygon="setNewPolygon(color)"></map-segment>
+                                         set-new-polygon="setNewPolygon(color)"
+                                         can-edit="currentUserIsAdmin"></map-segment>
                         </div>
                     </div>
                 </div>
@@ -147,7 +149,8 @@
                                       visible="beatsVisible"
                                       selected-polygon="selectedPolygon"
                                       make-all-polygons-uneditable="makeAllPolygonsUneditable()"
-                                      set-new-polygon="setNewPolygon(color)"></map-beat>
+                                      set-new-polygon="setNewPolygon(color)"
+                                      can-edit="currentUserIsAdmin"></map-beat>
                         </div>
                     </div>
                 </div>
@@ -182,7 +185,8 @@
                                            hide-map-data="hideMapData()"
                                            visible="dropZonesVisible"
                                            selected-polygon="selectedPolygon"
-                                           set-new-polygon="setNewPolygon(color)"></map-drop-zone>
+                                           set-new-polygon="setNewPolygon(color)"
+                                           can-edit="currentUserIsAdmin"></map-drop-zone>
                         </div>
                     </div>
                 </div>
@@ -218,7 +222,8 @@
                                           hide-map-data="hideMapData()"
                                           visible="callBoxesVisible"
                                           selected-marker="selectedMarker"
-                                          set-new-marker="setNewMarker()"></map-call-box>
+                                          set-new-marker="setNewMarker()"
+                                          can-edit="currentUserIsAdmin"></map-call-box>
                         </div>
                     </div>
                 </div>
