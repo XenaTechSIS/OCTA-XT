@@ -6,14 +6,20 @@
    </div>
    <div class="form-group"
       ng-hide="isBusyGetting">
+      <input type="text"
+         ng-model="nameFilter"
+         class="form-control"
+         placeholder="Type to filter" />
+      <br>
       <select class="form-control"
          ng-model="selectedDropZoneID"
          ng-change="setSelectedDropZone()"
-         ng-disabled="dropZones.length === 0 || isEditing">
+         ng-disabled="dropZones.length === 0 || isEditing"
+         size="5">
          <option value="">
             --Select Drop Zone--
          </option>
-         <option ng-repeat="dropZone in dropZones"
+         <option ng-repeat="dropZone in dropZones|filter:nameFilter"
             value="{{dropZone.DropZoneID}}">{{dropZone.DropZoneNumber}}</option>
       </select>
    </div>
@@ -24,7 +30,7 @@
    <!--input form-->
    <div ng-show="selectedDropZone">
       <div class="form-group"
-         ng-class="{'has-error': pageConfig.dropZoneForm.DropZoneNumber.$invalid}">
+         ng-class="{'has-error': pageConfig.dropZoneForm.DropZoneNumber.$invalid && (isEditing || isAdding)}">
          Number *
          <input ng-model="selectedDropZone.DropZoneNumber"
             type="text"
@@ -34,7 +40,7 @@
             ng-disabled="!isEditing && !isAdding" />
       </div>
       <div class="form-group"
-         ng-class="{'has-error': pageConfig.dropZoneForm.DropZoneDescription.$invalid}">
+         ng-class="{'has-error': pageConfig.dropZoneForm.DropZoneDescription.$invalid && (isEditing || isAdding)}">
          Description *
          <textarea ng-model="selectedDropZone.DropZoneDescription"
             class="form-control"
@@ -43,7 +49,7 @@
             ng-disabled="!isEditing && !isAdding"></textarea>
       </div>
       <div class="form-group"
-         ng-class="{'has-error': pageConfig.dropZoneForm.Comments.$invalid}">
+         ng-class="{'has-error': pageConfig.dropZoneForm.Comments.$invalid && (isEditing || isAdding)}">
          Comments *
          <textarea ng-model="selectedDropZone.Comments"
             class="form-control"
@@ -52,7 +58,7 @@
             ng-disabled="!isEditing && !isAdding"></textarea>
       </div>
       <div class="form-group"
-         ng-class="{'has-error': pageConfig.dropZoneForm.Location.$invalid}">
+         ng-class="{'has-error': pageConfig.dropZoneForm.Location.$invalid && (isEditing || isAdding)}">
          Location *
          <textarea ng-model="selectedDropZone.Location"
             class="form-control"
@@ -61,7 +67,7 @@
             ng-disabled="!isEditing && !isAdding"></textarea>
       </div>
       <div class="form-group"
-         ng-class="{'has-error': pageConfig.dropZoneForm.Restrictions.$invalid}">
+         ng-class="{'has-error': pageConfig.dropZoneForm.Restrictions.$invalid && (isEditing || isAdding)}">
          Restrictions *
          <input ng-model="selectedDropZone.Restrictions"
             type="text"
@@ -71,7 +77,7 @@
             ng-disabled="!isEditing && !isAdding" />
       </div>
       <div class="form-group"
-         ng-class="{'has-error': pageConfig.dropZoneForm.PDPhoneNumber.$invalid}">
+         ng-class="{'has-error': pageConfig.dropZoneForm.PDPhoneNumber.$invalid && (isEditing || isAdding)}">
          PD Phone # *
          <input ng-model="selectedDropZone.PDPhoneNumber"
             type="text"
@@ -91,7 +97,7 @@
             ng-disabled="!isEditing && !isAdding" />
       </div>
       <div class="form-group"
-         ng-class="{'has-error': pageConfig.dropZoneForm.City.$invalid}">
+         ng-class="{'has-error': pageConfig.dropZoneForm.City.$invalid && (isEditing || isAdding)}">
          City *
          <input ng-model="selectedDropZone.City"
             type="text"

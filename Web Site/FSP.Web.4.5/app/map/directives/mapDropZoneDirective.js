@@ -41,16 +41,16 @@
             function buildDetailsContent(dropZone) {
                var content = "<table>";
                content += "<tr>";
-               content += "<td>ID:</td>";
-               content += "<td><strong>" + dropZone.DropZoneID + "</strong></td>";
-               content += "</tr>";
-               content += "<tr>";
                content += "<td>Number:</td>";
                content += "<td><strong>" + dropZone.DropZoneNumber + "</strong></td>";
                content += "</tr>";
                content += "<tr>";
                content += "<td>Description:</td>";
                content += "<td><strong>" + dropZone.DropZoneDescription + "</strong></td>";
+               content += "</tr>";
+               content += "<tr>";
+               content += "<td>Comments:</td>";
+               content += "<td><strong>" + dropZone.Comments + "</strong></td>";
                content += "</tr>";
                content += "</table>";
                return content;

@@ -46,8 +46,8 @@
                content += "<td><strong>" + callBox.SignNumber + "</strong></td>";
                content += "</tr>";
                content += "<tr>";
-               content += "<td>Comments:</td>";
-               content += "<td><strong>" + callBox.Comments + "</strong></td>";
+               content += "<td>Phone #:</td>";
+               content += "<td><strong>" + callBox.TelephoneNumber + "</strong></td>";
                content += "</tr>";
                content += "<tr>";
                content += "<td>Location:</td>";
