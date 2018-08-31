@@ -227,6 +227,43 @@
                         </div>
                     </div>
                 </div>
+
+                @*511s*@
+                <div class="panel panel-default">
+                    <div class="panel-heading"
+                         role="tab"
+                         id="heading511s">
+                        <h4 class="panel-title">
+                            <a class="collapsed"
+                               role="button"
+                               data-toggle="collapse"
+                               data-parent="#accordion"
+                               href="#511s"
+                               aria-expanded="false"
+                               aria-controls="heading511s">
+                                511
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="511s"
+                         class="panel-collapse collapse"
+                         role="tabpanel"
+                         aria-labelledby="heading511s">
+                        <div class="panel-body">
+                            <map-511 reset-map="resetMap()"
+                                     display-map-data="displayMapData(polygons, markers)"
+                                     set-map-location="setMapLocation(lat, lon, zoom)"
+                                     set-edit-marker="setEditMarker(id)"
+                                     set-cancel-edit-marker="setCancelEditMarker(id)"
+                                     set-marker-position="setMarkerPosition(lat,lon)"
+                                     hide-map-data="hideMapData()"
+                                     visible="Five11sVisible"
+                                     selected-marker="selectedMarker"
+                                     set-new-marker="setNewMarker()"
+                                     can-edit="currentUserIsAdmin"></map-511>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
