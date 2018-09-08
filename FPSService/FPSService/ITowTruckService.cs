@@ -158,6 +158,21 @@ namespace FPSService
 
         [OperationContract]
         string DeleteCallBox(Guid DropZoneID);
+
+        [OperationContract]
+        List<Five11Signs> RetreiveFive11Signs();
+
+        [OperationContract]
+        Five11Signs RetreiveFive11Sign(Guid Five11SignID);
+
+        [OperationContract]
+        string CreateFive11Sign(Five11Signs Five11Sign);
+
+        [OperationContract]
+        string UpdateFive11Sign(Five11Signs Five11Sign);
+
+        [OperationContract]
+        string DeleteFive11Sign(Guid Five11SignID);
     }
 
     #endregion
@@ -960,6 +975,27 @@ namespace FPSService
     {
         [DataMember]
         public Guid CallBoxID { get; set; }
+        [DataMember]
+        public string TelephoneNumber { get; set; }
+        [DataMember]
+        public string Location { get; set; }
+        [DataMember]
+        public int FreewayID { get; set; }
+        [DataMember]
+        public string SiteType { get; set; }
+        [DataMember]
+        public string Comments { get; set; }
+        [DataMember]
+        public string Position { get; set; }
+        [DataMember]
+        public string SignNumber { get; set; }
+    }
+
+    [DataContract]
+    public class Five11Signs
+    {
+        [DataMember]
+        public Guid Five11SignID { get; set; }
         [DataMember]
         public string TelephoneNumber { get; set; }
         [DataMember]

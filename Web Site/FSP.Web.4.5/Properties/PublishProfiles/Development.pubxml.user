@@ -12,7 +12,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="app/app.js">
-      <publishTime>07/18/2018 11:52:54</publishTime>
+      <publishTime>09/08/2018 09:38:46</publishTime>
     </File>
     <File Include="app/core/app.config.js">
       <publishTime>07/18/2018 11:52:54</publishTime>
@@ -20,35 +20,41 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="app/filters/appFilters.js">
       <publishTime>07/18/2018 11:52:54</publishTime>
     </File>
+    <File Include="app/map/directives/map511Directive.js">
+      <publishTime>09/08/2018 12:57:01</publishTime>
+    </File>
+    <File Include="app/map/directives/map511Template.html">
+      <publishTime>09/08/2018 13:03:22</publishTime>
+    </File>
     <File Include="app/map/directives/mapBeatDirective.js">
-      <publishTime>07/24/2018 05:48:43</publishTime>
+      <publishTime>09/08/2018 09:38:46</publishTime>
     </File>
     <File Include="app/map/directives/mapBeatTemplate.html">
-      <publishTime>07/24/2018 05:48:43</publishTime>
+      <publishTime>09/08/2018 09:38:46</publishTime>
     </File>
     <File Include="app/map/directives/mapCallBoxDirective.js">
-      <publishTime>07/18/2018 11:52:54</publishTime>
+      <publishTime>09/08/2018 09:38:46</publishTime>
     </File>
     <File Include="app/map/directives/mapCallBoxTemplate.html">
-      <publishTime>07/18/2018 11:52:54</publishTime>
+      <publishTime>09/08/2018 09:38:46</publishTime>
     </File>
     <File Include="app/map/directives/mapDropZoneDirective.js">
-      <publishTime>07/18/2018 11:52:54</publishTime>
+      <publishTime>09/08/2018 09:38:46</publishTime>
     </File>
     <File Include="app/map/directives/mapDropZoneTemplate.html">
-      <publishTime>07/18/2018 11:52:54</publishTime>
+      <publishTime>09/08/2018 09:38:46</publishTime>
     </File>
     <File Include="app/map/directives/mapSegmentDirective.js">
-      <publishTime>07/24/2018 05:48:43</publishTime>
+      <publishTime>09/08/2018 09:38:46</publishTime>
     </File>
     <File Include="app/map/directives/mapSegmentTemplate.html">
-      <publishTime>07/18/2018 11:52:54</publishTime>
+      <publishTime>09/08/2018 09:38:46</publishTime>
     </File>
     <File Include="app/map/directives/mapTowYardDirective.js">
-      <publishTime>07/18/2018 11:52:54</publishTime>
+      <publishTime>09/08/2018 09:38:46</publishTime>
     </File>
     <File Include="app/map/directives/mapTowYardTemplate.html">
-      <publishTime>07/18/2018 11:52:54</publishTime>
+      <publishTime>09/08/2018 09:38:46</publishTime>
     </File>
     <File Include="app/map/map.module.config.js">
       <publishTime>07/18/2018 11:52:54</publishTime>
@@ -57,13 +63,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/18/2018 11:52:54</publishTime>
     </File>
     <File Include="app/map/mapController.js">
-      <publishTime>07/18/2018 11:52:54</publishTime>
+      <publishTime>09/08/2018 09:38:46</publishTime>
     </File>
     <File Include="app/services/generalService.js">
-      <publishTime>07/18/2018 11:52:54</publishTime>
+      <publishTime>09/08/2018 09:38:46</publishTime>
     </File>
     <File Include="app/services/mapService.js">
-      <publishTime>07/18/2018 11:52:54</publishTime>
+      <publishTime>09/08/2018 09:38:46</publishTime>
     </File>
     <File Include="app/services/trucksService.js">
       <publishTime>07/18/2018 11:52:54</publishTime>
@@ -432,19 +438,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/23/2017 13:15:20</publishTime>
     </File>
     <File Include="bin/FSP.Common.dll">
-      <publishTime>07/24/2018 05:49:44</publishTime>
+      <publishTime>09/08/2018 13:24:59</publishTime>
     </File>
     <File Include="bin/FSP.Common.pdb">
-      <publishTime>07/24/2018 05:49:44</publishTime>
+      <publishTime>09/08/2018 13:24:59</publishTime>
     </File>
     <File Include="bin/FSP.Domain.dll">
-      <publishTime>07/24/2018 05:49:42</publishTime>
+      <publishTime>09/08/2018 13:24:58</publishTime>
     </File>
     <File Include="bin/FSP.Domain.dll.config">
       <publishTime>07/18/2018 11:52:50</publishTime>
     </File>
     <File Include="bin/FSP.Domain.pdb">
-      <publishTime>07/24/2018 05:49:42</publishTime>
+      <publishTime>09/08/2018 13:24:58</publishTime>
     </File>
     <File Include="bin/FSP.Web.4.5.dll">
       <publishTime>03/22/2013 09:34:14</publishTime>
@@ -453,10 +459,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/22/2013 09:34:14</publishTime>
     </File>
     <File Include="bin/FSP.Web.dll">
-      <publishTime>07/24/2018 05:49:45</publishTime>
+      <publishTime>09/08/2018 13:33:30</publishTime>
     </File>
     <File Include="bin/FSP.Web.pdb">
-      <publishTime>07/24/2018 05:49:45</publishTime>
+      <publishTime>09/08/2018 13:33:30</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.Core.dll">
       <publishTime>04/03/2015 17:07:22</publishTime>
@@ -566,6 +572,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/WebMatrix.WebData.dll">
       <publishTime>11/15/2012 10:54:42</publishTime>
     </File>
+    <File Include="bower.json">
+      <publishTime>09/08/2018 09:38:46</publishTime>
+    </File>
     <File Include="Content/AssistEntry/ClientCSS.css">
       <publishTime>07/14/2018 09:25:03</publishTime>
     </File>
@@ -651,7 +660,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/18/2018 11:52:50</publishTime>
     </File>
     <File Include="Content/octa/map.css">
-      <publishTime>07/18/2018 11:52:50</publishTime>
+      <publishTime>09/08/2018 09:38:46</publishTime>
     </File>
     <File Include="Content/prettify.css">
       <publishTime>11/15/2012 11:55:31</publishTime>
@@ -1265,6 +1274,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Scripts/googleMap/angular-minicolors.js">
       <publishTime>07/18/2018 11:52:51</publishTime>
     </File>
+    <File Include="Scripts/googleMap/checklist-model.js">
+      <publishTime>09/08/2018 09:38:46</publishTime>
+    </File>
     <File Include="Scripts/googleMap/jquery.minicolors.js">
       <publishTime>07/18/2018 11:52:51</publishTime>
     </File>
@@ -1282,6 +1294,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Scripts/googleMap/markerwithlabel.js">
       <publishTime>07/18/2018 11:52:51</publishTime>
+    </File>
+    <File Include="Scripts/googleMap/ngMask.min.js">
+      <publishTime>08/15/2018 12:47:49</publishTime>
     </File>
     <File Include="Scripts/googleMap/RichMarker.js">
       <publishTime>07/18/2018 11:52:51</publishTime>
@@ -3671,6 +3686,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Service References/TowTruckServiceRef/FSP.Web.TowTruckServiceRef.DropZone_New.datasource">
       <publishTime>07/18/2018 11:52:54</publishTime>
     </File>
+    <File Include="Service References/TowTruckServiceRef/FSP.Web.TowTruckServiceRef.Five11Signs.datasource">
+      <publishTime>09/08/2018 09:38:46</publishTime>
+    </File>
     <File Include="Service References/TowTruckServiceRef/FSP.Web.TowTruckServiceRef.IncidentDisplay.datasource">
       <publishTime>07/14/2018 09:25:03</publishTime>
     </File>
@@ -3789,7 +3807,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/18/2018 11:52:54</publishTime>
     </File>
     <File Include="Views/Map/Index.cshtml">
-      <publishTime>07/18/2018 11:52:54</publishTime>
+      <publishTime>09/08/2018 09:38:46</publishTime>
     </File>
     <File Include="Views/Map/IndexOld.cshtml">
       <publishTime>07/18/2018 11:52:54</publishTime>
@@ -3831,13 +3849,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/13/2017 08:59:17</publishTime>
     </File>
     <File Include="Views/Web.config">
-      <publishTime>07/18/2018 11:52:54</publishTime>
+      <publishTime>08/15/2018 12:47:49</publishTime>
     </File>
     <File Include="Views/_ViewStart.cshtml">
       <publishTime>07/14/2018 09:25:03</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>07/24/2018 05:50:01</publishTime>
+      <publishTime>09/08/2018 13:25:13</publishTime>
     </File>
   </ItemGroup>
 </Project>

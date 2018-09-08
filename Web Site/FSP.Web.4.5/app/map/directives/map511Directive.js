@@ -194,7 +194,7 @@
           var cb = utilService.findArrayElement(scope.five11s, "Five11SignID", scope.selectedFive11SignID);
           if (!cb) {
             scope.selectedFive11 = "";
-            //scope.triggerHideMapData();
+            scope.triggerHideMapData();
             scope.triggerResetMap();
             return;
           }
