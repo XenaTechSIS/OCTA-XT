@@ -35,7 +35,7 @@
         scope.polygons = [];
         scope.markers = [];
 
-        scope.selectedFive11SignID = "";
+        scope.selectedFiveElevenSignID = "";
         scope.selectedFive11 = "";
         scope.selectedPosition = "";
 
@@ -155,7 +155,7 @@
               scope.polygons = [];
               scope.markers = [];
 
-              scope.selectedFive11SignID = "";
+              scope.selectedFiveElevenSignID = "";
               scope.selectedFive11 = "";
               scope.selectedPosition = "";
             }
@@ -165,7 +165,7 @@
         scope.getFive11Polygons = function (triggerMapUpdate) {
           scope.isBusyGetting = true;
           mapService.getFive11Polygons().then(function (rawFive11s) {
-            scope.isBusyGetting = false;            
+            scope.isBusyGetting = false;
             if (!rawFive11s) {
               toastr.error('Failed to retrieve five11 polygons', 'Error');
             } else {
@@ -177,8 +177,8 @@
                 buildMarkers(five11);
               });
 
-              if (scope.selectedFive11SignID) {
-                scope.selectedFive11 = utilService.findArrayElement(scope.five11s, "Five11SignID", scope.selectedFive11SignID);
+              if (scope.selectedFiveElevenSignID) {
+                scope.selectedFive11 = utilService.findArrayElement(scope.five11s, "Five11SignID", scope.selectedFiveElevenSignID);
                 scope.selectedPosition = scope.selectedFive11.PolygonData.Coordinates[0];
                 console.log(scope.selectedPosition);
               }
@@ -190,8 +190,8 @@
           });
         };
 
-        scope.setSelectedFive11 = function () {
-          var cb = utilService.findArrayElement(scope.five11s, "Five11SignID", scope.selectedFive11SignID);
+        scope.setSelectedFiveEleven = function () {
+          var cb = utilService.findArrayElement(scope.five11s, "Five11SignID", scope.selectedFiveElevenSignID);
           if (!cb) {
             scope.selectedFive11 = "";
             scope.triggerHideMapData();
@@ -210,22 +210,22 @@
 
         scope.setEdit = function () {
           scope.isEditing = true;
-          console.log("Edit five11 %s", scope.selectedFive11SignID);
-          scope.triggerSetEditMarker("five11Marker" + scope.selectedFive11SignID);
+          console.log("Edit five11 %s", scope.selectedFiveElevenSignID);
+          scope.triggerSetEditMarker("five11Marker" + scope.selectedFiveElevenSignID);
         };
 
         scope.cancelEdit = function () {
           scope.isEditing = false;
 
-          var cb = utilService.findArrayElement(scope.five11s, "Five11SignID", scope.selectedFive11SignID);
+          var cb = utilService.findArrayElement(scope.five11s, "Five11SignID", scope.selectedFiveElevenSignID);
           scope.selectedFive11 = angular.copy(cb);
-          console.log("Cancel edit five11 %s", scope.selectedFive11SignID);
+          console.log("Cancel edit five11 %s", scope.selectedFiveElevenSignID);
 
           scope.selectedPosition = scope.selectedFive11.PolygonData.Coordinates[0];
           console.log(scope.selectedPosition);
           scope.triggerSetMapLocation(scope.selectedPosition.lat, scope.selectedPosition.lng, selectedZoomFactor);
 
-          scope.triggerSetCancelEditMarker("five11Marker" + scope.selectedFive11SignID);
+          scope.triggerSetCancelEditMarker("five11Marker" + scope.selectedFiveElevenSignID);
           scope.triggerSetMarkerPosition(scope.selectedPosition.lat, scope.selectedPosition.lng);
 
         };
@@ -251,10 +251,10 @@
             scope.isBusySaving = false;
             if (result === false || result === "false") {
               console.error("Save Five 11");
-              toastr.error('Failed to save Five 11', 'Error');
+              toastr.error('Failed to save 511 Sign', 'Error');
             } else {
               console.log("Save Five 11 Success");
-              toastr.success('Five 11 Saved', 'Success');
+              toastr.success('511 Sign Saved', 'Success');
               scope.isEditing = false;
               scope.selectedFive11 = "";
               scope.selectedPosition = "";
@@ -268,19 +268,19 @@
         };
 
         scope.delete = function () {
-          if (confirm("Ok to delete this Five 11?")) {
+          if (confirm("Ok to delete this 511 Sign?")) {
             scope.isBusyDeleting = true;
             mapService.deleteFive11(scope.selectedFive11.Five11SignID).then(function (result) {
               scope.isBusyDeleting = false;
               scope.isEditing = false;
               if (result === false || result === "false") {
                 console.error("Delete Five11");
-                toastr.error('Failed to delete Five 11', 'Error');
+                toastr.error('Failed to delete 511 Sign', 'Error');
               } else {
                 console.log("Delete Five11 Success");
-                toastr.success('Five 11 Deleted', 'Success');
+                toastr.success('511 Sign Deleted', 'Success');
 
-                scope.selectedFive11SignID = "";
+                scope.selectedFiveElevenSignID = "";
                 scope.selectedFive11 = "";
                 scope.selectedPosition = "";
 
@@ -316,7 +316,7 @@
         scope.cancelAdd = function () {
           scope.isAdding = false;
 
-          scope.selectedFive11SignID = "";
+          scope.selectedFiveElevenSignID = "";
           scope.selectedFive11 = "";
           scope.selectedPosition = "";
 
@@ -336,13 +336,13 @@
             scope.isBusyAdding = false;
             if (result === false || result === "false") {
               console.error("Add Five11");
-              toastr.error('Failed to add Five 11', 'Error');
+              toastr.error('Failed to add 511 Sign', 'Error');
             } else {
               scope.isAdding = false;
               scope.selectedFive11 = "";
               scope.selectedPosition = "";
               console.log("Add Five11 Success");
-              toastr.success('Five 11 Added', 'Success');
+              toastr.success('511 Sign Added', 'Success');
               scope.triggerHideMapData();
               scope.getFive11Polygons(true);
             }
