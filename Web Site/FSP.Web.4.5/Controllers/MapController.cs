@@ -24,7 +24,7 @@ namespace FSP.Web.Controllers
         {
             return View();
         }
-       
+
         #region yards
 
         [HttpGet]
@@ -298,11 +298,28 @@ namespace FSP.Web.Controllers
                             {
                                 dbBeat.BeatSegments = data.BeatSegments;
 
+                                var rawSegments = service.RetreiveAllSegments();
+
                                 foreach (var segment in dbBeat.BeatSegments)
                                 {
-                                    segment.Color = data.BeatColor;
-                                    segment.LastUpdate = DateTime.Now.ToString();
-                                    segment.LastUpdateBy = HttpContext.User.Identity.Name;
+                                    try
+                                    {
+                                        var dbSegment = rawSegments.FirstOrDefault(p => p.BeatSegmentID == segment.BeatSegmentID);
+                                        if (dbSegment == null) continue;
+                                        dbSegment.Color = data.BeatColor;
+                                        dbSegment.LastUpdate = DateTime.Now.ToString();
+                                        dbSegment.LastUpdateBy = HttpContext.User.Identity.Name;
+                                        var updateSegmentResult = service.UpdateSegment(dbSegment);
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        Debug.WriteLine(e.Message);                                       
+                                    }
+
+                                    //segment.Color = data.BeatColor;
+                                    //segment.LastUpdate = DateTime.Now.ToString();
+                                    //segment.LastUpdateBy = HttpContext.User.Identity.Name;
+                                  
                                 }
                             }
                             else

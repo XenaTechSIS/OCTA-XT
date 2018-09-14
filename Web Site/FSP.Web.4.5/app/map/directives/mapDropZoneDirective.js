@@ -203,18 +203,31 @@
             };
 
             scope.setSelectedDropZone = function () {
-               console.log('Drop Zone ID %s', scope.selectedDropZoneID);
                var dz = utilService.findArrayElement(scope.dropZones, "DropZoneID", scope.selectedDropZoneID);
+               scope.triggerHideMapData();
+               scope.polygons = [];
+               scope.markers = [];
+
                if (!dz) {
                   scope.selectedDropZone = "";
-                  //scope.triggerHideMapData();
-                  scope.triggerResetMap();
+                  scope.dropZones.forEach(function (dropZone) {
+                     buildPolygons(dropZone);
+                     buildMarkers(dropZone);
+                  });
+                  var self = scope;
+                  setTimeout(function () {
+                     self.triggerDisplayMapData();
+                     self.triggerResetMap();
+                  }, 200);
                   return;
                }
                scope.selectedDropZone = angular.copy(dz);
-               console.log(scope.selectedDropZone);
+               buildPolygons(scope.selectedDropZone);
+               buildMarkers(scope.selectedDropZone);
+
                if (!scope.selectedDropZone.PolygonData) return;
                if (!scope.selectedDropZone.PolygonData.MiddleLat || !scope.selectedDropZone.PolygonData.MiddleLon) return;
+               scope.triggerDisplayMapData();
                scope.triggerSetMapLocation(scope.selectedDropZone.PolygonData.MiddleLat, scope.selectedDropZone.PolygonData.MiddleLon, selectedZoomFactor);
             };
 
