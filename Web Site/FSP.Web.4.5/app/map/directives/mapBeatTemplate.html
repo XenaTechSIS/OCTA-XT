@@ -160,7 +160,9 @@
             </h4>
          </div>
          <div class="modal-body">
-            <div class="segmentPickerList">
+            <segment-picker selected-beat="selectedBeat"
+               all-segments="allSegments"></segment-picker>
+            <!-- <div class="segmentPickerList">
                <input type="text"
                   ng-model="segmentNameFilter"
                   class="form-control"
@@ -174,7 +176,7 @@
                         checklist-value="segment.BeatSegmentID" /><span>{{segment.BeatSegmentNumber}}</span>
                   </label>
                </div>
-            </div>
+            </div> -->
          </div>
          <div class="modal-footer">
             <button type="button"
@@ -183,7 +185,7 @@
                Cancel
             </button>
             <button type="button"
-               ng-click="addSelectedSegments()"
+               ng-click="saveSelectedSegments()"
                class="btn btn-primary">
                Confirm
             </button>

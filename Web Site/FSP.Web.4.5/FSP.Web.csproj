@@ -209,6 +209,8 @@
     <Compile Include="Startup.cs" />
     <Content Include="app\app.js" />
     <Content Include="app\core\app.config.js" />
+    <Content Include="app\map\directives\beatSegmentPickerDirective.js" />
+    <Content Include="app\map\directives\beatSegmentPickerTemplate.html" />
     <Content Include="app\map\directives\map511Directive.js" />
     <Content Include="app\map\directives\mapCallBoxDirective.js" />
     <Content Include="app\map\directives\map511Template.html" />

@@ -40,7 +40,6 @@ namespace FSP.Web.Helpers
             //applicationPath = "http://" + HttpContext.Current.Request.Url.Authority;
             applicationPath = "http://" + HttpContext.Current.Request.Url.Authority + "/octafsp/";
 #endif
-
             var currentControllerName = (string)helper.ViewContext.RouteData.Values["controller"];
             var currentActionName = (string)helper.ViewContext.RouteData.Values["action"];
             
