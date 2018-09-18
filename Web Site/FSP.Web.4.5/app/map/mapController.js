@@ -117,8 +117,7 @@
          $scope.map.setZoom(zoom);
       }
 
-      function checkForAlarms() {
-         console.log("Checking for alarms...");
+      function checkForAlarms() {         
          trucksService.getTrucksRefreshRate().then(function (result) {
 
             if ($scope.haveAlarms === false && result === true) {
@@ -138,12 +137,9 @@
          });
       }
 
-      function getTruckRefreshRate() {
-         console.log("Getting refresh rate...");
-         trucksService.getTrucksRefreshRate().then(function (result) {
-            console.log(isNaN(result));
-            if (!isNaN(result)) refreshRate = Number(result);
-            console.log('Refresh rate %i', refreshRate);
+      function getTruckRefreshRate() {         
+         trucksService.getTrucksRefreshRate().then(function (result) {            
+            if (!isNaN(result)) refreshRate = Number(result);            
             getTrucks();
             $interval(function () {
                getTrucks();
@@ -176,7 +172,7 @@
 
          $scope.trucks = filteredTrucks;
 
-         console.log("%c Filtered Trucks %O", "color:red", $scope.trucks);
+         //console.log("%c Filtered Trucks %O", "color:red", $scope.trucks);
       }
 
       function getTrucks() {
@@ -284,7 +280,7 @@
          var truckMarker = utilService.findArrayElement($scope.truckMarkers, "id", truck.id);
 
          if (!truckMarker) {
-            console.log("New marker for truck-id: %s - %O", truck.id, truck);
+            //console.log("New marker for truck-id: %s - %O", truck.id, truck);
             truckMarker = new RichMarker({
                id: truck.id,
                map: $scope.map,
@@ -327,7 +323,7 @@
 
          //update info content with latest TRUCK values
          if ($scope.selectedTruckMarker && $scope.selectedTruckMarker.id === truckMarker.id && truckMarker.detailsContent) {
-            console.log("Infowindow requsted for: %s", truckMarker.id);
+            //console.log("Infowindow requsted for: %s", truckMarker.id);
             $scope.infowindow.setContent(truckMarker.detailsContent[0]);
          }
       }
@@ -365,12 +361,12 @@
       $scope.checkIfUserIsAdmin = function () {
          generalService.currentUserIsAdmin().then(function (result) {
             $scope.currentUserIsAdmin = result;
-            console.log('Current user is admin: %s', $scope.currentUserIsAdmin);
+            //console.log('Current user is admin: %s', $scope.currentUserIsAdmin);
          });
       };
 
       $scope.toggleAllFilters = function () {
-         console.log("Toggle all filters %s", $scope.allFiltersChecked);
+         //console.log("Toggle all filters %s", $scope.allFiltersChecked);
          $scope.onPatrolChecked = $scope.allFiltersChecked;
          $scope.driverLoggedOnChecked = $scope.allFiltersChecked;
          $scope.onAssistChecked = $scope.allFiltersChecked;
@@ -385,7 +381,7 @@
 
       //user actions
       $scope.follow = function (truckId) {
-         console.log("FOLLOW truck: %s", truckId);
+         //console.log("FOLLOW truck: %s", truckId);
          if (!truckId) return;
          $scope.truckToBeFollowed = utilService.findArrayElement($scope.trucks, "id", truckId);
          if (!$scope.truckToBeFollowed) return;
@@ -399,7 +395,7 @@
       };
 
       $scope.zoomTo = function (truckId) {
-         console.log("ZOOM truck: %s", truckId);
+         //console.log("ZOOM truck: %s", truckId);
          if (!truckId) return;
          var truckToBeZoomedTo = utilService.findArrayElement($scope.trucks, "id", truckId);
          if (!truckToBeZoomedTo) return;
@@ -408,7 +404,7 @@
       };
 
       $scope.filter = function () {
-         console.log("Filter request");
+         //console.log("Filter request");
          $scope.filterApplied = true;
          filterTrucks();
          drawTruckMarkers();
@@ -416,7 +412,7 @@
       };
 
       $scope.clearFilter = function () {
-         console.log("Clear Filter");
+         //console.log("Clear Filter");
 
          $scope.filterApplied = false;
          $scope.allFiltersChecked = true;
@@ -432,7 +428,7 @@
       };
 
       $('#segments').on('show.bs.collapse', function () {
-         console.log("segments visible");
+         //console.log("segments visible");
          $scope.hideMapData();
          $scope.resetMap();
          setTimeout(function () {
@@ -442,7 +438,7 @@
       });
 
       $('#segments').on('hidden.bs.collapse', function () {
-         console.log("segments invisible");
+         //console.log("segments invisible");
          $scope.segmentsVisible = false;
          $scope.$apply();
          $scope.hideMapData();
@@ -450,7 +446,7 @@
       });
 
       $('#beats').on('show.bs.collapse', function () {
-         console.log("beats visible");
+         //console.log("beats visible");
          $scope.hideMapData();
          $scope.resetMap();
          setTimeout(function () {
@@ -460,7 +456,7 @@
       });
 
       $('#beats').on('hidden.bs.collapse', function () {
-         console.log("beats invisible");
+         //console.log("beats invisible");
          $scope.beatsVisible = false;
          $scope.$apply();
          $scope.hideMapData();
@@ -468,7 +464,7 @@
       });
 
       $('#towTruckYards').on('show.bs.collapse', function () {
-         console.log("towTruckYards visible");
+         //console.log("towTruckYards visible");
          $scope.hideMapData();
          $scope.resetMap();
          setTimeout(function () {
@@ -478,7 +474,7 @@
       });
 
       $('#towTruckYards').on('hidden.bs.collapse', function () {
-         console.log("towTruckYards invisible");
+         //console.log("towTruckYards invisible");
          $scope.towTruckYardsVisible = false;
          $scope.$apply();
          $scope.hideMapData();
@@ -486,7 +482,7 @@
       });
 
       $('#dropZones').on('show.bs.collapse', function () {
-         console.log("dropZones visible");
+         //console.log("dropZones visible");
          $scope.hideMapData();
          $scope.resetMap();
          setTimeout(function () {
@@ -496,7 +492,7 @@
       });
 
       $('#dropZones').on('hidden.bs.collapse', function () {
-         console.log("dropZones invisible");
+         //console.log("dropZones invisible");
          $scope.dropZonesVisible = false;
          $scope.$apply();
          $scope.hideMapData();
@@ -504,7 +500,7 @@
       });
 
       $('#callBoxes').on('show.bs.collapse', function () {
-         console.log("callBoxes visible");
+         //console.log("callBoxes visible");
          $scope.hideMapData();
          $scope.resetMap();
          setTimeout(function () {
@@ -514,7 +510,7 @@
       });
 
       $('#callBoxes').on('hidden.bs.collapse', function () {
-         console.log("callBoxes invisible");
+         //console.log("callBoxes invisible");
          $scope.callBoxesVisible = false;
          $scope.$apply();
          $scope.hideMapData();
@@ -522,7 +518,7 @@
       });
 
       $('#511s').on('show.bs.collapse', function () {
-         console.log("511s visible");
+         //console.log("511s visible");
          $scope.hideMapData();
          $scope.resetMap();
          setTimeout(function () {
@@ -532,7 +528,7 @@
       });
 
       $('#511s').on('hidden.bs.collapse', function () {
-         console.log("511s invisible");
+         //console.log("511s invisible");
          $scope.Five11sVisible = false;
          $scope.$apply();
          $scope.hideMapData();
@@ -587,7 +583,7 @@
       }
 
       $scope.setEditPolygon = function (id) {
-         console.log("setEditPolygon");
+         //console.log("setEditPolygon");
          $scope.selectedPolygon = utilService.findArrayElement($scope.polygons, "id", id);
          if (!$scope.selectedPolygon) return;
 
@@ -647,8 +643,7 @@
          removeAllMapEvents();
       };
 
-      $scope.setNewPolygon = function (color) {
-         console.log("setNewPolygon");
+      $scope.setNewPolygon = function (color) {         
          $scope.hideMapData();
          $scope.selectedPolygon = {};
 
@@ -676,8 +671,7 @@
          $scope.polygons.push($scope.selectedPolygon);
       };
 
-      $scope.setNewMarker = function () {
-         console.log("setNewMarker");
+      $scope.setNewMarker = function () {         
          $scope.hideMapData();
 
          $scope.selectedMarker = new MarkerWithLabel({
@@ -701,8 +695,7 @@
          $scope.markers.push($scope.selectedMarker);
       };
 
-      $scope.makeAllPolygonsUneditable = function () {
-         console.log("makeAllPolygonsUneditable");
+      $scope.makeAllPolygonsUneditable = function () {         
          $scope.polygons.forEach(function (polygon) {
             polygon.setEditable(false);
          });

@@ -205,18 +205,31 @@
 
             scope.setSelectedYard = function () {
                var yard = utilService.findArrayElement(scope.yards, "YardID", scope.selectedYardID);
+               scope.triggerHideMapData();
+               scope.polygons = [];
+               scope.markers = [];
+
                if (!yard) {
                   scope.selectedYard = "";
-                  //scope.triggerHideMapData();
-                  scope.triggerResetMap();
+                  scope.yards.forEach(function (yard) {
+                     buildPolygons(yard);
+                     buildMarkers(yard);
+                  });
+                  var self = scope;
+                  setTimeout(function () {
+                     self.triggerDisplayMapData();
+                     self.triggerResetMap();
+                  }, 200);
                   return;
                }
-               scope.selectedYard = angular.copy(yard);
-               console.log(scope.selectedYard);
 
+               scope.selectedYard = angular.copy(yard);
+               buildPolygons(scope.selectedYard);
+               buildMarkers(scope.selectedYard);
+               scope.triggerDisplayMapData();
+               
                if (!scope.selectedYard.PolygonData) return;
                if (!scope.selectedYard.PolygonData.MiddleLat || !scope.selectedYard.PolygonData.MiddleLon) return;
-
                scope.triggerSetMapLocation(scope.selectedYard.PolygonData.MiddleLat, scope.selectedYard.PolygonData.MiddleLon, selectedZoomFactor);
             };
 
@@ -232,7 +245,17 @@
                scope.selectedYard = angular.copy(yard);
                console.log("Cancel edit %O", scope.selectedYard);
                scope.triggerSetCancelEditPolygon("yardPolygon" + scope.selectedYardID, "#000000");
+
+               scope.triggerHideMapData();
+               scope.polygons = [];
+               scope.markers = [];
+
+               buildPolygons(scope.selectedYard);
+               buildMarkers(scope.selectedYard);
+               scope.triggerDisplayMapData();           
+
                scope.triggerSetMapLocation(scope.selectedYard.PolygonData.MiddleLat, scope.selectedYard.PolygonData.MiddleLon, selectedZoomFactor);
+               
             };
 
             scope.save = function () {
@@ -242,7 +265,7 @@
                   scope.selectedYard.Position = JSON.stringify(polygonCoords);
                }
                scope.isBusySaving = true;
-               mapService.saveYard(scope.selectedYard).then(function (response) {                  
+               mapService.saveYard(scope.selectedYard).then(function (response) {
                   scope.isBusySaving = false;
                   if (response.result === false || response.result === "false") {
                      console.error("Save Yard");

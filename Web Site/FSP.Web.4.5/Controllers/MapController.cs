@@ -1,4 +1,5 @@
-﻿using FSP.Web.Helpers;
+﻿using FSP.Web.Filters;
+using FSP.Web.Helpers;
 using FSP.Web.TowTruckServiceRef;
 using Newtonsoft.Json;
 using System;
@@ -8,7 +9,6 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Web.Mvc;
-using FSP.Web.Filters;
 
 namespace FSP.Web.Controllers
 {
@@ -71,7 +71,9 @@ namespace FSP.Web.Controllers
                 }
 
                 if (data.YardID == Guid.Empty)
+                {
                     data.YardID = Guid.NewGuid();
+                }
 
                 using (var service = new TowTruckServiceClient())
                 {
@@ -188,17 +190,27 @@ namespace FSP.Web.Controllers
             try
             {
                 if (string.IsNullOrEmpty(data.BeatSegmentExtent))
+                {
                     return Json("false", JsonRequestBehavior.AllowGet);
+                }
 
                 if (data.BeatSegmentID == Guid.Empty)
+                {
                     data.BeatSegmentID = Guid.NewGuid();
+                }
 
                 data.LastUpdate = DateTime.Now.ToString(CultureInfo.InvariantCulture);
                 data.LastUpdateBy = HttpContext.User.Identity.Name;
                 if (string.IsNullOrEmpty(data.CHPDescription))
+                {
                     data.CHPDescription = "";
+                }
+
                 if (string.IsNullOrEmpty(data.CHPDescription2))
+                {
                     data.CHPDescription2 = "";
+                }
+
                 using (var service = new TowTruckServiceClient())
                 {
                     var updateResult = service.UpdateSegment(data);
@@ -305,7 +317,11 @@ namespace FSP.Web.Controllers
                                     try
                                     {
                                         var dbSegment = rawSegments.FirstOrDefault(p => p.BeatSegmentID == segment.BeatSegmentID);
-                                        if (dbSegment == null) continue;
+                                        if (dbSegment == null)
+                                        {
+                                            continue;
+                                        }
+
                                         dbSegment.Color = data.BeatColor;
                                         dbSegment.LastUpdate = DateTime.Now.ToString();
                                         dbSegment.LastUpdateBy = HttpContext.User.Identity.Name;
@@ -313,13 +329,8 @@ namespace FSP.Web.Controllers
                                     }
                                     catch (Exception e)
                                     {
-                                        Debug.WriteLine(e.Message);                                       
+                                        Debug.WriteLine(e.Message);
                                     }
-
-                                    //segment.Color = data.BeatColor;
-                                    //segment.LastUpdate = DateTime.Now.ToString();
-                                    //segment.LastUpdateBy = HttpContext.User.Identity.Name;
-                                  
                                 }
                             }
                             else
@@ -331,10 +342,14 @@ namespace FSP.Web.Controllers
                             dbBeat.LastUpdateBy = HttpContext.User.Identity.Name;
 
                             if (dbBeat.StartDate == DateTime.MinValue)
+                            {
                                 dbBeat.StartDate = DateTime.Now;
+                            }
 
                             if (dbBeat.EndDate == DateTime.MinValue)
+                            {
                                 dbBeat.EndDate = DateTime.Now;
+                            }
 
                             var updateResult = service.UpdateBeat(dbBeat);
 
@@ -351,7 +366,9 @@ namespace FSP.Web.Controllers
                     //new beat
 
                     if (data.BeatID == Guid.Empty)
-                        data.BeatID = Guid.NewGuid();
+                    {
+                        data.BeatID = Guid.NewGuid();                                               
+                    }
 
                     data.StartDate = DateTime.Now;
                     data.EndDate = DateTime.Now;
@@ -449,7 +466,9 @@ namespace FSP.Web.Controllers
                 }
 
                 if (data.CallBoxID == Guid.Empty)
+                {
                     data.CallBoxID = Guid.NewGuid();
+                }
 
                 using (var service = new TowTruckServiceClient())
                 {
@@ -533,7 +552,9 @@ namespace FSP.Web.Controllers
                 }
 
                 if (data.Five11SignID == Guid.Empty)
+                {
                     data.Five11SignID = Guid.NewGuid();
+                }
 
                 using (var service = new TowTruckServiceClient())
                 {
@@ -618,7 +639,9 @@ namespace FSP.Web.Controllers
                 }
 
                 if (data.DropZoneID == Guid.Empty)
+                {
                     data.DropZoneID = Guid.NewGuid();
+                }
 
                 using (var service = new TowTruckServiceClient())
                 {
@@ -664,8 +687,12 @@ namespace FSP.Web.Controllers
         {
             get
             {
-                if (!this.Coordinates.Any()) return 0;
-                return this.Coordinates.Max(p => p.lat);
+                if (!Coordinates.Any())
+                {
+                    return 0;
+                }
+
+                return Coordinates.Max(p => p.lat);
             }
         }
 
@@ -673,8 +700,12 @@ namespace FSP.Web.Controllers
         {
             get
             {
-                if (!this.Coordinates.Any()) return 0;
-                return this.Coordinates.Min(p => p.lat);
+                if (!Coordinates.Any())
+                {
+                    return 0;
+                }
+
+                return Coordinates.Min(p => p.lat);
             }
         }
 
@@ -682,8 +713,12 @@ namespace FSP.Web.Controllers
         {
             get
             {
-                if (!this.Coordinates.Any()) return 0;
-                return this.Coordinates.Max(p => p.lng);
+                if (!Coordinates.Any())
+                {
+                    return 0;
+                }
+
+                return Coordinates.Max(p => p.lng);
             }
         }
 
@@ -691,19 +726,23 @@ namespace FSP.Web.Controllers
         {
             get
             {
-                if (!this.Coordinates.Any()) return 0;
-                return this.Coordinates.Min(p => p.lng);
+                if (!Coordinates.Any())
+                {
+                    return 0;
+                }
+
+                return Coordinates.Min(p => p.lng);
             }
         }
 
         public double MiddleLat
         {
-            get { return this.MinLat + ((this.MaxLat - this.MinLat) / 2); }
+            get { return MinLat + ((MaxLat - MinLat) / 2); }
         }
 
         public double MiddleLon
         {
-            get { return this.MinLon + ((this.MaxLon - this.MinLon) / 2); }
+            get { return MinLon + ((MaxLon - MinLon) / 2); }
         }
 
         private readonly string _beatExtent;
@@ -711,7 +750,7 @@ namespace FSP.Web.Controllers
         public PolygonData(string beatExtent)
         {
             _beatExtent = beatExtent;
-            this.Coordinates = this.BuildCoordinates();
+            Coordinates = BuildCoordinates();
         }
 
         private List<Coordinate> BuildCoordinates()
@@ -720,8 +759,8 @@ namespace FSP.Web.Controllers
 
             try
             {
-                Debug.WriteLine(this._beatExtent);
-                returnList = JsonConvert.DeserializeObject<List<Coordinate>>(this._beatExtent);
+                Debug.WriteLine(_beatExtent);
+                returnList = JsonConvert.DeserializeObject<List<Coordinate>>(_beatExtent);
             }
             catch (Exception e)
             {

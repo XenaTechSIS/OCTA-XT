@@ -41,10 +41,10 @@
                content += "<tr>";
                content += "<td>Segment Number/Name:</td>";
                content += "<td><strong>" + segment.BeatSegmentNumber + "</strong></td>";
-               content += "</tr>";              
+               content += "</tr>";
                content += "<td>CHP Description:</td>";
                content += "<td><strong>" + segment.CHPDescription + "</strong></td>";
-               content += "</tr>";               
+               content += "</tr>";
                content += "</table>";
                return content;
             }
@@ -247,10 +247,21 @@
                scope.isEditing = false;
                console.log("Cancel edit segment %s", scope.selectedBeatSegmentID);
                var seg = utilService.findArrayElement(scope.segments, "BeatSegmentID", scope.selectedBeatSegmentID);
+               
                scope.selectedBeatSegment = angular.copy(seg);
                console.log("Cancel edit %O", scope.selectedBeatSegment);
+               
                scope.triggerSetCancelEditPolygon("segmentPolygon" + scope.selectedBeatSegment.BeatSegmentID, scope.selectedBeatSegment.Color);
-               scope.triggerSetMapLocation(scope.selectedBeatSegment.PolygonData.MiddleLat, scope.selectedBeatSegment.PolygonData.MiddleLon, selectedZoomFactor);
+
+               scope.triggerHideMapData();
+               scope.polygons = [];
+               scope.markers = [];
+
+               buildPolygons(scope.selectedBeatSegment);
+               buildMarkers(scope.selectedBeatSegment);
+               scope.triggerDisplayMapData();
+               setSegmentMapLocation(scope.selectedBeatSegment);
+
             };
 
             scope.save = function () {

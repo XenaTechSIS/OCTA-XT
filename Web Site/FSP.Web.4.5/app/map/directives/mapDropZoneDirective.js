@@ -224,10 +224,10 @@
                scope.selectedDropZone = angular.copy(dz);
                buildPolygons(scope.selectedDropZone);
                buildMarkers(scope.selectedDropZone);
+               scope.triggerDisplayMapData();
 
                if (!scope.selectedDropZone.PolygonData) return;
-               if (!scope.selectedDropZone.PolygonData.MiddleLat || !scope.selectedDropZone.PolygonData.MiddleLon) return;
-               scope.triggerDisplayMapData();
+               if (!scope.selectedDropZone.PolygonData.MiddleLat || !scope.selectedDropZone.PolygonData.MiddleLon) return;              
                scope.triggerSetMapLocation(scope.selectedDropZone.PolygonData.MiddleLat, scope.selectedDropZone.PolygonData.MiddleLon, selectedZoomFactor);
             };
 
@@ -245,6 +245,14 @@
                scope.selectedDropZone = angular.copy(dz);
                console.log("Cancel edit %O", scope.selectedDropZone);
                scope.triggerSetCancelEditPolygon("dropZonePolygon" + scope.selectedDropZone.DropZoneID, scope.selectedDropZone.Color);
+
+               scope.triggerHideMapData();
+               scope.polygons = [];
+               scope.markers = [];
+
+               buildPolygons(scope.selectedDropZone);
+               buildMarkers(scope.selectedDropZone);
+               scope.triggerDisplayMapData();               
                scope.triggerSetMapLocation(scope.selectedDropZone.PolygonData.MiddleLat, scope.selectedDropZone.PolygonData.MiddleLon, selectedZoomFactor);
             };
 
