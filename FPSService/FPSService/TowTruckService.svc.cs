@@ -759,8 +759,7 @@ namespace FPSService
             beat.StartDate = DateTime.Now;
             beat.EndDate = DateTime.Now.AddYears(25);
             beat.FreewayID = 0;
-
-            string extstring = "";
+            
             SQL.SQLCode sql = new SQL.SQLCode();
             //List<latLng> ext = JsonConvert.DeserializeObject<List<latLng>>(beat.BeatExtent);
             //for (int i = 0; i < ext.Count; i++)
