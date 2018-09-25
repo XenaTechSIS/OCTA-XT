@@ -73,10 +73,10 @@
                      var beatSegmentPolygon = new google.maps.Polygon({
                         id: "beatSegmentPolygon_" + beat.BeatID,
                         paths: segmentLatLng,
-                        strokeColor: beatSegment.Color || "#000000",
+                        strokeColor: beat.BeatColor || "#000000",
                         strokeOpacity: 0.8,
                         strokeWeight: 2,
-                        fillColor: beatSegment.Color || "#000000",
+                        fillColor: beat.BeatColor || "#000000",
                         fillOpacity: 0.35,
                         editable: false
                      });
@@ -109,7 +109,7 @@
                var segmentIndex = 0;
                if (numberOfSegments > 2)
                   segmentIndex = Math.ceil(numberOfSegments / 2);
-                  
+
                do {
                   var segment = beat.BeatSegments[segmentIndex];
                   if (!segment.PolygonData) return beatCenter;
@@ -124,7 +124,7 @@
                }
                while (centerCoordExists(beatCenter));
 
-               scope.beatCenterCoords.push(beatCenter);            
+               scope.beatCenterCoords.push(beatCenter);
                return beatCenter;
             }
 
@@ -212,17 +212,23 @@
             };
 
             scope.$watch("visible", function (isVisible) {
-               if (isVisible !== undefined) {
-                  if (isVisible) {
-                     if (scope.polygons.length === 0) {
-                        scope.getBeatPolygons(true);
-                     } else {
-                        scope.triggerDisplayMapData();
-                     }
+               if (isVisible === undefined) return;
+               console.log('isVisible: %s', isVisible);
+               if (isVisible === true) {
+                  if (scope.polygons.length === 0) {
+                     scope.getBeatPolygons(true);
                   } else {
-                     scope.selectedBeat = "";
+                     scope.triggerDisplayMapData();
                   }
+               } else {
+                  scope.isAdding = false;
+                  scope.isEditing = false;
+                  scope.selectedBeatID = "";
+                  scope.selectedBeat = "";
+                  scope.selectedPolygon = "";
+                  scope.polygons = [];
                }
+
             });
 
             scope.prepareToAddSegments = function () {
@@ -233,7 +239,7 @@
                $("#segmentPickerModal").modal("show");
             };
 
-            scope.saveSelectedSegments = function () {             
+            scope.saveSelectedSegments = function () {
                scope.selectedBeat.BeatSegments = [];
                scope.selectedBeat.selectedSegmentIds.forEach(function (segmentId) {
                   var segment = utilService.findArrayElement(scope.allSegments, "BeatSegmentID", segmentId);
@@ -417,7 +423,7 @@
                      toastr.error('Failed to add Beat', 'Error');
                   } else {
                      console.log("Add Beat Success");
-                     toastr.success('Beat Added', 'Success');                    
+                     toastr.success('Beat Added', 'Success');
                      scope.selectedBeat = "";
                      scope.getBeatPolygons(true);
                   }

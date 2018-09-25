@@ -309,29 +309,28 @@ namespace FSP.Web.Controllers
                             if (data.BeatSegments != null)
                             {
                                 dbBeat.BeatSegments = data.BeatSegments;
+                                //var rawSegments = service.RetreiveAllSegments();
 
-                                var rawSegments = service.RetreiveAllSegments();
+                                //foreach (var segment in dbBeat.BeatSegments)
+                                //{
+                                //    try
+                                //    {
+                                //        var dbSegment = rawSegments.FirstOrDefault(p => p.BeatSegmentID == segment.BeatSegmentID);
+                                //        if (dbSegment == null)
+                                //        {
+                                //            continue;
+                                //        }
 
-                                foreach (var segment in dbBeat.BeatSegments)
-                                {
-                                    try
-                                    {
-                                        var dbSegment = rawSegments.FirstOrDefault(p => p.BeatSegmentID == segment.BeatSegmentID);
-                                        if (dbSegment == null)
-                                        {
-                                            continue;
-                                        }
-
-                                        dbSegment.Color = data.BeatColor;
-                                        dbSegment.LastUpdate = DateTime.Now.ToString();
-                                        dbSegment.LastUpdateBy = HttpContext.User.Identity.Name;
-                                        var updateSegmentResult = service.UpdateSegment(dbSegment);
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        Debug.WriteLine(e.Message);
-                                    }
-                                }
+                                //        dbSegment.Color = data.BeatColor;
+                                //        dbSegment.LastUpdate = DateTime.Now.ToString();
+                                //        dbSegment.LastUpdateBy = HttpContext.User.Identity.Name;
+                                //        var updateSegmentResult = service.UpdateSegment(dbSegment);
+                                //    }
+                                //    catch (Exception e)
+                                //    {
+                                //        Debug.WriteLine(e.Message);
+                                //    }
+                                //}
                             }
                             else
                             {
