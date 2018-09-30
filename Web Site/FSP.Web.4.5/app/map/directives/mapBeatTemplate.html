@@ -54,7 +54,7 @@
       </div>
       <div>
          Segments ({{selectedBeat.BeatSegments.length}})
-         <button ng-show="isEditing"
+         <button ng-show="isEditing || isAdding"
             ng-click="prepareToAddSegments()"
             class="btn btn-primary btn-sm">
             <i class="fa fa-pencil"></i> Edit Segment List
@@ -79,7 +79,7 @@
          </button>
          <button ng-show="isEditing"
             ng-click="save()"
-            ng-disabled="isBusySaving || isBusyDeleting || pageConfig.beatForm.$invalid"
+            ng-disabled="isBusySaving || isBusyDeleting || pageConfig.beatForm.$invalid || !selectedBeat.selectedSegmentIds || selectedBeat.selectedSegmentIds.length === 0"
             class="btn btn-primary btn-sm">
             <i class="fa fa-check"
                ng-hide="isBusySaving">
@@ -118,7 +118,7 @@
          </button>
          <button ng-show="!isEditing && isAdding"
             ng-click="add()"
-            ng-disabled="isBusyAdding || pageConfig.beatForm.$invalid"
+            ng-disabled="isBusyAdding || pageConfig.beatForm.$invalid || !selectedBeat.selectedSegmentIds || selectedBeat.selectedSegmentIds.length === 0"
             class="btn btn-success btn-sm">
             <i class="fa fa-check"
                ng-hide="isBusyAdding">

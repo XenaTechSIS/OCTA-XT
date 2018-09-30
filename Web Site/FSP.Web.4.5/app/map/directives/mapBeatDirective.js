@@ -107,6 +107,7 @@
                };
 
                var segmentIndex = 0;
+               var coordIndex = 0;
                if (numberOfSegments > 2)
                   segmentIndex = Math.ceil(numberOfSegments / 2);
 
@@ -117,10 +118,13 @@
                   if (!segmentPolygon.Coordinates) return beatCenter;
                   if (segmentPolygon.Coordinates.length === 0) return beatCenter;
 
-                  beatCenter = segmentPolygon.Coordinates[0];
+                  beatCenter = segmentPolygon.Coordinates[coordIndex];
                   segmentIndex++;
+                  coordIndex++;
                   if (segmentIndex > numberOfSegments - 1)
                      segmentIndex = 0;
+                  if (coordIndex > segmentPolygon.Coordinates.length - 1)
+                     coordIndex = 0;
                }
                while (centerCoordExists(beatCenter));
 
@@ -286,6 +290,7 @@
             };
 
             scope.setSelectedBeat = function () {
+               scope.beatCenterCoords = [];
                var beat = utilService.findArrayElement(scope.beats, "BeatID", scope.selectedBeatID);
                scope.triggerHideMapData();
                scope.polygons = [];
@@ -310,7 +315,6 @@
                buildMarkers(scope.selectedBeat);
                scope.triggerDisplayMapData();
                setBeatMapLocation(scope.selectedBeat);
-
             };
 
             scope.setEdit = function () {
@@ -319,11 +323,10 @@
             };
 
             scope.cancelEdit = function () {
+               scope.beatCenterCoords = [];
                scope.isEditing = false;
-               console.log("Cancel edit beat %s", scope.selectedBeatID);
                var beat = utilService.findArrayElement(scope.beats, "BeatID", scope.selectedBeatID);
                scope.selectedBeat = angular.copy(beat);
-               console.log('Beat Segments %O', scope.selectedBeat.BeatSegments);
                scope.selectedBeat.selectedSegmentIds = [];
                setBeatMapLocation(scope.selectedBeat);
             };
@@ -333,6 +336,7 @@
                scope.isBusySaving = true;
                mapService.saveBeat(scope.selectedBeat).then(function (response) {
                   scope.isBusySaving = false;
+                  console.log('Save Beat result: %O', response);
                   if (response.result === false || response.result === "false") {
                      console.error("Save Beat");
                      toastr.error('Failed to save Beat', 'Error');
@@ -391,10 +395,34 @@
                   BeatDescription: "",
                   BeatSegments: [],
                   BeatColor: "#000000",
-                  BeatExtent: ""
+                  BeatExtent: "",
+                  selectedSegmentIds: []
                };
                scope.isAdding = true;
                scope.triggerSetNewPolygon(scope.selectedBeat.BeatColor);
+            };
+
+            scope.add = function () {
+               console.log("Adding Beat...");
+               scope.isBusyAdding = true;
+               mapService.saveBeat(scope.selectedBeat).then(function (response) {
+                  scope.isBusyAdding = false;
+                  scope.isAdding = false;
+                  console.log('Add Beat result: %O', response);
+                  scope.selectedBeatID = response.record.BeatID;
+                  scope.triggerMakeAllPolygonsUneditable();
+                  scope.triggerHideMapData();
+                  if (response.result === false || response.result === "false") {
+                     console.error("Add Beat");
+                     toastr.error('Failed to add Beat', 'Error');
+                  } else {
+                     console.log("Add Beat Success");
+                     toastr.success('Beat Added', 'Success');
+                     scope.selectedBeat.selectedSegmentIds = [];
+                     scope.selectedBeatID = "";
+                     scope.getBeatPolygons(true);
+                  }
+               });
             };
 
             scope.cancelAdd = function () {
@@ -406,28 +434,6 @@
 
                scope.triggerHideMapData();
                scope.triggerDisplayMapData();
-            };
-
-            scope.add = function () {
-               console.log("Adding Beat...");
-               scope.isBusyAdding = true;
-               mapService.saveBeat(scope.selectedBeat).then(function (response) {
-                  scope.isBusyAdding = false;
-                  scope.isAdding = false;
-                  console.log(response);
-                  scope.selectedBeatID = response.record.BeatID;
-                  scope.triggerMakeAllPolygonsUneditable();
-                  scope.triggerHideMapData();
-                  if (response.result === false || response.result === "false") {
-                     console.error("Add Beat");
-                     toastr.error('Failed to add Beat', 'Error');
-                  } else {
-                     console.log("Add Beat Success");
-                     toastr.success('Beat Added', 'Success');
-                     scope.selectedBeat = "";
-                     scope.getBeatPolygons(true);
-                  }
-               });
             };
 
             scope.getSegments = function () {

@@ -1,20 +1,23 @@
-﻿using FSP.Web.Filters;
-using FSP.Web.Helpers;
-using FSP.Web.TowTruckServiceRef;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Web.Mvc;
+using FSP.Web.Filters;
+using FSP.Web.Helpers;
+using FSP.Web.TowTruckServiceRef;
+using Newtonsoft.Json;
 
 namespace FSP.Web.Controllers
 {
     [CustomAuthorization]
     public class MapController : MyController
     {
+        private const string CacheKeyBeats = "MapBeats";
+        private const string CacheKeySegments = "MapSegments";
+        private const string CacheKeySegments2 = "MapSegments2";
+
         public ActionResult Index()
         {
             return View();
@@ -121,26 +124,33 @@ namespace FSP.Web.Controllers
         {
             try
             {
-                Util.LogInfo("segment requested");
                 using (var service = new TowTruckServiceClient())
                 {
-                    //var segments = service.RetreiveAllSegments().OrderBy(p => p.BeatSegmentNumber).ToList();
+                    var segments = Util.GetFromCache<List<SegmentViewModel>>(CacheKeySegments2);
+
+                    if (segments?.Any() == true)
+                    {
+                        var jsonResult1 = Json(segments, JsonRequestBehavior.AllowGet);
+                        jsonResult1.MaxJsonLength = int.MaxValue;
+                        return jsonResult1;
+                    }
 
                     var rawSegments = service.RetreiveAllSegments();
-                    var segments = rawSegments.OrderBy(p => p.BeatSegmentNumber).ToList().Select(s => new
+                    segments = rawSegments.OrderBy(p => p.BeatSegmentNumber).ToList().Select(s => new SegmentViewModel
                     {
-                        s.BeatSegmentID,
-                        s.BeatSegmentNumber,
-                        s.BeatSegmentDescription,
-                        s.CHPDescription,
-                        s.CHPDescription2,
-                        s.Color,
-                        s.BeatSegmentExtent
+                        BeatSegmentID = s.BeatSegmentID,
+                        BeatSegmentNumber = s.BeatSegmentNumber,
+                        BeatSegmentDescription = s.BeatSegmentDescription,
+                        CHPDescription = s.CHPDescription,
+                        CHPDescription2 = s.CHPDescription2,
+                        Color = s.Color,
+                        BeatSegmentExtent = s.BeatSegmentExtent
                     }).ToList();
+
+                    Util.AddToCache(CacheKeySegments2, segments, DateTime.Today.AddYears(1));
 
                     var jsonResult = Json(segments, JsonRequestBehavior.AllowGet);
                     jsonResult.MaxJsonLength = int.MaxValue;
-                    Util.LogInfo("segments polygons returned");
                     return jsonResult;
                 }
             }
@@ -156,24 +166,35 @@ namespace FSP.Web.Controllers
         {
             try
             {
-                Util.LogInfo("segment polygons requested");
                 using (var service = new TowTruckServiceClient())
                 {
-                    var rawSegments = service.RetreiveAllSegments();
-                    var segments = rawSegments.OrderBy(p => p.BeatSegmentNumber).ToList().Select(s => new
+
+                    var segments = Util.GetFromCache<List<SegmentViewModel>>(CacheKeySegments);
+
+                    if (segments?.Any() == true)
                     {
-                        s.BeatSegmentID,
-                        s.BeatSegmentNumber,
-                        s.BeatSegmentDescription,
-                        s.CHPDescription,
-                        s.CHPDescription2,
-                        s.Color,
+                        var jsonResult1 = Json(segments, JsonRequestBehavior.AllowGet);
+                        jsonResult1.MaxJsonLength = int.MaxValue;
+                        return jsonResult1;
+                    }
+
+                    var rawSegments = service.RetreiveAllSegments();
+                    segments = rawSegments.OrderBy(p => p.BeatSegmentNumber).ToList().Select(s => new SegmentViewModel
+                    {
+                        BeatSegmentID = s.BeatSegmentID,
+                        BeatSegmentNumber = s.BeatSegmentNumber,
+                        BeatSegmentDescription = s.BeatSegmentDescription,
+                        CHPDescription = s.CHPDescription,
+                        CHPDescription2 = s.CHPDescription2,
+                        Color = s.Color,
                         PolygonData = new PolygonData(s.BeatSegmentExtent)
                     }).ToList();
 
+                    Util.AddToCache(CacheKeySegments, segments, DateTime.Today.AddYears(1));
+
+
                     var jsonResult = Json(segments, JsonRequestBehavior.AllowGet);
                     jsonResult.MaxJsonLength = int.MaxValue;
-                    Util.LogInfo("segments polygons returned");
                     return jsonResult;
                 }
             }
@@ -219,6 +240,8 @@ namespace FSP.Web.Controllers
                         result = updateResult == "success",
                         record = data
                     };
+                    Util.RemoveFromCache(CacheKeySegments);
+                    Util.RemoveFromCache(CacheKeySegments2);
                     return Json(response, JsonRequestBehavior.AllowGet);
                 }
             }
@@ -237,6 +260,8 @@ namespace FSP.Web.Controllers
                 using (var service = new TowTruckServiceClient())
                 {
                     var deleteSResult = service.DeleteSegment(id);
+                    Util.RemoveFromCache(CacheKeySegments);
+                    Util.RemoveFromCache(CacheKeySegments2);
                     return Json(deleteSResult == "success", JsonRequestBehavior.AllowGet);
                 }
             }
@@ -257,29 +282,38 @@ namespace FSP.Web.Controllers
         {
             try
             {
-                Util.LogInfo("beat polygons requested");
                 using (var service = new TowTruckServiceClient())
                 {
-                    var rawBeats = service.RetreiveAllBeats();
-                    var beats = rawBeats.Where(p => p.Active).OrderBy(p => p.BeatNumber).ToList().Select(s => new
+                    var beats = Util.GetFromCache<List<BeatViewModel>>(CacheKeyBeats);
+
+                    if (beats?.Any() == true)
                     {
-                        s.BeatID,
-                        s.BeatDescription,
-                        s.BeatNumber,
-                        s.BeatColor,
-                        BeatSegments = s.BeatSegments.OrderBy(p => p.BeatSegmentNumber).Select(seg => new
+                        var jsonResult1 = Json(beats, JsonRequestBehavior.AllowGet);
+                        jsonResult1.MaxJsonLength = int.MaxValue;
+                        return jsonResult1;
+                    }
+
+                    var rawBeats = service.RetreiveAllBeats();
+                    beats = rawBeats.Where(p => p.Active).OrderBy(p => p.BeatNumber).ToList().Select(s => new BeatViewModel
+                    {
+                        BeatID = s.BeatID,
+                        BeatDescription = s.BeatDescription,
+                        BeatNumber = s.BeatNumber,
+                        BeatColor = s.BeatColor,
+                        BeatSegments = s.BeatSegments.OrderBy(p => p.BeatSegmentNumber).Select(seg => new SegmentViewModel
                         {
-                            seg.BeatSegmentID,
-                            seg.BeatSegmentNumber,
-                            seg.BeatSegmentDescription,
-                            seg.Color,
+                            BeatSegmentID = seg.BeatSegmentID,
+                            BeatSegmentNumber = seg.BeatSegmentNumber,
+                            BeatSegmentDescription = seg.BeatSegmentDescription,
+                            Color = seg.Color,
                             PolygonData = new PolygonData(seg.BeatSegmentExtent)
                         }).ToList()
                     }).ToList();
 
+                    Util.AddToCache(CacheKeyBeats, beats, DateTime.Today.AddYears(1));
+
                     var jsonResult = Json(beats, JsonRequestBehavior.AllowGet);
                     jsonResult.MaxJsonLength = int.MaxValue;
-                    Util.LogInfo("beat polygons returned");
                     return jsonResult;
                 }
             }
@@ -366,7 +400,7 @@ namespace FSP.Web.Controllers
 
                     if (data.BeatID == Guid.Empty)
                     {
-                        data.BeatID = Guid.NewGuid();                                               
+                        data.BeatID = Guid.NewGuid();
                     }
 
                     data.StartDate = DateTime.Now;
@@ -386,6 +420,8 @@ namespace FSP.Web.Controllers
                         record = newBeat
                     };
 
+                    Util.RemoveFromCache(CacheKeyBeats);
+
                     return Json(resp, JsonRequestBehavior.AllowGet);
                 }
             }
@@ -404,6 +440,7 @@ namespace FSP.Web.Controllers
                 using (var service = new TowTruckServiceClient())
                 {
                     var deleteResult = service.DeleteBeat(id);
+                    Util.RemoveFromCache(CacheKeyBeats);
                     return Json(deleteResult == "success", JsonRequestBehavior.AllowGet);
                 }
             }
@@ -774,5 +811,26 @@ namespace FSP.Web.Controllers
     {
         public double lat { get; set; }
         public double lng { get; set; }
+    }
+
+    public class BeatViewModel
+    {
+        public Guid BeatID { get; set; }
+        public string BeatDescription { get; set; }
+        public string BeatNumber { get; set; }
+        public string BeatColor { get; set; }
+        public List<SegmentViewModel> BeatSegments { get; set; }
+    }
+
+    public class SegmentViewModel
+    {
+        public Guid BeatSegmentID { get; set; }
+        public string BeatSegmentNumber { get; set; }
+        public string BeatSegmentDescription { get; set; }
+        public string CHPDescription { get; set; }
+        public string CHPDescription2 { get; set; }
+        public string Color { get; set; }
+        public string BeatSegmentExtent { get; set; }
+        public PolygonData PolygonData { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
@@ -8,6 +9,7 @@ using System.Net.Mail;
 using System.Reflection;
 using System.Threading;
 using System.Web;
+using System.Web.Caching;
 using System.Web.Security;
 using FSP.Domain.Model;
 using FSP.Web.Models;
@@ -245,6 +247,35 @@ namespace FSP.Web.Helpers
             var messageEntry = $"{DateTime.UtcNow} {message}";
             var logFilePath = LogsPath + "\\Errors.txt";
             WriteToLog(messageEntry, logFilePath);
+        }
+
+        public static T GetFromCache<T>(string key)
+        {
+            if (HttpContext.Current == null) return default(T);
+            if (HttpContext.Current.Cache[key] == null) return default(T);
+            return (T)HttpContext.Current.Cache[key];
+        }
+
+        public static void AddToCache<T>(string key, T value, DateTime expirationDate)
+        {
+            HttpContext.Current.Cache.Insert(key, value, null, expirationDate, Cache.NoSlidingExpiration, CacheItemPriority.High, null);
+        }
+
+        public static void RemoveFromCache(string key)
+        {
+            HttpContext.Current.Cache.Remove(key);
+        }
+
+        public static void RemoveFromCacheWhenKeyStartsWith(string partialKey)
+        {
+            foreach (DictionaryEntry cacheEntry in HttpContext.Current.Cache)
+            {
+                if (cacheEntry.Key.ToString().StartsWith(partialKey))
+                {                   
+                    HttpContext.Current.Cache.Remove(cacheEntry.Key.ToString());
+                }
+            }
+           
         }
     }
 }
