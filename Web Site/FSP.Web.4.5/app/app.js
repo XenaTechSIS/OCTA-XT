@@ -7,7 +7,8 @@
         'checklist-model',
         'ngMask',
         'octaApp.filters',
-        'octaApp.map'        
+        'octaApp.map',
+        'octaApp.incident'
     ]);
 
 $(function () {

@@ -1,0 +1,12 @@
+﻿.dispatch-comments {
+    max-width: 200px;
+    overflow: auto;
+}
+
+.incident-page-header-container {
+    font-size: 40px;
+}
+
+.incident-button-group-container {
+    text-align: center;
+}

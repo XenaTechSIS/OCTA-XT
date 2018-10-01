@@ -1,0 +1,86 @@
+﻿<h3>
+   {{title}}
+</h3>
+<table class="table table-striped table-hover table-bordered">
+   <thead>
+      <tr class="idosomething">
+         <th class="nowrap"
+            ng-show="columns[0].show"
+            ng-click="updateSortColumn('BeatNumber')">
+            Beat #
+         </th>
+         <th class="nowrap"
+            ng-show="columns[1].show"
+            ng-click="updateSortColumn('TruckNumber')">
+            Truck #
+         </th>
+         <th class="nowrap"
+            ng-show="columns[2].show"
+            ng-click="updateSortColumn('DriverName')">
+            Driver
+         </th>
+         <th class="nowrap"
+            ng-show="columns[3].show"
+            ng-click="updateSortColumn('DispatchComments')">
+            Dispatch Summary Message
+         </th>
+         <th class="nowrap"
+            ng-show="columns[4].show"
+            ng-click="updateSortColumn('Timestamp')">
+            Time
+         </th>
+         <th class="nowrap"
+            ng-show="columns[5].show"
+            ng-click="updateSortColumn('DispatchNumber')">
+            Dispatch #
+         </th>
+         <th class="nowrap"
+            ng-show="columns[6].show"
+            ng-click="updateSortColumn('State')">
+            State
+         </th>
+         <th class="nowrap"
+            ng-show="columns[7].show"
+            ng-click="updateSortColumn('ContractorName')">
+            Contractor
+         </th>
+         <th class="nowrap"
+            ng-show="columns[8].show"
+            ng-click="updateSortColumn('AssistNumber')">
+            Assist #
+         </th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr ng-repeat="incident in incidents|orderBy:sortColumn:predicate">
+         <td ng-show="columns[0].show">
+            {{incident.BeatNumber}}
+         </td>
+         <td ng-show="columns[1].show">
+            {{incident.TruckNumber}}
+         </td>
+         <td ng-show="columns[2].show">
+            {{incident.DriverName}}
+         </td>
+         <td ng-show="columns[3].show"
+            class="dispatch-comments">
+            {{incident.DispatchComments}}
+         </td>
+         <td ng-show="columns[4].show">
+            {{incident.Timestamp}}
+         </td>
+         <td ng-show="columns[5].show">
+            {{incident.DispatchNumber}}
+         </td>
+         <td ng-show="columns[6].show">
+            {{incident.State}}
+         </td>
+         <td ng-show="columns[7].show">
+            {{incident.ContractorName}}
+         </td>
+         <td ng-show="columns[8].show">
+            {{incident.AssistNumber}}
+         </td>
+      </tr>
+   </tbody>
+</table>

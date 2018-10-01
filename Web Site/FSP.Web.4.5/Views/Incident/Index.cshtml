@@ -1,112 +1,123 @@
 ﻿@{
     ViewBag.Title = "LATATrax | Incidents";
 }
-<div class="row">
-    <div class="col-sm-12">
-        <a class="btn btn-info" data-bind="click: showConfig">Column Configuration</a>
+
+<link href="~/Content/octa/incident.css" rel="stylesheet" />
+
+<div ng-app="octaApp" ng-cloak>
+    <div ng-controller="incidentController">
+        <div class="row">
+            <div class="col-sm-3">                
+                <div class="incident-page-header-container">
+                    {{header}} <i class="fa fa-spinner fa-spin" ng-show="isBusyGettingIncidents"></i>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <br />
+                <div class="incident-button-group-container">
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button type="button"
+                                class="btn btn-default"
+                                ng-class="{active: showDispatched, 'btn-primary': showDispatched}"
+                                ng-click="showDispatched = !showDispatched">
+                            {{dispatchedIncidentsTitle}} ({{dispatchedIncidents.length}})
+                        </button>
+                        <button type="button"
+                                class="btn btn-default"
+                                ng-class="{active: showActive, 'btn-primary': showActive}"
+                                ng-click="showActive = !showActive">
+                            {{activeIncidentsTitle}} ({{activeIncidents.length}})
+                        </button>
+                        <button type="button"
+                                class="btn btn-default"
+                                ng-class="{active: showTodays, 'btn-primary': showTodays}"
+                                ng-click="showTodays = !showTodays">
+                            {{todaysCompletedTitle}} ({{todaysCompletedIncidents.length}})
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <br />
+                <a class="btn btn-default pull-right"
+                   ng-click="showColumnConfig()">
+                    <i class="fa fa-gear"></i> Column Configuration
+                </a>
+            </div>
+        </div>
+        
+        <br />
+              
+        <incident-list ng-if="showDispatched"
+                       title="dispatchedIncidentsTitle"
+                       incidents="dispatchedIncidents"
+                       columns="columns"></incident-list>
+
+        <incident-list ng-if="showActive"
+                       title="activeIncidentsTitle"
+                       incidents="activeIncidents"
+                       columns="columns"></incident-list>
+
+        <incident-list ng-if="showTodays"
+                       title="todaysCompletedTitle"
+                       incidents="todaysCompletedIncidents"
+                       columns="columns"></incident-list>
+
+
+        <div class="modal fade"
+             id="columnConfigModal"
+             tabindex="-1"
+             role="dialog"
+             aria-labelledby="myModalLabel">
+
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button"
+                                class="close"
+                                data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title"
+                            id="myModalLabel">
+                            Show/Hide Columns
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="checkbox checkbox-slider--b-flat">
+                            <label>
+                                <input type="checkbox"
+                                       ng-model="allColumnsChecked"
+                                       ng-click="toggleAllColumns()" /><span>Toggle All</span>
+                            </label>
+                        </div>
+                        <br />
+                        <div ng-repeat="col in columns">
+                            <div class="checkbox checkbox-slider--b-flat">
+                                <label>
+                                    <input type="checkbox"
+                                           ng-model="col.show" /><span>{{col.name}}</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button"
+                                class="btn btn-primary"
+                                ng-click="submitColumnConfig()"
+                                data-dismiss="modal">
+                            Done
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
-
-<div class="row">
-    <div class="col-sm-12">
-        <h1>Incidents</h1>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-sm-12">
-        <h2>Dispatched and Acknowledged (<span data-bind="text: numberOfDispatchedAndAcked"></span>)</h2>
-        <table class="table table-condensed table-bordered table-striped tablesorter">
-            <thead>
-                <tr data-bind="foreach: columns">
-                    <th data-bind="visible: isVisible" class="span2">
-                        <span data-bind="click: sort, text: name()"></span>
-                        <img src='@Url.Content("~/Images/arrow_down.png")' data-bind="visible: currentSort() === value() && currentSortDirection() === 'Desc'" />
-                        <img src='@Url.Content("~/Images/arrow_up.png")' data-bind="visible: currentSort() === value() && currentSortDirection() === 'Asc'" />
-                    </th>
-                </tr>
-            </thead>
-            <tbody data-bind="foreach: incidents" style="cursor: pointer">
-                <tr data-bind="foreach: columns, visible: isAcked() === false" class="gridRow">
-                    <td data-bind="visible: isVisible" class="span2">
-                        <span class="span2" data-bind="visible: value() === 'beatNumber', text: $parent.beatNumber"></span>
-                        <span class="span2" data-bind="visible: value() === 'truckNumber', text: $parent.truckNumber"></span>
-                        <span class="span2" data-bind="visible: value() === 'driverName', text: $parent.driverName"></span>
-                        <span class="span2" data-bind="visible: value() === 'dispatchComments', text: $parent.dispatchComments"></span>
-                        <span class="span2" data-bind="visible: value() === 'timeStamp', text: $parent.timeStamp"></span>
-                        <span class="span2" data-bind="visible: value() === 'dispatchNumber', text: $parent.dispatchNumber"></span>
-                        <span class="span2" data-bind="visible: value() === 'state', text: $parent.state"></span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div  class="row">
-    <div class="col-sm-12">
-        <h2>Active (<span data-bind="text: numberOfActive"></span>)</h2>
-        <table class="table table-condensed table-bordered table-striped tablesorter">
-            <thead>
-                <tr data-bind="foreach: columns">
-                    <th data-bind="visible: isVisible" class="span2">
-                        <span data-bind="click: sort, text: name()"></span>
-                        <img src='@Url.Content("~/Images/arrow_down.png")' data-bind="visible: currentSort() === value() && currentSortDirection() === 'Desc'" />
-                        <img src='@Url.Content("~/Images/arrow_up.png")' data-bind="visible: currentSort() === value() && currentSortDirection() === 'Asc'" />
-                    </th>
-                </tr>
-            </thead>
-            <tbody data-bind="foreach: incidents" style="cursor: pointer">
-                <tr data-bind="foreach: columns, visible: isAcked() === true && isIncidentComplete() === false" class="gridRow">
-                    <td data-bind="visible: isVisible" class="span2">
-                        <span class="span2" data-bind="visible: value() === 'beatNumber', text: $parent.beatNumber"></span>
-                        <span class="span2" data-bind="visible: value() === 'truckNumber', text: $parent.truckNumber"></span>
-                        <span class="span2" data-bind="visible: value() === 'driverName', text: $parent.driverName"></span>
-                        <span class="span2" data-bind="visible: value() === 'dispatchComments', text: $parent.dispatchComments"></span>
-                        <span class="span2" data-bind="visible: value() === 'timeStamp', text: $parent.timeStamp"></span>
-                        <span class="span2" data-bind="visible: value() === 'dispatchNumber', text: $parent.dispatchNumber"></span>
-                        <span class="span2" data-bind="visible: value() === 'state', text: $parent.state"></span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div  class="row">
-    <div class="col-sm-12">
-        <h2>Today's Completed (<span data-bind="text: numberOfCompleted"></span>)</h2>
-        <table class="table table-condensed table-bordered table-striped tablesorter">
-            <thead>
-                <tr data-bind="foreach: columns">
-                    <th data-bind="visible: isVisible" class="span2">
-                        <span data-bind="click: sort, text: name()"></span>
-                        <img src='@Url.Content("~/Images/arrow_down.png")' data-bind="visible: currentSort() === value() && currentSortDirection() === 'Desc'" />
-                        <img src='@Url.Content("~/Images/arrow_up.png")' data-bind="visible: currentSort() === value() && currentSortDirection() === 'Asc'" />
-                    </th>
-                </tr>
-            </thead>
-            <tbody data-bind="foreach: incidents" style="cursor: pointer">
-                <tr data-bind="foreach: columns, visible: isIncidentComplete() === true" class="gridRow">
-                    <td data-bind="visible: isVisible" class="span2">
-                        <span class="span2" data-bind="visible: value() === 'beatNumber', text: $parent.beatNumber"></span>
-                        <span class="span2" data-bind="visible: value() === 'truckNumber', text: $parent.truckNumber"></span>
-                        <span class="span2" data-bind="visible: value() === 'driverName', text: $parent.driverName"></span>
-                        <span class="span2" data-bind="visible: value() === 'dispatchComments', text: $parent.dispatchComments"></span>
-                        <span class="span2" data-bind="visible: value() === 'timeStamp', text: $parent.timeStamp"></span>
-                        <span class="span2" data-bind="visible: value() === 'dispatchNumber', text: $parent.dispatchNumber"></span>
-                        <span class="span2" data-bind="visible: value() === 'state', text: $parent.state"></span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-
-@Html.Partial("_TruckListColumnConfig")
 
 @section scripts{
-    @Scripts.Render("~/bundles/KO")
-    @Scripts.Render("~/bundles/fspIncident")
+    @Scripts.Render("~/bundles/app")
+    @Scripts.Render("~/bundles/appAngular")
 }

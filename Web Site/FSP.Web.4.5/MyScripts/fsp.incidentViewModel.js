@@ -46,7 +46,6 @@ lata.FspWeb.prototype.incidentViewModel = function () {
     });
 
     var init = function () {
-
         try {
 
             self.getIncidents();
@@ -56,7 +55,8 @@ lata.FspWeb.prototype.incidentViewModel = function () {
                 console.log('Calling Server For New Incidents');
                 self.getIncidents();
                 setTimeout(updateIncidentsTimer, 10000);
-            }, 10000);
+            },
+                10000);
 
 
             //var int = setInterval(function () {
@@ -66,17 +66,16 @@ lata.FspWeb.prototype.incidentViewModel = function () {
         } catch (e) {
             console.error('error get incidents %s ', e);
         }
-
-    }
+    };
 
     self.columns = ko.observableArray([
-         new column(self, "Beat #", "beatNumber", true),
-         new column(self, "Truck #", "truckNumber", true),
-         new column(self, "Driver", "driverName", true),
-         new column(self, "Dispatch Summary Message", "dispatchComments", true),
-         new column(self, "Time", "timeStamp", true),
-         new column(self, "Dispatch #", "dispatchNumber", true),
-         new column(self, "State", "state", false)
+        new column(self, "Beat #", "beatNumber", true),
+        new column(self, "Truck #", "truckNumber", true),
+        new column(self, "Driver", "driverName", true),
+        new column(self, "Dispatch Summary Message", "dispatchComments", true),
+        new column(self, "Time", "timeStamp", true),
+        new column(self, "Dispatch #", "dispatchNumber", true),
+        new column(self, "State", "state", false)
     ]);
 
     self.doSort = function () {
@@ -132,65 +131,50 @@ lata.FspWeb.prototype.incidentViewModel = function () {
 
     }
 
-    self.getIncidents = function () {
-
+    self.getIncidents = function() {
         var url = fspWeb.SERVICE_BASE_URL + "/Incident/GetIncidents";
-
         $.ajax({
             url: url,
             type: "GET",
             dataType: "json",
-            error: function (xhr, ajaxOptions, thrownError) {
+            error: function(xhr, ajaxOptions, thrownError) {
                 console.error(xhr);
             },
-            success: function (dbIncidents) {
-
-
+            success: function(dbIncidents) {
                 self.incidents([]);
-
                 for (var i = 0; i < dbIncidents.length; i++) {
                     try {
-
                         self.addOrUpdateIncident(dbIncidents[i]);
-
                     } catch (e) {
 
                     }
-
                 }
             }
         });
+    };
 
-    }
-
-    self.addOrUpdateIncident = function (dbIncident) {
-
+    self.addOrUpdateIncident = function(dbIncident) {
         try {
-
-            var currentIncident = ko.utils.arrayFirst(self.incidents(), function (i) { return i.incidentID === dbIncident.IncidentID; });
-
+            var currentIncident = ko.utils.arrayFirst(self.incidents(),
+                function(i) { return i.incidentID === dbIncident.IncidentID; });
             if (currentIncident) {
                 currentIncident.update(dbIncident);
-            }
-            else {
+            } else {
                 self.incidents.push(new incident(self, dbIncident));
             }
-
         } catch (e) {
             Console.error(e);
         }
-    }
+    };
 
     //show Config
-    self.showConfig = function (item) {
+    self.showConfig = function(item) {
         try {
-
             $("#configModal").modal('show');
-
         } catch (e) {
 
         }
-    }
+    };
 
     function incident(root, dbIncident) {
 

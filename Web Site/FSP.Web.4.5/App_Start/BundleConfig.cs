@@ -16,13 +16,19 @@ namespace FSP.Web
                 "~/Scripts/googleMap/angular-minicolors.js",
                 "~/Scripts/googleMap/ngMask.min.js",
                 "~/Scripts/googleMap/checklist-model.js",
+
                 "~/app/app.js",
                 "~/app/core/*.js",
                 "~/app/filters/*.js",
                 "~/app/services/*.js",
+                
                 "~/app/map/map.module.js",
                 "~/app/map/*.js",
-                "~/app/map/directives/*.js"
+                "~/app/map/directives/*.js",
+
+                "~/app/incident/incident.module.js",
+                "~/app/incident/*.js",
+                "~/app/incident/directives/*.js"
             ));
 
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(

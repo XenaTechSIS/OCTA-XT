@@ -209,6 +209,11 @@
     <Compile Include="Startup.cs" />
     <Content Include="app\app.js" />
     <Content Include="app\core\app.config.js" />
+    <Content Include="app\incident\directives\incident.list.controller.js" />
+    <Content Include="app\incident\directives\incident.list.template.html" />
+    <Content Include="app\incident\incident.controller.js" />
+    <Content Include="app\incident\incident.module.config.js" />
+    <Content Include="app\incident\incident.module.js" />
     <Content Include="app\map\directives\beatSegmentPickerDirective.js" />
     <Content Include="app\map\directives\beatSegmentPickerTemplate.html" />
     <Content Include="app\map\directives\map511Directive.js" />
@@ -225,10 +230,11 @@
     <Content Include="app\map\directives\mapSegmentTemplate.html" />
     <Content Include="app\map\map.module.config.js" />
     <Content Include="app\map\map.module.js" />
-    <Content Include="app\map\mapController.js" />
+    <Content Include="app\map\map.controller.js" />
     <Content Include="app\filters\appFilters.js" />
     <Content Include="app\services\generalService.js" />
-    <Content Include="app\services\mapService.js" />
+    <Content Include="app\incident\incident.service.js" />
+    <Content Include="app\map\map.service.js" />
     <Content Include="app\services\trucksService.js" />
     <Content Include="app\services\utilService.js" />
     <Content Include="Content\bootstrap-octa-3.3.0.css" />
@@ -245,6 +251,7 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\octa\home.css" />
+    <Content Include="Content\octa\incident.css" />
     <Content Include="Content\octa\login.css" />
     <Content Include="Content\octa\map.css" />
     <Content Include="Content\Images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -1415,7 +1422,7 @@
     <Content Include="Views\CHPInformation\Index.cshtml" />
     <Content Include="Views\Truck\Grid.cshtml" />
     <Content Include="Views\Map\Index.cshtml" />
-    <Content Include="Views\Incident\Index.cshtml" />
+    <Content Include="Views\Incident\IndexOld.cshtml" />
     <Content Include="Views\Assist\Index.cshtml" />
     <Content Include="Views\Shared\Unauthorized.cshtml" />
     <Content Include="Views\Report\Index.cshtml" />
@@ -1432,7 +1439,6 @@
     <Content Include="Views\EmailReport\Create.cshtml" />
     <Content Include="Views\EmailReport\Edit.cshtml" />
     <Content Include="Views\EmailReport\Delete.cshtml" />
-    <Content Include="Views\Map\IndexOld.cshtml" />
     <None Include="Service References\TowTruckServiceRef\TowTruckService.wsdl" />
     <None Include="Service References\TowTruckServiceRef\TowTruckService.xsd">
       <SubType>Designer</SubType>
@@ -1446,6 +1452,7 @@
     <None Include="Service References\TowTruckServiceRef\TowTruckService3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\Incident\Index.cshtml" />
     <None Include="Web.Acceptance.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
