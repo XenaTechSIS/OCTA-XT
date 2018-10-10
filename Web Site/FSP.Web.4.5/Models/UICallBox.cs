@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace FSP.Web.Models
 {
     public class UICallBox
     {
         public Guid CallBoxId { get; set; }
-        public String TelephoneNumber { get; set; }
+        public string TelephoneNumber { get; set; }
         public int FreewayId { get; set; }
-        public String LocationDescription { get; set; }
-        public String SiteType { get; set; }
-        public String Comments { get; set; }
-        public String SignNumber { get; set; }
-        public Double Lat { get; set; }
-        public Double Lon { get; set; }
+        public string LocationDescription { get; set; }
+        public string SiteType { get; set; }
+        public string Comments { get; set; }
+        public string SignNumber { get; set; }
+        public double Lat { get; set; }
+        public double Lon { get; set; }
     }
 }

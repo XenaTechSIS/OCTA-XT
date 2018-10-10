@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace FSP.Web.Models
+﻿namespace FSP.Web.Models
 {
     public class DriversAlertComment
     {
-        public String BeatNumber { get; set; }
-        public String VehicleNumber { get; set; }
-        public String DriverFirstName { get; set; }
-        public String DriverLastName { get; set; }
-        public String DriverFullName { get; set; }
-        public String Datestamp { get; set; }
-        public String Explanation { get; set; }
-        public String CHPLogNumber { get; set; }
-        public String ExceptionType { get; set; }
+        public string BeatNumber { get; set; }
+        public string VehicleNumber { get; set; }
+        public string DriverFirstName { get; set; }
+        public string DriverLastName { get; set; }
+        public string DriverFullName { get; set; }
+        public string Datestamp { get; set; }
+        public string Explanation { get; set; }
+        public string CHPLogNumber { get; set; }
+        public string ExceptionType { get; set; }
     }
 }

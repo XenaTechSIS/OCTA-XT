@@ -4752,19 +4752,19 @@ namespace FSP.Web.TowTruckServiceRef {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string AssistNumberField;
+        private FSP.Web.TowTruckServiceRef.Assist[] AssistsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string BeatNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ContractorNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string DispatchCommentsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string DispatchNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private FSP.Web.TowTruckServiceRef.TowTruckDriver DriverField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string DriverNameField;
@@ -4790,6 +4790,9 @@ namespace FSP.Web.TowTruckServiceRef {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string TruckNumberField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private FSP.Web.TowTruckServiceRef.Contractors contractorField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -4801,14 +4804,14 @@ namespace FSP.Web.TowTruckServiceRef {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string AssistNumber {
+        public FSP.Web.TowTruckServiceRef.Assist[] Assists {
             get {
-                return this.AssistNumberField;
+                return this.AssistsField;
             }
             set {
-                if ((object.ReferenceEquals(this.AssistNumberField, value) != true)) {
-                    this.AssistNumberField = value;
-                    this.RaisePropertyChanged("AssistNumber");
+                if ((object.ReferenceEquals(this.AssistsField, value) != true)) {
+                    this.AssistsField = value;
+                    this.RaisePropertyChanged("Assists");
                 }
             }
         }
@@ -4822,19 +4825,6 @@ namespace FSP.Web.TowTruckServiceRef {
                 if ((object.ReferenceEquals(this.BeatNumberField, value) != true)) {
                     this.BeatNumberField = value;
                     this.RaisePropertyChanged("BeatNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ContractorName {
-            get {
-                return this.ContractorNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ContractorNameField, value) != true)) {
-                    this.ContractorNameField = value;
-                    this.RaisePropertyChanged("ContractorName");
                 }
             }
         }
@@ -4861,6 +4851,19 @@ namespace FSP.Web.TowTruckServiceRef {
                 if ((object.ReferenceEquals(this.DispatchNumberField, value) != true)) {
                     this.DispatchNumberField = value;
                     this.RaisePropertyChanged("DispatchNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public FSP.Web.TowTruckServiceRef.TowTruckDriver Driver {
+            get {
+                return this.DriverField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DriverField, value) != true)) {
+                    this.DriverField = value;
+                    this.RaisePropertyChanged("Driver");
                 }
             }
         }
@@ -4965,6 +4968,842 @@ namespace FSP.Web.TowTruckServiceRef {
                 if ((object.ReferenceEquals(this.TruckNumberField, value) != true)) {
                     this.TruckNumberField = value;
                     this.RaisePropertyChanged("TruckNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public FSP.Web.TowTruckServiceRef.Contractors contractor {
+            get {
+                return this.contractorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.contractorField, value) != true)) {
+                    this.contractorField = value;
+                    this.RaisePropertyChanged("contractor");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TowTruckDriver", Namespace="http://schemas.datacontract.org/2004/07/FPSService.TowTruck")]
+    [System.SerializableAttribute()]
+    public partial class TowTruckDriver : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid AssignedBeatField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid BeatScheduleIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime BreakStartedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid DriverIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FSPIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FirstNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LastNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime LunchStartedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TowTruckCompanyField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid AssignedBeat {
+            get {
+                return this.AssignedBeatField;
+            }
+            set {
+                if ((this.AssignedBeatField.Equals(value) != true)) {
+                    this.AssignedBeatField = value;
+                    this.RaisePropertyChanged("AssignedBeat");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid BeatScheduleID {
+            get {
+                return this.BeatScheduleIDField;
+            }
+            set {
+                if ((this.BeatScheduleIDField.Equals(value) != true)) {
+                    this.BeatScheduleIDField = value;
+                    this.RaisePropertyChanged("BeatScheduleID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime BreakStarted {
+            get {
+                return this.BreakStartedField;
+            }
+            set {
+                if ((this.BreakStartedField.Equals(value) != true)) {
+                    this.BreakStartedField = value;
+                    this.RaisePropertyChanged("BreakStarted");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid DriverID {
+            get {
+                return this.DriverIDField;
+            }
+            set {
+                if ((this.DriverIDField.Equals(value) != true)) {
+                    this.DriverIDField = value;
+                    this.RaisePropertyChanged("DriverID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FSPID {
+            get {
+                return this.FSPIDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FSPIDField, value) != true)) {
+                    this.FSPIDField = value;
+                    this.RaisePropertyChanged("FSPID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FirstName {
+            get {
+                return this.FirstNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FirstNameField, value) != true)) {
+                    this.FirstNameField = value;
+                    this.RaisePropertyChanged("FirstName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LastName {
+            get {
+                return this.LastNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LastNameField, value) != true)) {
+                    this.LastNameField = value;
+                    this.RaisePropertyChanged("LastName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime LunchStarted {
+            get {
+                return this.LunchStartedField;
+            }
+            set {
+                if ((this.LunchStartedField.Equals(value) != true)) {
+                    this.LunchStartedField = value;
+                    this.RaisePropertyChanged("LunchStarted");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TowTruckCompany {
+            get {
+                return this.TowTruckCompanyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TowTruckCompanyField, value) != true)) {
+                    this.TowTruckCompanyField = value;
+                    this.RaisePropertyChanged("TowTruckCompany");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Contractors", Namespace="http://schemas.datacontract.org/2004/07/FPSService.MiscData")]
+    [System.SerializableAttribute()]
+    public partial class Contractors : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContractCompanyNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid ContractorIDField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContractCompanyName {
+            get {
+                return this.ContractCompanyNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContractCompanyNameField, value) != true)) {
+                    this.ContractCompanyNameField = value;
+                    this.RaisePropertyChanged("ContractCompanyName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid ContractorID {
+            get {
+                return this.ContractorIDField;
+            }
+            set {
+                if ((this.ContractorIDField.Equals(value) != true)) {
+                    this.ContractorIDField = value;
+                    this.RaisePropertyChanged("ContractorID");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Assist", Namespace="http://schemas.datacontract.org/2004/07/FPSService.MiscData")]
+    [System.SerializableAttribute()]
+    public partial class Assist : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool AckedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool AssistCompleteField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid AssistIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AssistNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ColorField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CommentsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid ContractorIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CustomerLastNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int CustomerWaitTimeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime DispatchTimeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid DriverIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DropZoneField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double EndODField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid FleetVehicleIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid IncidentIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid IncidentTypeIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsMDCField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double LatField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LicensePlateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LogNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double LonField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MakeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime OnSiteTimeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string[] SelectedServicesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double StartODField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string StateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SurveyNumField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TipField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TipDetailField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid TowLocationIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid TrafficSpeedIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid VehiclePositionIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid VehicleTypeIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime x1097Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime x1098Field;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Acked {
+            get {
+                return this.AckedField;
+            }
+            set {
+                if ((this.AckedField.Equals(value) != true)) {
+                    this.AckedField = value;
+                    this.RaisePropertyChanged("Acked");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool AssistComplete {
+            get {
+                return this.AssistCompleteField;
+            }
+            set {
+                if ((this.AssistCompleteField.Equals(value) != true)) {
+                    this.AssistCompleteField = value;
+                    this.RaisePropertyChanged("AssistComplete");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid AssistID {
+            get {
+                return this.AssistIDField;
+            }
+            set {
+                if ((this.AssistIDField.Equals(value) != true)) {
+                    this.AssistIDField = value;
+                    this.RaisePropertyChanged("AssistID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string AssistNumber {
+            get {
+                return this.AssistNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AssistNumberField, value) != true)) {
+                    this.AssistNumberField = value;
+                    this.RaisePropertyChanged("AssistNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Color {
+            get {
+                return this.ColorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ColorField, value) != true)) {
+                    this.ColorField = value;
+                    this.RaisePropertyChanged("Color");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Comments {
+            get {
+                return this.CommentsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CommentsField, value) != true)) {
+                    this.CommentsField = value;
+                    this.RaisePropertyChanged("Comments");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid ContractorID {
+            get {
+                return this.ContractorIDField;
+            }
+            set {
+                if ((this.ContractorIDField.Equals(value) != true)) {
+                    this.ContractorIDField = value;
+                    this.RaisePropertyChanged("ContractorID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CustomerLastName {
+            get {
+                return this.CustomerLastNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CustomerLastNameField, value) != true)) {
+                    this.CustomerLastNameField = value;
+                    this.RaisePropertyChanged("CustomerLastName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int CustomerWaitTime {
+            get {
+                return this.CustomerWaitTimeField;
+            }
+            set {
+                if ((this.CustomerWaitTimeField.Equals(value) != true)) {
+                    this.CustomerWaitTimeField = value;
+                    this.RaisePropertyChanged("CustomerWaitTime");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime DispatchTime {
+            get {
+                return this.DispatchTimeField;
+            }
+            set {
+                if ((this.DispatchTimeField.Equals(value) != true)) {
+                    this.DispatchTimeField = value;
+                    this.RaisePropertyChanged("DispatchTime");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid DriverID {
+            get {
+                return this.DriverIDField;
+            }
+            set {
+                if ((this.DriverIDField.Equals(value) != true)) {
+                    this.DriverIDField = value;
+                    this.RaisePropertyChanged("DriverID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DropZone {
+            get {
+                return this.DropZoneField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DropZoneField, value) != true)) {
+                    this.DropZoneField = value;
+                    this.RaisePropertyChanged("DropZone");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double EndOD {
+            get {
+                return this.EndODField;
+            }
+            set {
+                if ((this.EndODField.Equals(value) != true)) {
+                    this.EndODField = value;
+                    this.RaisePropertyChanged("EndOD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid FleetVehicleID {
+            get {
+                return this.FleetVehicleIDField;
+            }
+            set {
+                if ((this.FleetVehicleIDField.Equals(value) != true)) {
+                    this.FleetVehicleIDField = value;
+                    this.RaisePropertyChanged("FleetVehicleID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid IncidentID {
+            get {
+                return this.IncidentIDField;
+            }
+            set {
+                if ((this.IncidentIDField.Equals(value) != true)) {
+                    this.IncidentIDField = value;
+                    this.RaisePropertyChanged("IncidentID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid IncidentTypeID {
+            get {
+                return this.IncidentTypeIDField;
+            }
+            set {
+                if ((this.IncidentTypeIDField.Equals(value) != true)) {
+                    this.IncidentTypeIDField = value;
+                    this.RaisePropertyChanged("IncidentTypeID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsMDC {
+            get {
+                return this.IsMDCField;
+            }
+            set {
+                if ((this.IsMDCField.Equals(value) != true)) {
+                    this.IsMDCField = value;
+                    this.RaisePropertyChanged("IsMDC");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double Lat {
+            get {
+                return this.LatField;
+            }
+            set {
+                if ((this.LatField.Equals(value) != true)) {
+                    this.LatField = value;
+                    this.RaisePropertyChanged("Lat");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LicensePlate {
+            get {
+                return this.LicensePlateField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LicensePlateField, value) != true)) {
+                    this.LicensePlateField = value;
+                    this.RaisePropertyChanged("LicensePlate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LogNumber {
+            get {
+                return this.LogNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LogNumberField, value) != true)) {
+                    this.LogNumberField = value;
+                    this.RaisePropertyChanged("LogNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double Lon {
+            get {
+                return this.LonField;
+            }
+            set {
+                if ((this.LonField.Equals(value) != true)) {
+                    this.LonField = value;
+                    this.RaisePropertyChanged("Lon");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Make {
+            get {
+                return this.MakeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MakeField, value) != true)) {
+                    this.MakeField = value;
+                    this.RaisePropertyChanged("Make");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime OnSiteTime {
+            get {
+                return this.OnSiteTimeField;
+            }
+            set {
+                if ((this.OnSiteTimeField.Equals(value) != true)) {
+                    this.OnSiteTimeField = value;
+                    this.RaisePropertyChanged("OnSiteTime");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string[] SelectedServices {
+            get {
+                return this.SelectedServicesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SelectedServicesField, value) != true)) {
+                    this.SelectedServicesField = value;
+                    this.RaisePropertyChanged("SelectedServices");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double StartOD {
+            get {
+                return this.StartODField;
+            }
+            set {
+                if ((this.StartODField.Equals(value) != true)) {
+                    this.StartODField = value;
+                    this.RaisePropertyChanged("StartOD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string State {
+            get {
+                return this.StateField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StateField, value) != true)) {
+                    this.StateField = value;
+                    this.RaisePropertyChanged("State");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SurveyNum {
+            get {
+                return this.SurveyNumField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SurveyNumField, value) != true)) {
+                    this.SurveyNumField = value;
+                    this.RaisePropertyChanged("SurveyNum");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Tip {
+            get {
+                return this.TipField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TipField, value) != true)) {
+                    this.TipField = value;
+                    this.RaisePropertyChanged("Tip");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TipDetail {
+            get {
+                return this.TipDetailField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TipDetailField, value) != true)) {
+                    this.TipDetailField = value;
+                    this.RaisePropertyChanged("TipDetail");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid TowLocationID {
+            get {
+                return this.TowLocationIDField;
+            }
+            set {
+                if ((this.TowLocationIDField.Equals(value) != true)) {
+                    this.TowLocationIDField = value;
+                    this.RaisePropertyChanged("TowLocationID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid TrafficSpeedID {
+            get {
+                return this.TrafficSpeedIDField;
+            }
+            set {
+                if ((this.TrafficSpeedIDField.Equals(value) != true)) {
+                    this.TrafficSpeedIDField = value;
+                    this.RaisePropertyChanged("TrafficSpeedID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid VehiclePositionID {
+            get {
+                return this.VehiclePositionIDField;
+            }
+            set {
+                if ((this.VehiclePositionIDField.Equals(value) != true)) {
+                    this.VehiclePositionIDField = value;
+                    this.RaisePropertyChanged("VehiclePositionID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid VehicleTypeID {
+            get {
+                return this.VehicleTypeIDField;
+            }
+            set {
+                if ((this.VehicleTypeIDField.Equals(value) != true)) {
+                    this.VehicleTypeIDField = value;
+                    this.RaisePropertyChanged("VehicleTypeID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime x1097 {
+            get {
+                return this.x1097Field;
+            }
+            set {
+                if ((this.x1097Field.Equals(value) != true)) {
+                    this.x1097Field = value;
+                    this.RaisePropertyChanged("x1097");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime x1098 {
+            get {
+                return this.x1098Field;
+            }
+            set {
+                if ((this.x1098Field.Equals(value) != true)) {
+                    this.x1098Field = value;
+                    this.RaisePropertyChanged("x1098");
                 }
             }
         }

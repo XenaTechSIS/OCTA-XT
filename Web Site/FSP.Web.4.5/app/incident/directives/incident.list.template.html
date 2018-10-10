@@ -31,7 +31,7 @@
          </th>
          <th class="nowrap"
             ng-show="columns[5].show"
-            ng-click="updateSortColumn('DispatchNumber')">
+            ng-click="updateSortColumn('IncidentNumber')">
             Dispatch #
          </th>
          <th class="nowrap"
@@ -41,7 +41,7 @@
          </th>
          <th class="nowrap"
             ng-show="columns[7].show"
-            ng-click="updateSortColumn('ContractorName')">
+            ng-click="updateSortColumn('ContractCompanyName')">
             Contractor
          </th>
          <th class="nowrap"
@@ -70,13 +70,13 @@
             {{incident.Timestamp}}
          </td>
          <td ng-show="columns[5].show">
-            {{incident.DispatchNumber}}
+            {{incident.IncidentNumber}}
          </td>
          <td ng-show="columns[6].show">
             {{incident.State}}
          </td>
          <td ng-show="columns[7].show">
-            {{incident.ContractorName}}
+            {{incident.ContractCompanyName}}
          </td>
          <td ng-show="columns[8].show">
             {{incident.AssistNumber}}

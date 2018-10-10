@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/FPSService.MiscData" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/FPSService.MiscData" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://38.124.164.213:9007/TowTruckService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://38.124.164.213:9007/TowTruckService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="ArrayOfAssist">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Assist" nillable="true" type="tns:Assist" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAssist" nillable="true" type="tns:ArrayOfAssist" />
+  <xs:complexType name="Assist">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Acked" type="xs:boolean" />
+      <xs:element minOccurs="0" name="AssistComplete" type="xs:boolean" />
+      <xs:element minOccurs="0" name="AssistID" type="ser:guid" />
+      <xs:element minOccurs="0" name="AssistNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Color" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Comments" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ContractorID" type="ser:guid" />
+      <xs:element minOccurs="0" name="CustomerLastName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerWaitTime" type="xs:int" />
+      <xs:element minOccurs="0" name="DispatchTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DriverID" type="ser:guid" />
+      <xs:element minOccurs="0" name="DropZone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EndOD" type="xs:double" />
+      <xs:element minOccurs="0" name="FleetVehicleID" type="ser:guid" />
+      <xs:element minOccurs="0" name="IncidentID" type="ser:guid" />
+      <xs:element minOccurs="0" name="IncidentTypeID" type="ser:guid" />
+      <xs:element minOccurs="0" name="IsMDC" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Lat" type="xs:double" />
+      <xs:element minOccurs="0" name="LicensePlate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LogNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Lon" type="xs:double" />
+      <xs:element minOccurs="0" name="Make" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OnSiteTime" type="xs:dateTime" />
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SelectedServices" nillable="true" type="q1:ArrayOfstring" />
+      <xs:element minOccurs="0" name="StartOD" type="xs:double" />
+      <xs:element minOccurs="0" name="State" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SurveyNum" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Tip" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipDetail" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TowLocationID" type="ser:guid" />
+      <xs:element minOccurs="0" name="TrafficSpeedID" type="ser:guid" />
+      <xs:element minOccurs="0" name="VehiclePositionID" type="ser:guid" />
+      <xs:element minOccurs="0" name="VehicleTypeID" type="ser:guid" />
+      <xs:element minOccurs="0" name="x1097" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="x1098" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Assist" nillable="true" type="tns:Assist" />
+  <xs:complexType name="Contractors">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ContractCompanyName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ContractorID" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Contractors" nillable="true" type="tns:Contractors" />
+</xs:schema>

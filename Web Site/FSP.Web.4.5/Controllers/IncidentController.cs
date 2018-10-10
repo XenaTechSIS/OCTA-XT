@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 using FSP.Domain.Model;
 using FSP.Web.Filters;
-using FSP.Web.Models;
 using FSP.Web.TowTruckServiceRef;
 
 namespace FSP.Web.Controllers
@@ -15,7 +11,6 @@ namespace FSP.Web.Controllers
     {
         public ActionResult GetIncidents()
         {
-            var returnList = new List<UIIncident>();
             var contractorName = string.Empty;
 
             using (var dc = new FSPDataContext())
@@ -29,46 +24,32 @@ namespace FSP.Web.Controllers
 
             using (var service = new TowTruckServiceClient())
             {
-                try
-                {
-                    var allIncidents = from q in service.getIncidentData()
-                                       select new UIIncident
-                                       {
-                                           IncidentID = q.IncidentID,
-                                           IsIncidentComplete = q.IsIncidentComplete,
-                                           IsAcked = q.IsAcked,
-                                           //UI fields
-                                           IncidentNumber = q.IncidentNumber,
-                                           BeatNumber = q.BeatNumber,
-                                           TruckNumber = q.TruckNumber,
-                                           DriverName = q.DriverName,
-                                           DispatchComments = q.DispatchComments,
-                                           Timestamp = q.Timestamp.ToString(),
-                                           State = q.State,
-                                           DispatchNumber = q.IncidentNumber,
-                                           ContractorName = q.ContractorName,
-                                           AssistNumber = q.AssistNumber
-                                       };
+                var rawIncidents = service.getIncidentData();
 
+                var incidents = from q in rawIncidents
+                                select new
+                                {
+                                    q.IncidentID,
+                                    q.IsIncidentComplete,
+                                    q.IsAcked,
+                                    //UI fields
+                                    q.IncidentNumber,
+                                    q.BeatNumber,
+                                    q.TruckNumber,
+                                    q.DriverName,
+                                    q.DispatchComments,
+                                    Timestamp = q.Timestamp.ToString(),
+                                    q.State,
+                                    q.contractor.ContractCompanyName,
+                                    q.Assists
+                                };
 
-                    foreach (var incident in allIncidents)
-                    {
-                        var addTruck = true;
-                        if (!string.IsNullOrEmpty(contractorName))
-                        {
-                            addTruck = contractorName == incident.ContractorName;
-                        }                                                    
-                        if (addTruck)
-                            returnList.Add(incident);
-                    }
-                }
-                catch (Exception ex)
+                if (!string.IsNullOrEmpty(contractorName))
                 {
-                    Debug.WriteLine(ex.Message);
+                    incidents = incidents.Where(p => p.ContractCompanyName == contractorName);
                 }
+                return Json(incidents.OrderBy(p => p.BeatNumber), JsonRequestBehavior.AllowGet);
             }
-
-            return Json(returnList.OrderBy(p => p.BeatNumber), JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Index()

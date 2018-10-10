@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace FSP.Web.Models
 {
-    public class UIAlertMessage
-    {
-        public String AlertMessage { get; set; }
-        public List<String> SelectedTrucks { get; set; }
-    }
+    //public class UIAlertMessage
+    //{
+    //    public string AlertMessage { get; set; }
+    //    public List<string> SelectedTrucks { get; set; }
+    //}
 }

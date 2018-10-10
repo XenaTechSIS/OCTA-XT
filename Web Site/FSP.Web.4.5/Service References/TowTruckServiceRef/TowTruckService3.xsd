@@ -2,6 +2,8 @@
 <xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/FPSService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/FPSService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://38.124.164.213:9007/TowTruckService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:import schemaLocation="http://38.124.164.213:9007/TowTruckService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://38.124.164.213:9007/TowTruckService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/FPSService.MiscData" />
+  <xs:import schemaLocation="http://38.124.164.213:9007/TowTruckService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/FPSService.TowTruck" />
   <xs:complexType name="ArrayOfTowTruckData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="TowTruckData" nillable="true" type="tns:TowTruckData" />
@@ -389,11 +391,11 @@
   <xs:element name="ArrayOfIncidentDisplay" nillable="true" type="tns:ArrayOfIncidentDisplay" />
   <xs:complexType name="IncidentDisplay">
     <xs:sequence>
-      <xs:element minOccurs="0" name="AssistNumber" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/FPSService.MiscData" minOccurs="0" name="Assists" nillable="true" type="q2:ArrayOfAssist" />
       <xs:element minOccurs="0" name="BeatNumber" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ContractorName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DispatchComments" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DispatchNumber" nillable="true" type="xs:string" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/FPSService.TowTruck" minOccurs="0" name="Driver" nillable="true" type="q3:TowTruckDriver" />
       <xs:element minOccurs="0" name="DriverName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IncidentID" type="ser:guid" />
       <xs:element minOccurs="0" name="IncidentNumber" nillable="true" type="xs:string" />
@@ -402,6 +404,7 @@
       <xs:element minOccurs="0" name="State" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Timestamp" type="xs:dateTime" />
       <xs:element minOccurs="0" name="TruckNumber" nillable="true" type="xs:string" />
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/FPSService.MiscData" minOccurs="0" name="contractor" nillable="true" type="q4:Contractors" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="IncidentDisplay" nillable="true" type="tns:IncidentDisplay" />
