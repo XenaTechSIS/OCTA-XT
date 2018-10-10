@@ -599,8 +599,8 @@ namespace FPSService
         public Guid IncidentID { get; set; }
         [DataMember]
         public string IncidentNumber { get; set; }
-        [DataMember]
-        public string AssistNumber { get; set; }
+        //[DataMember]
+        //public string AssistNumber { get; set; }
         [DataMember]
         public string BeatNumber { get; set; }
         [DataMember]
@@ -615,12 +615,18 @@ namespace FPSService
         public string State { get; set; }
         [DataMember]
         public string DispatchNumber { get; set; }
-        [DataMember]
-        public string ContractorName { get; set; }
+        //[DataMember]
+        //public string ContractorName { get; set; }
         [DataMember]
         public bool IsIncidentComplete { get; set; }
         [DataMember]
         public bool IsAcked { get; set; }
+        [DataMember]
+        public MiscData.Contractors contractor { get; set; }
+        [DataMember]
+        public List<MiscData.Assist> Assists { get; set; }
+        [DataMember]
+        public TowTruck.TowTruckDriver Driver { get; set; }
     }
 
     #endregion

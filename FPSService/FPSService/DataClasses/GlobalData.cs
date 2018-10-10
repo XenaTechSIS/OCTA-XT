@@ -1012,6 +1012,15 @@ namespace FPSService.DataClasses
             { return "Unknown"; }
         }
 
+        public static MiscData.Contractors FindContractorByID(Guid _ContractorID)
+        {
+            MiscData.Contractors thisFoundContractor = Contractors.Find(delegate (MiscData.Contractors c) { return c.ContractorID == _ContractorID; });
+            if (thisFoundContractor != null)
+            { return thisFoundContractor; }
+            else
+            { return new MiscData.Contractors(); }
+        }
+
         public static string FindTruckNumberByID(Guid _FleetVehicleID)
         {
             TowTruck.TowTruck thisFoundTruck = currentTrucks.Find(delegate(TowTruck.TowTruck t) { return t.Extended.FleetVehicleID == _FleetVehicleID; });

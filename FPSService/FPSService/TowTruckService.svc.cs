@@ -1487,7 +1487,7 @@ namespace FPSService
             {
                 MiscData.Incident inc = DataClasses.GlobalData.FindIncidentByID(ta.IncidentID);
                 TowTruck.TowTruck tt = DataClasses.GlobalData.FindTowTruckByTruckID(ta.FleetVehicleID);
-
+               
                 string State = "Not Connected";
                 if (tt != null)
                 {
@@ -1499,20 +1499,23 @@ namespace FPSService
                     IncidentDisplay id = new IncidentDisplay();
                     id.IncidentID = inc.IncidentID;
                     id.IncidentNumber = inc.IncidentNumber;
-                    id.AssistNumber = ta.AssistNumber;
+                    //id.AssistNumber = ta.AssistNumber;
                     id.BeatNumber = inc.BeatNumber;
-                    //id.TruckNumber = tt.TruckNumber;
+                    id.TruckNumber = tt.TruckNumber;
                     //id.DriverName = tt.Driver.LastName + ", " + tt.Driver.FirstName;
                     id.TruckNumber = mySQL.GetTruckNumberByID(ta.FleetVehicleID);
-                    id.DriverName = mySQL.FindDriverNameByID(ta.DriverID);
+                    //id.DriverName = mySQL.FindDriverNameByID(ta.DriverID);
                     id.DispatchComments = inc.Description;
                     id.Timestamp = inc.TimeStamp;
                     id.DispatchNumber = inc.IncidentNumber;
                     //id.ContractorName = tt.Extended.ContractorName;
-                    id.ContractorName = DataClasses.GlobalData.FindContractorNameByID(ta.ContractorID);
+                    //id.ContractorName = DataClasses.GlobalData.FindContractorNameByID(ta.ContractorID);
                     id.IsIncidentComplete = ta.AssistComplete;
                     id.State = State;
                     id.IsAcked = ta.Acked;
+                    id.Assists = DataClasses.GlobalData.Assists.Where(a => a.IncidentID == inc.IncidentID).ToList();
+                    id.Driver = tt.Driver;
+                    id.contractor = DataClasses.GlobalData.FindContractorByID(ta.ContractorID);
                     idl.Add(id);
                 }
             }
