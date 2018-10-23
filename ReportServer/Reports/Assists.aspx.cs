@@ -140,18 +140,25 @@ namespace ReportServer.Reports
 
         public void ExportExcel()
         {
-            Response.ClearContent();
-            Response.Buffer = true;
-            Response.AddHeader("content-disposition", "attachment;filename=Assists.xls");
-            Response.Charset = "";
-            Response.ContentType = "application/vnd.xls";
-            StringWriter sw = new StringWriter();
-            HtmlTextWriter htw = new HtmlTextWriter(sw);
-            gvData.AllowPaging = false;
-            gvData.HeaderRow.Style.Add("background-color", "#FFFFFF");
-            gvData.RenderControl(htw);
-            Response.Write(sw.ToString());
-            Response.End();
+            if (gvData.Rows.Count > 0)
+            {
+                Response.ClearContent();
+                Response.Buffer = true;
+                Response.AddHeader("content-disposition", "attachment;filename=Assists.xls");
+                Response.Charset = "";
+                Response.ContentType = "application/vnd.xls";
+                StringWriter sw = new StringWriter();
+                HtmlTextWriter htw = new HtmlTextWriter(sw);
+                gvData.AllowPaging = false;
+                gvData.HeaderRow.Style.Add("background-color", "#FFFFFF");
+                gvData.RenderControl(htw);
+                Response.Write(sw.ToString());
+                Response.End();
+            }
+            else
+            {
+                Response.Write("Build report first, then export it.");
+            }
         }
 
         protected void btnExportExcel_Click(object sender, EventArgs e)
@@ -204,6 +211,7 @@ namespace ReportServer.Reports
                     dt.Columns.Add("Dispatch Time", Type.GetType("System.String"));
                     dt.Columns.Add("Start Time", Type.GetType("System.String"));
                     dt.Columns.Add("End Time", Type.GetType("System.String"));
+                    dt.Columns.Add("On Site Time", Type.GetType("System.String"));
                     dt.Columns.Add("Customer Wait Time", Type.GetType("System.String"));
                     dt.Columns.Add("Beat Number", Type.GetType("System.String"));
                     dt.Columns.Add("Incident Number", Type.GetType("System.String"));
@@ -227,6 +235,9 @@ namespace ReportServer.Reports
                     dt.Columns.Add("Tow Location", Type.GetType("System.String"));
                     dt.Columns.Add("Drop Zone", Type.GetType("System.String"));
                     dt.Columns.Add("Comments", Type.GetType("System.String"));
+                    dt.Columns.Add("Tip", Type.GetType("System.String"));
+                    dt.Columns.Add("Tip Detail", Type.GetType("System.String"));
+                    dt.Columns.Add("Survery Num", Type.GetType("System.String"));
 
                     SqlDataReader rdr = cmd.ExecuteReader();
                     while (rdr.Read())
