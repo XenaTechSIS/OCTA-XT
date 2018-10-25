@@ -12,6 +12,8 @@ namespace FPSService
 
         protected void Application_Start(object sender, EventArgs e)
         {
+            SqlServerTypes.Utilities.LoadNativeAssemblies(Server.MapPath("~/bin"));
+
             UDP.UDPServer myServer = new UDP.UDPServer();
             DataClasses.TowTruckCleanser myCleanser = new DataClasses.TowTruckCleanser();
             

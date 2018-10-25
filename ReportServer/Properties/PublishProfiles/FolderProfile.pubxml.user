@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>C:\Deploy\OCTA\ReportServer</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="bin/App_global.asax.compiled">
+      <publishTime>10/25/2018 08:01:36</publishTime>
+    </File>
+    <File Include="bin/App_global.asax.dll">
+      <publishTime>10/25/2018 08:01:35</publishTime>
+    </File>
+    <File Include="bin/ReportServer.dll">
+      <publishTime>10/25/2018 08:01:33</publishTime>
+    </File>
+    <File Include="bin/ReportServer.pdb">
+      <publishTime>10/25/2018 08:01:33</publishTime>
+    </File>
+    <File Include="img/glyphicons-halflings-white.png">
+      <publishTime>10/23/2018 16:37:30</publishTime>
+    </File>
+    <File Include="img/glyphicons-halflings.png">
+      <publishTime>10/23/2018 16:37:30</publishTime>
+    </File>
+    <File Include="img/octa_survey layout_header.png">
+      <publishTime>10/23/2018 16:37:30</publishTime>
+    </File>
+    <File Include="PrecompiledApp.config">
+      <publishTime>10/25/2018 08:01:34</publishTime>
+    </File>
+    <File Include="Reports/Alarms.aspx">
+      <publishTime>10/23/2018 16:37:29</publishTime>
+    </File>
+    <File Include="Reports/Assists.aspx">
+      <publishTime>10/23/2018 16:37:29</publishTime>
+    </File>
+    <File Include="Reports/CombinedReport.aspx">
+      <publishTime>10/23/2018 16:37:29</publishTime>
+    </File>
+    <File Include="Reports/DriverAndBeatHours.aspx">
+      <publishTime>10/23/2018 16:37:29</publishTime>
+    </File>
+    <File Include="Reports/DriverAndBeatHoursNew.aspx">
+      <publishTime>10/23/2018 16:37:29</publishTime>
+    </File>
+    <File Include="Reports/DriverBreaks.aspx">
+      <publishTime>10/23/2018 16:37:29</publishTime>
+    </File>
+    <File Include="Reports/EarlyRollIns.aspx">
+      <publishTime>10/23/2018 16:37:29</publishTime>
+    </File>
+    <File Include="Reports/GPSPositionReport.aspx">
+      <publishTime>10/23/2018 16:37:29</publishTime>
+    </File>
+    <File Include="Reports/Logon.aspx">
+      <publishTime>10/23/2018 16:37:29</publishTime>
+    </File>
+    <File Include="Reports/ReportMain.aspx">
+      <publishTime>10/23/2018 16:37:29</publishTime>
+    </File>
+    <File Include="Reports/Schedules.aspx">
+      <publishTime>10/23/2018 16:37:30</publishTime>
+    </File>
+    <File Include="Reports/Speeding.aspx">
+      <publishTime>10/23/2018 16:37:30</publishTime>
+    </File>
+    <File Include="Reports/TruckMessages.aspx">
+      <publishTime>10/23/2018 16:37:30</publishTime>
+    </File>
+    <File Include="Scripts/bootstrap.js">
+      <publishTime>10/23/2018 16:37:30</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.9.1.js">
+      <publishTime>10/23/2018 16:37:30</publishTime>
+    </File>
+    <File Include="Scripts/jquery-ui-1.10.0.custom.js">
+      <publishTime>10/23/2018 16:37:30</publishTime>
+    </File>
+    <File Include="Styles/bootstrap-responsive.css">
+      <publishTime>10/23/2018 16:37:30</publishTime>
+    </File>
+    <File Include="Styles/bootstrap.css">
+      <publishTime>10/23/2018 16:37:30</publishTime>
+    </File>
+    <File Include="Styles/images/animated-overlay.gif">
+      <publishTime>10/23/2018 16:37:30</publishTime>
+    </File>
+    <File Include="Styles/images/ui-bg_flat_30_cccccc_40x100.png">
+      <publishTime>10/23/2018 16:37:30</publishTime>
+    </File>
+    <File Include="Styles/images/ui-bg_flat_50_5c5c5c_40x100.png">
+      <publishTime>10/23/2018 16:37:30</publishTime>
+    </File>
+    <File Include="Styles/images/ui-bg_glass_20_555555_1x400.png">
+      <publishTime>10/23/2018 16:37:30</publishTime>
+    </File>
+    <File Include="Styles/images/ui-bg_glass_40_0078a3_1x400.png">
+      <publishTime>10/23/2018 16:37:30</publishTime>
+    </File>
+    <File Include="Styles/images/ui-bg_glass_40_ffc73d_1x400.png">
+      <publishTime>10/23/2018 16:37:30</publishTime>
+    </File>
+    <File Include="Styles/images/ui-bg_gloss-wave_25_333333_500x100.png">
+      <publishTime>10/23/2018 16:37:30</publishTime>
+    </File>
+    <File Include="Styles/images/ui-bg_highlight-soft_80_eeeeee_1x100.png">
+      <publishTime>10/23/2018 16:37:30</publishTime>
+    </File>
+    <File Include="Styles/images/ui-bg_inset-soft_25_000000_1x100.png">
+      <publishTime>10/23/2018 16:37:30</publishTime>
+    </File>
+    <File Include="Styles/images/ui-bg_inset-soft_30_f58400_1x100.png">
+      <publishTime>10/23/2018 16:37:30</publishTime>
+    </File>
+    <File Include="Styles/images/ui-icons_222222_256x240.png">
+      <publishTime>10/23/2018 16:37:30</publishTime>
+    </File>
+    <File Include="Styles/images/ui-icons_4b8e0b_256x240.png">
+      <publishTime>10/23/2018 16:37:30</publishTime>
+    </File>
+    <File Include="Styles/images/ui-icons_a83300_256x240.png">
+      <publishTime>10/23/2018 16:37:30</publishTime>
+    </File>
+    <File Include="Styles/images/ui-icons_cccccc_256x240.png">
+      <publishTime>10/23/2018 16:37:30</publishTime>
+    </File>
+    <File Include="Styles/images/ui-icons_ffffff_256x240.png">
+      <publishTime>10/23/2018 16:37:30</publishTime>
+    </File>
+    <File Include="Styles/jquery-ui-1.10.0.custom.css">
+      <publishTime>10/23/2018 16:37:30</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>10/25/2018 08:01:34</publishTime>
+    </File>
+  </ItemGroup>
+</Project>
