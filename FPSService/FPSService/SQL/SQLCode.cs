@@ -369,8 +369,25 @@ namespace FPSService.SQL
                         thisDropZone.PDPhoneNumber = rdr["PDPhoneNumber"].ToString();
                         thisDropZone.Capacity = Convert.ToInt32(rdr["Capacity"]);
                         // New 4/19/18 MM
-                        var polygon = new SqlChars(new SqlString("Polygon (( " + rdr["Position"].ToString() + " ))"));
-                        thisDropZone.Position = SqlGeography.STPolyFromText(polygon, 4236);
+                        string polygonString = "POLYGON ((";
+                        List<string> LonLat = rdr["Position"].ToString().Split(',').ToList();
+                        if(LonLat[0].Trim() != LonLat[LonLat.Count()-1].Trim())
+                        {
+                            LonLat.Add(LonLat[0]);
+                        }
+                        for(int i = 0; i < LonLat.Count(); i++)
+                        {
+                            string[] ll = LonLat[i].Trim().Split(' ');
+                            if(i != LonLat.Count() - 1)
+                            {
+                                polygonString += ll[1] + " " + ll[0] + ",";
+                            } else
+                            {
+                                polygonString += ll[1] + " " + ll[0] + "))";
+                            }
+                        }
+                        var polygon = new SqlChars(new SqlString(polygonString));
+                        thisDropZone.Position = SqlGeography.Parse(polygonString);
                         //thisDropZone.Position = SqlGeography.Deserialize(rdr.GetSqlBytes(9));
                         DataClasses.GlobalData.DropZones.Add(thisDropZone);
                     }
@@ -832,8 +849,28 @@ namespace FPSService.SQL
                         thisYard.Location = rdr["Location"].ToString();
                         thisYard.TowTruckCompanyName = rdr["TowTruckCompanyName"].ToString();
                         // New 4/19/18 MM
-                        var polygon = new SqlChars(new SqlString("Polygon (( " + rdr["Position"].ToString() + " ))"));
-                        thisYard.Position = SqlGeography.STPolyFromText(polygon, 4236);
+                        string polygonString = "POLYGON ((";
+                        List<string> LonLat = rdr["Position"].ToString().Split(',').ToList();
+                        if (LonLat[0].Trim() != LonLat[LonLat.Count() - 1].Trim())
+                        {
+                            LonLat.Add(LonLat[0]);
+                        }
+                        for (int i = 0; i < LonLat.Count(); i++)
+                        {
+                            string[] ll = LonLat[i].Trim().Split(' ');
+                            if (i != LonLat.Count() - 1)
+                            {
+                                polygonString += ll[1] + " " + ll[0] + ",";
+                            }
+                            else
+                            {
+                                polygonString += ll[1] + " " + ll[0] + "))";
+                            }
+                        }
+                        var polygon = new SqlChars(new SqlString(polygonString));
+                        thisYard.Position = SqlGeography.Parse(polygonString);
+                        //var polygon = new SqlChars(new SqlString("Polygon (( " + rdr["Position"].ToString() + " ))"));
+                        //thisYard.Position = SqlGeography.STPolyFromText(polygon, 4236);
                         //thisYard.Position = SqlGeography.Deserialize(rdr.GetSqlBytes(3));
                         thisYard.YardDescription = rdr["TowTruckYardDescription"].ToString();
                         theseYards.Add(thisYard);
@@ -866,8 +903,27 @@ namespace FPSService.SQL
                         thisBeat.BeatDescription = rdr["BeatDescription"].ToString();
 
                         // New 4/19/18 MM
-                        var polygon = new SqlChars(new SqlString("Polygon (( " + rdr["BeatExtent"].ToString() + " ))"));
-                        thisBeat.BeatExtent = SqlGeography.STPolyFromText(polygon, 4236);
+                        string polygonString = "POLYGON ((";
+                        List<string> LonLat = rdr["BeatExtent"].ToString().Split(',').ToList();
+                        if (LonLat[0].Trim() != LonLat[LonLat.Count() - 1].Trim())
+                        {
+                            LonLat.Add(LonLat[0]);
+                        }
+                        for (int i = 0; i < LonLat.Count(); i++)
+                        {
+                            string[] ll = LonLat[i].Trim().Split(' ');
+                            if (i != LonLat.Count() - 1)
+                            {
+                                polygonString += ll[1] + " " + ll[0] + ",";
+                            }
+                            else
+                            {
+                                polygonString += ll[1] + " " + ll[0] + "))";
+                            }
+                        }
+                        var polygon = new SqlChars(new SqlString(polygonString));
+                        thisBeat.BeatExtent = SqlGeography.Parse(polygonString);
+                        //var polygon = new SqlChars(new SqlString("POLYGON (( " + rdr["BeatExtent"].ToString() + " ))"));
                         //thisBeat.BeatExtent = SqlGeography.Deserialize(rdr.GetSqlBytes(2));
 
                         thisBeat.FreewayID = Convert.ToInt32(rdr["FreewayID"]);
@@ -906,8 +962,28 @@ namespace FPSService.SQL
                         thisSegment.CHPDescription = rdr["CHPDescription"].ToString();
 
                         // New 4/19/18 MM
-                        var polygon = new SqlChars(new SqlString("Polygon (( " + rdr["BeatSegmentExtent"].ToString() + " ))"));
-                        thisSegment.BeatSegmentExtent = SqlGeography.STPolyFromText(polygon, 4236);
+                        string polygonString = "POLYGON ((";
+                        List<string> LonLat = rdr["BeatSegmentExtent"].ToString().Split(',').ToList();
+                        if (LonLat[0].Trim() != LonLat[LonLat.Count() - 1].Trim())
+                        {
+                            LonLat.Add(LonLat[0]);
+                        }
+                        for (int i = 0; i < LonLat.Count(); i++)
+                        {
+                            string[] ll = LonLat[i].Trim().Split(' ');
+                            if (i != LonLat.Count() - 1)
+                            {
+                                polygonString += ll[1] + " " + ll[0] + ",";
+                            }
+                            else
+                            {
+                                polygonString += ll[1] + " " + ll[0] + "))";
+                            }
+                        }
+                        var polygon = new SqlChars(new SqlString(polygonString));
+                        thisSegment.BeatSegmentExtent = SqlGeography.Parse(polygonString);
+                        //var polygon = new SqlChars(new SqlString("Polygon (( " + rdr["BeatSegmentExtent"].ToString() + " ))"));
+                        //thisSegment.BeatSegmentExtent = SqlGeography.STPolyFromText(polygon, 4236);
                         //thisSegment.BeatSegmentExtent = SqlGeography.Deserialize(rdr.GetSqlBytes(2));
 
                         thisSegment.BeatSegmentNumber = rdr["BeatSegmentNumber"].ToString();

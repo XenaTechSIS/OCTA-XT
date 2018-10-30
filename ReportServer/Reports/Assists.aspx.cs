@@ -215,7 +215,7 @@ namespace ReportServer.Reports
                     dt.Columns.Add("Assist Location (Segment #)", Type.GetType("System.String"));
                     dt.Columns.Add("Freeway", Type.GetType("System.String"));
                     dt.Columns.Add("Freeway Segment", Type.GetType("System.String"));
-                    //dt.Columns.Add("Dispatch Location Info", Type.GetType("System.String"));
+                    dt.Columns.Add("Dir", Type.GetType("System.String"));
                     dt.Columns.Add("Lat", Type.GetType("System.String"));
                     dt.Columns.Add("Lon", Type.GetType("System.String"));
                     dt.Columns.Add("Vehicle Type Code", Type.GetType("System.String"));

@@ -34,16 +34,14 @@ namespace FPSService
             mySQL.LoadVehiclePositions();
             mySQL.LoadVehicleTypes();
             mySQL.LoadContractors();
-            mySQL.LoadDropZones();
             mySQL.LoadLeeways();
             mySQL.LoadBeatSchedules();
+            mySQL.LoadDropZones();
             BeatData.Beats.LoadBeats();
             BeatData.Beats.LoadBeatSegments();
             BeatData.YardClass.LoadYards();
             DataClasses.BulkLogger myBulkLogger = new DataClasses.BulkLogger();
             DataClasses.TruckDumper myDumper = new DataClasses.TruckDumper();
-
-            SqlServerTypes.Utilities.LoadNativeAssemblies(Server.MapPath("~/bin"));
         }
 
         protected void Session_Start(object sender, EventArgs e)
