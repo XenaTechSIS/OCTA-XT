@@ -158,21 +158,6 @@ namespace FPSService
 
         [OperationContract]
         string DeleteCallBox(Guid DropZoneID);
-
-        [OperationContract]
-        List<Five11Signs> RetreiveFive11Signs();
-
-        [OperationContract]
-        Five11Signs RetreiveFive11Sign(Guid Five11SignID);
-
-        [OperationContract]
-        string CreateFive11Sign(Five11Signs Five11Sign);
-
-        [OperationContract]
-        string UpdateFive11Sign(Five11Signs Five11Sign);
-
-        [OperationContract]
-        string DeleteFive11Sign(Guid Five11SignID);
     }
 
     #endregion
@@ -599,8 +584,8 @@ namespace FPSService
         public Guid IncidentID { get; set; }
         [DataMember]
         public string IncidentNumber { get; set; }
-        //[DataMember]
-        //public string AssistNumber { get; set; }
+        [DataMember]
+        public string AssistNumber { get; set; }
         [DataMember]
         public string BeatNumber { get; set; }
         [DataMember]
@@ -615,18 +600,12 @@ namespace FPSService
         public string State { get; set; }
         [DataMember]
         public string DispatchNumber { get; set; }
-        //[DataMember]
-        //public string ContractorName { get; set; }
+        [DataMember]
+        public string ContractorName { get; set; }
         [DataMember]
         public bool IsIncidentComplete { get; set; }
         [DataMember]
         public bool IsAcked { get; set; }
-        [DataMember]
-        public MiscData.Contractors contractor { get; set; }
-        [DataMember]
-        public List<MiscData.Assist> Assists { get; set; }
-        [DataMember]
-        public TowTruck.TowTruckDriver Driver { get; set; }
     }
 
     #endregion
@@ -887,8 +866,8 @@ namespace FPSService
         [DataMember]
         public bool Active { get; set; }
 
-        //[DataMember]
-        //public string BeatExtent { get; set; }
+        [DataMember]
+        public string BeatExtent { get; set; }
 
         [DataMember]
         public int FreewayID { get; set; }
@@ -918,7 +897,7 @@ namespace FPSService
         public DateTime EndDate { get; set; }
 
         [DataMember]
-        public List<BeatSegment_New> BeatSegments { get; set; }
+        public List<BeatSegment_Cond> BeatSegments { get; set; }
     }
 
     [DataContract]
@@ -981,27 +960,6 @@ namespace FPSService
     {
         [DataMember]
         public Guid CallBoxID { get; set; }
-        [DataMember]
-        public string TelephoneNumber { get; set; }
-        [DataMember]
-        public string Location { get; set; }
-        [DataMember]
-        public int FreewayID { get; set; }
-        [DataMember]
-        public string SiteType { get; set; }
-        [DataMember]
-        public string Comments { get; set; }
-        [DataMember]
-        public string Position { get; set; }
-        [DataMember]
-        public string SignNumber { get; set; }
-    }
-
-    [DataContract]
-    public class Five11Signs
-    {
-        [DataMember]
-        public Guid Five11SignID { get; set; }
         [DataMember]
         public string TelephoneNumber { get; set; }
         [DataMember]

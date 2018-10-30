@@ -759,21 +759,22 @@ namespace FPSService
             beat.StartDate = DateTime.Now;
             beat.EndDate = DateTime.Now.AddYears(25);
             beat.FreewayID = 0;
-            
+
+            string extstring = "";
             SQL.SQLCode sql = new SQL.SQLCode();
-            //List<latLng> ext = JsonConvert.DeserializeObject<List<latLng>>(beat.BeatExtent);
-            //for (int i = 0; i < ext.Count; i++)
-            //{
-            //    if (i < ext.Count - 1)
-            //    {
-            //        extstring += ext[i].lat + " " + ext[i].lng + ", ";
-            //    }
-            //    else
-            //    {
-            //        extstring += ext[i].lat + " " + ext[i].lng;
-            //    }
-            //}
-            //beat.BeatExtent = extstring;
+            List<latLng> ext = JsonConvert.DeserializeObject<List<latLng>>(beat.BeatExtent);
+            for (int i = 0; i < ext.Count; i++)
+            {
+                if (i < ext.Count - 1)
+                {
+                    extstring += ext[i].lat + " " + ext[i].lng + ", ";
+                }
+                else
+                {
+                    extstring += ext[i].lat + " " + ext[i].lng;
+                }
+            }
+            beat.BeatExtent = extstring;
             string result = sql.CreateBeat(beat);
             BeatData.Beats.LoadBeats();
 
@@ -786,22 +787,21 @@ namespace FPSService
             beat.EndDate = DateTime.Now.AddYears(25);
             beat.FreewayID = 0;
 
-            //string extstring = "";
-            //List<latLng> ext = JsonConvert.DeserializeObject<List<latLng>>(beat.BeatExtent);
-            //for (int i = 0; i < ext.Count; i++)
-            //{
-            //    if (i < ext.Count - 1)
-            //    {
-            //        extstring += ext[i].lat + " " + ext[i].lng + ", ";
-            //    }
-            //    else
-            //    {
-            //        extstring += ext[i].lat + " " + ext[i].lng;
-            //    }
-            //}
-            ////beat.BeatExtent = extstring;
-
+            string extstring = "";
             SQL.SQLCode sql = new SQL.SQLCode();
+            List<latLng> ext = JsonConvert.DeserializeObject<List<latLng>>(beat.BeatExtent);
+            for (int i = 0; i < ext.Count; i++)
+            {
+                if (i < ext.Count - 1)
+                {
+                    extstring += ext[i].lat + " " + ext[i].lng + ", ";
+                }
+                else
+                {
+                    extstring += ext[i].lat + " " + ext[i].lng;
+                }
+            }
+            beat.BeatExtent = extstring;
             string result = sql.CreateBeat(beat);
             BeatData.Beats.LoadBeats();
 
@@ -815,51 +815,28 @@ namespace FPSService
             Beats = sql.RetrieveAllBeats();
             foreach (Beats_New bn in Beats)
             {
-                //string JSON = "[";
-                //string[] extent = bn.BeatExtent.Split(',');
-                //for (int i = 0; i < extent.Length; i++)
-                //{
-                //    string[] LL = extent[i].Trim().Split(' ');
-                //    if (i == extent.Length - 1)
-                //    {
-                //        JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " }";
-                //    }
-                //    else
-                //    {
-                //        JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " },";
-                //    }
-                //}
-                //JSON += "]";
-                //bn.BeatExtent = JSON;
-                bn.BeatSegments = new List<BeatSegment_New>();
+                string JSON = "[";
+                string[] extent = bn.BeatExtent.Split(',');
+                for (int i = 0; i < extent.Length; i++)
+                {
+                    string[] LL = extent[i].Trim().Split(' ');
+                    if (i == extent.Length - 1)
+                    {
+                        JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " }";
+                    }
+                    else
+                    {
+                        JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " },";
+                    }
+                }
+                JSON += "]";
+                bn.BeatExtent = JSON;
+                bn.BeatSegments = new List<BeatSegment_Cond>();
                 if(bn.BeatColor == null || bn.BeatColor == "")
                 {
                     bn.BeatColor = "#000000";
                 }
                 bn.BeatSegments = sql.RetrieveBeatSegments(bn.BeatID);
-
-                //Get this into JSON object for Tolga
-                foreach (BeatSegment_New bsn in bn.BeatSegments)
-                {
-                    string JSON2 = "[";
-                    string[] extent2 = bsn.BeatSegmentExtent.Split(',');
-                    for (int x = 0; x < extent2.Length; x++)
-                    {
-
-                        string[] ex3 = extent2[x].Trim().Split(' ');
-                        if (x == extent2.Length - 1)
-                        {
-                            JSON2 += "{ lat: " + ex3[0] + ", lng: " + ex3[1] + " }";
-                        }
-                        else
-                        {
-                            JSON2 += "{ lat: " + ex3[0] + ", lng: " + ex3[1] + " },";
-                        }
-                    }
-
-                    JSON2 += "]";
-                    bsn.BeatSegmentExtent = JSON2;
-                }
             }
 
             return Beats;
@@ -871,49 +848,27 @@ namespace FPSService
             SQL.SQLCode sql = new SQL.SQLCode();
             Beat = sql.RetrieveBeat(BeatID);
             string JSON = "[";
-            //string[] extent = Beat.BeatExtent.Split(',');
-            //for (int i = 0; i < extent.Length; i++)
-            //{
-            //    string[] LL = extent[i].Trim().Split(' ');
-            //    if (i == extent.Length - 1)
-            //    {
-            //        JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " }";
-            //    }
-            //    else
-            //    {
-            //        JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " },";
-            //    }
-            //}
-            //JSON += "]";
-            //Beat.BeatExtent = JSON;
+            string[] extent = Beat.BeatExtent.Split(',');
+            for (int i = 0; i < extent.Length; i++)
+            {
+                string[] LL = extent[i].Trim().Split(' ');
+                if (i == extent.Length - 1)
+                {
+                    JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " }";
+                }
+                else
+                {
+                    JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " },";
+                }
+            }
+            JSON += "]";
+            Beat.BeatExtent = JSON;
             if (Beat.BeatColor == null || Beat.BeatColor == "")
             {
                 Beat.BeatColor = "#000000";
             }
-            Beat.BeatSegments = new List<BeatSegment_New>();
+            Beat.BeatSegments = new List<BeatSegment_Cond>();
             Beat.BeatSegments = sql.RetrieveBeatSegments(Beat.BeatID);
-
-            //Get this into JSON object for Tolga
-            foreach (BeatSegment_New bsn in Beat.BeatSegments)
-            {
-                string JSON2 = "[";
-                string[] extent2 = bsn.BeatSegmentExtent.Split(',');
-                for (int x = 0; x < extent2.Length; x++)
-                {
-                    string[] ex3 = extent2[x].Trim().Split(' ');
-                    if (x == extent2.Length - 1)
-                    {
-                        JSON2 += "{ lat: " + ex3[0] + ", lng: " + ex3[1] + " }";
-                    }
-                    else
-                    {
-                        JSON2 += "{ lat: " + ex3[0] + ", lng: " + ex3[1] + " },";
-                    }
-                }
-
-                JSON2 += "]";
-                bsn.BeatSegmentExtent = JSON2;
-            }
 
             return Beat;
         }
@@ -1229,7 +1184,7 @@ namespace FPSService
 
             return CallBoxes;
         }
-        
+
         public CallBoxes_New RetreiveCallBox(Guid CallBoxID)
         {
             CallBoxes_New CallBox = new CallBoxes_New();
@@ -1255,116 +1210,6 @@ namespace FPSService
             return CallBox;
         }
 
-        #endregion
-
-        #region 511 Signs CRUD
-
-        public string DeleteFive11Sign(Guid Five11SignID)
-        {
-
-            SQL.SQLCode sql = new SQL.SQLCode();
-            string result = sql.DeleteFive11Sign(Five11SignID);
-            sql.LoadDropZones();
-
-            return result;
-        }
-
-        public string CreateFive11Sign(Five11Signs Five11Sign)
-        {
-            string extstring = "";
-            SQL.SQLCode sql = new SQL.SQLCode();
-            List<latLng> ext = JsonConvert.DeserializeObject<List<latLng>>(Five11Sign.Position);
-            for (int i = 0; i < ext.Count; i++)
-            {
-                if (i < ext.Count - 1)
-                {
-                    extstring += ext[i].lat + " " + ext[i].lng + ", ";
-                }
-                else
-                {
-                    extstring += ext[i].lat + " " + ext[i].lng;
-                }
-            }
-            Five11Sign.Position = extstring;
-            string result = sql.UpdateFive11Sign(Five11Sign);
-
-            return result;
-        }
-
-        public string UpdateFive11Sign(Five11Signs Five11Sign)
-        {
-            string extstring = "";
-            SQL.SQLCode sql = new SQL.SQLCode();
-            List<latLng> ext = JsonConvert.DeserializeObject<List<latLng>>(Five11Sign.Position);
-            for (int i = 0; i < ext.Count; i++)
-            {
-                if (i < ext.Count - 1)
-                {
-                    extstring += ext[i].lat + " " + ext[i].lng + ", ";
-                }
-                else
-                {
-                    extstring += ext[i].lat + " " + ext[i].lng;
-                }
-            }
-            Five11Sign.Position = extstring;
-            string result = sql.UpdateFive11Sign(Five11Sign);
-
-            return result;
-        }
-
-        public List<Five11Signs> RetreiveFive11Signs()
-        {
-            List<Five11Signs> Five11Signs = new List<Five11Signs>();
-            SQL.SQLCode sql = new SQL.SQLCode();
-            Five11Signs = sql.RetreiveFive11Signs();
-            foreach (Five11Signs Five11Sign in Five11Signs)
-            {
-                string JSON = "[";
-                string[] extent = Five11Sign.Position.Split(',');
-                for (int i = 0; i < extent.Length; i++)
-                {
-                    string[] LL = extent[i].Trim().Split(' ');
-                    if (i == extent.Length - 1)
-                    {
-                        JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " }";
-                    }
-                    else
-                    {
-                        JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " },";
-                    }
-                }
-                JSON += "]";
-                Five11Sign.Position = JSON;
-            }
-
-            return Five11Signs;
-        }
-
-        public Five11Signs RetreiveFive11Sign(Guid Five11SignID)
-        {
-            Five11Signs Five11Sign = new Five11Signs();
-            SQL.SQLCode sql = new SQL.SQLCode();
-            Five11Sign = sql.RetreiveFive11Sign(Five11SignID);
-            string JSON = "[";
-            string[] extent = Five11Sign.Position.Split(',');
-            for (int i = 0; i < extent.Length; i++)
-            {
-                string[] LL = extent[i].Trim().Split(' ');
-                if (i == extent.Length - 1)
-                {
-                    JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " }";
-                }
-                else
-                {
-                    JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " },";
-                }
-            }
-            JSON += "]";
-            Five11Sign.Position = JSON;
-
-            return Five11Sign;
-        }
         #endregion
 
         #endregion
@@ -1487,7 +1332,7 @@ namespace FPSService
             {
                 MiscData.Incident inc = DataClasses.GlobalData.FindIncidentByID(ta.IncidentID);
                 TowTruck.TowTruck tt = DataClasses.GlobalData.FindTowTruckByTruckID(ta.FleetVehicleID);
-               
+
                 string State = "Not Connected";
                 if (tt != null)
                 {
@@ -1499,23 +1344,20 @@ namespace FPSService
                     IncidentDisplay id = new IncidentDisplay();
                     id.IncidentID = inc.IncidentID;
                     id.IncidentNumber = inc.IncidentNumber;
-                    //id.AssistNumber = ta.AssistNumber;
+                    id.AssistNumber = ta.AssistNumber;
                     id.BeatNumber = inc.BeatNumber;
-                    id.TruckNumber = tt.TruckNumber;
+                    //id.TruckNumber = tt.TruckNumber;
                     //id.DriverName = tt.Driver.LastName + ", " + tt.Driver.FirstName;
                     id.TruckNumber = mySQL.GetTruckNumberByID(ta.FleetVehicleID);
-                    //id.DriverName = mySQL.FindDriverNameByID(ta.DriverID);
+                    id.DriverName = mySQL.FindDriverNameByID(ta.DriverID);
                     id.DispatchComments = inc.Description;
                     id.Timestamp = inc.TimeStamp;
                     id.DispatchNumber = inc.IncidentNumber;
                     //id.ContractorName = tt.Extended.ContractorName;
-                    //id.ContractorName = DataClasses.GlobalData.FindContractorNameByID(ta.ContractorID);
+                    id.ContractorName = DataClasses.GlobalData.FindContractorNameByID(ta.ContractorID);
                     id.IsIncidentComplete = ta.AssistComplete;
                     id.State = State;
                     id.IsAcked = ta.Acked;
-                    id.Assists = DataClasses.GlobalData.Assists.Where(a => a.IncidentID == inc.IncidentID).ToList();
-                    id.Driver = tt.Driver;
-                    id.contractor = DataClasses.GlobalData.FindContractorByID(ta.ContractorID);
                     idl.Add(id);
                 }
             }

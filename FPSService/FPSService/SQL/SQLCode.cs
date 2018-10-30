@@ -369,8 +369,25 @@ namespace FPSService.SQL
                         thisDropZone.PDPhoneNumber = rdr["PDPhoneNumber"].ToString();
                         thisDropZone.Capacity = Convert.ToInt32(rdr["Capacity"]);
                         // New 4/19/18 MM
-                        var polygon = new SqlChars(new SqlString("Polygon (( " + rdr["Position"].ToString() + " ))"));
-                        thisDropZone.Position = SqlGeography.STPolyFromText(polygon, 4236);
+                        string polygonString = "POLYGON ((";
+                        List<string> LonLat = rdr["Position"].ToString().Split(',').ToList();
+                        if(LonLat[0].Trim() != LonLat[LonLat.Count()-1].Trim())
+                        {
+                            LonLat.Add(LonLat[0]);
+                        }
+                        for(int i = 0; i < LonLat.Count(); i++)
+                        {
+                            string[] ll = LonLat[i].Trim().Split(' ');
+                            if(i != LonLat.Count() - 1)
+                            {
+                                polygonString += ll[1] + " " + ll[0] + ",";
+                            } else
+                            {
+                                polygonString += ll[1] + " " + ll[0] + "))";
+                            }
+                        }
+                        var polygon = new SqlChars(new SqlString(polygonString));
+                        thisDropZone.Position = SqlGeography.Parse(polygonString);
                         //thisDropZone.Position = SqlGeography.Deserialize(rdr.GetSqlBytes(9));
                         DataClasses.GlobalData.DropZones.Add(thisDropZone);
                     }
@@ -832,8 +849,28 @@ namespace FPSService.SQL
                         thisYard.Location = rdr["Location"].ToString();
                         thisYard.TowTruckCompanyName = rdr["TowTruckCompanyName"].ToString();
                         // New 4/19/18 MM
-                        var polygon = new SqlChars(new SqlString("Polygon (( " + rdr["Position"].ToString() + " ))"));
-                        thisYard.Position = SqlGeography.STPolyFromText(polygon, 4236);
+                        string polygonString = "POLYGON ((";
+                        List<string> LonLat = rdr["Position"].ToString().Split(',').ToList();
+                        if (LonLat[0].Trim() != LonLat[LonLat.Count() - 1].Trim())
+                        {
+                            LonLat.Add(LonLat[0]);
+                        }
+                        for (int i = 0; i < LonLat.Count(); i++)
+                        {
+                            string[] ll = LonLat[i].Trim().Split(' ');
+                            if (i != LonLat.Count() - 1)
+                            {
+                                polygonString += ll[1] + " " + ll[0] + ",";
+                            }
+                            else
+                            {
+                                polygonString += ll[1] + " " + ll[0] + "))";
+                            }
+                        }
+                        var polygon = new SqlChars(new SqlString(polygonString));
+                        thisYard.Position = SqlGeography.Parse(polygonString);
+                        //var polygon = new SqlChars(new SqlString("Polygon (( " + rdr["Position"].ToString() + " ))"));
+                        //thisYard.Position = SqlGeography.STPolyFromText(polygon, 4236);
                         //thisYard.Position = SqlGeography.Deserialize(rdr.GetSqlBytes(3));
                         thisYard.YardDescription = rdr["TowTruckYardDescription"].ToString();
                         theseYards.Add(thisYard);
@@ -866,8 +903,27 @@ namespace FPSService.SQL
                         thisBeat.BeatDescription = rdr["BeatDescription"].ToString();
 
                         // New 4/19/18 MM
-                        var polygon = new SqlChars(new SqlString("Polygon (( " + rdr["BeatExtent"].ToString() + " ))"));
-                        thisBeat.BeatExtent = SqlGeography.STPolyFromText(polygon, 4236);
+                        string polygonString = "POLYGON ((";
+                        List<string> LonLat = rdr["BeatExtent"].ToString().Split(',').ToList();
+                        if (LonLat[0].Trim() != LonLat[LonLat.Count() - 1].Trim())
+                        {
+                            LonLat.Add(LonLat[0]);
+                        }
+                        for (int i = 0; i < LonLat.Count(); i++)
+                        {
+                            string[] ll = LonLat[i].Trim().Split(' ');
+                            if (i != LonLat.Count() - 1)
+                            {
+                                polygonString += ll[1] + " " + ll[0] + ",";
+                            }
+                            else
+                            {
+                                polygonString += ll[1] + " " + ll[0] + "))";
+                            }
+                        }
+                        var polygon = new SqlChars(new SqlString(polygonString));
+                        thisBeat.BeatExtent = SqlGeography.Parse(polygonString);
+                        //var polygon = new SqlChars(new SqlString("POLYGON (( " + rdr["BeatExtent"].ToString() + " ))"));
                         //thisBeat.BeatExtent = SqlGeography.Deserialize(rdr.GetSqlBytes(2));
 
                         thisBeat.FreewayID = Convert.ToInt32(rdr["FreewayID"]);
@@ -906,8 +962,28 @@ namespace FPSService.SQL
                         thisSegment.CHPDescription = rdr["CHPDescription"].ToString();
 
                         // New 4/19/18 MM
-                        var polygon = new SqlChars(new SqlString("Polygon (( " + rdr["BeatSegmentExtent"].ToString() + " ))"));
-                        thisSegment.BeatSegmentExtent = SqlGeography.STPolyFromText(polygon, 4236);
+                        string polygonString = "POLYGON ((";
+                        List<string> LonLat = rdr["BeatSegmentExtent"].ToString().Split(',').ToList();
+                        if (LonLat[0].Trim() != LonLat[LonLat.Count() - 1].Trim())
+                        {
+                            LonLat.Add(LonLat[0]);
+                        }
+                        for (int i = 0; i < LonLat.Count(); i++)
+                        {
+                            string[] ll = LonLat[i].Trim().Split(' ');
+                            if (i != LonLat.Count() - 1)
+                            {
+                                polygonString += ll[1] + " " + ll[0] + ",";
+                            }
+                            else
+                            {
+                                polygonString += ll[1] + " " + ll[0] + "))";
+                            }
+                        }
+                        var polygon = new SqlChars(new SqlString(polygonString));
+                        thisSegment.BeatSegmentExtent = SqlGeography.Parse(polygonString);
+                        //var polygon = new SqlChars(new SqlString("Polygon (( " + rdr["BeatSegmentExtent"].ToString() + " ))"));
+                        //thisSegment.BeatSegmentExtent = SqlGeography.STPolyFromText(polygon, 4236);
                         //thisSegment.BeatSegmentExtent = SqlGeography.Deserialize(rdr.GetSqlBytes(2));
 
                         thisSegment.BeatSegmentNumber = rdr["BeatSegmentNumber"].ToString();
@@ -1088,10 +1164,9 @@ namespace FPSService.SQL
                     {
                         Beats_New beat = new Beats_New();
                         beat.Active = Convert.ToBoolean(rdr["Active"]);
-                        //beat.BeatExtent = rdr["BeatExtent"].ToString();
+                        beat.BeatExtent = rdr["BeatExtent"].ToString();
                         beat.BeatID = new Guid(rdr["BeatID"].ToString());
                         beat.BeatNumber = rdr["BeatNumber"].ToString();
-                        beat.BeatColor = rdr["BeatColor"].ToString();
                         beat.BeatDescription = rdr["BeatDescription"].ToString();
                         beat.IsTemporary = Convert.ToBoolean(rdr["IsTemporary"]);
                         beat.LastUpdate = Convert.ToDateTime(rdr["LastUpdate"].ToString());
@@ -1127,10 +1202,9 @@ namespace FPSService.SQL
                     while (rdr.Read())
                     {
                         beat.Active = Convert.ToBoolean(rdr["Active"]);
-                        //beat.BeatExtent = rdr["BeatExtent"].ToString();
+                        beat.BeatExtent = rdr["BeatExtent"].ToString();
                         beat.BeatID = new Guid(rdr["BeatID"].ToString());
                         beat.BeatNumber = rdr["BeatNumber"].ToString();
-                        beat.BeatColor = rdr["BeatColor"].ToString();
                         beat.BeatDescription = rdr["BeatDescription"].ToString();
                         beat.IsTemporary = Convert.ToBoolean(rdr["IsTemporary"]);
                         beat.LastUpdate = Convert.ToDateTime(rdr["LastUpdate"].ToString());
@@ -1151,9 +1225,9 @@ namespace FPSService.SQL
             return beat;
         }
 
-        public List<BeatSegment_New> RetrieveBeatSegments(Guid BeatID)
+        public List<BeatSegment_Cond> RetrieveBeatSegments(Guid BeatID)
         {
-            List<BeatSegment_New> segments = new List<BeatSegment_New>();
+            List<BeatSegment_Cond> segments = new List<BeatSegment_Cond>();
 
             try
             {
@@ -1166,18 +1240,10 @@ namespace FPSService.SQL
                     SqlDataReader rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        BeatSegment_New segment = new BeatSegment_New();
-                        segment.Active = Convert.ToBoolean(rdr["Active"].ToString());
+                        BeatSegment_Cond segment = new BeatSegment_Cond();
                         segment.BeatSegmentDescription = rdr["BeatSegmentDescription"].ToString();
-                        segment.BeatSegmentExtent = rdr["BeatSegmentExtent"].ToString();
                         segment.BeatSegmentID = new Guid(rdr["BeatSegmentID"].ToString());
                         segment.BeatSegmentNumber = rdr["BeatSegmentNumber"].ToString();
-                        segment.CHPDescription = rdr["CHPDescription"].ToString();
-                        segment.CHPDescription2 = rdr["CHPDescription2"].ToString();
-                        segment.Color = rdr["Color"].ToString();
-                        segment.LastUpdate = rdr["LastUpdate"].ToString();
-                        segment.LastUpdateBy = rdr["LastUpdateBy"].ToString();
-                        segment.PIMSID = rdr["PIMSID"].ToString();
                         segments.Add(segment);
                     }
                     conn.Close();
@@ -1428,84 +1494,7 @@ namespace FPSService.SQL
 
             return CallBox;
         }
-    
-        public List<Five11Signs> RetreiveFive11Signs()
-        {
-            List<Five11Signs> Five11Signs = new List<Five11Signs>();
-            logger = new Logging.EventLogger();
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
-                {
-                    conn.Open();
-                    string SQL = "SELECT * FROM [dbo].[Five11Signs]";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
-                    while (rdr.Read())
-                    {
-                        Five11Signs Five11Sign = new Five11Signs();
-                        Five11Sign.Five11SignID = new Guid(rdr["Five11SignID"].ToString());
-                        Five11Sign.TelephoneNumber = rdr["TelephoneNumber"].ToString();
-                        Five11Sign.Location = rdr["Location"].ToString();
-                        Five11Sign.FreewayID = Convert.ToInt32(rdr["FreewayID"]);
-                        Five11Sign.SiteType = rdr["SiteType"].ToString();
-                        Five11Sign.Comments = rdr["Comments"].ToString();
-                        Five11Sign.Position = rdr["Position"].ToString();
-                        Five11Sign.SignNumber = rdr["SignNumber"].ToString();
-                        Five11Signs.Add(Five11Sign);
-                    }
-                    rdr.Close();
-                    rdr = null;
-                    cmd = null;
 
-                    conn.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error RetrieveFive11Signs " + Environment.NewLine + ex.ToString(), true);
-            }
-
-            return Five11Signs;
-        }
-
-        public Five11Signs RetreiveFive11Sign(Guid Five11SignID)
-        {
-            Five11Signs Five11Sign = new Five11Signs();
-            logger = new Logging.EventLogger();
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
-                {
-                    conn.Open();
-                    string SQL = "SELECT * FROM [dbo].[Five11Signs] WHERE Five11SignID = '" + Five11SignID + "'";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
-                    while (rdr.Read())
-                    {
-                        Five11Sign.Five11SignID = new Guid(rdr["Five11SignID"].ToString());
-                        Five11Sign.TelephoneNumber = rdr["TelephoneNumber"].ToString();
-                        Five11Sign.Location = rdr["Location"].ToString();
-                        Five11Sign.FreewayID = Convert.ToInt32(rdr["FreewayID"]);
-                        Five11Sign.SiteType = rdr["SiteType"].ToString();
-                        Five11Sign.Comments = rdr["Comments"].ToString();
-                        Five11Sign.Position = rdr["Position"].ToString();
-                        Five11Sign.SignNumber = rdr["SignNumber"].ToString();
-                    }
-                    rdr.Close();
-                    rdr = null;
-                    cmd = null;
-
-                    conn.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error RetrieveFive11Sign " + Environment.NewLine + ex.ToString(), true);
-            }
-
-            return Five11Sign;
-        }
         /*
         public List<BeatData.BeatClass> LoadBeats()
         {
@@ -2079,7 +2068,7 @@ namespace FPSService.SQL
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@BeatID", beat.BeatID);
                     cmd.Parameters.AddWithValue("@Active", beat.Active);
-                    //cmd.Parameters.AddWithValue("@BeatExtent", beat.BeatExtent);
+                    cmd.Parameters.AddWithValue("@BeatExtent", beat.BeatExtent);
                     cmd.Parameters.AddWithValue("@FreewayID", beat.FreewayID);
                     cmd.Parameters.AddWithValue("@BeatDescription", beat.BeatDescription);
                     cmd.Parameters.AddWithValue("@BeatNumber", beat.BeatNumber);
@@ -2098,7 +2087,7 @@ namespace FPSService.SQL
                     cmd.ExecuteNonQuery();
                     //Add beat segment associations
                     cmd = null;
-                    foreach (BeatSegment_New bs in beat.BeatSegments)
+                    foreach (BeatSegment_Cond bs in beat.BeatSegments)
                     {
                         cmd = new SqlCommand("AssociateBeatSegment", conn);
                         cmd.CommandType = CommandType.StoredProcedure;
@@ -2338,68 +2327,6 @@ namespace FPSService.SQL
 
             return ret;
         }
-
-        public string UpdateFive11Sign(Five11Signs Five11Sign)
-        {
-            logger = new Logging.EventLogger();
-            string ret = "success";
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
-                {
-                    conn.Open();
-                    //Update yard
-                    SqlCommand cmd = new SqlCommand("UpdateFive11Sign", conn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@Five11Signid", Five11Sign.Five11SignID);
-                    cmd.Parameters.AddWithValue("@TelephoneNumber", Five11Sign.TelephoneNumber);
-                    cmd.Parameters.AddWithValue("@Location", Five11Sign.Location);
-                    cmd.Parameters.AddWithValue("@FreewayID", Five11Sign.FreewayID);
-                    cmd.Parameters.AddWithValue("@SiteType", Five11Sign.SiteType);
-                    cmd.Parameters.AddWithValue("@Comments", Five11Sign.Comments);
-                    cmd.Parameters.AddWithValue("@Position", Five11Sign.Position);
-                    cmd.Parameters.AddWithValue("@SignNumber", Five11Sign.SignNumber);
-                    cmd.ExecuteNonQuery();
-                    cmd = null;
-                    conn.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "ERROR CREATING/UPDATING NEW CALLBOX " + Environment.NewLine + ex.ToString(), true);
-                ret = "failure: " + ex;
-            }
-
-            return ret;
-        }
-
-        public string DeleteFive11Sign(Guid Five11SignID)
-        {
-            string ret = "success";
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
-                {
-                    conn.Open();
-                    string SQL = "DELETE FROM [dbo].[Five11Signs] WHERE Five11SignID = '" + Five11SignID + "'";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
-                    rdr.Close();
-                    rdr = null;
-                    cmd = null;
-                    conn.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Deleting CallBox " + Environment.NewLine + ex.ToString(), true);
-
-                ret = "failure";
-            }
-
-            return ret;
-        }
-
         #endregion
 
         #region " SQL Stored Procs "
