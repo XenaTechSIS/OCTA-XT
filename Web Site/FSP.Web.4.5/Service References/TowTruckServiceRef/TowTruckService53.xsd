@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/FPSService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/FPSService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://38.124.164.213:9007/TowTruckService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:import schemaLocation="http://38.124.164.213:9007/TowTruckService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-  <xs:import schemaLocation="http://38.124.164.213:9007/TowTruckService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/FPSService.MiscData" />
-  <xs:import schemaLocation="http://38.124.164.213:9007/TowTruckService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/FPSService.TowTruck" />
+  <xs:import schemaLocation="http://38.124.164.212:9007/TowTruckService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://38.124.164.212:9007/TowTruckService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://38.124.164.212:9007/TowTruckService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/FPSService.MiscData" />
   <xs:complexType name="ArrayOfTowTruckData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="TowTruckData" nillable="true" type="tns:TowTruckData" />
@@ -391,11 +390,12 @@
   <xs:element name="ArrayOfIncidentDisplay" nillable="true" type="tns:ArrayOfIncidentDisplay" />
   <xs:complexType name="IncidentDisplay">
     <xs:sequence>
-      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/FPSService.MiscData" minOccurs="0" name="Assists" nillable="true" type="q2:ArrayOfAssist" />
+      <xs:element minOccurs="0" name="AssistNumber" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/FPSService.MiscData" minOccurs="0" name="Assists" nillable="true" type="q2:Assist" />
       <xs:element minOccurs="0" name="BeatNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ContractorName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DispatchComments" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DispatchNumber" nillable="true" type="xs:string" />
-      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/FPSService.TowTruck" minOccurs="0" name="Driver" nillable="true" type="q3:TowTruckDriver" />
       <xs:element minOccurs="0" name="DriverName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IncidentID" type="ser:guid" />
       <xs:element minOccurs="0" name="IncidentNumber" nillable="true" type="xs:string" />
@@ -404,7 +404,7 @@
       <xs:element minOccurs="0" name="State" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Timestamp" type="xs:dateTime" />
       <xs:element minOccurs="0" name="TruckNumber" nillable="true" type="xs:string" />
-      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/FPSService.MiscData" minOccurs="0" name="contractor" nillable="true" type="q4:Contractors" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/FPSService.MiscData" minOccurs="0" name="contractor" nillable="true" type="q3:Contractors" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="IncidentDisplay" nillable="true" type="tns:IncidentDisplay" />
@@ -441,9 +441,10 @@
       <xs:element minOccurs="0" name="Active" type="xs:boolean" />
       <xs:element minOccurs="0" name="BeatColor" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BeatDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BeatExtent" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BeatID" type="ser:guid" />
       <xs:element minOccurs="0" name="BeatNumber" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="BeatSegments" nillable="true" type="tns:ArrayOfBeatSegment_New" />
+      <xs:element minOccurs="0" name="BeatSegments" nillable="true" type="tns:ArrayOfBeatSegment_Cond" />
       <xs:element minOccurs="0" name="EndDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="FreewayID" type="xs:int" />
       <xs:element minOccurs="0" name="IsTemporary" type="xs:boolean" />
@@ -453,6 +454,22 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Beats_New" nillable="true" type="tns:Beats_New" />
+  <xs:complexType name="ArrayOfBeatSegment_Cond">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BeatSegment_Cond" nillable="true" type="tns:BeatSegment_Cond" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBeatSegment_Cond" nillable="true" type="tns:ArrayOfBeatSegment_Cond" />
+  <xs:complexType name="BeatSegment_Cond">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BeatSegmentDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BeatSegmentExtent" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BeatSegmentID" type="ser:guid" />
+      <xs:element minOccurs="0" name="BeatSegmentNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Color" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BeatSegment_Cond" nillable="true" type="tns:BeatSegment_Cond" />
   <xs:complexType name="ArrayOfYard_New">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Yard_New" nillable="true" type="tns:Yard_New" />

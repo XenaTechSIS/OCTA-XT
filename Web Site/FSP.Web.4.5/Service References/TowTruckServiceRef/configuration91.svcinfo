@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="c9YUFeHmIJ7hzFCIN2WIX/qxTc8=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="PeaJFXWqWujGb10tdbMwScEgNzw=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="BasicHttpBinding_ITowTruckService">
       <properties>
@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="BasicHttpBinding_ITowTruckService" contract="TowTruckServiceRef.ITowTruckService" bindingType="basicHttpBinding" address="http://38.124.164.213:9007/TowTruckService.svc" bindingConfiguration="BasicHttpBinding_ITowTruckService">
+    <endpoint name="BasicHttpBinding_ITowTruckService" contract="TowTruckServiceRef.ITowTruckService" bindingType="basicHttpBinding" address="http://38.124.164.212:9007/TowTruckService.svc" bindingConfiguration="BasicHttpBinding_ITowTruckService">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://38.124.164.213:9007/TowTruckService.svc</serializedValue>
+          <serializedValue>http://38.124.164.212:9007/TowTruckService.svc</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
