@@ -22,12 +22,6 @@ namespace FSP.Web.Controllers
         {
             return View();
         }
-
-        public ActionResult IndexOld()
-        {
-            return View();
-        }
-
       
         #region yards
 
