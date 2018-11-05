@@ -1398,6 +1398,12 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <Content Include="Scripts\sortable.js" />
+<<<<<<< HEAD
+=======
+    <None Include="Service References\TowTruckServiceRef\TowTruckService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+>>>>>>> e5b4931217f65f330561d3201f21622a94b5c7f0
     <None Include="Service References\TowTruckServiceRef\TowTruckService1.disco" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -1440,6 +1446,7 @@
     <Content Include="Views\Incident\Index.cshtml" />
     <None Include="Service References\TowTruckServiceRef\TowTruckService1.wsdl" />
     <None Include="Service References\TowTruckServiceRef\TowTruckService5.xsd">
+<<<<<<< HEAD
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\TowTruckServiceRef\TowTruckService51.xsd">
@@ -1452,6 +1459,17 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\TowTruckServiceRef\TowTruckService54.xsd">
+=======
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TowTruckServiceRef\TowTruckService51.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TowTruckServiceRef\TowTruckService52.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TowTruckServiceRef\TowTruckService53.xsd">
+>>>>>>> e5b4931217f65f330561d3201f21622a94b5c7f0
       <SubType>Designer</SubType>
     </None>
     <None Include="Web.Acceptance.config">

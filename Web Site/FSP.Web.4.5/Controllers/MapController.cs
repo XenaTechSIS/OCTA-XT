@@ -28,6 +28,7 @@ namespace FSP.Web.Controllers
             return View();
         }
 
+      
         #region yards
 
         [HttpGet]
@@ -368,6 +369,10 @@ namespace FSP.Web.Controllers
                             }
                             else
                             {
+<<<<<<< HEAD
+=======
+                                //dbBeat.BeatSegments = new BeatSegment_New[0];
+>>>>>>> e5b4931217f65f330561d3201f21622a94b5c7f0
                                 dbBeat.BeatSegments = new BeatSegment_Cond[0];
                             }
 
