@@ -24,7 +24,7 @@ namespace FSP.Web.Controllers
 
             using (var service = new TowTruckServiceClient())
             {
-                var rawIncidents = service.getIncidentData();
+                 var rawIncidents = service.getIncidentData();
 
                 var incidents = from q in rawIncidents
                                 select new

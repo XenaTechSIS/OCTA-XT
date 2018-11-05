@@ -368,7 +368,7 @@ namespace FSP.Web.Controllers
                             }
                             else
                             {
-                                dbBeat.BeatSegments = new BeatSegment_New[0];
+                                dbBeat.BeatSegments = new BeatSegment_Cond[0];
                             }
 
                             dbBeat.LastUpdate = DateTime.Now;

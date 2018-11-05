@@ -1495,6 +1495,83 @@ namespace FPSService.SQL
             return CallBox;
         }
 
+        public List<Five11Signs> RetreiveFive11Signs()
+        {
+            List<Five11Signs> Five11Signs = new List<Five11Signs>();
+            logger = new Logging.EventLogger();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(ConnStr))
+                {
+                    conn.Open();
+                    string SQL = "SELECT * FROM [dbo].[Five11Signs]";
+                    SqlCommand cmd = new SqlCommand(SQL, conn);
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        Five11Signs Five11Sign = new Five11Signs();
+                        Five11Sign.Five11SignID = new Guid(rdr["Five11SignID"].ToString());
+                        Five11Sign.TelephoneNumber = rdr["TelephoneNumber"].ToString();
+                        Five11Sign.Location = rdr["Location"].ToString();
+                        Five11Sign.FreewayID = Convert.ToInt32(rdr["FreewayID"]);
+                        Five11Sign.SiteType = rdr["SiteType"].ToString();
+                        Five11Sign.Comments = rdr["Comments"].ToString();
+                        Five11Sign.Position = rdr["Position"].ToString();
+                        Five11Sign.SignNumber = rdr["SignNumber"].ToString();
+                        Five11Signs.Add(Five11Sign);
+                    }
+                    rdr.Close();
+                    rdr = null;
+                    cmd = null;
+
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error RetrieveFive11Signs " + Environment.NewLine + ex.ToString(), true);
+            }
+
+            return Five11Signs;
+        }
+
+        public Five11Signs RetreiveFive11Sign(Guid Five11SignID)
+        {
+            Five11Signs Five11Sign = new Five11Signs();
+            logger = new Logging.EventLogger();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(ConnStr))
+                {
+                    conn.Open();
+                    string SQL = "SELECT * FROM [dbo].[Five11Signs] WHERE Five11SignID = '" + Five11SignID + "'";
+                    SqlCommand cmd = new SqlCommand(SQL, conn);
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        Five11Sign.Five11SignID = new Guid(rdr["Five11SignID"].ToString());
+                        Five11Sign.TelephoneNumber = rdr["TelephoneNumber"].ToString();
+                        Five11Sign.Location = rdr["Location"].ToString();
+                        Five11Sign.FreewayID = Convert.ToInt32(rdr["FreewayID"]);
+                        Five11Sign.SiteType = rdr["SiteType"].ToString();
+                        Five11Sign.Comments = rdr["Comments"].ToString();
+                        Five11Sign.Position = rdr["Position"].ToString();
+                        Five11Sign.SignNumber = rdr["SignNumber"].ToString();
+                    }
+                    rdr.Close();
+                    rdr = null;
+                    cmd = null;
+
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error RetrieveFive11Sign " + Environment.NewLine + ex.ToString(), true);
+            }
+
+            return Five11Sign;
+        }
         /*
         public List<BeatData.BeatClass> LoadBeats()
         {
@@ -2310,6 +2387,67 @@ namespace FPSService.SQL
                 {
                     conn.Open();
                     string SQL = "DELETE FROM [dbo].[CallBoxes_New] WHERE CallBoxID = '" + CallBoxID + "'";
+                    SqlCommand cmd = new SqlCommand(SQL, conn);
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    rdr.Close();
+                    rdr = null;
+                    cmd = null;
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Deleting CallBox " + Environment.NewLine + ex.ToString(), true);
+
+                ret = "failure";
+            }
+
+            return ret;
+        }
+
+        public string UpdateFive11Sign(Five11Signs Five11Sign)
+        {
+            logger = new Logging.EventLogger();
+            string ret = "success";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(ConnStr))
+                {
+                    conn.Open();
+                    //Update yard
+                    SqlCommand cmd = new SqlCommand("UpdateFive11Sign", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Five11Signid", Five11Sign.Five11SignID);
+                    cmd.Parameters.AddWithValue("@TelephoneNumber", Five11Sign.TelephoneNumber);
+                    cmd.Parameters.AddWithValue("@Location", Five11Sign.Location);
+                    cmd.Parameters.AddWithValue("@FreewayID", Five11Sign.FreewayID);
+                    cmd.Parameters.AddWithValue("@SiteType", Five11Sign.SiteType);
+                    cmd.Parameters.AddWithValue("@Comments", Five11Sign.Comments);
+                    cmd.Parameters.AddWithValue("@Position", Five11Sign.Position);
+                    cmd.Parameters.AddWithValue("@SignNumber", Five11Sign.SignNumber);
+                    cmd.ExecuteNonQuery();
+                    cmd = null;
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "ERROR CREATING/UPDATING NEW CALLBOX " + Environment.NewLine + ex.ToString(), true);
+                ret = "failure: " + ex;
+            }
+
+            return ret;
+        }
+
+        public string DeleteFive11Sign(Guid Five11SignID)
+        {
+            string ret = "success";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(ConnStr))
+                {
+                    conn.Open();
+                    string SQL = "DELETE FROM [dbo].[Five11Signs] WHERE Five11SignID = '" + Five11SignID + "'";
                     SqlCommand cmd = new SqlCommand(SQL, conn);
                     SqlDataReader rdr = cmd.ExecuteReader();
                     rdr.Close();

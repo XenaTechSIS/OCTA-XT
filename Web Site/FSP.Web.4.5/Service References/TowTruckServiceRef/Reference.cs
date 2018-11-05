@@ -4752,19 +4752,22 @@ namespace FSP.Web.TowTruckServiceRef {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private FSP.Web.TowTruckServiceRef.Assist[] AssistsField;
+        private string AssistNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private FSP.Web.TowTruckServiceRef.Assist AssistsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string BeatNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContractorNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string DispatchCommentsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string DispatchNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private FSP.Web.TowTruckServiceRef.TowTruckDriver DriverField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string DriverNameField;
@@ -4804,7 +4807,20 @@ namespace FSP.Web.TowTruckServiceRef {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public FSP.Web.TowTruckServiceRef.Assist[] Assists {
+        public string AssistNumber {
+            get {
+                return this.AssistNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AssistNumberField, value) != true)) {
+                    this.AssistNumberField = value;
+                    this.RaisePropertyChanged("AssistNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public FSP.Web.TowTruckServiceRef.Assist Assists {
             get {
                 return this.AssistsField;
             }
@@ -4825,6 +4841,19 @@ namespace FSP.Web.TowTruckServiceRef {
                 if ((object.ReferenceEquals(this.BeatNumberField, value) != true)) {
                     this.BeatNumberField = value;
                     this.RaisePropertyChanged("BeatNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContractorName {
+            get {
+                return this.ContractorNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContractorNameField, value) != true)) {
+                    this.ContractorNameField = value;
+                    this.RaisePropertyChanged("ContractorName");
                 }
             }
         }
@@ -4851,19 +4880,6 @@ namespace FSP.Web.TowTruckServiceRef {
                 if ((object.ReferenceEquals(this.DispatchNumberField, value) != true)) {
                     this.DispatchNumberField = value;
                     this.RaisePropertyChanged("DispatchNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public FSP.Web.TowTruckServiceRef.TowTruckDriver Driver {
-            get {
-                return this.DriverField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DriverField, value) != true)) {
-                    this.DriverField = value;
-                    this.RaisePropertyChanged("Driver");
                 }
             }
         }
@@ -4981,240 +4997,6 @@ namespace FSP.Web.TowTruckServiceRef {
                 if ((object.ReferenceEquals(this.contractorField, value) != true)) {
                     this.contractorField = value;
                     this.RaisePropertyChanged("contractor");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="TowTruckDriver", Namespace="http://schemas.datacontract.org/2004/07/FPSService.TowTruck")]
-    [System.SerializableAttribute()]
-    public partial class TowTruckDriver : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Guid AssignedBeatField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Guid BeatScheduleIDField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime BreakStartedField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Guid DriverIDField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string FSPIDField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string FirstNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string LastNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime LunchStartedField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string TowTruckCompanyField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Guid AssignedBeat {
-            get {
-                return this.AssignedBeatField;
-            }
-            set {
-                if ((this.AssignedBeatField.Equals(value) != true)) {
-                    this.AssignedBeatField = value;
-                    this.RaisePropertyChanged("AssignedBeat");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Guid BeatScheduleID {
-            get {
-                return this.BeatScheduleIDField;
-            }
-            set {
-                if ((this.BeatScheduleIDField.Equals(value) != true)) {
-                    this.BeatScheduleIDField = value;
-                    this.RaisePropertyChanged("BeatScheduleID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime BreakStarted {
-            get {
-                return this.BreakStartedField;
-            }
-            set {
-                if ((this.BreakStartedField.Equals(value) != true)) {
-                    this.BreakStartedField = value;
-                    this.RaisePropertyChanged("BreakStarted");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Guid DriverID {
-            get {
-                return this.DriverIDField;
-            }
-            set {
-                if ((this.DriverIDField.Equals(value) != true)) {
-                    this.DriverIDField = value;
-                    this.RaisePropertyChanged("DriverID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FSPID {
-            get {
-                return this.FSPIDField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FSPIDField, value) != true)) {
-                    this.FSPIDField = value;
-                    this.RaisePropertyChanged("FSPID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FirstName {
-            get {
-                return this.FirstNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FirstNameField, value) != true)) {
-                    this.FirstNameField = value;
-                    this.RaisePropertyChanged("FirstName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string LastName {
-            get {
-                return this.LastNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.LastNameField, value) != true)) {
-                    this.LastNameField = value;
-                    this.RaisePropertyChanged("LastName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime LunchStarted {
-            get {
-                return this.LunchStartedField;
-            }
-            set {
-                if ((this.LunchStartedField.Equals(value) != true)) {
-                    this.LunchStartedField = value;
-                    this.RaisePropertyChanged("LunchStarted");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string TowTruckCompany {
-            get {
-                return this.TowTruckCompanyField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TowTruckCompanyField, value) != true)) {
-                    this.TowTruckCompanyField = value;
-                    this.RaisePropertyChanged("TowTruckCompany");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Contractors", Namespace="http://schemas.datacontract.org/2004/07/FPSService.MiscData")]
-    [System.SerializableAttribute()]
-    public partial class Contractors : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ContractCompanyNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Guid ContractorIDField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ContractCompanyName {
-            get {
-                return this.ContractCompanyNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ContractCompanyNameField, value) != true)) {
-                    this.ContractCompanyNameField = value;
-                    this.RaisePropertyChanged("ContractCompanyName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Guid ContractorID {
-            get {
-                return this.ContractorIDField;
-            }
-            set {
-                if ((this.ContractorIDField.Equals(value) != true)) {
-                    this.ContractorIDField = value;
-                    this.RaisePropertyChanged("ContractorID");
                 }
             }
         }
@@ -5820,6 +5602,67 @@ namespace FSP.Web.TowTruckServiceRef {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Contractors", Namespace="http://schemas.datacontract.org/2004/07/FPSService.MiscData")]
+    [System.SerializableAttribute()]
+    public partial class Contractors : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContractCompanyNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid ContractorIDField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContractCompanyName {
+            get {
+                return this.ContractCompanyNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContractCompanyNameField, value) != true)) {
+                    this.ContractCompanyNameField = value;
+                    this.RaisePropertyChanged("ContractCompanyName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid ContractorID {
+            get {
+                return this.ContractorIDField;
+            }
+            set {
+                if ((this.ContractorIDField.Equals(value) != true)) {
+                    this.ContractorIDField = value;
+                    this.RaisePropertyChanged("ContractorID");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="BeatSegment_New", Namespace="http://schemas.datacontract.org/2004/07/FPSService")]
     [System.SerializableAttribute()]
     public partial class BeatSegment_New : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -6042,13 +5885,16 @@ namespace FSP.Web.TowTruckServiceRef {
         private string BeatDescriptionField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BeatExtentField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Guid BeatIDField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string BeatNumberField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private FSP.Web.TowTruckServiceRef.BeatSegment_New[] BeatSegmentsField;
+        private FSP.Web.TowTruckServiceRef.BeatSegment_Cond[] BeatSegmentsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime EndDateField;
@@ -6118,6 +5964,19 @@ namespace FSP.Web.TowTruckServiceRef {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BeatExtent {
+            get {
+                return this.BeatExtentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BeatExtentField, value) != true)) {
+                    this.BeatExtentField = value;
+                    this.RaisePropertyChanged("BeatExtent");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Guid BeatID {
             get {
                 return this.BeatIDField;
@@ -6144,7 +6003,7 @@ namespace FSP.Web.TowTruckServiceRef {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public FSP.Web.TowTruckServiceRef.BeatSegment_New[] BeatSegments {
+        public FSP.Web.TowTruckServiceRef.BeatSegment_Cond[] BeatSegments {
             get {
                 return this.BeatSegmentsField;
             }
@@ -6230,6 +6089,115 @@ namespace FSP.Web.TowTruckServiceRef {
                 if ((this.StartDateField.Equals(value) != true)) {
                     this.StartDateField = value;
                     this.RaisePropertyChanged("StartDate");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BeatSegment_Cond", Namespace="http://schemas.datacontract.org/2004/07/FPSService")]
+    [System.SerializableAttribute()]
+    public partial class BeatSegment_Cond : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BeatSegmentDescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BeatSegmentExtentField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid BeatSegmentIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BeatSegmentNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ColorField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BeatSegmentDescription {
+            get {
+                return this.BeatSegmentDescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BeatSegmentDescriptionField, value) != true)) {
+                    this.BeatSegmentDescriptionField = value;
+                    this.RaisePropertyChanged("BeatSegmentDescription");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BeatSegmentExtent {
+            get {
+                return this.BeatSegmentExtentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BeatSegmentExtentField, value) != true)) {
+                    this.BeatSegmentExtentField = value;
+                    this.RaisePropertyChanged("BeatSegmentExtent");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid BeatSegmentID {
+            get {
+                return this.BeatSegmentIDField;
+            }
+            set {
+                if ((this.BeatSegmentIDField.Equals(value) != true)) {
+                    this.BeatSegmentIDField = value;
+                    this.RaisePropertyChanged("BeatSegmentID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BeatSegmentNumber {
+            get {
+                return this.BeatSegmentNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BeatSegmentNumberField, value) != true)) {
+                    this.BeatSegmentNumberField = value;
+                    this.RaisePropertyChanged("BeatSegmentNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Color {
+            get {
+                return this.ColorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ColorField, value) != true)) {
+                    this.ColorField = value;
+                    this.RaisePropertyChanged("Color");
                 }
             }
         }

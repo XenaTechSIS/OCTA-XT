@@ -60,10 +60,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/23/2018 16:37:29</publishTime>
     </File>
     <File Include="bin/FPSService.dll">
-      <publishTime>10/30/2018 12:08:33</publishTime>
+      <publishTime>11/04/2018 08:51:07</publishTime>
     </File>
     <File Include="bin/FPSService.pdb">
-      <publishTime>10/30/2018 12:08:33</publishTime>
+      <publishTime>11/04/2018 08:51:07</publishTime>
     </File>
     <File Include="bin/Microsoft.SqlServer.Types.dll">
       <publishTime>09/27/2018 09:33:46</publishTime>
@@ -75,13 +75,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/23/2018 18:22:26</publishTime>
     </File>
     <File Include="bin/SqlServerTypes/x64/SqlServerSpatial140.dll">
-      <publishTime>10/23/2018 18:22:26</publishTime>
+      <publishTime>10/30/2018 13:52:01</publishTime>
     </File>
     <File Include="bin/SqlServerTypes/x86/msvcr120.dll">
       <publishTime>10/23/2018 18:22:26</publishTime>
     </File>
     <File Include="bin/SqlServerTypes/x86/SqlServerSpatial140.dll">
-      <publishTime>10/23/2018 18:22:26</publishTime>
+      <publishTime>10/30/2018 13:52:01</publishTime>
     </File>
     <File Include="bin/System.Data.Entity.dll">
       <publishTime>06/19/2015 23:14:56</publishTime>
@@ -276,13 +276,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/23/2018 18:22:26</publishTime>
     </File>
     <File Include="SqlServerTypes/x64/SqlServerSpatial140.dll">
-      <publishTime>10/23/2018 18:22:26</publishTime>
+      <publishTime>10/30/2018 13:52:01</publishTime>
     </File>
     <File Include="SqlServerTypes/x86/msvcr120.dll">
       <publishTime>10/23/2018 18:22:26</publishTime>
     </File>
     <File Include="SqlServerTypes/x86/SqlServerSpatial140.dll">
-      <publishTime>10/23/2018 18:22:26</publishTime>
+      <publishTime>10/30/2018 13:52:01</publishTime>
     </File>
     <File Include="TabletClient/Assist.html">
       <publishTime>10/23/2018 16:37:29</publishTime>
@@ -525,7 +525,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/23/2018 16:37:29</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>10/30/2018 12:08:33</publishTime>
+      <publishTime>10/30/2018 17:13:28</publishTime>
     </File>
     <File Include="WebSite/CurrentConnects.aspx">
       <publishTime>10/23/2018 16:37:29</publishTime>

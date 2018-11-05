@@ -567,7 +567,6 @@ namespace FPSService
         }
 
 
-
         /*
         public void AddTruckAssistRequest(string IPAddress, AssistReq thisReq, Guid IncidentID)
         {
@@ -832,7 +831,7 @@ namespace FPSService
                 JSON += "]";
                 bn.BeatExtent = JSON;
                 bn.BeatSegments = new List<BeatSegment_Cond>();
-                if(bn.BeatColor == null || bn.BeatColor == "")
+                if (bn.BeatColor == null || bn.BeatColor == "")
                 {
                     bn.BeatColor = "#000000";
                 }
@@ -1212,6 +1211,116 @@ namespace FPSService
 
         #endregion
 
+
+        #region 511 Signs CRUD
+
+        public string DeleteFive11Sign(Guid Five11SignID)
+        {
+
+            SQL.SQLCode sql = new SQL.SQLCode();
+            string result = sql.DeleteFive11Sign(Five11SignID);
+            sql.LoadDropZones();
+
+            return result;
+        }
+
+        public string CreateFive11Sign(Five11Signs Five11Sign)
+        {
+            string extstring = "";
+            SQL.SQLCode sql = new SQL.SQLCode();
+            List<latLng> ext = JsonConvert.DeserializeObject<List<latLng>>(Five11Sign.Position);
+            for (int i = 0; i < ext.Count; i++)
+            {
+                if (i < ext.Count - 1)
+                {
+                    extstring += ext[i].lat + " " + ext[i].lng + ", ";
+                }
+                else
+                {
+                    extstring += ext[i].lat + " " + ext[i].lng;
+                }
+            }
+            Five11Sign.Position = extstring;
+            string result = sql.UpdateFive11Sign(Five11Sign);
+
+            return result;
+        }
+
+        public string UpdateFive11Sign(Five11Signs Five11Sign)
+        {
+            string extstring = "";
+            SQL.SQLCode sql = new SQL.SQLCode();
+            List<latLng> ext = JsonConvert.DeserializeObject<List<latLng>>(Five11Sign.Position);
+            for (int i = 0; i < ext.Count; i++)
+            {
+                if (i < ext.Count - 1)
+                {
+                    extstring += ext[i].lat + " " + ext[i].lng + ", ";
+                }
+                else
+                {
+                    extstring += ext[i].lat + " " + ext[i].lng;
+                }
+            }
+            Five11Sign.Position = extstring;
+            string result = sql.UpdateFive11Sign(Five11Sign);
+
+            return result;
+        }
+
+        public List<Five11Signs> RetreiveFive11Signs()
+        {
+            List<Five11Signs> Five11Signs = new List<Five11Signs>();
+            SQL.SQLCode sql = new SQL.SQLCode();
+            Five11Signs = sql.RetreiveFive11Signs();
+            foreach (Five11Signs Five11Sign in Five11Signs)
+            {
+                string JSON = "[";
+                string[] extent = Five11Sign.Position.Split(',');
+                for (int i = 0; i < extent.Length; i++)
+                {
+                    string[] LL = extent[i].Trim().Split(' ');
+                    if (i == extent.Length - 1)
+                    {
+                        JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " }";
+                    }
+                    else
+                    {
+                        JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " },";
+                    }
+                }
+                JSON += "]";
+                Five11Sign.Position = JSON;
+            }
+
+            return Five11Signs;
+        }
+
+        public Five11Signs RetreiveFive11Sign(Guid Five11SignID)
+        {
+            Five11Signs Five11Sign = new Five11Signs();
+            SQL.SQLCode sql = new SQL.SQLCode();
+            Five11Sign = sql.RetreiveFive11Sign(Five11SignID);
+            string JSON = "[";
+            string[] extent = Five11Sign.Position.Split(',');
+            for (int i = 0; i < extent.Length; i++)
+            {
+                string[] LL = extent[i].Trim().Split(' ');
+                if (i == extent.Length - 1)
+                {
+                    JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " }";
+                }
+                else
+                {
+                    JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " },";
+                }
+            }
+            JSON += "]";
+            Five11Sign.Position = JSON;
+
+            return Five11Sign;
+        }
+        #endregion
         #endregion
 
         public int GetUsedBreakTime(string DriverID, string Type)
@@ -1358,6 +1467,8 @@ namespace FPSService
                     id.IsIncidentComplete = ta.AssistComplete;
                     id.State = State;
                     id.IsAcked = ta.Acked;
+                    id.contractor = DataClasses.GlobalData.Contractors.Where(c => c.ContractorID == ta.ContractorID).FirstOrDefault();
+                    id.Assists = DataClasses.GlobalData.FindAssistByID(ta.AssistID);
                     idl.Add(id);
                 }
             }

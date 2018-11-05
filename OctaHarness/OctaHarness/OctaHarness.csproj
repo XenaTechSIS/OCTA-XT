@@ -39,14 +39,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ionic.Zip.Reduced">
-      <HintPath>..\..\..\Users\elahti\Downloads\SharpKml 1.05 - Binary\Debug\Ionic.Zip.Reduced.dll</HintPath>
+      <HintPath>..\..\..\..\..\Desktop\OCTA Harness\Ionic.Zip.Reduced.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.Types, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft SQL Server\110\Shared\Microsoft.SqlServer.Types.dll</HintPath>
     </Reference>
     <Reference Include="SharpKml">
-      <HintPath>..\..\..\Users\elahti\Downloads\SharpKml 1.05 - Binary\Debug\SharpKml.dll</HintPath>
+      <HintPath>..\..\..\..\..\Desktop\OCTA Harness\SharpKml.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />

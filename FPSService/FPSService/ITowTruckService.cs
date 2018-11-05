@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using FPSService.MiscData;
 using Microsoft.SqlServer.Types;
 
 namespace FPSService
@@ -158,6 +159,21 @@ namespace FPSService
 
         [OperationContract]
         string DeleteCallBox(Guid DropZoneID);
+
+        [OperationContract]
+        List<Five11Signs> RetreiveFive11Signs();
+
+        [OperationContract]
+        Five11Signs RetreiveFive11Sign(Guid Five11SignID);
+
+        [OperationContract]
+        string CreateFive11Sign(Five11Signs Five11Sign);
+
+        [OperationContract]
+        string UpdateFive11Sign(Five11Signs Five11Sign);
+
+        [OperationContract]
+        string DeleteFive11Sign(Guid Five11SignID);
     }
 
     #endregion
@@ -606,6 +622,10 @@ namespace FPSService
         public bool IsIncidentComplete { get; set; }
         [DataMember]
         public bool IsAcked { get; set; }
+        [DataMember]
+        public Contractors contractor { get; set; }
+        [DataMember]
+        public Assist Assists { get; set; }
     }
 
     #endregion
@@ -855,6 +875,12 @@ namespace FPSService
 
         [DataMember]
         public string BeatSegmentDescription { get; set; }
+
+        [DataMember]
+        public string Color { get; set; }
+
+        [DataMember]
+        public string BeatSegmentExtent { get; set; }
     }
 
     [DataContract]
@@ -960,6 +986,27 @@ namespace FPSService
     {
         [DataMember]
         public Guid CallBoxID { get; set; }
+        [DataMember]
+        public string TelephoneNumber { get; set; }
+        [DataMember]
+        public string Location { get; set; }
+        [DataMember]
+        public int FreewayID { get; set; }
+        [DataMember]
+        public string SiteType { get; set; }
+        [DataMember]
+        public string Comments { get; set; }
+        [DataMember]
+        public string Position { get; set; }
+        [DataMember]
+        public string SignNumber { get; set; }
+    }
+
+    [DataContract]
+    public class Five11Signs
+    {
+        [DataMember]
+        public Guid Five11SignID { get; set; }
         [DataMember]
         public string TelephoneNumber { get; set; }
         [DataMember]
