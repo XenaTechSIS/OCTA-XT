@@ -1157,7 +1157,7 @@ namespace FPSService.SQL
                 using (SqlConnection conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    string SQL = "SELECT * FROM [dbo].[Beats_NEW] WHERE ACTIVE = 1";
+                    string SQL = "SELECT * FROM [dbo].[Beats_NEW] WHERE ACTIVE = 1 AND BeatExtent != ''";
                     SqlCommand cmd = new SqlCommand(SQL, conn);
                     SqlDataReader rdr = cmd.ExecuteReader();
                     while (rdr.Read())
