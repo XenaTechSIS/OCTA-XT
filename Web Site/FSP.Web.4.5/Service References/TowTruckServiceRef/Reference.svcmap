@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="b26409b4-ed0f-4f90-bad6-6eb441b37c2d" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="0cb7df9d-cc8f-4978-af02-c6a408967b94" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
     <EnableDataBinding>true</EnableDataBinding>
     <ExcludedTypes />
     <ImportXmlTypes>false</ImportXmlTypes>
@@ -12,7 +13,7 @@
     <GenerateSerializableTypes>true</GenerateSerializableTypes>
     <Serializer>Auto</Serializer>
     <UseSerializerForFaults>true</UseSerializerForFaults>
-    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
     <ReferencedAssemblies />
     <ReferencedDataContractTypes />
     <ServiceContractMappings />
@@ -21,23 +22,13 @@
     <MetadataSource Address="http://38.124.164.212:9007/TowTruckService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-<<<<<<< HEAD
-    <MetadataFile FileName="TowTruckService5.xsd" MetadataType="Schema" ID="9309d829-df2e-48af-915e-c83ea2d05867" SourceId="1" SourceUrl="http://38.124.164.212:9007/TowTruckService.svc?xsd=xsd3" />
-    <MetadataFile FileName="TowTruckService1.wsdl" MetadataType="Wsdl" ID="5875297e-f7dd-4264-945c-817244b35570" SourceId="1" SourceUrl="http://38.124.164.212:9007/TowTruckService.svc?wsdl" />
-    <MetadataFile FileName="TowTruckService51.xsd" MetadataType="Schema" ID="86ca4734-deaf-4062-b7f9-bb6c151bd3b6" SourceId="1" SourceUrl="http://38.124.164.212:9007/TowTruckService.svc?xsd=xsd0" />
-    <MetadataFile FileName="TowTruckService52.xsd" MetadataType="Schema" ID="cbe6b6a3-bc39-4376-83c6-a6b996c01c14" SourceId="1" SourceUrl="http://38.124.164.212:9007/TowTruckService.svc?xsd=xsd1" />
-    <MetadataFile FileName="TowTruckService1.disco" MetadataType="Disco" ID="6b1dc429-c1c2-447b-aca9-1cf7caef41ca" SourceId="1" SourceUrl="http://38.124.164.212:9007/TowTruckService.svc?disco" />
-    <MetadataFile FileName="TowTruckService53.xsd" MetadataType="Schema" ID="d1f72576-1217-4ba2-9bdc-a443d3896f25" SourceId="1" SourceUrl="http://38.124.164.212:9007/TowTruckService.svc?xsd=xsd2" />
-    <MetadataFile FileName="TowTruckService54.xsd" MetadataType="Schema" ID="77211575-e448-42b0-8463-dc011e248fdc" SourceId="1" SourceUrl="http://38.124.164.212:9007/TowTruckService.svc?xsd=xsd4" />
-=======
-    <MetadataFile FileName="TowTruckService5.xsd" MetadataType="Schema" ID="1a449973-d761-4760-99cb-f90788a94332" SourceId="1" SourceUrl="http://38.124.164.212:9007/TowTruckService.svc?xsd=xsd3" />
-    <MetadataFile FileName="TowTruckService1.wsdl" MetadataType="Wsdl" ID="a5ec03e4-c644-430f-adbf-2577fd216713" SourceId="1" SourceUrl="http://38.124.164.212:9007/TowTruckService.svc?wsdl" />
-    <MetadataFile FileName="TowTruckService51.xsd" MetadataType="Schema" ID="8a4fac2a-6d1c-4dd0-b4ba-92b7fb8fbf85" SourceId="1" SourceUrl="http://38.124.164.212:9007/TowTruckService.svc?xsd=xsd0" />
-    <MetadataFile FileName="TowTruckService52.xsd" MetadataType="Schema" ID="f9875603-d49c-42a1-8ac1-80c7f0fc8bd5" SourceId="1" SourceUrl="http://38.124.164.212:9007/TowTruckService.svc?xsd=xsd1" />
-    <MetadataFile FileName="TowTruckService1.disco" MetadataType="Disco" ID="6d8e08b0-f8bf-419c-b719-35c0061b3eb5" SourceId="1" SourceUrl="http://38.124.164.212:9007/TowTruckService.svc?disco" />
-    <MetadataFile FileName="TowTruckService53.xsd" MetadataType="Schema" ID="2eba262a-179a-4717-8a03-c98f1943423d" SourceId="1" SourceUrl="http://38.124.164.212:9007/TowTruckService.svc?xsd=xsd2" />
-    <MetadataFile FileName="TowTruckService.xsd" MetadataType="Schema" ID="3073b7f5-7ca7-437d-bcd0-641d092d83ba" SourceId="1" SourceUrl="http://38.124.164.212:9007/TowTruckService.svc?xsd=xsd4" />
->>>>>>> e5b4931217f65f330561d3201f21622a94b5c7f0
+    <MetadataFile FileName="TowTruckService.xsd" MetadataType="Schema" ID="7259cc05-a035-4489-b6b9-f3da970a7e70" SourceId="1" SourceUrl="http://38.124.164.212:9007/TowTruckService.svc?xsd=xsd3" />
+    <MetadataFile FileName="TowTruckService.wsdl" MetadataType="Wsdl" ID="034fe0b1-8f53-4ab1-b148-d56cdea33462" SourceId="1" SourceUrl="http://38.124.164.212:9007/TowTruckService.svc?wsdl" />
+    <MetadataFile FileName="TowTruckService1.xsd" MetadataType="Schema" ID="ccd39694-16ec-4867-9eac-3b50baf87391" SourceId="1" SourceUrl="http://38.124.164.212:9007/TowTruckService.svc?xsd=xsd0" />
+    <MetadataFile FileName="TowTruckService2.xsd" MetadataType="Schema" ID="29a35fe8-fd92-4508-b694-388ae1a83ccb" SourceId="1" SourceUrl="http://38.124.164.212:9007/TowTruckService.svc?xsd=xsd1" />
+    <MetadataFile FileName="TowTruckService.disco" MetadataType="Disco" ID="4ff1e5dd-1608-4ca8-b5b0-af01cf86b844" SourceId="1" SourceUrl="http://38.124.164.212:9007/TowTruckService.svc?disco" />
+    <MetadataFile FileName="TowTruckService3.xsd" MetadataType="Schema" ID="39535611-77a0-4a85-88f7-053afb041b7f" SourceId="1" SourceUrl="http://38.124.164.212:9007/TowTruckService.svc?xsd=xsd2" />
+    <MetadataFile FileName="TowTruckService4.xsd" MetadataType="Schema" ID="d5a6163a-3fd5-466e-8f4c-ca8648bdf379" SourceId="1" SourceUrl="http://38.124.164.212:9007/TowTruckService.svc?xsd=xsd4" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

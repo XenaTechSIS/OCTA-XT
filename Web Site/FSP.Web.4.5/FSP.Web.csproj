@@ -206,6 +206,11 @@
     <Compile Include="Controllers\MapController.cs" />
     <Compile Include="Controllers\UtilController.cs" />
     <Compile Include="Helpers\HtmlExtensions.cs" />
+    <Compile Include="Service References\TowTruckServiceRef\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
     <Content Include="app\app.js" />
     <Content Include="app\core\app.config.js" />
@@ -350,11 +355,6 @@
     <Compile Include="Models\UITowTruck.cs" />
     <Compile Include="Models\UIUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service References\TowTruckServiceRef\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\AssistEntry\ClientCSS.css" />
@@ -1349,8 +1349,7 @@
     <Content Include="Scripts\toastr.min.js" />
     <Content Include="Scripts\Tooltip.js" />
     <Content Include="Scripts\version.json" />
-    <None Include="Service References\TowTruckServiceRef\configuration91.svcinfo" />
-    <None Include="Service References\TowTruckServiceRef\configuration.svcinfo" />
+    <Content Include="Scripts\sortable.js" />
     <Content Include="Service References\TowTruckServiceRef\FSP.Web.TowTruckServiceRef.AlarmStatus.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
@@ -1358,6 +1357,21 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <Content Include="Service References\TowTruckServiceRef\FSP.Web.TowTruckServiceRef.AssistTruck.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TowTruckServiceRef\FSP.Web.TowTruckServiceRef.BeatSegment_New.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TowTruckServiceRef\FSP.Web.TowTruckServiceRef.Beats_New.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TowTruckServiceRef\FSP.Web.TowTruckServiceRef.CallBoxes_New.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TowTruckServiceRef\FSP.Web.TowTruckServiceRef.DropZone_New.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\TowTruckServiceRef\FSP.Web.TowTruckServiceRef.Five11Signs.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <Content Include="Service References\TowTruckServiceRef\FSP.Web.TowTruckServiceRef.IncidentDisplay.datasource">
@@ -1375,30 +1389,16 @@
     <Content Include="Service References\TowTruckServiceRef\FSP.Web.TowTruckServiceRef.TowTruckData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Service References\TowTruckServiceRef\FSP.Web.TowTruckServiceRef.BeatSegment_New.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\TowTruckServiceRef\FSP.Web.TowTruckServiceRef.Beats_New.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\TowTruckServiceRef\FSP.Web.TowTruckServiceRef.CallBoxes_New.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\TowTruckServiceRef\FSP.Web.TowTruckServiceRef.DropZone_New.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
     <Content Include="Service References\TowTruckServiceRef\FSP.Web.TowTruckServiceRef.Yard_New.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Service References\TowTruckServiceRef\FSP.Web.TowTruckServiceRef.Five11Signs.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
+    <None Include="Service References\TowTruckServiceRef\TowTruckService.disco" />
+    <None Include="Service References\TowTruckServiceRef\configuration91.svcinfo" />
+    <None Include="Service References\TowTruckServiceRef\configuration.svcinfo" />
     <None Include="Service References\TowTruckServiceRef\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="Scripts\sortable.js" />
-    <None Include="Service References\TowTruckServiceRef\TowTruckService1.disco" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1438,29 +1438,20 @@
     <Content Include="Views\EmailReport\Edit.cshtml" />
     <Content Include="Views\EmailReport\Delete.cshtml" />
     <Content Include="Views\Incident\Index.cshtml" />
-    <None Include="Service References\TowTruckServiceRef\TowTruckService1.wsdl" />
-    <None Include="Service References\TowTruckServiceRef\TowTruckService5.xsd">
+    <None Include="Service References\TowTruckServiceRef\TowTruckService.wsdl" />
+    <None Include="Service References\TowTruckServiceRef\TowTruckService.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\TowTruckServiceRef\TowTruckService51.xsd">
+    <None Include="Service References\TowTruckServiceRef\TowTruckService1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\TowTruckServiceRef\TowTruckService52.xsd">
+    <None Include="Service References\TowTruckServiceRef\TowTruckService2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\TowTruckServiceRef\TowTruckService53.xsd">
+    <None Include="Service References\TowTruckServiceRef\TowTruckService3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\TowTruckServiceRef\TowTruckService54.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\TowTruckServiceRef\TowTruckService51.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\TowTruckServiceRef\TowTruckService52.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\TowTruckServiceRef\TowTruckService53.xsd">
+    <None Include="Service References\TowTruckServiceRef\TowTruckService4.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Web.Acceptance.config">

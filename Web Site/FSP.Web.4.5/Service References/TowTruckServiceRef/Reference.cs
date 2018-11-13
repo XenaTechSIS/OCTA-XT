@@ -6863,158 +6863,314 @@ namespace FSP.Web.TowTruckServiceRef {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/CurrentTrucks", ReplyAction="http://tempuri.org/ITowTruckService/CurrentTrucksResponse")]
         FSP.Web.TowTruckServiceRef.TowTruckData[] CurrentTrucks();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/CurrentTrucks", ReplyAction="http://tempuri.org/ITowTruckService/CurrentTrucksResponse")]
+        System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.TowTruckData[]> CurrentTrucksAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/SingleTruckDump", ReplyAction="http://tempuri.org/ITowTruckService/SingleTruckDumpResponse")]
         void SingleTruckDump(FSP.Web.TowTruckServiceRef.CopyTruck t);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/SingleTruckDump", ReplyAction="http://tempuri.org/ITowTruckService/SingleTruckDumpResponse")]
+        System.Threading.Tasks.Task SingleTruckDumpAsync(FSP.Web.TowTruckServiceRef.CopyTruck t);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/UnexcuseAlarm", ReplyAction="http://tempuri.org/ITowTruckService/UnexcuseAlarmResponse")]
         void UnexcuseAlarm(string _vehicleNumber, string _beatNumber, string _alarm, string _driverName, string _comments);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/UnexcuseAlarm", ReplyAction="http://tempuri.org/ITowTruckService/UnexcuseAlarmResponse")]
+        System.Threading.Tasks.Task UnexcuseAlarmAsync(string _vehicleNumber, string _beatNumber, string _alarm, string _driverName, string _comments);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/TruckDump", ReplyAction="http://tempuri.org/ITowTruckService/TruckDumpResponse")]
         void TruckDump(FSP.Web.TowTruckServiceRef.CopyTruck[] trucks);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/TruckDump", ReplyAction="http://tempuri.org/ITowTruckService/TruckDumpResponse")]
+        System.Threading.Tasks.Task TruckDumpAsync(FSP.Web.TowTruckServiceRef.CopyTruck[] trucks);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/ClearAlarm", ReplyAction="http://tempuri.org/ITowTruckService/ClearAlarmResponse")]
         void ClearAlarm(string _vehicleNumber, string _alarm);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/ClearAlarm", ReplyAction="http://tempuri.org/ITowTruckService/ClearAlarmResponse")]
+        System.Threading.Tasks.Task ClearAlarmAsync(string _vehicleNumber, string _alarm);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/ExcuseAlarm", ReplyAction="http://tempuri.org/ITowTruckService/ExcuseAlarmResponse")]
         void ExcuseAlarm(string _vehicleNumber, string _beatNumber, string _alarm, string _driverName, string _comments);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/ExcuseAlarm", ReplyAction="http://tempuri.org/ITowTruckService/ExcuseAlarmResponse")]
+        System.Threading.Tasks.Task ExcuseAlarmAsync(string _vehicleNumber, string _beatNumber, string _alarm, string _driverName, string _comments);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/GetPreloadedData", ReplyAction="http://tempuri.org/ITowTruckService/GetPreloadedDataResponse")]
         string[] GetPreloadedData(string Type);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/GetPreloadedData", ReplyAction="http://tempuri.org/ITowTruckService/GetPreloadedDataResponse")]
+        System.Threading.Tasks.Task<string[]> GetPreloadedDataAsync(string Type);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/AddIncident", ReplyAction="http://tempuri.org/ITowTruckService/AddIncidentResponse")]
         void AddIncident(FSP.Web.TowTruckServiceRef.IncidentIn thisIncidentIn);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/AddIncident", ReplyAction="http://tempuri.org/ITowTruckService/AddIncidentResponse")]
+        System.Threading.Tasks.Task AddIncidentAsync(FSP.Web.TowTruckServiceRef.IncidentIn thisIncidentIn);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/GetAllIncidents", ReplyAction="http://tempuri.org/ITowTruckService/GetAllIncidentsResponse")]
         FSP.Web.TowTruckServiceRef.IncidentScreenData[] GetAllIncidents();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/GetAllIncidents", ReplyAction="http://tempuri.org/ITowTruckService/GetAllIncidentsResponse")]
+        System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.IncidentScreenData[]> GetAllIncidentsAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/FindIncidentByID", ReplyAction="http://tempuri.org/ITowTruckService/FindIncidentByIDResponse")]
         FSP.Web.TowTruckServiceRef.IncidentIn FindIncidentByID(System.Guid IncidentID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/FindIncidentByID", ReplyAction="http://tempuri.org/ITowTruckService/FindIncidentByIDResponse")]
+        System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.IncidentIn> FindIncidentByIDAsync(System.Guid IncidentID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/ClearIncident", ReplyAction="http://tempuri.org/ITowTruckService/ClearIncidentResponse")]
         void ClearIncident(System.Guid IncidentID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/ClearIncident", ReplyAction="http://tempuri.org/ITowTruckService/ClearIncidentResponse")]
+        System.Threading.Tasks.Task ClearIncidentAsync(System.Guid IncidentID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/AddAssist", ReplyAction="http://tempuri.org/ITowTruckService/AddAssistResponse")]
         void AddAssist(FSP.Web.TowTruckServiceRef.AssistReq thisReq);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/AddAssist", ReplyAction="http://tempuri.org/ITowTruckService/AddAssistResponse")]
+        System.Threading.Tasks.Task AddAssistAsync(FSP.Web.TowTruckServiceRef.AssistReq thisReq);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/GetAllAssists", ReplyAction="http://tempuri.org/ITowTruckService/GetAllAssistsResponse")]
         FSP.Web.TowTruckServiceRef.AssistScreenData[] GetAllAssists();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/GetAllAssists", ReplyAction="http://tempuri.org/ITowTruckService/GetAllAssistsResponse")]
+        System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.AssistScreenData[]> GetAllAssistsAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/GetAssistTrucks", ReplyAction="http://tempuri.org/ITowTruckService/GetAssistTrucksResponse")]
         FSP.Web.TowTruckServiceRef.AssistTruck[] GetAssistTrucks();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/GetAssistTrucks", ReplyAction="http://tempuri.org/ITowTruckService/GetAssistTrucksResponse")]
+        System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.AssistTruck[]> GetAssistTrucksAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/GetUsedBreakTime", ReplyAction="http://tempuri.org/ITowTruckService/GetUsedBreakTimeResponse")]
         int GetUsedBreakTime(string DriverID, string Type);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/GetUsedBreakTime", ReplyAction="http://tempuri.org/ITowTruckService/GetUsedBreakTimeResponse")]
+        System.Threading.Tasks.Task<int> GetUsedBreakTimeAsync(string DriverID, string Type);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/GetTruckDrivers", ReplyAction="http://tempuri.org/ITowTruckService/GetTruckDriversResponse")]
         FSP.Web.TowTruckServiceRef.ListDrivers[] GetTruckDrivers();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/GetTruckDrivers", ReplyAction="http://tempuri.org/ITowTruckService/GetTruckDriversResponse")]
+        System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.ListDrivers[]> GetTruckDriversAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/LogOffDriver", ReplyAction="http://tempuri.org/ITowTruckService/LogOffDriverResponse")]
         void LogOffDriver(System.Guid DriverID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/LogOffDriver", ReplyAction="http://tempuri.org/ITowTruckService/LogOffDriverResponse")]
+        System.Threading.Tasks.Task LogOffDriverAsync(System.Guid DriverID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/GetAllAlarms", ReplyAction="http://tempuri.org/ITowTruckService/GetAllAlarmsResponse")]
         FSP.Web.TowTruckServiceRef.AlarmStatus[] GetAllAlarms();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/GetAllAlarms", ReplyAction="http://tempuri.org/ITowTruckService/GetAllAlarmsResponse")]
+        System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.AlarmStatus[]> GetAllAlarmsAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/AlarmByTruck", ReplyAction="http://tempuri.org/ITowTruckService/AlarmByTruckResponse")]
         FSP.Web.TowTruckServiceRef.AlarmStatus[] AlarmByTruck(string IPAddress);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/AlarmByTruck", ReplyAction="http://tempuri.org/ITowTruckService/AlarmByTruckResponse")]
+        System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.AlarmStatus[]> AlarmByTruckAsync(string IPAddress);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/SendMessage", ReplyAction="http://tempuri.org/ITowTruckService/SendMessageResponse")]
         void SendMessage(FSP.Web.TowTruckServiceRef.TruckMessage thisMessage);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/SendMessage", ReplyAction="http://tempuri.org/ITowTruckService/SendMessageResponse")]
+        System.Threading.Tasks.Task SendMessageAsync(FSP.Web.TowTruckServiceRef.TruckMessage thisMessage);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/getIncidentData", ReplyAction="http://tempuri.org/ITowTruckService/getIncidentDataResponse")]
         FSP.Web.TowTruckServiceRef.IncidentDisplay[] getIncidentData();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/getIncidentData", ReplyAction="http://tempuri.org/ITowTruckService/getIncidentDataResponse")]
+        System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.IncidentDisplay[]> getIncidentDataAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/ResetAlarm", ReplyAction="http://tempuri.org/ITowTruckService/ResetAlarmResponse")]
         void ResetAlarm(string _vehicleNumber, string _alarm);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/ResetAlarm", ReplyAction="http://tempuri.org/ITowTruckService/ResetAlarmResponse")]
+        System.Threading.Tasks.Task ResetAlarmAsync(string _vehicleNumber, string _alarm);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveAllSegments", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveAllSegmentsResponse")]
         FSP.Web.TowTruckServiceRef.BeatSegment_New[] RetreiveAllSegments();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveAllSegments", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveAllSegmentsResponse")]
+        System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.BeatSegment_New[]> RetreiveAllSegmentsAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetrieveSegment", ReplyAction="http://tempuri.org/ITowTruckService/RetrieveSegmentResponse")]
         FSP.Web.TowTruckServiceRef.BeatSegment_New RetrieveSegment(System.Guid SegmentID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetrieveSegment", ReplyAction="http://tempuri.org/ITowTruckService/RetrieveSegmentResponse")]
+        System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.BeatSegment_New> RetrieveSegmentAsync(System.Guid SegmentID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/CreateSegment", ReplyAction="http://tempuri.org/ITowTruckService/CreateSegmentResponse")]
         string CreateSegment(FSP.Web.TowTruckServiceRef.BeatSegment_New segment);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/CreateSegment", ReplyAction="http://tempuri.org/ITowTruckService/CreateSegmentResponse")]
+        System.Threading.Tasks.Task<string> CreateSegmentAsync(FSP.Web.TowTruckServiceRef.BeatSegment_New segment);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/UpdateSegment", ReplyAction="http://tempuri.org/ITowTruckService/UpdateSegmentResponse")]
         string UpdateSegment(FSP.Web.TowTruckServiceRef.BeatSegment_New segment);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/UpdateSegment", ReplyAction="http://tempuri.org/ITowTruckService/UpdateSegmentResponse")]
+        System.Threading.Tasks.Task<string> UpdateSegmentAsync(FSP.Web.TowTruckServiceRef.BeatSegment_New segment);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/DeleteSegment", ReplyAction="http://tempuri.org/ITowTruckService/DeleteSegmentResponse")]
         string DeleteSegment(System.Guid segmentid);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/DeleteSegment", ReplyAction="http://tempuri.org/ITowTruckService/DeleteSegmentResponse")]
+        System.Threading.Tasks.Task<string> DeleteSegmentAsync(System.Guid segmentid);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveAllBeats", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveAllBeatsResponse")]
         FSP.Web.TowTruckServiceRef.Beats_New[] RetreiveAllBeats();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveAllBeats", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveAllBeatsResponse")]
+        System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.Beats_New[]> RetreiveAllBeatsAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveBeat", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveBeatResponse")]
         FSP.Web.TowTruckServiceRef.Beats_New RetreiveBeat(System.Guid BeatID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveBeat", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveBeatResponse")]
+        System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.Beats_New> RetreiveBeatAsync(System.Guid BeatID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/CreateBeat", ReplyAction="http://tempuri.org/ITowTruckService/CreateBeatResponse")]
         string CreateBeat(FSP.Web.TowTruckServiceRef.Beats_New beat);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/CreateBeat", ReplyAction="http://tempuri.org/ITowTruckService/CreateBeatResponse")]
+        System.Threading.Tasks.Task<string> CreateBeatAsync(FSP.Web.TowTruckServiceRef.Beats_New beat);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/UpdateBeat", ReplyAction="http://tempuri.org/ITowTruckService/UpdateBeatResponse")]
         string UpdateBeat(FSP.Web.TowTruckServiceRef.Beats_New beat);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/UpdateBeat", ReplyAction="http://tempuri.org/ITowTruckService/UpdateBeatResponse")]
+        System.Threading.Tasks.Task<string> UpdateBeatAsync(FSP.Web.TowTruckServiceRef.Beats_New beat);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/DeleteBeat", ReplyAction="http://tempuri.org/ITowTruckService/DeleteBeatResponse")]
         string DeleteBeat(System.Guid BeatID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/DeleteBeat", ReplyAction="http://tempuri.org/ITowTruckService/DeleteBeatResponse")]
+        System.Threading.Tasks.Task<string> DeleteBeatAsync(System.Guid BeatID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveAllYards", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveAllYardsResponse")]
         FSP.Web.TowTruckServiceRef.Yard_New[] RetreiveAllYards();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveAllYards", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveAllYardsResponse")]
+        System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.Yard_New[]> RetreiveAllYardsAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveYard", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveYardResponse")]
         FSP.Web.TowTruckServiceRef.Yard_New RetreiveYard(System.Guid TowTruckYardID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveYard", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveYardResponse")]
+        System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.Yard_New> RetreiveYardAsync(System.Guid TowTruckYardID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/CreateYard", ReplyAction="http://tempuri.org/ITowTruckService/CreateYardResponse")]
         string CreateYard(FSP.Web.TowTruckServiceRef.Yard_New Yard);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/CreateYard", ReplyAction="http://tempuri.org/ITowTruckService/CreateYardResponse")]
+        System.Threading.Tasks.Task<string> CreateYardAsync(FSP.Web.TowTruckServiceRef.Yard_New Yard);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/UpdateYard", ReplyAction="http://tempuri.org/ITowTruckService/UpdateYardResponse")]
         string UpdateYard(FSP.Web.TowTruckServiceRef.Yard_New Yard);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/UpdateYard", ReplyAction="http://tempuri.org/ITowTruckService/UpdateYardResponse")]
+        System.Threading.Tasks.Task<string> UpdateYardAsync(FSP.Web.TowTruckServiceRef.Yard_New Yard);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/DeleteYard", ReplyAction="http://tempuri.org/ITowTruckService/DeleteYardResponse")]
         string DeleteYard(System.Guid YardID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/DeleteYard", ReplyAction="http://tempuri.org/ITowTruckService/DeleteYardResponse")]
+        System.Threading.Tasks.Task<string> DeleteYardAsync(System.Guid YardID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveAllDZs", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveAllDZsResponse")]
         FSP.Web.TowTruckServiceRef.DropZone_New[] RetreiveAllDZs();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveAllDZs", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveAllDZsResponse")]
+        System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.DropZone_New[]> RetreiveAllDZsAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveDZ", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveDZResponse")]
         FSP.Web.TowTruckServiceRef.DropZone_New RetreiveDZ(System.Guid DropZoneID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveDZ", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveDZResponse")]
+        System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.DropZone_New> RetreiveDZAsync(System.Guid DropZoneID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/CreateDropZone", ReplyAction="http://tempuri.org/ITowTruckService/CreateDropZoneResponse")]
         string CreateDropZone(FSP.Web.TowTruckServiceRef.DropZone_New Yard);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/CreateDropZone", ReplyAction="http://tempuri.org/ITowTruckService/CreateDropZoneResponse")]
+        System.Threading.Tasks.Task<string> CreateDropZoneAsync(FSP.Web.TowTruckServiceRef.DropZone_New Yard);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/UpdateDropZone", ReplyAction="http://tempuri.org/ITowTruckService/UpdateDropZoneResponse")]
         string UpdateDropZone(FSP.Web.TowTruckServiceRef.DropZone_New Yard);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/UpdateDropZone", ReplyAction="http://tempuri.org/ITowTruckService/UpdateDropZoneResponse")]
+        System.Threading.Tasks.Task<string> UpdateDropZoneAsync(FSP.Web.TowTruckServiceRef.DropZone_New Yard);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/DeleteDropZone", ReplyAction="http://tempuri.org/ITowTruckService/DeleteDropZoneResponse")]
         string DeleteDropZone(System.Guid DropZoneID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/DeleteDropZone", ReplyAction="http://tempuri.org/ITowTruckService/DeleteDropZoneResponse")]
+        System.Threading.Tasks.Task<string> DeleteDropZoneAsync(System.Guid DropZoneID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveCallBoxes", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveCallBoxesResponse")]
         FSP.Web.TowTruckServiceRef.CallBoxes_New[] RetreiveCallBoxes();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveCallBoxes", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveCallBoxesResponse")]
+        System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.CallBoxes_New[]> RetreiveCallBoxesAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveCallBox", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveCallBoxResponse")]
         FSP.Web.TowTruckServiceRef.CallBoxes_New RetreiveCallBox(System.Guid CallBoxID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveCallBox", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveCallBoxResponse")]
+        System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.CallBoxes_New> RetreiveCallBoxAsync(System.Guid CallBoxID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/CreateCallBox", ReplyAction="http://tempuri.org/ITowTruckService/CreateCallBoxResponse")]
         string CreateCallBox(FSP.Web.TowTruckServiceRef.CallBoxes_New Yard);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/CreateCallBox", ReplyAction="http://tempuri.org/ITowTruckService/CreateCallBoxResponse")]
+        System.Threading.Tasks.Task<string> CreateCallBoxAsync(FSP.Web.TowTruckServiceRef.CallBoxes_New Yard);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/UpdateCallBox", ReplyAction="http://tempuri.org/ITowTruckService/UpdateCallBoxResponse")]
         string UpdateCallBox(FSP.Web.TowTruckServiceRef.CallBoxes_New Yard);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/UpdateCallBox", ReplyAction="http://tempuri.org/ITowTruckService/UpdateCallBoxResponse")]
+        System.Threading.Tasks.Task<string> UpdateCallBoxAsync(FSP.Web.TowTruckServiceRef.CallBoxes_New Yard);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/DeleteCallBox", ReplyAction="http://tempuri.org/ITowTruckService/DeleteCallBoxResponse")]
         string DeleteCallBox(System.Guid DropZoneID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/DeleteCallBox", ReplyAction="http://tempuri.org/ITowTruckService/DeleteCallBoxResponse")]
+        System.Threading.Tasks.Task<string> DeleteCallBoxAsync(System.Guid DropZoneID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveFive11Signs", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveFive11SignsResponse")]
         FSP.Web.TowTruckServiceRef.Five11Signs[] RetreiveFive11Signs();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveFive11Signs", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveFive11SignsResponse")]
+        System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.Five11Signs[]> RetreiveFive11SignsAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveFive11Sign", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveFive11SignResponse")]
         FSP.Web.TowTruckServiceRef.Five11Signs RetreiveFive11Sign(System.Guid Five11SignID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/RetreiveFive11Sign", ReplyAction="http://tempuri.org/ITowTruckService/RetreiveFive11SignResponse")]
+        System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.Five11Signs> RetreiveFive11SignAsync(System.Guid Five11SignID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/CreateFive11Sign", ReplyAction="http://tempuri.org/ITowTruckService/CreateFive11SignResponse")]
         string CreateFive11Sign(FSP.Web.TowTruckServiceRef.Five11Signs Five11Sign);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/CreateFive11Sign", ReplyAction="http://tempuri.org/ITowTruckService/CreateFive11SignResponse")]
+        System.Threading.Tasks.Task<string> CreateFive11SignAsync(FSP.Web.TowTruckServiceRef.Five11Signs Five11Sign);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/UpdateFive11Sign", ReplyAction="http://tempuri.org/ITowTruckService/UpdateFive11SignResponse")]
         string UpdateFive11Sign(FSP.Web.TowTruckServiceRef.Five11Signs Five11Sign);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/UpdateFive11Sign", ReplyAction="http://tempuri.org/ITowTruckService/UpdateFive11SignResponse")]
+        System.Threading.Tasks.Task<string> UpdateFive11SignAsync(FSP.Web.TowTruckServiceRef.Five11Signs Five11Sign);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/DeleteFive11Sign", ReplyAction="http://tempuri.org/ITowTruckService/DeleteFive11SignResponse")]
         string DeleteFive11Sign(System.Guid Five11SignID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITowTruckService/DeleteFive11Sign", ReplyAction="http://tempuri.org/ITowTruckService/DeleteFive11SignResponse")]
+        System.Threading.Tasks.Task<string> DeleteFive11SignAsync(System.Guid Five11SignID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -7048,208 +7204,416 @@ namespace FSP.Web.TowTruckServiceRef {
             return base.Channel.CurrentTrucks();
         }
         
+        public System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.TowTruckData[]> CurrentTrucksAsync() {
+            return base.Channel.CurrentTrucksAsync();
+        }
+        
         public void SingleTruckDump(FSP.Web.TowTruckServiceRef.CopyTruck t) {
             base.Channel.SingleTruckDump(t);
+        }
+        
+        public System.Threading.Tasks.Task SingleTruckDumpAsync(FSP.Web.TowTruckServiceRef.CopyTruck t) {
+            return base.Channel.SingleTruckDumpAsync(t);
         }
         
         public void UnexcuseAlarm(string _vehicleNumber, string _beatNumber, string _alarm, string _driverName, string _comments) {
             base.Channel.UnexcuseAlarm(_vehicleNumber, _beatNumber, _alarm, _driverName, _comments);
         }
         
+        public System.Threading.Tasks.Task UnexcuseAlarmAsync(string _vehicleNumber, string _beatNumber, string _alarm, string _driverName, string _comments) {
+            return base.Channel.UnexcuseAlarmAsync(_vehicleNumber, _beatNumber, _alarm, _driverName, _comments);
+        }
+        
         public void TruckDump(FSP.Web.TowTruckServiceRef.CopyTruck[] trucks) {
             base.Channel.TruckDump(trucks);
+        }
+        
+        public System.Threading.Tasks.Task TruckDumpAsync(FSP.Web.TowTruckServiceRef.CopyTruck[] trucks) {
+            return base.Channel.TruckDumpAsync(trucks);
         }
         
         public void ClearAlarm(string _vehicleNumber, string _alarm) {
             base.Channel.ClearAlarm(_vehicleNumber, _alarm);
         }
         
+        public System.Threading.Tasks.Task ClearAlarmAsync(string _vehicleNumber, string _alarm) {
+            return base.Channel.ClearAlarmAsync(_vehicleNumber, _alarm);
+        }
+        
         public void ExcuseAlarm(string _vehicleNumber, string _beatNumber, string _alarm, string _driverName, string _comments) {
             base.Channel.ExcuseAlarm(_vehicleNumber, _beatNumber, _alarm, _driverName, _comments);
+        }
+        
+        public System.Threading.Tasks.Task ExcuseAlarmAsync(string _vehicleNumber, string _beatNumber, string _alarm, string _driverName, string _comments) {
+            return base.Channel.ExcuseAlarmAsync(_vehicleNumber, _beatNumber, _alarm, _driverName, _comments);
         }
         
         public string[] GetPreloadedData(string Type) {
             return base.Channel.GetPreloadedData(Type);
         }
         
+        public System.Threading.Tasks.Task<string[]> GetPreloadedDataAsync(string Type) {
+            return base.Channel.GetPreloadedDataAsync(Type);
+        }
+        
         public void AddIncident(FSP.Web.TowTruckServiceRef.IncidentIn thisIncidentIn) {
             base.Channel.AddIncident(thisIncidentIn);
+        }
+        
+        public System.Threading.Tasks.Task AddIncidentAsync(FSP.Web.TowTruckServiceRef.IncidentIn thisIncidentIn) {
+            return base.Channel.AddIncidentAsync(thisIncidentIn);
         }
         
         public FSP.Web.TowTruckServiceRef.IncidentScreenData[] GetAllIncidents() {
             return base.Channel.GetAllIncidents();
         }
         
+        public System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.IncidentScreenData[]> GetAllIncidentsAsync() {
+            return base.Channel.GetAllIncidentsAsync();
+        }
+        
         public FSP.Web.TowTruckServiceRef.IncidentIn FindIncidentByID(System.Guid IncidentID) {
             return base.Channel.FindIncidentByID(IncidentID);
+        }
+        
+        public System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.IncidentIn> FindIncidentByIDAsync(System.Guid IncidentID) {
+            return base.Channel.FindIncidentByIDAsync(IncidentID);
         }
         
         public void ClearIncident(System.Guid IncidentID) {
             base.Channel.ClearIncident(IncidentID);
         }
         
+        public System.Threading.Tasks.Task ClearIncidentAsync(System.Guid IncidentID) {
+            return base.Channel.ClearIncidentAsync(IncidentID);
+        }
+        
         public void AddAssist(FSP.Web.TowTruckServiceRef.AssistReq thisReq) {
             base.Channel.AddAssist(thisReq);
+        }
+        
+        public System.Threading.Tasks.Task AddAssistAsync(FSP.Web.TowTruckServiceRef.AssistReq thisReq) {
+            return base.Channel.AddAssistAsync(thisReq);
         }
         
         public FSP.Web.TowTruckServiceRef.AssistScreenData[] GetAllAssists() {
             return base.Channel.GetAllAssists();
         }
         
+        public System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.AssistScreenData[]> GetAllAssistsAsync() {
+            return base.Channel.GetAllAssistsAsync();
+        }
+        
         public FSP.Web.TowTruckServiceRef.AssistTruck[] GetAssistTrucks() {
             return base.Channel.GetAssistTrucks();
+        }
+        
+        public System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.AssistTruck[]> GetAssistTrucksAsync() {
+            return base.Channel.GetAssistTrucksAsync();
         }
         
         public int GetUsedBreakTime(string DriverID, string Type) {
             return base.Channel.GetUsedBreakTime(DriverID, Type);
         }
         
+        public System.Threading.Tasks.Task<int> GetUsedBreakTimeAsync(string DriverID, string Type) {
+            return base.Channel.GetUsedBreakTimeAsync(DriverID, Type);
+        }
+        
         public FSP.Web.TowTruckServiceRef.ListDrivers[] GetTruckDrivers() {
             return base.Channel.GetTruckDrivers();
+        }
+        
+        public System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.ListDrivers[]> GetTruckDriversAsync() {
+            return base.Channel.GetTruckDriversAsync();
         }
         
         public void LogOffDriver(System.Guid DriverID) {
             base.Channel.LogOffDriver(DriverID);
         }
         
+        public System.Threading.Tasks.Task LogOffDriverAsync(System.Guid DriverID) {
+            return base.Channel.LogOffDriverAsync(DriverID);
+        }
+        
         public FSP.Web.TowTruckServiceRef.AlarmStatus[] GetAllAlarms() {
             return base.Channel.GetAllAlarms();
+        }
+        
+        public System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.AlarmStatus[]> GetAllAlarmsAsync() {
+            return base.Channel.GetAllAlarmsAsync();
         }
         
         public FSP.Web.TowTruckServiceRef.AlarmStatus[] AlarmByTruck(string IPAddress) {
             return base.Channel.AlarmByTruck(IPAddress);
         }
         
+        public System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.AlarmStatus[]> AlarmByTruckAsync(string IPAddress) {
+            return base.Channel.AlarmByTruckAsync(IPAddress);
+        }
+        
         public void SendMessage(FSP.Web.TowTruckServiceRef.TruckMessage thisMessage) {
             base.Channel.SendMessage(thisMessage);
+        }
+        
+        public System.Threading.Tasks.Task SendMessageAsync(FSP.Web.TowTruckServiceRef.TruckMessage thisMessage) {
+            return base.Channel.SendMessageAsync(thisMessage);
         }
         
         public FSP.Web.TowTruckServiceRef.IncidentDisplay[] getIncidentData() {
             return base.Channel.getIncidentData();
         }
         
+        public System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.IncidentDisplay[]> getIncidentDataAsync() {
+            return base.Channel.getIncidentDataAsync();
+        }
+        
         public void ResetAlarm(string _vehicleNumber, string _alarm) {
             base.Channel.ResetAlarm(_vehicleNumber, _alarm);
+        }
+        
+        public System.Threading.Tasks.Task ResetAlarmAsync(string _vehicleNumber, string _alarm) {
+            return base.Channel.ResetAlarmAsync(_vehicleNumber, _alarm);
         }
         
         public FSP.Web.TowTruckServiceRef.BeatSegment_New[] RetreiveAllSegments() {
             return base.Channel.RetreiveAllSegments();
         }
         
+        public System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.BeatSegment_New[]> RetreiveAllSegmentsAsync() {
+            return base.Channel.RetreiveAllSegmentsAsync();
+        }
+        
         public FSP.Web.TowTruckServiceRef.BeatSegment_New RetrieveSegment(System.Guid SegmentID) {
             return base.Channel.RetrieveSegment(SegmentID);
+        }
+        
+        public System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.BeatSegment_New> RetrieveSegmentAsync(System.Guid SegmentID) {
+            return base.Channel.RetrieveSegmentAsync(SegmentID);
         }
         
         public string CreateSegment(FSP.Web.TowTruckServiceRef.BeatSegment_New segment) {
             return base.Channel.CreateSegment(segment);
         }
         
+        public System.Threading.Tasks.Task<string> CreateSegmentAsync(FSP.Web.TowTruckServiceRef.BeatSegment_New segment) {
+            return base.Channel.CreateSegmentAsync(segment);
+        }
+        
         public string UpdateSegment(FSP.Web.TowTruckServiceRef.BeatSegment_New segment) {
             return base.Channel.UpdateSegment(segment);
+        }
+        
+        public System.Threading.Tasks.Task<string> UpdateSegmentAsync(FSP.Web.TowTruckServiceRef.BeatSegment_New segment) {
+            return base.Channel.UpdateSegmentAsync(segment);
         }
         
         public string DeleteSegment(System.Guid segmentid) {
             return base.Channel.DeleteSegment(segmentid);
         }
         
+        public System.Threading.Tasks.Task<string> DeleteSegmentAsync(System.Guid segmentid) {
+            return base.Channel.DeleteSegmentAsync(segmentid);
+        }
+        
         public FSP.Web.TowTruckServiceRef.Beats_New[] RetreiveAllBeats() {
             return base.Channel.RetreiveAllBeats();
+        }
+        
+        public System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.Beats_New[]> RetreiveAllBeatsAsync() {
+            return base.Channel.RetreiveAllBeatsAsync();
         }
         
         public FSP.Web.TowTruckServiceRef.Beats_New RetreiveBeat(System.Guid BeatID) {
             return base.Channel.RetreiveBeat(BeatID);
         }
         
+        public System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.Beats_New> RetreiveBeatAsync(System.Guid BeatID) {
+            return base.Channel.RetreiveBeatAsync(BeatID);
+        }
+        
         public string CreateBeat(FSP.Web.TowTruckServiceRef.Beats_New beat) {
             return base.Channel.CreateBeat(beat);
+        }
+        
+        public System.Threading.Tasks.Task<string> CreateBeatAsync(FSP.Web.TowTruckServiceRef.Beats_New beat) {
+            return base.Channel.CreateBeatAsync(beat);
         }
         
         public string UpdateBeat(FSP.Web.TowTruckServiceRef.Beats_New beat) {
             return base.Channel.UpdateBeat(beat);
         }
         
+        public System.Threading.Tasks.Task<string> UpdateBeatAsync(FSP.Web.TowTruckServiceRef.Beats_New beat) {
+            return base.Channel.UpdateBeatAsync(beat);
+        }
+        
         public string DeleteBeat(System.Guid BeatID) {
             return base.Channel.DeleteBeat(BeatID);
+        }
+        
+        public System.Threading.Tasks.Task<string> DeleteBeatAsync(System.Guid BeatID) {
+            return base.Channel.DeleteBeatAsync(BeatID);
         }
         
         public FSP.Web.TowTruckServiceRef.Yard_New[] RetreiveAllYards() {
             return base.Channel.RetreiveAllYards();
         }
         
+        public System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.Yard_New[]> RetreiveAllYardsAsync() {
+            return base.Channel.RetreiveAllYardsAsync();
+        }
+        
         public FSP.Web.TowTruckServiceRef.Yard_New RetreiveYard(System.Guid TowTruckYardID) {
             return base.Channel.RetreiveYard(TowTruckYardID);
+        }
+        
+        public System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.Yard_New> RetreiveYardAsync(System.Guid TowTruckYardID) {
+            return base.Channel.RetreiveYardAsync(TowTruckYardID);
         }
         
         public string CreateYard(FSP.Web.TowTruckServiceRef.Yard_New Yard) {
             return base.Channel.CreateYard(Yard);
         }
         
+        public System.Threading.Tasks.Task<string> CreateYardAsync(FSP.Web.TowTruckServiceRef.Yard_New Yard) {
+            return base.Channel.CreateYardAsync(Yard);
+        }
+        
         public string UpdateYard(FSP.Web.TowTruckServiceRef.Yard_New Yard) {
             return base.Channel.UpdateYard(Yard);
+        }
+        
+        public System.Threading.Tasks.Task<string> UpdateYardAsync(FSP.Web.TowTruckServiceRef.Yard_New Yard) {
+            return base.Channel.UpdateYardAsync(Yard);
         }
         
         public string DeleteYard(System.Guid YardID) {
             return base.Channel.DeleteYard(YardID);
         }
         
+        public System.Threading.Tasks.Task<string> DeleteYardAsync(System.Guid YardID) {
+            return base.Channel.DeleteYardAsync(YardID);
+        }
+        
         public FSP.Web.TowTruckServiceRef.DropZone_New[] RetreiveAllDZs() {
             return base.Channel.RetreiveAllDZs();
+        }
+        
+        public System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.DropZone_New[]> RetreiveAllDZsAsync() {
+            return base.Channel.RetreiveAllDZsAsync();
         }
         
         public FSP.Web.TowTruckServiceRef.DropZone_New RetreiveDZ(System.Guid DropZoneID) {
             return base.Channel.RetreiveDZ(DropZoneID);
         }
         
+        public System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.DropZone_New> RetreiveDZAsync(System.Guid DropZoneID) {
+            return base.Channel.RetreiveDZAsync(DropZoneID);
+        }
+        
         public string CreateDropZone(FSP.Web.TowTruckServiceRef.DropZone_New Yard) {
             return base.Channel.CreateDropZone(Yard);
+        }
+        
+        public System.Threading.Tasks.Task<string> CreateDropZoneAsync(FSP.Web.TowTruckServiceRef.DropZone_New Yard) {
+            return base.Channel.CreateDropZoneAsync(Yard);
         }
         
         public string UpdateDropZone(FSP.Web.TowTruckServiceRef.DropZone_New Yard) {
             return base.Channel.UpdateDropZone(Yard);
         }
         
+        public System.Threading.Tasks.Task<string> UpdateDropZoneAsync(FSP.Web.TowTruckServiceRef.DropZone_New Yard) {
+            return base.Channel.UpdateDropZoneAsync(Yard);
+        }
+        
         public string DeleteDropZone(System.Guid DropZoneID) {
             return base.Channel.DeleteDropZone(DropZoneID);
+        }
+        
+        public System.Threading.Tasks.Task<string> DeleteDropZoneAsync(System.Guid DropZoneID) {
+            return base.Channel.DeleteDropZoneAsync(DropZoneID);
         }
         
         public FSP.Web.TowTruckServiceRef.CallBoxes_New[] RetreiveCallBoxes() {
             return base.Channel.RetreiveCallBoxes();
         }
         
+        public System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.CallBoxes_New[]> RetreiveCallBoxesAsync() {
+            return base.Channel.RetreiveCallBoxesAsync();
+        }
+        
         public FSP.Web.TowTruckServiceRef.CallBoxes_New RetreiveCallBox(System.Guid CallBoxID) {
             return base.Channel.RetreiveCallBox(CallBoxID);
+        }
+        
+        public System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.CallBoxes_New> RetreiveCallBoxAsync(System.Guid CallBoxID) {
+            return base.Channel.RetreiveCallBoxAsync(CallBoxID);
         }
         
         public string CreateCallBox(FSP.Web.TowTruckServiceRef.CallBoxes_New Yard) {
             return base.Channel.CreateCallBox(Yard);
         }
         
+        public System.Threading.Tasks.Task<string> CreateCallBoxAsync(FSP.Web.TowTruckServiceRef.CallBoxes_New Yard) {
+            return base.Channel.CreateCallBoxAsync(Yard);
+        }
+        
         public string UpdateCallBox(FSP.Web.TowTruckServiceRef.CallBoxes_New Yard) {
             return base.Channel.UpdateCallBox(Yard);
+        }
+        
+        public System.Threading.Tasks.Task<string> UpdateCallBoxAsync(FSP.Web.TowTruckServiceRef.CallBoxes_New Yard) {
+            return base.Channel.UpdateCallBoxAsync(Yard);
         }
         
         public string DeleteCallBox(System.Guid DropZoneID) {
             return base.Channel.DeleteCallBox(DropZoneID);
         }
         
+        public System.Threading.Tasks.Task<string> DeleteCallBoxAsync(System.Guid DropZoneID) {
+            return base.Channel.DeleteCallBoxAsync(DropZoneID);
+        }
+        
         public FSP.Web.TowTruckServiceRef.Five11Signs[] RetreiveFive11Signs() {
             return base.Channel.RetreiveFive11Signs();
+        }
+        
+        public System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.Five11Signs[]> RetreiveFive11SignsAsync() {
+            return base.Channel.RetreiveFive11SignsAsync();
         }
         
         public FSP.Web.TowTruckServiceRef.Five11Signs RetreiveFive11Sign(System.Guid Five11SignID) {
             return base.Channel.RetreiveFive11Sign(Five11SignID);
         }
         
+        public System.Threading.Tasks.Task<FSP.Web.TowTruckServiceRef.Five11Signs> RetreiveFive11SignAsync(System.Guid Five11SignID) {
+            return base.Channel.RetreiveFive11SignAsync(Five11SignID);
+        }
+        
         public string CreateFive11Sign(FSP.Web.TowTruckServiceRef.Five11Signs Five11Sign) {
             return base.Channel.CreateFive11Sign(Five11Sign);
+        }
+        
+        public System.Threading.Tasks.Task<string> CreateFive11SignAsync(FSP.Web.TowTruckServiceRef.Five11Signs Five11Sign) {
+            return base.Channel.CreateFive11SignAsync(Five11Sign);
         }
         
         public string UpdateFive11Sign(FSP.Web.TowTruckServiceRef.Five11Signs Five11Sign) {
             return base.Channel.UpdateFive11Sign(Five11Sign);
         }
         
+        public System.Threading.Tasks.Task<string> UpdateFive11SignAsync(FSP.Web.TowTruckServiceRef.Five11Signs Five11Sign) {
+            return base.Channel.UpdateFive11SignAsync(Five11Sign);
+        }
+        
         public string DeleteFive11Sign(System.Guid Five11SignID) {
             return base.Channel.DeleteFive11Sign(Five11SignID);
+        }
+        
+        public System.Threading.Tasks.Task<string> DeleteFive11SignAsync(System.Guid Five11SignID) {
+            return base.Channel.DeleteFive11SignAsync(Five11SignID);
         }
     }
 }
