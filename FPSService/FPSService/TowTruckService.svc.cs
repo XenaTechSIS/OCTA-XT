@@ -830,7 +830,7 @@ namespace FPSService
                 }
                 JSON += "]";
                 bn.BeatExtent = JSON;
-                bn.BeatSegments = new List<BeatSegment_Cond>();
+                bn.BeatSegments = new List<BeatSegment_New>();
                 if (bn.BeatColor == null || bn.BeatColor == "")
                 {
                     bn.BeatColor = "#000000";
@@ -866,7 +866,7 @@ namespace FPSService
             {
                 Beat.BeatColor = "#000000";
             }
-            Beat.BeatSegments = new List<BeatSegment_Cond>();
+            Beat.BeatSegments = new List<BeatSegment_New>();
             Beat.BeatSegments = sql.RetrieveBeatSegments(Beat.BeatID);
 
             return Beat;
