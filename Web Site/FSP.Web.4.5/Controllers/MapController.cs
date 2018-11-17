@@ -334,39 +334,7 @@ namespace FSP.Web.Controllers
                             dbBeat.BeatNumber = data.BeatNumber;
                             dbBeat.BeatDescription = data.BeatDescription;
                             dbBeat.BeatColor = data.BeatColor;
-
-                            if (data.BeatSegments != null)
-                            {
-                                dbBeat.BeatSegments = data.BeatSegments;
-                                //var rawSegments = service.RetreiveAllSegments();
-
-                                //foreach (var segment in dbBeat.BeatSegments)
-                                //{
-                                //    try
-                                //    {
-                                //        var dbSegment = rawSegments.FirstOrDefault(p => p.BeatSegmentID == segment.BeatSegmentID);
-                                //        if (dbSegment == null)
-                                //        {
-                                //            continue;
-                                //        }
-
-                                //        dbSegment.Color = data.BeatColor;
-                                //        dbSegment.LastUpdate = DateTime.Now.ToString();
-                                //        dbSegment.LastUpdateBy = HttpContext.User.Identity.Name;
-                                //        var updateSegmentResult = service.UpdateSegment(dbSegment);
-                                //    }
-                                //    catch (Exception e)
-                                //    {
-                                //        Debug.WriteLine(e.Message);
-                                //    }
-                                //}
-                            }
-                            else
-                            {
-                                //dbBeat.BeatSegments = new BeatSegment_New[0];
-                                dbBeat.BeatSegments = new BeatSegment_Cond[0];
-                            }
-
+                            dbBeat.BeatSegments = data.BeatSegments ?? new BeatSegment_New[0];
                             dbBeat.LastUpdate = DateTime.Now;
                             dbBeat.LastUpdateBy = HttpContext.User.Identity.Name;
 
