@@ -2168,7 +2168,7 @@ namespace FPSService.SQL
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@BeatID", beat.BeatID);
                     cmd.Parameters.AddWithValue("@Active", beat.Active);
-                    cmd.Parameters.AddWithValue("@BeatExtent", beat.BeatExtent);
+                    //cmd.Parameters.AddWithValue("@BeatExtent", beat.BeatExtent);
                     cmd.Parameters.AddWithValue("@FreewayID", beat.FreewayID);
                     cmd.Parameters.AddWithValue("@BeatDescription", beat.BeatDescription);
                     cmd.Parameters.AddWithValue("@BeatNumber", beat.BeatNumber);
