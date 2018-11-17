@@ -53,3 +53,4 @@ C:\GitHub\OCTA-XT\FPSService\FPSService\bin\FPSService.pdb
 \\Mac\Home\Documents\GitHub\OCTA-XT\FPSService\FPSService\obj\Debug\FPSService.csproj.CopyComplete
 \\Mac\Home\Documents\GitHub\OCTA-XT\FPSService\FPSService\obj\Debug\FPSService.dll
 \\Mac\Home\Documents\GitHub\OCTA-XT\FPSService\FPSService\obj\Debug\FPSService.pdb
+\\Mac\Home\Documents\GitHub\OCTA-XT\FPSService\FPSService\obj\Debug\FPSService.csprojAssemblyReference.cache

@@ -1243,7 +1243,22 @@ namespace FPSService.SQL
                         BeatSegment_New segment = new BeatSegment_New();
                         segment.Active = Convert.ToBoolean(rdr["Active"].ToString());
                         segment.BeatSegmentDescription = rdr["BeatSegmentDescription"].ToString();
-                        segment.BeatSegmentExtent = rdr["BeatSegmentExtent"].ToString();
+                        string JSON = "[";
+                        string[] extent = rdr["BeatSegmentExtent"].ToString().Split(',');
+                        for (int i = 0; i < extent.Length; i++)
+                        {
+                            string[] LL = extent[i].Trim().Split(' ');
+                            if (i == extent.Length - 1)
+                            {
+                                JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " }";
+                            }
+                            else
+                            {
+                                JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " },";
+                            }
+                        }
+                        JSON += "]";
+                        segment.BeatSegmentExtent = JSON;
                         segment.BeatSegmentID = new Guid(rdr["BeatSegmentID"].ToString());
                         segment.BeatSegmentNumber = rdr["BeatSegmentNumber"].ToString();
                         segment.CHPDescription = rdr["CHPDescription"].ToString();

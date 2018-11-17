@@ -220,9 +220,9 @@ namespace ReportServer.Reports
                     dt.Columns.Add("Truck #", Type.GetType("System.String"));
                     dt.Columns.Add("Driver Name", Type.GetType("System.String"));
                     dt.Columns.Add("Freeway Segment", Type.GetType("System.String"));
+                    dt.Columns.Add("Freeway", Type.GetType("System.String"));
                     dt.Columns.Add("Location Description", Type.GetType("System.String"));
                     dt.Columns.Add("Direction", Type.GetType("System.String"));
-                    dt.Columns.Add("Dispatch Location Info", Type.GetType("System.String"));
                     dt.Columns.Add("Lat", Type.GetType("System.String"));
                     dt.Columns.Add("Lon", Type.GetType("System.String"));
                     dt.Columns.Add("Vehicle Type Code", Type.GetType("System.String"));
