@@ -350,6 +350,9 @@ namespace FSP.Web.Controllers
 
                             var updateResult = service.UpdateBeat(dbBeat);
 
+                            if (updateResult == "success")
+                                Util.RemoveFromCache(CacheKeyBeats);
+
                             var response = new
                             {
                                 result = updateResult == "success",
@@ -375,7 +378,7 @@ namespace FSP.Web.Controllers
                     data.Active = true;
 
                     var createResult = service.UpdateBeat(data);
-
+                   
                     var newBeat = service.RetreiveAllBeats().FirstOrDefault(p => p.BeatID == data.BeatID);
 
                     var resp = new
