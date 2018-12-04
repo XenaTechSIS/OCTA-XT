@@ -57,6 +57,39 @@
          });
          $scope.columns.push({
             name: 'Assist #',
+            show: true
+         });
+
+         $scope.columns.push({
+            name: 'Vehicle Color',
+            show: false
+         });
+         $scope.columns.push({
+            name: 'Vehicle License Plate',
+            show: false
+         });
+         $scope.columns.push({
+            name: 'Vehicle Make',
+            show: false
+         });
+         $scope.columns.push({
+            name: 'Drop Zone',
+            show: false
+         });
+         $scope.columns.push({
+            name: 'Dispatch Time',
+            show: false
+         });
+         $scope.columns.push({
+            name: 'State',
+            show: false
+         });
+         $scope.columns.push({
+            name: 'Customer Last Name',
+            show: false
+         });
+         $scope.columns.push({
+            name: 'Customer Wait Time',
             show: false
          });
       };
