@@ -2217,17 +2217,18 @@ namespace FPSService.SQL
                 using (SqlConnection conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    string SQL = "DELETE FROM [dbo].[Beats_New] WHERE BeatID = '" + BeatID + "'";
+
+                    string SQL = "DELETE FROM [dbo].[BeatBeatSegments] WHERE BeatID = '" + BeatID + "'";
                     SqlCommand cmd = new SqlCommand(SQL, conn);
                     SqlDataReader rdr = cmd.ExecuteReader();
                     rdr.Close();
-                    rdr = null;
-                    cmd = null;
 
-                    SQL = "DELETE FROM [dbo].[BeatBeatSegments] WHERE BeatID = '" + BeatID + "'";
+                    SQL = "DELETE FROM [dbo].[Beats_New] WHERE BeatID = '" + BeatID + "'";
                     cmd = new SqlCommand(SQL, conn);
                     rdr = cmd.ExecuteReader();
                     rdr.Close();
+                    rdr = null;
+                    cmd = null;
 
                     rdr = null;
                     cmd = null;
