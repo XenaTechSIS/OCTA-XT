@@ -49,8 +49,22 @@ C:\GitHub\OCTA-XT\FPSService\FPSService\bin\FPSService.pdb
 \\Mac\Home\Documents\GitHub\OCTA-XT\FPSService\FPSService\bin\Microsoft.SqlServer.Types.dll
 \\Mac\Home\Documents\GitHub\OCTA-XT\FPSService\FPSService\bin\Newtonsoft.Json.dll
 \\Mac\Home\Documents\GitHub\OCTA-XT\FPSService\FPSService\bin\System.Data.Entity.dll
+\\Mac\Home\Documents\GitHub\OCTA-XT\FPSService\FPSService\obj\Debug\FPSService.csprojAssemblyReference.cache
 \\Mac\Home\Documents\GitHub\OCTA-XT\FPSService\FPSService\obj\Debug\FPSService.csproj.CoreCompileInputs.cache
 \\Mac\Home\Documents\GitHub\OCTA-XT\FPSService\FPSService\obj\Debug\FPSService.csproj.CopyComplete
 \\Mac\Home\Documents\GitHub\OCTA-XT\FPSService\FPSService\obj\Debug\FPSService.dll
 \\Mac\Home\Documents\GitHub\OCTA-XT\FPSService\FPSService\obj\Debug\FPSService.pdb
-\\Mac\Home\Documents\GitHub\OCTA-XT\FPSService\FPSService\obj\Debug\FPSService.csprojAssemblyReference.cache
+\\Mac\Home\Documents\Documents - Jon’s MacBook Pro (2)\GitHub\OCTA-XT\FPSService\FPSService\bin\SqlServerTypes\x64\msvcr120.dll
+\\Mac\Home\Documents\Documents - Jon’s MacBook Pro (2)\GitHub\OCTA-XT\FPSService\FPSService\bin\SqlServerTypes\x64\SqlServerSpatial140.dll
+\\Mac\Home\Documents\Documents - Jon’s MacBook Pro (2)\GitHub\OCTA-XT\FPSService\FPSService\bin\SqlServerTypes\x86\msvcr120.dll
+\\Mac\Home\Documents\Documents - Jon’s MacBook Pro (2)\GitHub\OCTA-XT\FPSService\FPSService\bin\SqlServerTypes\x86\SqlServerSpatial140.dll
+\\Mac\Home\Documents\Documents - Jon’s MacBook Pro (2)\GitHub\OCTA-XT\FPSService\FPSService\bin\FPSService.dll.config
+\\Mac\Home\Documents\Documents - Jon’s MacBook Pro (2)\GitHub\OCTA-XT\FPSService\FPSService\bin\FPSService.dll
+\\Mac\Home\Documents\Documents - Jon’s MacBook Pro (2)\GitHub\OCTA-XT\FPSService\FPSService\bin\FPSService.pdb
+\\Mac\Home\Documents\Documents - Jon’s MacBook Pro (2)\GitHub\OCTA-XT\FPSService\FPSService\bin\Microsoft.SqlServer.Types.dll
+\\Mac\Home\Documents\Documents - Jon’s MacBook Pro (2)\GitHub\OCTA-XT\FPSService\FPSService\bin\Newtonsoft.Json.dll
+\\Mac\Home\Documents\Documents - Jon’s MacBook Pro (2)\GitHub\OCTA-XT\FPSService\FPSService\bin\System.Data.Entity.dll
+\\Mac\Home\Documents\Documents - Jon’s MacBook Pro (2)\GitHub\OCTA-XT\FPSService\FPSService\obj\Debug\FPSService.csproj.CoreCompileInputs.cache
+\\Mac\Home\Documents\Documents - Jon’s MacBook Pro (2)\GitHub\OCTA-XT\FPSService\FPSService\obj\Debug\FPSService.csproj.CopyComplete
+\\Mac\Home\Documents\Documents - Jon’s MacBook Pro (2)\GitHub\OCTA-XT\FPSService\FPSService\obj\Debug\FPSService.dll
+\\Mac\Home\Documents\Documents - Jon’s MacBook Pro (2)\GitHub\OCTA-XT\FPSService\FPSService\obj\Debug\FPSService.pdb

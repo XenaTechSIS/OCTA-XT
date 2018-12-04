@@ -238,12 +238,13 @@ namespace ReportServer.Reports
                     dt.Columns.Add("Tip", Type.GetType("System.String"));
                     dt.Columns.Add("Tip Detail", Type.GetType("System.String"));
                     dt.Columns.Add("Survery Num", Type.GetType("System.String"));
+                    dt.Columns.Add("CHP Log Number", Type.GetType("System.String"));
 
                     SqlDataReader rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
                         DataRow row = dt.NewRow();
-                        for (int i = 0; i < rdr.FieldCount -1; i++)
+                        for (int i = 0; i < rdr.FieldCount; i++)
                         {
                             row[i] = rdr[i].ToString();
                             //if (i < 13)

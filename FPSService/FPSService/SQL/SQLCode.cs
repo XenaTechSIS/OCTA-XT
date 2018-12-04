@@ -1157,7 +1157,7 @@ namespace FPSService.SQL
                 using (SqlConnection conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    string SQL = "SELECT * FROM [dbo].[Beats_NEW] WHERE ACTIVE = 1 AND BeatExtent != ''";
+                    string SQL = "SELECT * FROM [dbo].[Beats_NEW] WHERE ACTIVE = 1";
                     SqlCommand cmd = new SqlCommand(SQL, conn);
                     SqlDataReader rdr = cmd.ExecuteReader();
                     while (rdr.Read())
@@ -1171,6 +1171,7 @@ namespace FPSService.SQL
                         beat.IsTemporary = Convert.ToBoolean(rdr["IsTemporary"]);
                         beat.LastUpdate = Convert.ToDateTime(rdr["LastUpdate"].ToString());
                         beat.LastUpdateBy = rdr["LastUpdateBy"].ToString();
+                        beat.BeatColor = rdr["BeatColor"].ToString();
                         beats.Add(beat);
                     }
                     rdr.Close();
@@ -2216,17 +2217,18 @@ namespace FPSService.SQL
                 using (SqlConnection conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    string SQL = "DELETE FROM [dbo].[Beats_New] WHERE BeatID = '" + BeatID + "'";
+
+                    string SQL = "DELETE FROM [dbo].[BeatBeatSegments] WHERE BeatID = '" + BeatID + "'";
                     SqlCommand cmd = new SqlCommand(SQL, conn);
                     SqlDataReader rdr = cmd.ExecuteReader();
                     rdr.Close();
-                    rdr = null;
-                    cmd = null;
 
-                    SQL = "DELETE FROM [dbo].[BeatBeatSegments] WHERE BeatID = '" + BeatID + "'";
+                    SQL = "DELETE FROM [dbo].[Beats_New] WHERE BeatID = '" + BeatID + "'";
                     cmd = new SqlCommand(SQL, conn);
                     rdr = cmd.ExecuteReader();
                     rdr.Close();
+                    rdr = null;
+                    cmd = null;
 
                     rdr = null;
                     cmd = null;
