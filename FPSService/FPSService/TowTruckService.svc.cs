@@ -786,21 +786,21 @@ namespace FPSService
             beat.EndDate = DateTime.Now.AddYears(25);
             beat.FreewayID = 0;
 
-            string extstring = "";
+            //string extstring = "";
+            //List<latLng> ext = JsonConvert.DeserializeObject<List<latLng>>(beat.BeatExtent);
+            //for (int i = 0; i < ext.Count; i++)
+            //{
+            //    if (i < ext.Count - 1)
+            //    {
+            //        extstring += ext[i].lat + " " + ext[i].lng + ", ";
+            //    }
+            //    else
+            //    {
+            //        extstring += ext[i].lat + " " + ext[i].lng;
+            //    }
+            //}
+            //beat.BeatExtent = extstring;
             SQL.SQLCode sql = new SQL.SQLCode();
-            List<latLng> ext = JsonConvert.DeserializeObject<List<latLng>>(beat.BeatExtent);
-            for (int i = 0; i < ext.Count; i++)
-            {
-                if (i < ext.Count - 1)
-                {
-                    extstring += ext[i].lat + " " + ext[i].lng + ", ";
-                }
-                else
-                {
-                    extstring += ext[i].lat + " " + ext[i].lng;
-                }
-            }
-            beat.BeatExtent = extstring;
             string result = sql.CreateBeat(beat);
             BeatData.Beats.LoadBeats();
 
@@ -814,27 +814,27 @@ namespace FPSService
             Beats = sql.RetrieveAllBeats();
             foreach (Beats_New bn in Beats)
             {
-                string JSON = "[";
-                string[] extent = bn.BeatExtent.Split(',');
-                for (int i = 0; i < extent.Length; i++)
-                {
-                    string[] LL = extent[i].Trim().Split(' ');
-                    if (i == extent.Length - 1)
-                    {
-                        JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " }";
-                    }
-                    else
-                    {
-                        JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " },";
-                    }
-                }
-                JSON += "]";
-                bn.BeatExtent = JSON;
+                //string JSON = "[";
+                //string[] extent = bn.BeatExtent.Split(',');
+                //for (int i = 0; i < extent.Length; i++)
+                //{
+                //    string[] LL = extent[i].Trim().Split(' ');
+                //    if (i == extent.Length - 1)
+                //    {
+                //        JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " }";
+                //    }
+                //    else
+                //    {
+                //        JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " },";
+                //    }
+                //}
+                //JSON += "]";
+                //bn.BeatExtent = JSON;
                 bn.BeatSegments = new List<BeatSegment_New>();
-                if (bn.BeatColor == null || bn.BeatColor == "")
-                {
-                    bn.BeatColor = "#000000";
-                }
+                //if (bn.BeatColor == null || bn.BeatColor == "")
+                //{
+                //    bn.BeatColor = "#000000";
+                //}
                 bn.BeatSegments = sql.RetrieveBeatSegments(bn.BeatID);
             }
 

@@ -49,8 +49,8 @@ C:\GitHub\OCTA-XT\FPSService\FPSService\bin\FPSService.pdb
 \\Mac\Home\Documents\GitHub\OCTA-XT\FPSService\FPSService\bin\Microsoft.SqlServer.Types.dll
 \\Mac\Home\Documents\GitHub\OCTA-XT\FPSService\FPSService\bin\Newtonsoft.Json.dll
 \\Mac\Home\Documents\GitHub\OCTA-XT\FPSService\FPSService\bin\System.Data.Entity.dll
+\\Mac\Home\Documents\GitHub\OCTA-XT\FPSService\FPSService\obj\Debug\FPSService.csprojAssemblyReference.cache
 \\Mac\Home\Documents\GitHub\OCTA-XT\FPSService\FPSService\obj\Debug\FPSService.csproj.CoreCompileInputs.cache
 \\Mac\Home\Documents\GitHub\OCTA-XT\FPSService\FPSService\obj\Debug\FPSService.csproj.CopyComplete
 \\Mac\Home\Documents\GitHub\OCTA-XT\FPSService\FPSService\obj\Debug\FPSService.dll
 \\Mac\Home\Documents\GitHub\OCTA-XT\FPSService\FPSService\obj\Debug\FPSService.pdb
-\\Mac\Home\Documents\GitHub\OCTA-XT\FPSService\FPSService\obj\Debug\FPSService.csprojAssemblyReference.cache
