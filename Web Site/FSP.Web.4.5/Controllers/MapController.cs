@@ -242,6 +242,8 @@ namespace FSP.Web.Controllers
             }
             catch (Exception ex)
             {
+                Util.RemoveFromCache(CacheKeySegments);
+                Util.RemoveFromCache(CacheKeySegments2);
                 Util.LogError($"SaveSegment Error: {ex.Message}");
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
@@ -262,6 +264,8 @@ namespace FSP.Web.Controllers
             }
             catch (Exception ex)
             {
+                Util.RemoveFromCache(CacheKeySegments);
+                Util.RemoveFromCache(CacheKeySegments2);
                 Util.LogError($"DeleteSegment Error: {ex.Message}, {ex.Message}");
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
@@ -394,6 +398,7 @@ namespace FSP.Web.Controllers
             }
             catch (Exception ex)
             {
+                Util.RemoveFromCache(CacheKeyBeats);
                 Util.LogError($"Save Beat Error: {ex.Message}");
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
@@ -406,17 +411,17 @@ namespace FSP.Web.Controllers
             {
                 using (var service = new TowTruckServiceClient())
                 {
-                    var deleteResult = service.DeleteBeat(id);
+                    var deleteResult = service.DeleteBeat(id);                 
                     Util.RemoveFromCache(CacheKeyBeats);
                     return Json(deleteResult == "success", JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
             {
+                Util.RemoveFromCache(CacheKeyBeats);
                 Util.LogError($"Delete Beat Error: {ex.Message}, {ex.Message}");
                 return Json(false, JsonRequestBehavior.AllowGet);
-            }
-
+            }            
         }
 
         #endregion
