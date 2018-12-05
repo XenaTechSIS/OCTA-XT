@@ -1,52 +1,53 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
-using System.Web.Security;
-using System.Web.SessionState;
+using FPSService.BeatData;
+using FPSService.DataClasses;
+using FPSService.Logging;
+using FPSService.MiscData;
+using FPSService.SQL;
+using FPSService.UDP;
+using SqlServerTypes;
 
 namespace FPSService
 {
-    public class Global : System.Web.HttpApplication
+    public class Global : HttpApplication
     {
-
         protected void Application_Start(object sender, EventArgs e)
         {
-            SqlServerTypes.Utilities.LoadNativeAssemblies(Server.MapPath("~/bin"));
+            Utilities.LoadNativeAssemblies(Server.MapPath("~/bin"));
 
-            UDP.UDPServer myServer = new UDP.UDPServer();
-            DataClasses.TowTruckCleanser myCleanser = new DataClasses.TowTruckCleanser();
-            
-            MiscData.LogonCheck myCheck = new MiscData.LogonCheck();
-            Logging.EventLogger myLogger = new Logging.EventLogger();
-            myLogger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "FSP Service Started", false);
+            var myServer = new UDPServer();
+            var myCleanser = new TowTruckCleanser();
+
+            var myCheck = new LogonCheck();
+            var myLogger = new EventLogger();
+            myLogger.LogEvent(DateTime.Now + Environment.NewLine + "FSP Service Started", false);
             //Data loaded once during run of application.
-            SQL.SQLCode mySQL = new SQL.SQLCode();
-            int SpeedingValue = Convert.ToInt32(mySQL.GetVarValue("Speeding"));
-            DataClasses.GlobalData.SpeedingValue = SpeedingValue;
-            mySQL.LoadCode1098s();
-            mySQL.LoadFreeways();
-            mySQL.LoadIncidentTypes();
-            mySQL.LoadLocationCoding();
-            mySQL.LoadServiceTypes();
-            mySQL.LoadTowLocations();
-            mySQL.LoadTrafficSpeeds();
-            mySQL.LoadVehiclePositions();
-            mySQL.LoadVehicleTypes();
-            mySQL.LoadContractors();
-            mySQL.LoadLeeways();
-            mySQL.LoadBeatSchedules();
-            mySQL.LoadDropZones();
-            BeatData.Beats.LoadBeats();
-            BeatData.Beats.LoadBeatSegments();
-            BeatData.YardClass.LoadYards();
-            DataClasses.BulkLogger myBulkLogger = new DataClasses.BulkLogger();
-            DataClasses.TruckDumper myDumper = new DataClasses.TruckDumper();
+            var mySql = new SQLCode();
+            var speedingValue = Convert.ToInt32(mySql.GetVarValue("Speeding"));
+            GlobalData.SpeedingValue = speedingValue;
+            mySql.LoadCode1098s();
+            mySql.LoadFreeways();
+            mySql.LoadIncidentTypes();
+            mySql.LoadLocationCoding();
+            mySql.LoadServiceTypes();
+            mySql.LoadTowLocations();
+            mySql.LoadTrafficSpeeds();
+            mySql.LoadVehiclePositions();
+            mySql.LoadVehicleTypes();
+            mySql.LoadContractors();
+            mySql.LoadLeeways();
+            mySql.LoadBeatSchedules();
+            mySql.LoadDropZones();
+            Beats.LoadBeats();
+            Beats.LoadBeatSegments();
+            YardClass.LoadYards();
+            var myBulkLogger = new BulkLogger();
+            var myDumper = new TruckDumper();
         }
 
         protected void Session_Start(object sender, EventArgs e)
         {
-
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)
@@ -58,34 +59,31 @@ namespace FPSService
             if (HttpContext.Current.Request.HttpMethod == "OPTIONS")
             {
                 HttpContext.Current.Response.AddHeader("Access-Control-Allow-Methods",
-                              "GET, POST");
+                    "GET, POST");
                 HttpContext.Current.Response.AddHeader("Access-Control-Allow-Headers",
-                              "Content-Type, Accept");
+                    "Content-Type, Accept");
                 HttpContext.Current.Response.AddHeader("Access-Control-Max-Age",
-                              "1728000");
+                    "1728000");
                 HttpContext.Current.Response.End();
             }
         }
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
-
         }
 
         protected void Application_Error(object sender, EventArgs e)
         {
-
         }
 
         protected void Session_End(object sender, EventArgs e)
         {
-
         }
 
         protected void Application_End(object sender, EventArgs e)
         {
-            Logging.EventLogger myLogger = new Logging.EventLogger();
-            myLogger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "FSP Service Has Stopped", false);
+            var myLogger = new EventLogger();
+            myLogger.LogEvent(DateTime.Now + Environment.NewLine + "FSP Service Has Stopped", false);
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using FPSService.Logging;
+using FPSService.SQL;
 using Microsoft.SqlServer.Types;
-using System.Data.SqlClient;
 
 namespace FPSService.BeatData
 {
@@ -48,18 +48,19 @@ namespace FPSService.BeatData
         //public static List<BeatClass> AllBeats = new List<BeatClass>();
         public static List<Beat> AllBeats = new List<Beat>();
         public static List<BeatSegment> AllBeatSegments = new List<BeatSegment>();
-        static Logging.EventLogger logger = new Logging.EventLogger();
+        private static readonly EventLogger logger = new EventLogger();
 
         public static void LoadBeats() //completely reinitializes in-memory beat list
         {
             try
             {
-                SQL.SQLCode mySQL = new SQL.SQLCode();
+                var mySQL = new SQLCode();
                 AllBeats = mySQL.LoadBeatsOnly();
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Loading All Beats" + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "Error Loading All Beats" + Environment.NewLine + ex, true);
             }
         }
 
@@ -67,12 +68,14 @@ namespace FPSService.BeatData
         {
             try
             {
-                SQL.SQLCode mySQL = new SQL.SQLCode();
+                var mySQL = new SQLCode();
                 AllBeatSegments = mySQL.LoadSegmentsOnly();
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Loading All Beat Segments" + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "Error Loading All Beat Segments" + Environment.NewLine + ex,
+                    true);
             }
         }
 
@@ -81,15 +84,13 @@ namespace FPSService.BeatData
             //only add distinct beats
             try
             {
-                Beat newBeat = AllBeats.Find(delegate(Beat b) { return b.BeatID == thisBeat.BeatID; });
-                if (newBeat == null)
-                {
-                    AllBeats.Add(thisBeat);
-                }
+                var newBeat = AllBeats.Find(delegate(Beat b) { return b.BeatID == thisBeat.BeatID; });
+                if (newBeat == null) AllBeats.Add(thisBeat);
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Adding Beat" + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Adding Beat" + Environment.NewLine + ex,
+                    true);
             }
         }
 
@@ -97,18 +98,16 @@ namespace FPSService.BeatData
         {
             try
             {
-                Beat thisBeat = AllBeats.Find(b => b.BeatID == BeatID);
+                var thisBeat = AllBeats.Find(b => b.BeatID == BeatID);
                 if (thisBeat != null)
-                {
                     return thisBeat;
-                }
-                else {
-                    return null;
-                }
+                return null;
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Finding Driver Beat By ID" + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "Error Finding Driver Beat By ID" + Environment.NewLine + ex,
+                    true);
                 return null;
             }
         }
@@ -117,226 +116,173 @@ namespace FPSService.BeatData
         {
             try
             {
-                List<Beat> thisBeatData = new List<Beat>();
+                var thisBeatData = new List<Beat>();
                 var lstBeat = from ab in AllBeats
-                              where ab.BeatID == BeatID
-                              select ab;
-                foreach (Beat thisBeat in lstBeat)
-                {
-                    thisBeatData.Add(thisBeat);
-                }
+                    where ab.BeatID == BeatID
+                    select ab;
+                foreach (var thisBeat in lstBeat) thisBeatData.Add(thisBeat);
                 if (thisBeatData.Count > 0)
-                {
                     return thisBeatData;
-                }
-                else
-                {
-                    return null;
-                }
+                return null;
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Finding Beat By ID" + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "Error Finding Beat By ID" + Environment.NewLine + ex, true);
                 return null;
             }
         }
 
         public static string FindBeatSegmentNameByID(Guid _BeatSegmentID)
         {
-            BeatSegment thisFoundSegment = AllBeatSegments.Find(delegate(BeatSegment bs) { return bs.BeatSegmentID == _BeatSegmentID; });
+            var thisFoundSegment = AllBeatSegments.Find(delegate(BeatSegment bs)
+            {
+                return bs.BeatSegmentID == _BeatSegmentID;
+            });
             if (thisFoundSegment != null)
-            {
                 return thisFoundSegment.BeatSegmentNumber;
-            }
-            else
-            {
-                return "Unknown";
-            }
+            return "Unknown";
         }
 
         public static string FindBeat(SqlGeography thisGeography)
         {
-            string BeatDescription = "No Beat";
+            var BeatDescription = "No Beat";
             var bList = from ab in AllBeats
-                        select ab;
-            foreach (Beat thisBeat in bList)
-            {
-                if(thisBeat.BeatExtent.STIntersects(thisGeography))
-                //if (thisBeat.BeatExtent.STContains(thisGeography))
-                {
+                select ab;
+            foreach (var thisBeat in bList)
+                if (thisBeat.BeatExtent.STIntersects(thisGeography))
+                    //if (thisBeat.BeatExtent.STContains(thisGeography))
                     BeatDescription = thisBeat.BeatDescription;
-                }
-            }
             return BeatDescription;
         }
 
         public static bool FindOnBeat(Guid BeatID, SqlGeography thisGeography)
         {
-            bool OnBeat = false;
+            var OnBeat = false;
             var bList = from ab in AllBeats
-                        where ab.BeatID == BeatID
-                        select ab;
-            foreach (Beat thisBeat in bList)
-            {
+                where ab.BeatID == BeatID
+                select ab;
+            foreach (var thisBeat in bList)
                 if (thisBeat.BeatExtent.STBuffer(10).STIntersects(thisGeography))
-                {
                     OnBeat = true;
-                }
-            }
             return OnBeat;
         }
 
         public static string FindCurrentBeatSegment(Guid BeatID, SqlGeography thisGeography)
         {
-            string currentSegment = "NA";
+            var currentSegment = "NA";
             var bList = from ab in AllBeatSegments
-                        where ab.BeatID == BeatID
-                        select ab;
-            foreach (BeatSegment thisBeatSegment in bList)
-            {
+                where ab.BeatID == BeatID
+                select ab;
+            foreach (var thisBeatSegment in bList)
                 if (thisBeatSegment.BeatSegmentExtent.STBuffer(10).STIntersects(thisGeography))
-                {
                     currentSegment = thisBeatSegment.BeatSegmentDescription;
-                }
-            }
             return currentSegment;
         }
 
         public static Guid FindBeatIDByName(string BeatName)
         {
-            Guid BeatID = new Guid("00000000-0000-0000-0000-000000000000");
+            var BeatID = new Guid("00000000-0000-0000-0000-000000000000");
 
             var bList = from b in AllBeats
-                        where b.BeatNumber == BeatName
-                        select b;
+                where b.BeatNumber == BeatName
+                select b;
 
-            foreach (Beat b in bList)
-            {
-                BeatID = b.BeatID;
-            }
+            foreach (var b in bList) BeatID = b.BeatID;
 
             return BeatID;
         }
 
         public static Guid FindCurrentBeatSegmentID(Guid BeatID, SqlGeography thisGeography)
         {
-            Guid segmentID = new Guid("00000000-0000-0000-0000-000000000000");
+            var segmentID = new Guid("00000000-0000-0000-0000-000000000000");
 
             var bList = from ab in AllBeatSegments
-                        where ab.BeatID == BeatID
-                        select ab;
-            foreach (BeatSegment bs in bList)
-            {
+                where ab.BeatID == BeatID
+                select ab;
+            foreach (var bs in bList)
                 if (bs.BeatSegmentExtent.STBuffer(10).STIntersects(thisGeography))
-                {
                     segmentID = bs.BeatSegmentID;
-                }
-            }
 
             return segmentID;
         }
 
         public static Guid FindBeatID(SqlGeography thisGeography)
         {
-            Guid BeatID = new Guid("00000000-0000-0000-0000-000000000000");
+            var BeatID = new Guid("00000000-0000-0000-0000-000000000000");
             var bList = from ab in AllBeats
-                        select ab;
-            foreach (Beat thisBeat in bList)
-            {
+                select ab;
+            foreach (var thisBeat in bList)
                 if (thisBeat.BeatExtent.STBuffer(10).STIntersects(thisGeography))
                 {
                     BeatID = thisBeat.BeatID;
                     return BeatID;
                 }
-            }
+
             return BeatID;
         }
 
         public static Guid FindBeatSegmentIDbyName(Guid BeatID, string segmentName)
         {
-            Guid segID = new Guid("00000000-0000-0000-0000-000000000000");
+            var segID = new Guid("00000000-0000-0000-0000-000000000000");
             var bList = from abs in AllBeatSegments
-                        where abs.BeatID == BeatID && abs.BeatSegmentDescription == segmentName
-                        select abs;
-            foreach (BeatSegment bs in bList)
-            {
-                segID = bs.BeatSegmentID;
-            }
+                where abs.BeatID == BeatID && abs.BeatSegmentDescription == segmentName
+                select abs;
+            foreach (var bs in bList) segID = bs.BeatSegmentID;
             return segID;
         }
 
         public static Guid FindBeatSegmentID(Guid BeatID, SqlGeography thisGeography)
         {
-            Guid BeatSegmentID = new Guid("00000000-0000-0000-0000-000000000000");
+            var BeatSegmentID = new Guid("00000000-0000-0000-0000-000000000000");
             var bList = from abs in AllBeatSegments
-                        where abs.BeatID == BeatID
-                        select abs;
-            foreach (BeatSegment thisBeatSegment in bList)
-            {
+                where abs.BeatID == BeatID
+                select abs;
+            foreach (var thisBeatSegment in bList)
                 if (thisBeatSegment.BeatSegmentExtent.STBuffer(10).STIntersects(thisGeography))
                 {
                     BeatSegmentID = thisBeatSegment.BeatSegmentID;
                     return BeatSegmentID;
                 }
-            }
+
             return BeatSegmentID;
         }
 
         public static Beat FindBeatSegment(string BeatDescription, SqlGeography thisGeography)
         {
-            Beat foundBeat = new Beat();
+            var foundBeat = new Beat();
             var bList = from ab in AllBeats
-                        where ab.BeatDescription == BeatDescription
-                        select ab;
-            foreach (Beat thisBeat in bList)
-            {
+                where ab.BeatDescription == BeatDescription
+                select ab;
+            foreach (var thisBeat in bList)
                 if (thisBeat.BeatExtent.STBuffer(10).STIntersects(thisGeography))
-                {
                     foundBeat = thisBeat;
-                }
-            }
             return foundBeat;
         }
 
         public static List<Beat> FindBeatByDescription(string Description)
         {
-            List<Beat> thisBeatData = new List<Beat>();
+            var thisBeatData = new List<Beat>();
             var lstBeat = from ab in AllBeats
-                          where ab.BeatDescription == Description
-                          select ab;
-            foreach (Beat thisBeat in lstBeat)
-            {
-                thisBeatData.Add(thisBeat);
-            }
+                where ab.BeatDescription == Description
+                select ab;
+            foreach (var thisBeat in lstBeat) thisBeatData.Add(thisBeat);
             if (thisBeatData.Count > 0)
-            {
                 return thisBeatData;
-            }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
         public static List<Beat> FindBeatsByFreeway(int FreewayID)
         {
-            List<Beat> FreewayBeats = new List<Beat>();
-            foreach (Beat b in AllBeats)
-            {
+            var FreewayBeats = new List<Beat>();
+            foreach (var b in AllBeats)
                 if (b.FreewayID == FreewayID)
-                {
                     FreewayBeats.Add(b);
-                }
-            }
             if (FreewayBeats.Count > 0)
-            {
                 return FreewayBeats;
-            }
-            else
-            {
-                return null;
-            }
+            return null;
         }
+
         /*
         public static List<Beat> FindSegmentsByBeat(string BeatDescription)
         {

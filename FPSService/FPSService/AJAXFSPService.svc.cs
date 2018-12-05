@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Web;
-using System.Text;
 using System.Web.Script.Serialization;
-using Microsoft.SqlServer.Types;
-using FPSService.TowTruck;
 using System.Xml.Serialization;
-using System.IO;
-using System.Configuration;
-using System.Threading;
+using FPSService.TowTruck;
+using Microsoft.SqlServer.Types;
 
 namespace FPSService
 {
@@ -35,7 +31,7 @@ namespace FPSService
         public void KillTruck(string ip)
         {
             DataClasses.GlobalData.RemoveTowTruck(ip);
-        }       
+        }
 
         [OperationContract]
         [WebGet]
@@ -293,7 +289,7 @@ namespace FPSService
                     return Status;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 string err = ex.ToString();
                 return "NOK";
@@ -643,7 +639,7 @@ namespace FPSService
             Guid AssistID;
             if (thisTruck != null)
             {
-                if(thisNewIncidentAssist.AssistID == new Guid("00000000-0000-0000-0000-000000000000"))
+                if (thisNewIncidentAssist.AssistID == new Guid("00000000-0000-0000-0000-000000000000"))
                 {
                     AssistID = new Guid(MakeGuid());
                 }
@@ -651,7 +647,7 @@ namespace FPSService
                 {
                     AssistID = thisNewIncidentAssist.AssistID;
                 }
-                if(thisNewIncidentAssist.IncidentID == new Guid("00000000-0000-0000-0000-000000000000"))
+                if (thisNewIncidentAssist.IncidentID == new Guid("00000000-0000-0000-0000-000000000000"))
                 {
                     IncidentID = new Guid(MakeGuid());
                 }
@@ -833,145 +829,145 @@ namespace FPSService
             Guid AssistID;
             //if (thisTruck != null)
             //{
-                if (thisNewIncidentAssist.AssistID == new Guid("00000000-0000-0000-0000-000000000000"))
-                {
-                    AssistID = new Guid(MakeGuid());
-                }
-                else
-                {
-                    AssistID = thisNewIncidentAssist.AssistID;
-                }
-                if (thisNewIncidentAssist.IncidentID == new Guid("00000000-0000-0000-0000-000000000000"))
-                {
-                    IncidentID = new Guid(MakeGuid());
-                }
-                else
-                {
-                    IncidentID = thisNewIncidentAssist.IncidentID;
-                }
-                DateTime DispatchTime = DateTime.Now;
-                DateTime x1097 = thisNewIncidentAssist.x1097;
-                DateTime x1098 = thisNewIncidentAssist.x1098;
-                if (thisNewIncidentAssist.DispatchTime != DateTime.Parse("01/01/0001 00:00:00"))
-                {
-                    DispatchTime = thisNewIncidentAssist.DispatchTime;
-                    x1097 = thisNewIncidentAssist.DispatchTime;
-                    x1098 = thisNewIncidentAssist.DispatchTime;
-                }
-                else
-                {
-                    DispatchTime = x1097;
-                }
+            if (thisNewIncidentAssist.AssistID == new Guid("00000000-0000-0000-0000-000000000000"))
+            {
+                AssistID = new Guid(MakeGuid());
+            }
+            else
+            {
+                AssistID = thisNewIncidentAssist.AssistID;
+            }
+            if (thisNewIncidentAssist.IncidentID == new Guid("00000000-0000-0000-0000-000000000000"))
+            {
+                IncidentID = new Guid(MakeGuid());
+            }
+            else
+            {
+                IncidentID = thisNewIncidentAssist.IncidentID;
+            }
+            DateTime DispatchTime = DateTime.Now;
+            DateTime x1097 = thisNewIncidentAssist.x1097;
+            DateTime x1098 = thisNewIncidentAssist.x1098;
+            if (thisNewIncidentAssist.DispatchTime != DateTime.Parse("01/01/0001 00:00:00"))
+            {
+                DispatchTime = thisNewIncidentAssist.DispatchTime;
+                x1097 = thisNewIncidentAssist.DispatchTime;
+                x1098 = thisNewIncidentAssist.DispatchTime;
+            }
+            else
+            {
+                DispatchTime = x1097;
+            }
 
-                //check to see if we already have an incident with this id
-                MiscData.Incident foundIncident = DataClasses.GlobalData.FindIncidentByID(thisNewIncidentAssist.IncidentID);
-                if (foundIncident == null)
-                {
-                    //Create the incident
-                    MiscData.Incident thisIncident = new MiscData.Incident();
-                    thisIncident.IncidentID = IncidentID;
-                    thisIncident.BeatSegmentID = thisNewIncidentAssist.BeatSegmentID;
-                    thisIncident.TimeStamp = DateTime.Now;
-                    thisIncident.Description = thisNewIncidentAssist.Description;
-                    thisIncident.IncidentNumber = GenerateNumber("i");
-                    thisIncident.Location = thisNewIncidentAssist.Location;
-                    thisIncident.LocationID = thisNewIncidentAssist.LocationID;
-                    thisIncident.FreewayID = thisNewIncidentAssist.FreewayID;
-                    thisIncident.CreatedBy = thisNewIncidentAssist.CreatedBy;
-                    thisIncident.CrossStreet1 = thisNewIncidentAssist.CrossStreet1;
-                    thisIncident.CrossStreet2 = thisNewIncidentAssist.CrossStreet2;
-                    thisIncident.Direction = thisNewIncidentAssist.Direction;
-                    thisIncident.BeatNumber = thisNewIncidentAssist.BeatNumber;
-                    DataClasses.GlobalData.AddIncident(thisIncident);
-                }
+            //check to see if we already have an incident with this id
+            MiscData.Incident foundIncident = DataClasses.GlobalData.FindIncidentByID(thisNewIncidentAssist.IncidentID);
+            if (foundIncident == null)
+            {
+                //Create the incident
+                MiscData.Incident thisIncident = new MiscData.Incident();
+                thisIncident.IncidentID = IncidentID;
+                thisIncident.BeatSegmentID = thisNewIncidentAssist.BeatSegmentID;
+                thisIncident.TimeStamp = DateTime.Now;
+                thisIncident.Description = thisNewIncidentAssist.Description;
+                thisIncident.IncidentNumber = GenerateNumber("i");
+                thisIncident.Location = thisNewIncidentAssist.Location;
+                thisIncident.LocationID = thisNewIncidentAssist.LocationID;
+                thisIncident.FreewayID = thisNewIncidentAssist.FreewayID;
+                thisIncident.CreatedBy = thisNewIncidentAssist.CreatedBy;
+                thisIncident.CrossStreet1 = thisNewIncidentAssist.CrossStreet1;
+                thisIncident.CrossStreet2 = thisNewIncidentAssist.CrossStreet2;
+                thisIncident.Direction = thisNewIncidentAssist.Direction;
+                thisIncident.BeatNumber = thisNewIncidentAssist.BeatNumber;
+                DataClasses.GlobalData.AddIncident(thisIncident);
+            }
 
-                MiscData.Assist foundAssist = DataClasses.GlobalData.FindAssistByID(thisNewIncidentAssist.AssistID);
-                if (foundAssist == null)
+            MiscData.Assist foundAssist = DataClasses.GlobalData.FindAssistByID(thisNewIncidentAssist.AssistID);
+            if (foundAssist == null)
+            {
+                //Create a new assist, this will generate an assist number, updating the assist won't
+                MiscData.Assist thisAssist = new MiscData.Assist();
+                thisAssist.AssistID = AssistID;
+                thisAssist.IncidentID = IncidentID;
+                thisAssist.DispatchTime = DispatchTime;
+                thisAssist.DriverID = thisNewIncidentAssist.DriverID;
+                thisAssist.IncidentTypeID = thisNewIncidentAssist.IncidentTypeID;
+                thisAssist.FleetVehicleID = thisNewIncidentAssist.FleetVehicleID;
+                thisAssist.TrafficSpeedID = thisNewIncidentAssist.TrafficSpeedID;
+                thisAssist.DropZone = thisNewIncidentAssist.DropZone;
+                thisAssist.Make = thisNewIncidentAssist.Make;
+                thisAssist.VehicleTypeID = thisNewIncidentAssist.VehicleTypeID;
+                thisAssist.VehiclePositionID = thisNewIncidentAssist.VehiclePositionID;
+                thisAssist.Color = thisNewIncidentAssist.Color;
+                thisAssist.LicensePlate = thisNewIncidentAssist.LicensePlate;
+                thisAssist.State = thisNewIncidentAssist.State;
+                thisAssist.StartOD = thisNewIncidentAssist.StartOD;
+                thisAssist.EndOD = thisNewIncidentAssist.EndOD;
+                thisAssist.TowLocationID = thisNewIncidentAssist.TowLocationID;
+                thisAssist.Tip = thisNewIncidentAssist.Tip;
+                thisAssist.TipDetail = thisNewIncidentAssist.TipDetail;
+                thisAssist.CustomerLastName = thisNewIncidentAssist.CustomerLastName;
+                thisAssist.Comments = thisNewIncidentAssist.Comments;
+                thisAssist.IsMDC = thisNewIncidentAssist.IsMDC;
+                thisAssist.x1097 = x1097;
+                thisAssist.x1098 = thisNewIncidentAssist.x1098;
+                thisAssist.OnSiteTime = thisNewIncidentAssist.OnSiteTime;
+                thisAssist.ContractorID = thisNewIncidentAssist.ContractorID;
+                thisAssist.LogNumber = thisNewIncidentAssist.LogNumber;
+                thisAssist.Lat = 0.0;
+                thisAssist.CustomerWaitTime = thisNewIncidentAssist.CustomerWaitTime;
+                thisAssist.Lon = 0.0;
+                thisAssist.Acked = true;
+                thisAssist.SelectedServices = thisNewIncidentAssist.SelectedServices;
+                thisAssist.AssistComplete = true;
+                thisAssist.SurveyNum = thisNewIncidentAssist.SurveyNum;
+                thisAssist.AssistNumber = GenerateNumber("a");
+                DataClasses.GlobalData.AddAssist(thisAssist);
+            }
+            else
+            {
+
+                MiscData.Assist thisAssist = new MiscData.Assist();
+                if (foundAssist.AssistNumber == null)
                 {
-                    //Create a new assist, this will generate an assist number, updating the assist won't
-                    MiscData.Assist thisAssist = new MiscData.Assist();
-                    thisAssist.AssistID = AssistID;
-                    thisAssist.IncidentID = IncidentID;
-                    thisAssist.DispatchTime = DispatchTime;
-                    thisAssist.DriverID = thisNewIncidentAssist.DriverID;
-                    thisAssist.IncidentTypeID = thisNewIncidentAssist.IncidentTypeID;
-                    thisAssist.FleetVehicleID = thisNewIncidentAssist.FleetVehicleID;
-                    thisAssist.TrafficSpeedID = thisNewIncidentAssist.TrafficSpeedID;
-                    thisAssist.DropZone = thisNewIncidentAssist.DropZone;
-                    thisAssist.Make = thisNewIncidentAssist.Make;
-                    thisAssist.VehicleTypeID = thisNewIncidentAssist.VehicleTypeID;
-                    thisAssist.VehiclePositionID = thisNewIncidentAssist.VehiclePositionID;
-                    thisAssist.Color = thisNewIncidentAssist.Color;
-                    thisAssist.LicensePlate = thisNewIncidentAssist.LicensePlate;
-                    thisAssist.State = thisNewIncidentAssist.State;
-                    thisAssist.StartOD = thisNewIncidentAssist.StartOD;
-                    thisAssist.EndOD = thisNewIncidentAssist.EndOD;
-                    thisAssist.TowLocationID = thisNewIncidentAssist.TowLocationID;
-                    thisAssist.Tip = thisNewIncidentAssist.Tip;
-                    thisAssist.TipDetail = thisNewIncidentAssist.TipDetail;
-                    thisAssist.CustomerLastName = thisNewIncidentAssist.CustomerLastName;
-                    thisAssist.Comments = thisNewIncidentAssist.Comments;
-                    thisAssist.IsMDC = thisNewIncidentAssist.IsMDC;
-                    thisAssist.x1097 = x1097;
-                    thisAssist.x1098 = thisNewIncidentAssist.x1098;
-                    thisAssist.OnSiteTime = thisNewIncidentAssist.OnSiteTime;
-                    thisAssist.ContractorID = thisNewIncidentAssist.ContractorID;
-                    thisAssist.LogNumber = thisNewIncidentAssist.LogNumber;
-                    thisAssist.Lat = 0.0;
-                    thisAssist.CustomerWaitTime = thisNewIncidentAssist.CustomerWaitTime;
-                    thisAssist.Lon = 0.0;
-                    thisAssist.Acked = true;
-                    thisAssist.SelectedServices = thisNewIncidentAssist.SelectedServices;
-                    thisAssist.AssistComplete = true;
-                    thisAssist.SurveyNum = thisNewIncidentAssist.SurveyNum;
                     thisAssist.AssistNumber = GenerateNumber("a");
-                    DataClasses.GlobalData.AddAssist(thisAssist);
                 }
-                else
-                {
-
-                    MiscData.Assist thisAssist = new MiscData.Assist();
-                    if (foundAssist.AssistNumber == null)
-                    {
-                        thisAssist.AssistNumber = GenerateNumber("a");
-                    }
-                    thisAssist.AssistID = AssistID;
-                    thisAssist.IncidentID = IncidentID;
-                    thisAssist.DispatchTime = DispatchTime;
-                    thisAssist.DriverID = thisNewIncidentAssist.DriverID;
-                    thisAssist.IncidentTypeID = thisNewIncidentAssist.IncidentTypeID;
-                    thisAssist.FleetVehicleID = thisNewIncidentAssist.FleetVehicleID;
-                    thisAssist.TrafficSpeedID = thisNewIncidentAssist.TrafficSpeedID;
-                    thisAssist.DropZone = thisNewIncidentAssist.DropZone;
-                    thisAssist.Make = thisNewIncidentAssist.Make;
-                    thisAssist.VehicleTypeID = thisNewIncidentAssist.VehicleTypeID;
-                    thisAssist.VehiclePositionID = thisNewIncidentAssist.VehiclePositionID;
-                    thisAssist.Color = thisNewIncidentAssist.Color;
-                    thisAssist.LicensePlate = thisNewIncidentAssist.LicensePlate;
-                    thisAssist.State = thisNewIncidentAssist.State;
-                    thisAssist.StartOD = thisNewIncidentAssist.StartOD;
-                    thisAssist.EndOD = thisNewIncidentAssist.EndOD;
-                    thisAssist.TowLocationID = thisNewIncidentAssist.TowLocationID;
-                    thisAssist.Tip = thisNewIncidentAssist.Tip;
-                    thisAssist.TipDetail = thisNewIncidentAssist.TipDetail;
-                    thisAssist.CustomerLastName = thisNewIncidentAssist.CustomerLastName;
-                    thisAssist.Comments = thisNewIncidentAssist.Comments;
-                    thisAssist.IsMDC = thisNewIncidentAssist.IsMDC;
-                    thisAssist.x1097 = x1097;
-                    thisAssist.x1098 = thisNewIncidentAssist.x1098;
-                    thisAssist.OnSiteTime = thisNewIncidentAssist.OnSiteTime;
-                    thisAssist.ContractorID = thisNewIncidentAssist.ContractorID;
-                    thisAssist.LogNumber = thisNewIncidentAssist.LogNumber;
-                    thisAssist.Lat = 0.0;
-                    thisAssist.CustomerWaitTime = thisNewIncidentAssist.CustomerWaitTime;
-                    thisAssist.Lon = 0.0;
-                    thisAssist.Acked = true;
-                    thisAssist.SelectedServices = thisNewIncidentAssist.SelectedServices;
-                    thisAssist.AssistComplete = true;
-                    thisAssist.AssistNumber = foundAssist.AssistNumber;
-                    thisAssist.SurveyNum = thisNewIncidentAssist.SurveyNum;
-                    DataClasses.GlobalData.AddAssist(thisAssist);
-                }
+                thisAssist.AssistID = AssistID;
+                thisAssist.IncidentID = IncidentID;
+                thisAssist.DispatchTime = DispatchTime;
+                thisAssist.DriverID = thisNewIncidentAssist.DriverID;
+                thisAssist.IncidentTypeID = thisNewIncidentAssist.IncidentTypeID;
+                thisAssist.FleetVehicleID = thisNewIncidentAssist.FleetVehicleID;
+                thisAssist.TrafficSpeedID = thisNewIncidentAssist.TrafficSpeedID;
+                thisAssist.DropZone = thisNewIncidentAssist.DropZone;
+                thisAssist.Make = thisNewIncidentAssist.Make;
+                thisAssist.VehicleTypeID = thisNewIncidentAssist.VehicleTypeID;
+                thisAssist.VehiclePositionID = thisNewIncidentAssist.VehiclePositionID;
+                thisAssist.Color = thisNewIncidentAssist.Color;
+                thisAssist.LicensePlate = thisNewIncidentAssist.LicensePlate;
+                thisAssist.State = thisNewIncidentAssist.State;
+                thisAssist.StartOD = thisNewIncidentAssist.StartOD;
+                thisAssist.EndOD = thisNewIncidentAssist.EndOD;
+                thisAssist.TowLocationID = thisNewIncidentAssist.TowLocationID;
+                thisAssist.Tip = thisNewIncidentAssist.Tip;
+                thisAssist.TipDetail = thisNewIncidentAssist.TipDetail;
+                thisAssist.CustomerLastName = thisNewIncidentAssist.CustomerLastName;
+                thisAssist.Comments = thisNewIncidentAssist.Comments;
+                thisAssist.IsMDC = thisNewIncidentAssist.IsMDC;
+                thisAssist.x1097 = x1097;
+                thisAssist.x1098 = thisNewIncidentAssist.x1098;
+                thisAssist.OnSiteTime = thisNewIncidentAssist.OnSiteTime;
+                thisAssist.ContractorID = thisNewIncidentAssist.ContractorID;
+                thisAssist.LogNumber = thisNewIncidentAssist.LogNumber;
+                thisAssist.Lat = 0.0;
+                thisAssist.CustomerWaitTime = thisNewIncidentAssist.CustomerWaitTime;
+                thisAssist.Lon = 0.0;
+                thisAssist.Acked = true;
+                thisAssist.SelectedServices = thisNewIncidentAssist.SelectedServices;
+                thisAssist.AssistComplete = true;
+                thisAssist.AssistNumber = foundAssist.AssistNumber;
+                thisAssist.SurveyNum = thisNewIncidentAssist.SurveyNum;
+                DataClasses.GlobalData.AddAssist(thisAssist);
+            }
             //}
         }
 
@@ -979,7 +975,7 @@ namespace FPSService
         [WebInvoke]
         public void PostAssist(MiscData.ClientAssist thisASsist)
         {
-           
+
 
         }
 
@@ -1045,7 +1041,7 @@ namespace FPSService
             Guid AssistID = new Guid(_AssistID);
             DataClasses.GlobalData.AckAssistRequest(AssistID);
         }
-        
+
         [OperationContract]
         [WebGet]
         public string GetAssistRequests(string Mac = "0")
@@ -1075,7 +1071,7 @@ namespace FPSService
                 BeatData.Beat thisBeat = new BeatData.Beat();
                 foreach (MiscData.Assist req in truckAssistRequests)
                 {
-                    if(req.Acked == false)
+                    if (req.Acked == false)
                     {
                         if (req.x1098 == DateTime.Parse("01/01/0001 00:00:00"))
                         {
@@ -1091,7 +1087,7 @@ namespace FPSService
                                     {
                                         IncidentDetail = thisIncident.Description;
                                         IncidentDetail += Environment.NewLine + "Direction: " + thisIncident.Direction + " Freeway: " + DataClasses.GlobalData.FindFreewayNameByID(thisIncident.FreewayID);
-                                        if(!string.IsNullOrEmpty(thisIncident.CrossStreet1))
+                                        if (!string.IsNullOrEmpty(thisIncident.CrossStreet1))
                                         {
                                             IncidentDetail += Environment.NewLine + "Near: " + thisIncident.CrossStreet1;
                                         }
@@ -1110,7 +1106,7 @@ namespace FPSService
                                     AssistInfo = IncidentDetail,
                                     CreatedByID = DataClasses.GlobalData.FindIncidentCreatorFromAssist(req.IncidentID),
                                     Description = IncidentDetail,
-                                    
+
                                     //AssistType = req.AssistType,
                                     //BeatBoundry = beatsegArea
                                 });
@@ -1674,7 +1670,8 @@ namespace FPSService
         public string GetBeats()
         {
             List<MiscData.ClientBeat> myBeats = new List<MiscData.ClientBeat>();
-            myBeats.Add(new MiscData.ClientBeat { 
+            myBeats.Add(new MiscData.ClientBeat
+            {
                 BeatName = "000-000",
                 BeatID = new Guid("00000000-0000-0000-0000-000000000000")
             });
@@ -1696,13 +1693,14 @@ namespace FPSService
         {
             JavaScriptSerializer js = new JavaScriptSerializer();
             string JSONData = "";
-            switch(Type)
+            switch (Type)
             {
                 case "Code1098s":
                     List<DataClasses.ClientCode1098> Code1098s = new List<DataClasses.ClientCode1098>();
                     foreach (MiscData.Code1098 thisCode in DataClasses.GlobalData.Code1098s)
                     {
-                        Code1098s.Add(new DataClasses.ClientCode1098 { 
+                        Code1098s.Add(new DataClasses.ClientCode1098
+                        {
                             CodeID = thisCode.CodeID,
                             CodeCall = thisCode.CodeCall
                         });
@@ -1713,7 +1711,8 @@ namespace FPSService
                     List<DataClasses.ClientFreeway> Freeways = new List<DataClasses.ClientFreeway>();
                     foreach (MiscData.Freeway thisFreeway in DataClasses.GlobalData.Freeways)
                     {
-                        Freeways.Add(new DataClasses.ClientFreeway { 
+                        Freeways.Add(new DataClasses.ClientFreeway
+                        {
                             FreewayID = thisFreeway.FreewayID,
                             FreewayName = thisFreeway.FreewayName
                         });
@@ -1724,7 +1723,8 @@ namespace FPSService
                     List<DataClasses.ClientIncidentType> IncidentTypes = new List<DataClasses.ClientIncidentType>();
                     foreach (MiscData.IncidentType thisIncident in DataClasses.GlobalData.IncidentTypes)
                     {
-                        IncidentTypes.Add(new DataClasses.ClientIncidentType { 
+                        IncidentTypes.Add(new DataClasses.ClientIncidentType
+                        {
                             IncidentTypeID = thisIncident.IncidentTypeID,
                             IncidentTypeCode = thisIncident.IncidentTypeCode,
                             IncidentTypeName = thisIncident.IncidentTypeName
@@ -1736,7 +1736,8 @@ namespace FPSService
                     List<DataClasses.ClientLocationCode> LocationCodes = new List<DataClasses.ClientLocationCode>();
                     foreach (MiscData.LocationCoding thisCode in DataClasses.GlobalData.LocationCodes)
                     {
-                        LocationCodes.Add(new DataClasses.ClientLocationCode { 
+                        LocationCodes.Add(new DataClasses.ClientLocationCode
+                        {
                             LocationID = thisCode.LocationID,
                             LocationCode = thisCode.LocationCode
                         });
@@ -1747,7 +1748,8 @@ namespace FPSService
                     List<DataClasses.ClientServiceType> ServiceTypes = new List<DataClasses.ClientServiceType>();
                     foreach (MiscData.ServiceType thisServiceType in DataClasses.GlobalData.ServiceTypes)
                     {
-                        ServiceTypes.Add(new DataClasses.ClientServiceType { 
+                        ServiceTypes.Add(new DataClasses.ClientServiceType
+                        {
                             ServiceTypeID = thisServiceType.ServiceTypeID,
                             ServiceTypeCode = thisServiceType.ServiceTypeCode,
                             ServiceTypeName = thisServiceType.ServiceTypeName
@@ -1759,7 +1761,8 @@ namespace FPSService
                     List<DataClasses.ClientTowLocation> TowLocations = new List<DataClasses.ClientTowLocation>();
                     foreach (MiscData.TowLocation thisTowLocation in DataClasses.GlobalData.TowLocations)
                     {
-                        TowLocations.Add(new DataClasses.ClientTowLocation { 
+                        TowLocations.Add(new DataClasses.ClientTowLocation
+                        {
                             TowLocationID = thisTowLocation.TowLocationID,
                             TowLocationCode = thisTowLocation.TowLocationCode,
                             TowLocationName = thisTowLocation.TowLocationName
@@ -1771,7 +1774,8 @@ namespace FPSService
                     List<DataClasses.ClientTrafficSpeed> TrafficSpeeds = new List<DataClasses.ClientTrafficSpeed>();
                     foreach (MiscData.TrafficSpeed thisSpeed in DataClasses.GlobalData.TrafficSpeeds)
                     {
-                        TrafficSpeeds.Add(new DataClasses.ClientTrafficSpeed { 
+                        TrafficSpeeds.Add(new DataClasses.ClientTrafficSpeed
+                        {
                             TrafficSpeedID = thisSpeed.TrafficSpeedID,
                             TrafficSpeedCode = thisSpeed.TrafficSpeedCode
                         });
@@ -1782,7 +1786,8 @@ namespace FPSService
                     List<DataClasses.ClientVehiclePosition> VehiclePositions = new List<DataClasses.ClientVehiclePosition>();
                     foreach (MiscData.VehiclePosition thisPosition in DataClasses.GlobalData.VehiclePositions)
                     {
-                        VehiclePositions.Add(new DataClasses.ClientVehiclePosition { 
+                        VehiclePositions.Add(new DataClasses.ClientVehiclePosition
+                        {
                             VehiclePositionID = thisPosition.VehiclePositionID,
                             VehiclePositionCode = thisPosition.VehiclePositionCode
                         });
@@ -1793,7 +1798,8 @@ namespace FPSService
                     List<DataClasses.ClientVehicleTypes> VehicleTypes = new List<DataClasses.ClientVehicleTypes>();
                     foreach (MiscData.VehicleType thisType in DataClasses.GlobalData.VehicleTypes)
                     {
-                        VehicleTypes.Add(new DataClasses.ClientVehicleTypes { 
+                        VehicleTypes.Add(new DataClasses.ClientVehicleTypes
+                        {
                             VehicleTypeID = thisType.VehicleTypeID,
                             VehicleTypeCode = thisType.VehicleTypeCode
                         });
@@ -1802,9 +1808,10 @@ namespace FPSService
                     break;
                 case "DropZones":
                     List<DataClasses.ClientDropZone> DropZones = new List<DataClasses.ClientDropZone>();
-                    foreach(MiscData.DropZone thisZone in DataClasses.GlobalData.DropZones)
+                    foreach (MiscData.DropZone thisZone in DataClasses.GlobalData.DropZones)
                     {
-                        DropZones.Add(new DataClasses.ClientDropZone { 
+                        DropZones.Add(new DataClasses.ClientDropZone
+                        {
                             DropZoneID = thisZone.DropZoneID,
                             Location = thisZone.Location
                         });
@@ -1815,7 +1822,8 @@ namespace FPSService
                     List<DataClasses.ClientContractor> Contractors = new List<DataClasses.ClientContractor>();
                     foreach (MiscData.Contractors thisContractor in DataClasses.GlobalData.Contractors)
                     {
-                        Contractors.Add(new DataClasses.ClientContractor { 
+                        Contractors.Add(new DataClasses.ClientContractor
+                        {
                             ContractorID = thisContractor.ContractorID,
                             ContractCompanyName = thisContractor.ContractCompanyName
                         });

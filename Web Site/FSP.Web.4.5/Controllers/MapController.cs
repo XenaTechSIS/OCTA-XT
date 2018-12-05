@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.ServiceModel;
 using System.Web.Mvc;
 using FSP.Web.Filters;
 using FSP.Web.Helpers;
@@ -328,6 +329,15 @@ namespace FSP.Web.Controllers
         {
             try
             {
+
+                //var binding = new BasicHttpBinding
+                //{
+                //    MaxReceivedMessageSize = 2147483647,
+                //    MaxBufferPoolSize = 2147483647,
+                //    MaxBufferSize = 2147483647
+                //};
+                //var endpointAddress = new EndpointAddress("http://localhost:50138/TowTruckService.svc");
+
                 using (var service = new TowTruckServiceClient())
                 {
                     if (data.BeatID != Guid.Empty)
@@ -354,8 +364,7 @@ namespace FSP.Web.Controllers
 
                             var updateResult = service.UpdateBeat(dbBeat);
 
-                            if (updateResult == "success")
-                                Util.RemoveFromCache(CacheKeyBeats);
+                            Util.RemoveFromCache(CacheKeyBeats);
 
                             var response = new
                             {
@@ -382,7 +391,7 @@ namespace FSP.Web.Controllers
                     data.Active = true;
 
                     var createResult = service.UpdateBeat(data);
-                   
+
                     var newBeat = service.RetreiveAllBeats().FirstOrDefault(p => p.BeatID == data.BeatID);
 
                     var resp = new
@@ -411,7 +420,7 @@ namespace FSP.Web.Controllers
             {
                 using (var service = new TowTruckServiceClient())
                 {
-                    var deleteResult = service.DeleteBeat(id);                 
+                    var deleteResult = service.DeleteBeat(id);
                     Util.RemoveFromCache(CacheKeyBeats);
                     return Json(deleteResult == "success", JsonRequestBehavior.AllowGet);
                 }
@@ -421,7 +430,7 @@ namespace FSP.Web.Controllers
                 Util.RemoveFromCache(CacheKeyBeats);
                 Util.LogError($"Delete Beat Error: {ex.Message}, {ex.Message}");
                 return Json(false, JsonRequestBehavior.AllowGet);
-            }            
+            }
         }
 
         #endregion

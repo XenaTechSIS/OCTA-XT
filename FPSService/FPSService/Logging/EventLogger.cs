@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Diagnostics;
 
 namespace FPSService.Logging
@@ -10,25 +7,28 @@ namespace FPSService.Logging
     {
         private void CheckLogStatus()
         {
-            if (!EventLog.SourceExists("FSPService"))
+            try
             {
-                EventLog.CreateEventSource("FSPService", "FSPServiceLog");
+                if (!EventLog.SourceExists("FSPService")) EventLog.CreateEventSource("FSPService", "FSPServiceLog");
+            }
+            catch
+            {
             }
         }
 
-        public void LogEvent(string EventData, bool error)
+        public void LogEvent(string eventData, bool error)
         {
-            CheckLogStatus();
-            EventLog eventLog1 = new EventLog();
-            eventLog1.Source = "FSPService";
-            eventLog1.Log = "FSPServiceLog";
-            if (error == true)
+            try
             {
-                eventLog1.WriteEntry(EventData, EventLogEntryType.Error);
+                CheckLogStatus();
+                var eventLog1 = new EventLog {Source = "FSPService", Log = "FSPServiceLog"};
+                if (error)
+                    eventLog1.WriteEntry(eventData, EventLogEntryType.Error);
+                else
+                    eventLog1.WriteEntry(eventData);
             }
-            else
+            catch
             {
-                eventLog1.WriteEntry(EventData);
             }
         }
     }
