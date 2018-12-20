@@ -1,27 +1,25 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Collections;
-using Microsoft.SqlServer.Types;
 using System.Data.SqlTypes;
-using FPSService.MiscData;
+using System.Linq;
+using Microsoft.SqlServer.Types;
 
 namespace FPSService.SQL
 {
     public class SQLCode
     {
-        string ConnStr;
-        string ConnBeat;
+        readonly string ConnStr;
+        readonly string ConnBeat;
         Logging.EventLogger logger;
 
         public SQLCode()
         {
-            ConnStr = ConfigurationManager.AppSettings["FSPdb"].ToString();
-            ConnBeat = ConfigurationManager.AppSettings["BeatDB"].ToString();
+            ConnStr = ConfigurationManager.AppSettings["FSPdb"];
+            ConnBeat = ConfigurationManager.AppSettings["BeatDB"];
         }
 
         #region " SQL Reads "
@@ -371,17 +369,18 @@ namespace FPSService.SQL
                         // New 4/19/18 MM
                         string polygonString = "POLYGON ((";
                         List<string> LonLat = rdr["Position"].ToString().Split(',').ToList();
-                        if(LonLat[0].Trim() != LonLat[LonLat.Count()-1].Trim())
+                        if (LonLat[0].Trim() != LonLat[LonLat.Count() - 1].Trim())
                         {
                             LonLat.Add(LonLat[0]);
                         }
-                        for(int i = 0; i < LonLat.Count(); i++)
+                        for (int i = 0; i < LonLat.Count(); i++)
                         {
                             string[] ll = LonLat[i].Trim().Split(' ');
-                            if(i != LonLat.Count() - 1)
+                            if (i != LonLat.Count() - 1)
                             {
                                 polygonString += ll[1] + " " + ll[0] + ",";
-                            } else
+                            }
+                            else
                             {
                                 polygonString += ll[1] + " " + ll[0] + "))";
                             }
@@ -694,7 +693,6 @@ namespace FPSService.SQL
                     conn.Open();
                     int TodayNum = 0;
                     int DBNum = 0;
-                    int SurveyNumVal = 0;
                     string sMonth = DateTime.Now.Month.ToString();
                     string sDay = DateTime.Now.Day.ToString();
                     string sYear = DateTime.Now.Year.ToString();

@@ -353,6 +353,10 @@
                   else if (response.result === false || response.result === "false") {
                      console.error("Save Beat");
                      toastr.error('Failed to save Beat', 'Error');
+                     scope.triggerHideMapData();
+                     setTimeout(function () {
+                        scope.getBeatPolygons(true);
+                     }, 250);
                   } else {
                      console.log("Save Beat Success");
                      toastr.success('Beat Saved', 'Success');                     

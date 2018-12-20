@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
-using System.ServiceModel.Web;
-using System.Text;
 using FPSService.TowTruck;
 
 namespace FPSService
@@ -31,13 +27,13 @@ namespace FPSService
             return DataClasses.GlobalData.currentTrucks;
         }
 
-        public TowTruck.TowTruckExtended GetExtendedData(string TruckID)
+        public TowTruck.TowTruckExtended GetExtendedData(string truckId)
         {
-            TowTruck.TowTruckExtended thisTruck = new TowTruckExtended();
+            var thisTruck = new TowTruckExtended();
             var lstTrucks = from tt in DataClasses.GlobalData.currentTrucks
-                            where tt.Identifier == TruckID
+                            where tt.Identifier == truckId
                             select tt.Extended;
-            foreach(TowTruck.TowTruckExtended myTruck in lstTrucks)
+            foreach (var myTruck in lstTrucks)
             {
                 thisTruck = myTruck;
             }

@@ -92,6 +92,14 @@
             name: 'Customer Wait Time',
             show: false
          });
+         $scope.columns.push({
+            name: 'Tip',
+            show: false
+         });
+         $scope.columns.push({
+            name: 'Tip Detail',
+            show: false
+         });
       };
 
       $scope.showColumnConfig = function () {
