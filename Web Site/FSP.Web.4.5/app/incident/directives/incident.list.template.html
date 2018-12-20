@@ -90,6 +90,16 @@
             ng-click="updateSortColumn('Assists.CustomerWaitTime')">
             Customer Wait Time
          </th>
+         <th class="nowrap"
+            ng-show="columns[17].show"
+            ng-click="updateSortColumn('Assists.Tip')">
+            Tip
+         </th>
+         <th class="nowrap"
+            ng-show="columns[18].show"
+            ng-click="updateSortColumn('Assists.TipDetail')">
+            Tip Detail
+         </th>
       </tr>
    </thead>
    <tbody>
@@ -145,6 +155,12 @@
          </td>
          <td ng-show="columns[16].show">
             {{incident.Assists.CustomerWaitTime}}
+         </td>
+         <td ng-show="columns[17].show">
+            {{incident.Assists.Tip}}
+         </td>
+         <td ng-show="columns[18].show">
+            {{incident.Assists.TipDetail}}
          </td>
       </tr>
    </tbody>

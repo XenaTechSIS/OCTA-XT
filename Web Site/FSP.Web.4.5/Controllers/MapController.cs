@@ -329,7 +329,6 @@ namespace FSP.Web.Controllers
         {
             try
             {
-
                 //var binding = new BasicHttpBinding
                 //{
                 //    MaxReceivedMessageSize = 2147483647,
