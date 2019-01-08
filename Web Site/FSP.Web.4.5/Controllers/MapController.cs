@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.ServiceModel;
 using System.Web.Mvc;
 using FSP.Web.Filters;
 using FSP.Web.Helpers;
@@ -329,14 +328,6 @@ namespace FSP.Web.Controllers
         {
             try
             {
-                //var binding = new BasicHttpBinding
-                //{
-                //    MaxReceivedMessageSize = 2147483647,
-                //    MaxBufferPoolSize = 2147483647,
-                //    MaxBufferSize = 2147483647
-                //};
-                //var endpointAddress = new EndpointAddress("http://localhost:50138/TowTruckService.svc");
-
                 using (var service = new TowTruckServiceClient())
                 {
                     if (data.BeatID != Guid.Empty)
@@ -361,7 +352,25 @@ namespace FSP.Web.Controllers
                                 dbBeat.EndDate = DateTime.Now;
                             }
 
-                            var updateResult = service.UpdateBeat(dbBeat);
+                            var dbBeat2 = new Beats_New2
+                            {
+                                Active = dbBeat.Active,
+                                BeatColor = dbBeat.BeatColor,
+                                BeatDescription = dbBeat.BeatDescription,
+                                BeatExtent = dbBeat.BeatExtent,
+                                BeatID = dbBeat.BeatID,
+                                BeatNumber = dbBeat.BeatNumber,
+                                BeatSegments = data.BeatSegments?.Select(p => p.BeatSegmentID).ToArray(),
+                                EndDate = dbBeat.EndDate,
+                                ExtensionData = dbBeat.ExtensionData,
+                                FreewayID = dbBeat.FreewayID,
+                                IsTemporary = dbBeat.IsTemporary,
+                                LastUpdate = dbBeat.LastUpdate,
+                                LastUpdateBy = dbBeat.LastUpdateBy,
+                                StartDate = dbBeat.StartDate
+                            };
+
+                            var updateResult = service.UpdateBeat2(dbBeat2);
 
                             Util.RemoveFromCache(CacheKeyBeats);
 
@@ -389,7 +398,26 @@ namespace FSP.Web.Controllers
                     data.FreewayID = 0;
                     data.Active = true;
 
-                    var createResult = service.UpdateBeat(data);
+
+                    var data2 = new Beats_New2
+                    {
+                        Active = data.Active,
+                        BeatColor = data.BeatColor,
+                        BeatDescription = data.BeatDescription,
+                        BeatExtent = data.BeatExtent,
+                        BeatID = data.BeatID,
+                        BeatNumber = data.BeatNumber,
+                        BeatSegments = data.BeatSegments.Select(p => p.BeatSegmentID).ToArray(),
+                        EndDate = data.EndDate,
+                        ExtensionData = data.ExtensionData,
+                        FreewayID = data.FreewayID,
+                        IsTemporary = data.IsTemporary,
+                        LastUpdate = data.LastUpdate,
+                        LastUpdateBy = data.LastUpdateBy,
+                        StartDate = data.StartDate
+                    };
+
+                    var createResult = service.UpdateBeat2(data2);
 
                     var newBeat = service.RetreiveAllBeats().FirstOrDefault(p => p.BeatID == data.BeatID);
 

@@ -6,15 +6,20 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Linq;
+using FPSService.BeatData;
+using FPSService.DataClasses;
+using FPSService.Logging;
+using FPSService.MiscData;
+using FPSService.TowTruck;
 using Microsoft.SqlServer.Types;
 
 namespace FPSService.SQL
 {
     public class SQLCode
     {
-        readonly string ConnStr;
-        readonly string ConnBeat;
-        Logging.EventLogger logger;
+        private readonly string ConnBeat;
+        private readonly string ConnStr;
+        private EventLogger logger;
 
         public SQLCode()
         {
@@ -28,51 +33,53 @@ namespace FPSService.SQL
 
         public void LoadContractors()
         {
-            logger = new Logging.EventLogger();
-            string SQL = "SELECT ContractorID, ContractCompanyName FROM Contractors ORDER BY ContractCompanyName";
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            logger = new EventLogger();
+            var SQL = "SELECT ContractorID, ContractCompanyName FROM Contractors ORDER BY ContractCompanyName";
+            using (var conn = new SqlConnection(ConnStr))
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        MiscData.Contractors thisContractor = new MiscData.Contractors();
+                        var thisContractor = new Contractors();
                         thisContractor.ContractorID = new Guid(rdr["ContractorID"].ToString());
                         thisContractor.ContractCompanyName = rdr["ContractCompanyName"].ToString();
-                        DataClasses.GlobalData.Contractors.Add(thisContractor);
+                        GlobalData.Contractors.Add(thisContractor);
                     }
                 }
                 catch (Exception ex)
                 {
-                    logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Loading Contractors" + Environment.NewLine + ex.ToString(), true);
+                    logger.LogEvent(
+                        DateTime.Now + Environment.NewLine + "Error Loading Contractors" + Environment.NewLine + ex,
+                        true);
                 }
             }
         }
 
         public void LoadCode1098s()
         {
-            logger = new Logging.EventLogger();
-            string SQL = "Get1098Codes";
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            logger = new EventLogger();
+            var SQL = "Get1098Codes";
+            using (var conn = new SqlConnection(ConnStr))
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
 
                     while (rdr.Read())
                     {
-                        MiscData.Code1098 thisCode = new MiscData.Code1098();
+                        var thisCode = new Code1098();
                         thisCode.CodeID = new Guid(rdr["CodeID"].ToString());
                         thisCode.Code = rdr["Code"].ToString();
                         thisCode.CodeName = rdr["CodeName"].ToString();
                         thisCode.CodeDescription = rdr["CodeDescription"].ToString();
                         thisCode.CodeCall = rdr["CodeCall"].ToString();
-                        DataClasses.GlobalData.Code1098s.Add(thisCode);
+                        GlobalData.Code1098s.Add(thisCode);
                     }
 
                     rdr.Close();
@@ -82,30 +89,31 @@ namespace FPSService.SQL
                 }
                 catch (Exception ex)
                 {
-                    logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Loading 1098 Codes" +
-                        Environment.NewLine + ex.ToString(), true);
+                    logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Loading 1098 Codes" +
+                                    Environment.NewLine + ex, true);
                 }
             }
         }
 
         public void LoadFreeways()
         {
-            logger = new Logging.EventLogger();
-            string SQL = "GetFreeways";
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            logger = new EventLogger();
+            var SQL = "GetFreeways";
+            using (var conn = new SqlConnection(ConnStr))
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        MiscData.Freeway thisFreeway = new MiscData.Freeway();
+                        var thisFreeway = new Freeway();
                         thisFreeway.FreewayID = Convert.ToInt32(rdr["FreewayID"]);
                         thisFreeway.FreewayName = rdr["FreewayName"].ToString();
-                        DataClasses.GlobalData.Freeways.Add(thisFreeway);
+                        GlobalData.Freeways.Add(thisFreeway);
                     }
+
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -113,31 +121,32 @@ namespace FPSService.SQL
                 }
                 catch (Exception ex)
                 {
-                    logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Loading Freeways" +
-                        Environment.NewLine + ex.ToString(), true);
+                    logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Loading Freeways" +
+                                    Environment.NewLine + ex, true);
                 }
             }
         }
 
         public void LoadIncidentTypes()
         {
-            logger = new Logging.EventLogger();
-            string SQL = "GetIncidentTypes";
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            logger = new EventLogger();
+            var SQL = "GetIncidentTypes";
+            using (var conn = new SqlConnection(ConnStr))
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        MiscData.IncidentType thisIncidentType = new MiscData.IncidentType();
+                        var thisIncidentType = new IncidentType();
                         thisIncidentType.IncidentTypeID = new Guid(rdr["IncidentTypeID"].ToString());
                         thisIncidentType.IncidentTypeCode = rdr["IncidentTypeCode"].ToString();
                         thisIncidentType.IncidentTypeName = rdr["IncidentType"].ToString();
-                        DataClasses.GlobalData.IncidentTypes.Add(thisIncidentType);
+                        GlobalData.IncidentTypes.Add(thisIncidentType);
                     }
+
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -145,31 +154,32 @@ namespace FPSService.SQL
                 }
                 catch (Exception ex)
                 {
-                    logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Loading Incident Types" +
-                        Environment.NewLine + ex.ToString(), true);
+                    logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Loading Incident Types" +
+                                    Environment.NewLine + ex, true);
                 }
             }
         }
 
         public void LoadLocationCoding()
         {
-            logger = new Logging.EventLogger();
-            string SQL = "GetLocationCoding";
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            logger = new EventLogger();
+            var SQL = "GetLocationCoding";
+            using (var conn = new SqlConnection(ConnStr))
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        MiscData.LocationCoding thisLocationCoding = new MiscData.LocationCoding();
+                        var thisLocationCoding = new LocationCoding();
                         thisLocationCoding.LocationID = new Guid(rdr["LocationID"].ToString());
                         thisLocationCoding.LocationCode = rdr["LocationCode"].ToString();
                         thisLocationCoding.Location = rdr["Location"].ToString();
-                        DataClasses.GlobalData.LocationCodes.Add(thisLocationCoding);
+                        GlobalData.LocationCodes.Add(thisLocationCoding);
                     }
+
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -177,31 +187,32 @@ namespace FPSService.SQL
                 }
                 catch (Exception ex)
                 {
-                    logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Loading Location Coding" +
-                        Environment.NewLine + ex.ToString(), true);
+                    logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Loading Location Coding" +
+                                    Environment.NewLine + ex, true);
                 }
             }
         }
 
         public void LoadServiceTypes()
         {
-            logger = new Logging.EventLogger();
-            string SQL = "GetServiceTypes";
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            logger = new EventLogger();
+            var SQL = "GetServiceTypes";
+            using (var conn = new SqlConnection(ConnStr))
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        MiscData.ServiceType thisServiceType = new MiscData.ServiceType();
+                        var thisServiceType = new ServiceType();
                         thisServiceType.ServiceTypeID = new Guid(rdr["ServiceTypeID"].ToString());
                         thisServiceType.ServiceTypeCode = rdr["ServiceTypeCode"].ToString();
                         thisServiceType.ServiceTypeName = rdr["ServiceType"].ToString();
-                        DataClasses.GlobalData.ServiceTypes.Add(thisServiceType);
+                        GlobalData.ServiceTypes.Add(thisServiceType);
                     }
+
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -209,31 +220,32 @@ namespace FPSService.SQL
                 }
                 catch (Exception ex)
                 {
-                    logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Loading Service Types" +
-                        Environment.NewLine + ex.ToString(), true);
+                    logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Loading Service Types" +
+                                    Environment.NewLine + ex, true);
                 }
             }
         }
 
         public void LoadTowLocations()
         {
-            logger = new Logging.EventLogger();
-            string SQL = "GetTowLocations";
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            logger = new EventLogger();
+            var SQL = "GetTowLocations";
+            using (var conn = new SqlConnection(ConnStr))
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        MiscData.TowLocation thisTowLocation = new MiscData.TowLocation();
+                        var thisTowLocation = new TowLocation();
                         thisTowLocation.TowLocationID = new Guid(rdr["TowLocationID"].ToString());
                         thisTowLocation.TowLocationCode = rdr["TowLocationCode"].ToString();
                         thisTowLocation.TowLocationName = rdr["TowLocation"].ToString();
-                        DataClasses.GlobalData.TowLocations.Add(thisTowLocation);
+                        GlobalData.TowLocations.Add(thisTowLocation);
                     }
+
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -241,31 +253,32 @@ namespace FPSService.SQL
                 }
                 catch (Exception ex)
                 {
-                    logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Loading Tow Locations" +
-                        Environment.NewLine + ex.ToString(), true);
+                    logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Loading Tow Locations" +
+                                    Environment.NewLine + ex, true);
                 }
             }
         }
 
         public void LoadTrafficSpeeds()
         {
-            logger = new Logging.EventLogger();
-            string SQL = "GetTrafficSpeeds";
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            logger = new EventLogger();
+            var SQL = "GetTrafficSpeeds";
+            using (var conn = new SqlConnection(ConnStr))
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        MiscData.TrafficSpeed thisTrafficSpeed = new MiscData.TrafficSpeed();
+                        var thisTrafficSpeed = new TrafficSpeed();
                         thisTrafficSpeed.TrafficSpeedID = new Guid(rdr["TrafficSpeedID"].ToString());
                         thisTrafficSpeed.TrafficSpeedCode = rdr["TrafficSpeedCode"].ToString();
                         thisTrafficSpeed.TrafficSpeedName = rdr["TrafficSpeed"].ToString();
-                        DataClasses.GlobalData.TrafficSpeeds.Add(thisTrafficSpeed);
+                        GlobalData.TrafficSpeeds.Add(thisTrafficSpeed);
                     }
+
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -273,31 +286,32 @@ namespace FPSService.SQL
                 }
                 catch (Exception ex)
                 {
-                    logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Loading Traffic Speeds" +
-                        Environment.NewLine + ex.ToString(), true);
+                    logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Loading Traffic Speeds" +
+                                    Environment.NewLine + ex, true);
                 }
             }
         }
 
         public void LoadVehiclePositions()
         {
-            logger = new Logging.EventLogger();
-            string SQL = "GetVehiclePositions";
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            logger = new EventLogger();
+            var SQL = "GetVehiclePositions";
+            using (var conn = new SqlConnection(ConnStr))
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        MiscData.VehiclePosition thisVehiclePosition = new MiscData.VehiclePosition();
+                        var thisVehiclePosition = new VehiclePosition();
                         thisVehiclePosition.VehiclePositionID = new Guid(rdr["VehiclePositionID"].ToString());
                         thisVehiclePosition.VehiclePositionCode = rdr["VehiclePositionCode"].ToString();
                         thisVehiclePosition.VehiclePositionName = rdr["VehiclePosition"].ToString();
-                        DataClasses.GlobalData.VehiclePositions.Add(thisVehiclePosition);
+                        GlobalData.VehiclePositions.Add(thisVehiclePosition);
                     }
+
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -305,31 +319,32 @@ namespace FPSService.SQL
                 }
                 catch (Exception ex)
                 {
-                    logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Loading Vehicle Positions" +
-                        Environment.NewLine + ex.ToString(), true);
+                    logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Loading Vehicle Positions" +
+                                    Environment.NewLine + ex, true);
                 }
             }
         }
 
         public void LoadVehicleTypes()
         {
-            logger = new Logging.EventLogger();
-            string SQL = "GetVehicleTypes";
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            logger = new EventLogger();
+            var SQL = "GetVehicleTypes";
+            using (var conn = new SqlConnection(ConnStr))
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        MiscData.VehicleType thisVehicleType = new MiscData.VehicleType();
+                        var thisVehicleType = new VehicleType();
                         thisVehicleType.VehicleTypeID = new Guid(rdr["VehicleTypeID"].ToString());
                         thisVehicleType.VehicleTypeCode = rdr["VehicleTypeCode"].ToString();
                         thisVehicleType.VehicleTypeName = rdr["VehicleType"].ToString();
-                        DataClasses.GlobalData.VehicleTypes.Add(thisVehicleType);
+                        GlobalData.VehicleTypes.Add(thisVehicleType);
                     }
+
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -337,26 +352,26 @@ namespace FPSService.SQL
                 }
                 catch (Exception ex)
                 {
-                    logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Loading Vehicle Types" +
-                        Environment.NewLine + ex.ToString(), true);
+                    logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Loading Vehicle Types" +
+                                    Environment.NewLine + ex, true);
                 }
             }
         }
 
         public void LoadDropZones()
         {
-            logger = new Logging.EventLogger();
-            string SQL = "GetDropZones";
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            logger = new EventLogger();
+            var SQL = "GetDropZones";
+            using (var conn = new SqlConnection(ConnStr))
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        MiscData.DropZone thisDropZone = new MiscData.DropZone();
+                        var thisDropZone = new DropZone();
                         thisDropZone.DropZoneID = new Guid(rdr["DropZoneID"].ToString());
                         thisDropZone.Location = rdr["Location"].ToString();
                         thisDropZone.Comments = rdr["Comments"].ToString();
@@ -367,29 +382,24 @@ namespace FPSService.SQL
                         thisDropZone.PDPhoneNumber = rdr["PDPhoneNumber"].ToString();
                         thisDropZone.Capacity = Convert.ToInt32(rdr["Capacity"]);
                         // New 4/19/18 MM
-                        string polygonString = "POLYGON ((";
-                        List<string> LonLat = rdr["Position"].ToString().Split(',').ToList();
-                        if (LonLat[0].Trim() != LonLat[LonLat.Count() - 1].Trim())
+                        var polygonString = "POLYGON ((";
+                        var LonLat = rdr["Position"].ToString().Split(',').ToList();
+                        if (LonLat[0].Trim() != LonLat[LonLat.Count() - 1].Trim()) LonLat.Add(LonLat[0]);
+                        for (var i = 0; i < LonLat.Count(); i++)
                         {
-                            LonLat.Add(LonLat[0]);
-                        }
-                        for (int i = 0; i < LonLat.Count(); i++)
-                        {
-                            string[] ll = LonLat[i].Trim().Split(' ');
+                            var ll = LonLat[i].Trim().Split(' ');
                             if (i != LonLat.Count() - 1)
-                            {
                                 polygonString += ll[1] + " " + ll[0] + ",";
-                            }
                             else
-                            {
                                 polygonString += ll[1] + " " + ll[0] + "))";
-                            }
                         }
+
                         var polygon = new SqlChars(new SqlString(polygonString));
                         thisDropZone.Position = SqlGeography.Parse(polygonString);
                         //thisDropZone.Position = SqlGeography.Deserialize(rdr.GetSqlBytes(9));
-                        DataClasses.GlobalData.DropZones.Add(thisDropZone);
+                        GlobalData.DropZones.Add(thisDropZone);
                     }
+
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -397,8 +407,8 @@ namespace FPSService.SQL
                 }
                 catch (Exception ex)
                 {
-                    logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Loading Drop Zones" +
-                        Environment.NewLine + ex.ToString(), true);
+                    logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Loading Drop Zones" +
+                                    Environment.NewLine + ex, true);
                 }
             }
         }
@@ -407,52 +417,53 @@ namespace FPSService.SQL
         {
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    string SQL = "SELECT VarName, VarValue FROM Vars WHERE VarName LIKE '%Leeway'";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var SQL = "SELECT VarName, VarValue FROM Vars WHERE VarName LIKE '%Leeway'";
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        int LeewayVal = Convert.ToInt32(rdr["VarValue"]);
+                        var LeewayVal = Convert.ToInt32(rdr["VarValue"]);
                         switch (rdr["VarName"].ToString())
                         {
                             case "RollOutLeeway":
-                                DataClasses.GlobalData.RollOutLeeway = LeewayVal;
+                                GlobalData.RollOutLeeway = LeewayVal;
                                 break;
                             case "StationaryLeeway":
-                                DataClasses.GlobalData.StationaryLeeway = LeewayVal;
+                                GlobalData.StationaryLeeway = LeewayVal;
                                 break;
                             case "LogOnLeeway":
-                                DataClasses.GlobalData.LogOnLeeway = LeewayVal;
+                                GlobalData.LogOnLeeway = LeewayVal;
                                 break;
                             case "OnPatrolLeeway":
-                                DataClasses.GlobalData.OnPatrollLeeway = LeewayVal;
+                                GlobalData.OnPatrollLeeway = LeewayVal;
                                 break;
                             case "RollInLeeway":
-                                DataClasses.GlobalData.RollInLeeway = LeewayVal;
+                                GlobalData.RollInLeeway = LeewayVal;
                                 break;
                             case "LogOffLeeway":
-                                DataClasses.GlobalData.LogOffLeeway = LeewayVal;
+                                GlobalData.LogOffLeeway = LeewayVal;
                                 break;
                             case "SpeedingLeeway":
-                                DataClasses.GlobalData.SpeedingLeeway = LeewayVal;
+                                GlobalData.SpeedingLeeway = LeewayVal;
                                 break;
                             case "OffBeatLeeway":
-                                DataClasses.GlobalData.OffBeatLeeway = LeewayVal;
+                                GlobalData.OffBeatLeeway = LeewayVal;
                                 break;
                             case "ExtendedLeeway":
-                                DataClasses.GlobalData.ExtendedLeeway = LeewayVal;
+                                GlobalData.ExtendedLeeway = LeewayVal;
                                 break;
                             case "GPSIssueLeeway":
-                                DataClasses.GlobalData.GPSIssueLeeway = LeewayVal;
+                                GlobalData.GPSIssueLeeway = LeewayVal;
                                 break;
                             case "ForcedOffLeeway":
-                                DataClasses.GlobalData.ForceOff = LeewayVal;
+                                GlobalData.ForceOff = LeewayVal;
                                 break;
                         }
                     }
+
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -461,7 +472,8 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Loading Leeways" + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Loading Leeways" + Environment.NewLine + ex,
+                    true);
             }
         }
 
@@ -471,35 +483,33 @@ namespace FPSService.SQL
             //Second check: what are those schedules?
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
-                    DataClasses.GlobalData.theseSchedules.Clear();
+                    GlobalData.theseSchedules.Clear();
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("GetBeatSchedules", conn);
+                    var cmd = new SqlCommand("GetBeatSchedules", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    SqlDataReader rdr = cmd.ExecuteReader();
-                    string cDate = DateTime.Now.ToShortDateString();
+                    var rdr = cmd.ExecuteReader();
+                    var cDate = DateTime.Now.ToShortDateString();
                     while (rdr.Read())
                     {
-                        MiscData.BeatSchedule thisSchedule = new MiscData.BeatSchedule();
+                        var thisSchedule = new BeatSchedule();
                         thisSchedule.BeatID = new Guid(rdr["BeatID"].ToString());
                         thisSchedule.BeatScheduleID = new Guid(rdr["BeatScheduleID"].ToString());
                         thisSchedule.BeatNumber = rdr["BeatNumber"].ToString();
                         thisSchedule.ScheduleName = rdr["ScheduleName"].ToString();
-                        bool Weekday = false;
-                        string wdtest = rdr["Weekday"].ToString();
-                        if (rdr["Weekday"].ToString() == "True")
-                        {
-                            Weekday = true;
-                        }
+                        var Weekday = false;
+                        var wdtest = rdr["Weekday"].ToString();
+                        if (rdr["Weekday"].ToString() == "True") Weekday = true;
                         thisSchedule.Weekday = Weekday;
                         thisSchedule.Logon = Convert.ToDateTime(cDate + " " + rdr["Logon"]);
                         thisSchedule.RollOut = Convert.ToDateTime(cDate + " " + rdr["RollOut"]);
                         thisSchedule.OnPatrol = Convert.ToDateTime(cDate + " " + rdr["OnPatrol"]);
                         thisSchedule.RollIn = Convert.ToDateTime(cDate + " " + rdr["RollIn"]);
                         thisSchedule.LogOff = Convert.ToDateTime(cDate + " " + rdr["LogOff"]);
-                        DataClasses.GlobalData.AddBeatSchedule(thisSchedule);
+                        GlobalData.AddBeatSchedule(thisSchedule);
                     }
+
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -508,7 +518,9 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "ERROR Loading Beat Schedules" + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "ERROR Loading Beat Schedules" + Environment.NewLine + ex,
+                    true);
             }
         }
 
@@ -516,20 +528,18 @@ namespace FPSService.SQL
 
         public Guid GetDriverID(string _lastName, string _firstName)
         {
-            Guid gDriver = new Guid("00000000-0000-0000-0000-000000000000");
+            var gDriver = new Guid("00000000-0000-0000-0000-000000000000");
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    string SQL = "SELECT DriverID FROM Drivers WHERE LastName = '" + _lastName + "' AND FirstName = '" + _firstName + "'";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    object driverIDObj = cmd.ExecuteScalar();
-                    string driverIDString = "00000000-0000-0000-0000-000000000000";
-                    if (driverIDObj != null)
-                    {
-                        driverIDString = driverIDObj.ToString();
-                    }
+                    var SQL = "SELECT DriverID FROM Drivers WHERE LastName = '" + _lastName + "' AND FirstName = '" +
+                              _firstName + "'";
+                    var cmd = new SqlCommand(SQL, conn);
+                    var driverIDObj = cmd.ExecuteScalar();
+                    var driverIDString = "00000000-0000-0000-0000-000000000000";
+                    if (driverIDObj != null) driverIDString = driverIDObj.ToString();
                     //string driverIDString = cmd.ExecuteScalar().ToString();
                     gDriver = new Guid(driverIDString);
                     cmd = null;
@@ -538,101 +548,101 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Getting DriverID for " + _firstName + " " + _lastName +
-                Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Getting DriverID for " + _firstName + " " +
+                                _lastName +
+                                Environment.NewLine + ex, true);
             }
+
             return gDriver;
         }
 
         public Guid GetTruckID(string truckNumber)
         {
-            Guid gTruck = new Guid("00000000-0000-0000-0000-000000000000");
+            var gTruck = new Guid("00000000-0000-0000-0000-000000000000");
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    string SQL = "SELECT ISNULL(FleetVehicleID, '00000000-0000-0000-0000-000000000000') FROM FleetVehicles WHERE VehicleNumber = '" + truckNumber + "'";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    object truckIDString = cmd.ExecuteScalar();
+                    var SQL =
+                        "SELECT ISNULL(FleetVehicleID, '00000000-0000-0000-0000-000000000000') FROM FleetVehicles WHERE VehicleNumber = '" +
+                        truckNumber + "'";
+                    var cmd = new SqlCommand(SQL, conn);
+                    var truckIDString = cmd.ExecuteScalar();
                     cmd = null;
-                    if (truckIDString != null)
-                    {
-                        gTruck = new Guid(truckIDString.ToString());
-                    }
+                    if (truckIDString != null) gTruck = new Guid(truckIDString.ToString());
                     conn.Close();
                 }
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Getting TruckID for " + truckNumber +
-                               Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Getting TruckID for " + truckNumber +
+                                Environment.NewLine + ex, true);
             }
+
             return gTruck;
         }
 
         public string GetMACAddress(string ID)
         {
-            string MAC = "NA";
+            var MAC = "NA";
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    string SQL = "SELECT IPAddress FROM FleetVehicles WHERE VehicleNumber = '" + ID + "'";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    object truckIP = cmd.ExecuteScalar();
-                    if (truckIP != null)
-                    {
-                        MAC = truckIP.ToString();
-                    }
+                    var SQL = "SELECT IPAddress FROM FleetVehicles WHERE VehicleNumber = '" + ID + "'";
+                    var cmd = new SqlCommand(SQL, conn);
+                    var truckIP = cmd.ExecuteScalar();
+                    if (truckIP != null) MAC = truckIP.ToString();
                     cmd = null;
                     conn.Close();
                 }
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Getting IPAddress for " + ID +
-                               Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Getting IPAddress for " + ID +
+                                Environment.NewLine + ex, true);
             }
+
             return MAC;
         }
 
         public string GetTruckNumberByID(Guid FleetVehicleID)
         {
-            string TruckNumber = "";
+            var TruckNumber = "";
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("GetVehicleNumber", conn);
+                    var cmd = new SqlCommand("GetVehicleNumber", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@FleetVehicleID", FleetVehicleID);
                     TruckNumber = cmd.ExecuteScalar().ToString();
                     cmd = null;
                     conn.Close();
                 }
-
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Getting Next Survey Number " +
-                Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Getting Next Survey Number " +
+                                Environment.NewLine + ex, true);
             }
+
             return TruckNumber;
         }
 
         public int GetUsedBreakTime(string DriverID, string Type)
         {
-            int UsedBreakTime = 0;
-            logger = new Logging.EventLogger();
+            var UsedBreakTime = 0;
+            logger = new EventLogger();
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("FindUsedBreakTime", conn);
+                    var cmd = new SqlCommand("FindUsedBreakTime", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@BreakType", Type);
                     cmd.Parameters.AddWithValue("@DriverID", DriverID);
@@ -640,34 +650,33 @@ namespace FPSService.SQL
                     if (returnVal != null)
                     {
                         UsedBreakTime = Convert.ToInt32(returnVal);
-                        if (UsedBreakTime < 0)
-                        {
-                            UsedBreakTime = 0;
-                        }
+                        if (UsedBreakTime < 0) UsedBreakTime = 0;
                     }
+
                     conn.Close();
                     cmd = null;
                 }
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Getting Used BreakTime: " +
-                 Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Getting Used BreakTime: " +
+                                Environment.NewLine + ex, true);
             }
+
             return UsedBreakTime;
         }
 
         public string GetVarValue(string VarName)
         {
             string VarValue;
-            logger = new Logging.EventLogger();
+            logger = new EventLogger();
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    string SQL = "SELECT VarValue FROM Vars WHERE VarName = '" + VarName + "'";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
+                    var SQL = "SELECT VarValue FROM Vars WHERE VarName = '" + VarName + "'";
+                    var cmd = new SqlCommand(SQL, conn);
                     VarValue = cmd.ExecuteScalar().ToString();
                     conn.Close();
                     cmd = null;
@@ -675,42 +684,34 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Getting Next Incident Number " +
-                  Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Getting Next Incident Number " +
+                                Environment.NewLine + ex, true);
                 VarValue = "error";
             }
+
             return VarValue;
         }
 
         public string GetSurveyNum()
         {
-            logger = new Logging.EventLogger();
-            string SurveyNum = "NA";
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            logger = new EventLogger();
+            var SurveyNum = "NA";
+            using (var conn = new SqlConnection(ConnStr))
             {
                 try
                 {
                     conn.Open();
-                    int TodayNum = 0;
-                    int DBNum = 0;
-                    string sMonth = DateTime.Now.Month.ToString();
-                    string sDay = DateTime.Now.Day.ToString();
-                    string sYear = DateTime.Now.Year.ToString();
-                    while (sMonth.Length < 2)
-                    {
-                        sMonth = "0" + sMonth;
-                    }
-                    while (sDay.Length < 2)
-                    {
-                        sDay = "0" + sDay;
-                    }
-                    while (sYear.Length < 4)
-                    {
-                        sYear = "0" + sYear;
-                    }
+                    var TodayNum = 0;
+                    var DBNum = 0;
+                    var sMonth = DateTime.Now.Month.ToString();
+                    var sDay = DateTime.Now.Day.ToString();
+                    var sYear = DateTime.Now.Year.ToString();
+                    while (sMonth.Length < 2) sMonth = "0" + sMonth;
+                    while (sDay.Length < 2) sDay = "0" + sDay;
+                    while (sYear.Length < 4) sYear = "0" + sYear;
                     SurveyNum = sMonth + sDay + sYear + "SN";
-                    string SQL = "SELECT DATEPART(dy,GETDATE())"; //get TodayNum
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
+                    var SQL = "SELECT DATEPART(dy,GETDATE())"; //get TodayNum
+                    var cmd = new SqlCommand(SQL, conn);
                     TodayNum = Convert.ToInt32(cmd.ExecuteScalar());
 
                     SQL = "SELECT VarValue FROM Vars WHERE VarName = 'SurveyNumLastUpdate'"; //get DBNum
@@ -726,7 +727,7 @@ namespace FPSService.SQL
 
                     cmd = new SqlCommand("GetNextSurveyNum", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    string NextSNum = Convert.ToString(cmd.ExecuteScalar());
+                    var NextSNum = Convert.ToString(cmd.ExecuteScalar());
                     SurveyNum += NextSNum;
 
                     cmd = null;
@@ -734,26 +735,26 @@ namespace FPSService.SQL
                 }
                 catch (Exception ex)
                 {
-                    logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Getting Next Survey Number " +
-                      Environment.NewLine + ex.ToString(), true);
-                    if (conn.State == ConnectionState.Open)
-                    { conn.Close(); }
+                    logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Getting Next Survey Number " +
+                                    Environment.NewLine + ex, true);
+                    if (conn.State == ConnectionState.Open) conn.Close();
                 }
             }
+
             return SurveyNum;
         }
 
         public int GetNextIncidentNumber()
         {
-            logger = new Logging.EventLogger();
-            int NextNumber = 2147483647;
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            logger = new EventLogger();
+            var NextNumber = 2147483647;
+            using (var conn = new SqlConnection(ConnStr))
             {
                 try
                 {
                     conn.Open();
-                    string SQL = "GetIncidentCountForDay";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
+                    var SQL = "GetIncidentCountForDay";
+                    var cmd = new SqlCommand(SQL, conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     NextNumber = Convert.ToInt32(cmd.ExecuteScalar()) + 1;
                     cmd = null;
@@ -761,35 +762,34 @@ namespace FPSService.SQL
                 }
                 catch (Exception ex)
                 {
-                    logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Getting Next Incident Number " +
-                       Environment.NewLine + ex.ToString(), true);
-                    if (conn.State == ConnectionState.Open)
-                    { conn.Close(); }
+                    logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Getting Next Incident Number " +
+                                    Environment.NewLine + ex, true);
+                    if (conn.State == ConnectionState.Open) conn.Close();
                 }
+
                 return NextNumber;
             }
         }
 
-        public TowTruck.TowTruckExtended GetExtendedData(string IPAddress)
+        public TowTruckExtended GetExtendedData(string IPAddress)
         {
-            logger = new Logging.EventLogger();
-            TowTruck.TowTruckExtended thisTruckExtended = null;
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            logger = new EventLogger();
+            TowTruckExtended thisTruckExtended = null;
+            using (var conn = new SqlConnection(ConnStr))
             {
                 try
                 {
                     conn.Open();
-                    string SQL = "GetExtendedData";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
+                    var SQL = "GetExtendedData";
+                    var cmd = new SqlCommand(SQL, conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IPAddress", IPAddress);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var rdr = cmd.ExecuteReader();
 
-                    thisTruckExtended = new TowTruck.TowTruckExtended();
+                    thisTruckExtended = new TowTruckExtended();
 
                     while (rdr.Read())
                     {
-
                         thisTruckExtended.ContractorName = rdr["ContractCompanyName"].ToString();
                         thisTruckExtended.FleetNumber = rdr["FleetNumber"].ToString();
                         thisTruckExtended.ProgramStartDate = Convert.ToDateTime(rdr["ProgramStartDate"]);
@@ -816,55 +816,51 @@ namespace FPSService.SQL
                         thisTruckExtended.FleetVehicleID = new Guid(rdr["FleetVehicleID"].ToString());
                         thisTruckExtended.ContractorID = new Guid(rdr["ContractorID"].ToString());
                     }
+
                     conn.Close();
                 }
                 catch (Exception ex)
                 {
-                    logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Getting Extended Data for Tow Truck " + IPAddress +
-                        Environment.NewLine + ex.ToString(), true);
-                    if (conn.State == ConnectionState.Open)
-                    { conn.Close(); }
+                    logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Getting Extended Data for Tow Truck " +
+                                    IPAddress +
+                                    Environment.NewLine + ex, true);
+                    if (conn.State == ConnectionState.Open) conn.Close();
                 }
             }
+
             return thisTruckExtended;
         }
 
-        public List<BeatData.Yard> LoadYards()
+        public List<Yard> LoadYards()
         {
-            logger = new Logging.EventLogger();
-            List<BeatData.Yard> theseYards = new List<BeatData.Yard>();
+            logger = new EventLogger();
+            var theseYards = new List<Yard>();
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnBeat))
+                using (var conn = new SqlConnection(ConnBeat))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("GetAllYards", conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var cmd = new SqlCommand("GetAllYards", conn);
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        BeatData.Yard thisYard = new BeatData.Yard();
+                        var thisYard = new Yard();
                         thisYard.YardID = new Guid(rdr["TowTruckYardID"].ToString());
                         thisYard.Location = rdr["Location"].ToString();
                         thisYard.TowTruckCompanyName = rdr["TowTruckCompanyName"].ToString();
                         // New 4/19/18 MM
-                        string polygonString = "POLYGON ((";
-                        List<string> LonLat = rdr["Position"].ToString().Split(',').ToList();
-                        if (LonLat[0].Trim() != LonLat[LonLat.Count() - 1].Trim())
+                        var polygonString = "POLYGON ((";
+                        var LonLat = rdr["Position"].ToString().Split(',').ToList();
+                        if (LonLat[0].Trim() != LonLat[LonLat.Count() - 1].Trim()) LonLat.Add(LonLat[0]);
+                        for (var i = 0; i < LonLat.Count(); i++)
                         {
-                            LonLat.Add(LonLat[0]);
-                        }
-                        for (int i = 0; i < LonLat.Count(); i++)
-                        {
-                            string[] ll = LonLat[i].Trim().Split(' ');
+                            var ll = LonLat[i].Trim().Split(' ');
                             if (i != LonLat.Count() - 1)
-                            {
                                 polygonString += ll[1] + " " + ll[0] + ",";
-                            }
                             else
-                            {
                                 polygonString += ll[1] + " " + ll[0] + "))";
-                            }
                         }
+
                         var polygon = new SqlChars(new SqlString(polygonString));
                         thisYard.Position = SqlGeography.Parse(polygonString);
                         //var polygon = new SqlChars(new SqlString("Polygon (( " + rdr["Position"].ToString() + " ))"));
@@ -877,48 +873,44 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error loading yards" + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(DateTime.Now + Environment.NewLine + "Error loading yards" + Environment.NewLine + ex,
+                    true);
             }
+
             return theseYards;
         }
 
-        public List<BeatData.Beat> LoadBeatsOnly()
+        public List<Beat> LoadBeatsOnly()
         {
-            logger = new Logging.EventLogger();
-            List<BeatData.Beat> theseBeats = new List<BeatData.Beat>();
+            logger = new EventLogger();
+            var theseBeats = new List<Beat>();
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnBeat))
+                using (var conn = new SqlConnection(ConnBeat))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("LoadBeatsOnly", conn);
+                    var cmd = new SqlCommand("LoadBeatsOnly", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        BeatData.Beat thisBeat = new BeatData.Beat();
+                        var thisBeat = new Beat();
                         thisBeat.BeatID = new Guid(rdr["BeatID"].ToString());
                         thisBeat.BeatDescription = rdr["BeatDescription"].ToString();
 
                         // New 4/19/18 MM
-                        string polygonString = "POLYGON ((";
-                        List<string> LonLat = rdr["BeatExtent"].ToString().Split(',').ToList();
-                        if (LonLat[0].Trim() != LonLat[LonLat.Count() - 1].Trim())
+                        var polygonString = "POLYGON ((";
+                        var LonLat = rdr["BeatExtent"].ToString().Split(',').ToList();
+                        if (LonLat[0].Trim() != LonLat[LonLat.Count() - 1].Trim()) LonLat.Add(LonLat[0]);
+                        for (var i = 0; i < LonLat.Count(); i++)
                         {
-                            LonLat.Add(LonLat[0]);
-                        }
-                        for (int i = 0; i < LonLat.Count(); i++)
-                        {
-                            string[] ll = LonLat[i].Trim().Split(' ');
+                            var ll = LonLat[i].Trim().Split(' ');
                             if (i != LonLat.Count() - 1)
-                            {
                                 polygonString += ll[1] + " " + ll[0] + ",";
-                            }
                             else
-                            {
                                 polygonString += ll[1] + " " + ll[0] + "))";
-                            }
                         }
+
                         var polygon = new SqlChars(new SqlString(polygonString));
                         thisBeat.BeatExtent = SqlGeography.Parse(polygonString);
                         //var polygon = new SqlChars(new SqlString("POLYGON (( " + rdr["BeatExtent"].ToString() + " ))"));
@@ -933,51 +925,46 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Loading Beats Only" + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "Error Loading Beats Only" + Environment.NewLine + ex, true);
             }
+
             if (theseBeats.Count > 0)
-            { return theseBeats; }
-            else
-            { return null; }
+                return theseBeats;
+            return null;
         }
 
-        public List<BeatData.BeatSegment> LoadSegmentsOnly()
+        public List<BeatSegment> LoadSegmentsOnly()
         {
-            logger = new Logging.EventLogger();
-            List<BeatData.BeatSegment> theseSegments = new List<BeatData.BeatSegment>();
+            logger = new EventLogger();
+            var theseSegments = new List<BeatSegment>();
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnBeat))
+                using (var conn = new SqlConnection(ConnBeat))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("LoadBeatSegmentsOnly", conn);
+                    var cmd = new SqlCommand("LoadBeatSegmentsOnly", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        BeatData.BeatSegment thisSegment = new BeatData.BeatSegment();
+                        var thisSegment = new BeatSegment();
                         thisSegment.BeatSegmentID = new Guid(rdr["BeatSegmentID"].ToString());
                         thisSegment.CHPDescription = rdr["CHPDescription"].ToString();
 
                         // New 4/19/18 MM
-                        string polygonString = "POLYGON ((";
-                        List<string> LonLat = rdr["BeatSegmentExtent"].ToString().Split(',').ToList();
-                        if (LonLat[0].Trim() != LonLat[LonLat.Count() - 1].Trim())
+                        var polygonString = "POLYGON ((";
+                        var LonLat = rdr["BeatSegmentExtent"].ToString().Split(',').ToList();
+                        if (LonLat[0].Trim() != LonLat[LonLat.Count() - 1].Trim()) LonLat.Add(LonLat[0]);
+                        for (var i = 0; i < LonLat.Count(); i++)
                         {
-                            LonLat.Add(LonLat[0]);
-                        }
-                        for (int i = 0; i < LonLat.Count(); i++)
-                        {
-                            string[] ll = LonLat[i].Trim().Split(' ');
+                            var ll = LonLat[i].Trim().Split(' ');
                             if (i != LonLat.Count() - 1)
-                            {
                                 polygonString += ll[1] + " " + ll[0] + ",";
-                            }
                             else
-                            {
                                 polygonString += ll[1] + " " + ll[0] + "))";
-                            }
                         }
+
                         var polygon = new SqlChars(new SqlString(polygonString));
                         thisSegment.BeatSegmentExtent = SqlGeography.Parse(polygonString);
                         //var polygon = new SqlChars(new SqlString("Polygon (( " + rdr["BeatSegmentExtent"].ToString() + " ))"));
@@ -989,30 +976,33 @@ namespace FPSService.SQL
                         thisSegment.BeatID = new Guid(rdr["BeatID"].ToString());
                         theseSegments.Add(thisSegment);
                     }
+
                     conn.Close();
                     cmd = null;
                 }
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Loading Beat Segments Only" + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "Error Loading Beat Segments Only" + Environment.NewLine + ex,
+                    true);
             }
+
             if (theseSegments.Count > 0)
-            { return theseSegments; }
-            else
-            { return null; }
+                return theseSegments;
+            return null;
         }
 
         public string FindUserNameByID(Guid ID)
         {
-            logger = new Logging.EventLogger();
-            string UserName = "";
+            logger = new EventLogger();
+            var UserName = "";
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("FindUserName", conn);
+                    var cmd = new SqlCommand("FindUserName", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ID", ID);
                     UserName = Convert.ToString(cmd.ExecuteScalar());
@@ -1022,28 +1012,26 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Finding User Name by ID" + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "Error Finding User Name by ID" + Environment.NewLine + ex,
+                    true);
             }
+
             if (string.IsNullOrEmpty(UserName))
-            {
                 return "Unknown";
-            }
-            else
-            {
-                return UserName;
-            }
+            return UserName;
         }
 
         public string FindDriverNameByID(Guid ID)
         {
-            logger = new Logging.EventLogger();
-            string DriverName = "";
+            logger = new EventLogger();
+            var DriverName = "";
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("FindDriverNameByID", conn);
+                    var cmd = new SqlCommand("FindDriverNameByID", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@DriverID", ID.ToString());
                     DriverName = Convert.ToString(cmd.ExecuteScalar());
@@ -1053,32 +1041,30 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Finding Driver Name by ID" + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "Error Finding Driver Name by ID" + Environment.NewLine + ex,
+                    true);
             }
+
             if (string.IsNullOrEmpty(DriverName))
-            {
                 return "Unknown";
-            }
-            else
-            {
-                return DriverName;
-            }
+            return DriverName;
         }
 
         public List<BeatSegment_New> RetrieveAllSegments()
         {
-            List<BeatSegment_New> segments = new List<BeatSegment_New>();
+            var segments = new List<BeatSegment_New>();
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    string SQL = "SELECT * FROM [dbo].[BeatSegments_New]";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var SQL = "SELECT * FROM [dbo].[BeatSegments_New]";
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        BeatSegment_New segment = new BeatSegment_New();
+                        var segment = new BeatSegment_New();
                         segment.Active = Convert.ToBoolean(rdr["Active"]);
                         segment.BeatSegmentDescription = rdr["BeatSegmentDescription"].ToString();
                         segment.BeatSegmentExtent = rdr["BeatSegmentExtent"].ToString();
@@ -1092,6 +1078,7 @@ namespace FPSService.SQL
                         segment.Color = rdr["Color"].ToString();
                         segments.Add(segment);
                     }
+
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -1101,7 +1088,8 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error RetrieveAllSegments" + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "Error RetrieveAllSegments" + Environment.NewLine + ex, true);
             }
 
             return segments;
@@ -1109,15 +1097,15 @@ namespace FPSService.SQL
 
         public BeatSegment_New RetrieveSegment(Guid SegmentID)
         {
-            BeatSegment_New segment = new BeatSegment_New();
+            var segment = new BeatSegment_New();
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    string SQL = "SELECT * FROM [dbo].[BeatSegments_New] WHERE BeatSegmentID = '" + SegmentID + "'";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var SQL = "SELECT * FROM [dbo].[BeatSegments_New] WHERE BeatSegmentID = '" + SegmentID + "'";
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
                         segment.Active = Convert.ToBoolean(rdr["Active"]);
@@ -1132,6 +1120,7 @@ namespace FPSService.SQL
                         segment.PIMSID = rdr["PIMSID"].ToString();
                         segment.Color = rdr["Color"].ToString();
                     }
+
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -1141,7 +1130,8 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error RetrieveAllSegments" + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "Error RetrieveAllSegments" + Environment.NewLine + ex, true);
             }
 
             return segment;
@@ -1149,18 +1139,18 @@ namespace FPSService.SQL
 
         public List<Beats_New> RetrieveAllBeats()
         {
-            List<Beats_New> beats = new List<Beats_New>();
+            var beats = new List<Beats_New>();
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    string SQL = "SELECT * FROM [dbo].[Beats_NEW] WHERE ACTIVE = 1";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var SQL = "SELECT * FROM [dbo].[Beats_NEW] WHERE ACTIVE = 1";
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        Beats_New beat = new Beats_New();
+                        var beat = new Beats_New();
                         beat.Active = Convert.ToBoolean(rdr["Active"]);
                         beat.BeatExtent = rdr["BeatExtent"].ToString();
                         beat.BeatID = new Guid(rdr["BeatID"].ToString());
@@ -1172,6 +1162,7 @@ namespace FPSService.SQL
                         beat.BeatColor = rdr["BeatColor"].ToString();
                         beats.Add(beat);
                     }
+
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -1181,7 +1172,8 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error RetrieveAllBeats" + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "Error RetrieveAllBeats" + Environment.NewLine + ex, true);
             }
 
             return beats;
@@ -1189,15 +1181,15 @@ namespace FPSService.SQL
 
         public Beats_New RetrieveBeat(Guid BeatID)
         {
-            Beats_New beat = new Beats_New();
+            var beat = new Beats_New();
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    string SQL = "SELECT * FROM [dbo].[Beats_NEW] WHERE BeatID = '" + BeatID + "'";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var SQL = "SELECT * FROM [dbo].[Beats_NEW] WHERE BeatID = '" + BeatID + "'";
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
                         beat.Active = Convert.ToBoolean(rdr["Active"]);
@@ -1209,6 +1201,7 @@ namespace FPSService.SQL
                         beat.LastUpdate = Convert.ToDateTime(rdr["LastUpdate"].ToString());
                         beat.LastUpdateBy = rdr["LastUpdateBy"].ToString();
                     }
+
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -1218,7 +1211,8 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error RetrieveAllBeats" + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "Error RetrieveAllBeats" + Environment.NewLine + ex, true);
             }
 
             return beat;
@@ -1226,36 +1220,33 @@ namespace FPSService.SQL
 
         public List<BeatSegment_New> RetrieveBeatSegments(Guid BeatID)
         {
-            List<BeatSegment_New> segments = new List<BeatSegment_New>();
+            var segments = new List<BeatSegment_New>();
 
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("GetBeatSegments", conn);
+                    var cmd = new SqlCommand("GetBeatSegments", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@BeatID", BeatID);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        BeatSegment_New segment = new BeatSegment_New();
+                        var segment = new BeatSegment_New();
                         segment.Active = Convert.ToBoolean(rdr["Active"].ToString());
                         segment.BeatSegmentDescription = rdr["BeatSegmentDescription"].ToString();
-                        string JSON = "[";
-                        string[] extent = rdr["BeatSegmentExtent"].ToString().Split(',');
-                        for (int i = 0; i < extent.Length; i++)
+                        var JSON = "[";
+                        var extent = rdr["BeatSegmentExtent"].ToString().Split(',');
+                        for (var i = 0; i < extent.Length; i++)
                         {
-                            string[] LL = extent[i].Trim().Split(' ');
+                            var LL = extent[i].Trim().Split(' ');
                             if (i == extent.Length - 1)
-                            {
                                 JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " }";
-                            }
                             else
-                            {
                                 JSON += "{ lat: " + LL[0] + ", lng: " + LL[1] + " },";
-                            }
                         }
+
                         JSON += "]";
                         segment.BeatSegmentExtent = JSON;
                         segment.BeatSegmentID = new Guid(rdr["BeatSegmentID"].ToString());
@@ -1268,6 +1259,7 @@ namespace FPSService.SQL
                         segment.PIMSID = rdr["PIMSID"].ToString();
                         segments.Add(segment);
                     }
+
                     conn.Close();
                     cmd = null;
                     rdr.Close();
@@ -1275,7 +1267,8 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error RetrieveAllBeats" + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "Error RetrieveAllBeats" + Environment.NewLine + ex, true);
             }
 
             return segments;
@@ -1283,18 +1276,18 @@ namespace FPSService.SQL
 
         public List<Yard_New> RetrieveAllYards()
         {
-            List<Yard_New> Yards = new List<Yard_New>();
+            var Yards = new List<Yard_New>();
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    string SQL = "SELECT * FROM [dbo].[TowTruckYard_New]";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var SQL = "SELECT * FROM [dbo].[TowTruckYard_New]";
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        Yard_New yard = new Yard_New();
+                        var yard = new Yard_New();
                         yard.YardID = new Guid(rdr["TowTruckYardID"].ToString());
                         yard.Location = rdr["Location"].ToString();
                         yard.Comments = rdr["Comments"].ToString();
@@ -1304,6 +1297,7 @@ namespace FPSService.SQL
                         yard.Position = rdr["Position"].ToString();
                         Yards.Add(yard);
                     }
+
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -1313,7 +1307,8 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error RetrieveAllYards " + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "Error RetrieveAllYards " + Environment.NewLine + ex, true);
             }
 
             return Yards;
@@ -1321,16 +1316,16 @@ namespace FPSService.SQL
 
         public Yard_New RetrieveYard(Guid TowTruckYardID)
         {
-            Yard_New yard = new Yard_New();
+            var yard = new Yard_New();
 
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    string SQL = "SELECT * FROM [dbo].[TowTruckYard_New] WHERE TowTruckYardID = '" + TowTruckYardID + "'";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var SQL = "SELECT * FROM [dbo].[TowTruckYard_New] WHERE TowTruckYardID = '" + TowTruckYardID + "'";
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
                         yard.YardID = new Guid(rdr["TowTruckYardID"].ToString());
@@ -1341,6 +1336,7 @@ namespace FPSService.SQL
                         yard.TowTruckCompanyPhoneNumber = rdr["TowTruckCompanyPhoneNumber"].ToString();
                         yard.Position = rdr["Position"].ToString();
                     }
+
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -1350,7 +1346,8 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error RetrieveYard " + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(DateTime.Now + Environment.NewLine + "Error RetrieveYard " + Environment.NewLine + ex,
+                    true);
             }
 
             return yard;
@@ -1358,19 +1355,19 @@ namespace FPSService.SQL
 
         public List<DropZone_New> RetreiveAllDZs()
         {
-            List<DropZone_New> DZs = new List<DropZone_New>();
-            logger = new Logging.EventLogger();
-            string SQL = "GetDropZones";
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            var DZs = new List<DropZone_New>();
+            logger = new EventLogger();
+            var SQL = "GetDropZones";
+            using (var conn = new SqlConnection(ConnStr))
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        DropZone_New thisDropZone = new DropZone_New();
+                        var thisDropZone = new DropZone_New();
                         thisDropZone.DropZoneID = new Guid(rdr["DropZoneID"].ToString());
                         thisDropZone.Location = rdr["Location"].ToString();
                         thisDropZone.Comments = rdr["Comments"].ToString();
@@ -1384,6 +1381,7 @@ namespace FPSService.SQL
                         //thisDropZone.Position = SqlGeography.Deserialize(rdr.GetSqlBytes(9));
                         DZs.Add(thisDropZone);
                     }
+
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -1391,8 +1389,8 @@ namespace FPSService.SQL
                 }
                 catch (Exception ex)
                 {
-                    logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Retreiving Drop Zones" +
-                        Environment.NewLine + ex.ToString(), true);
+                    logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Retreiving Drop Zones" +
+                                    Environment.NewLine + ex, true);
                 }
             }
 
@@ -1401,16 +1399,16 @@ namespace FPSService.SQL
 
         public DropZone_New RetreiveDropZone(Guid DropZoneID)
         {
-            DropZone_New DropZone = new DropZone_New();
+            var DropZone = new DropZone_New();
 
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    string SQL = "SELECT * FROM [dbo].[DropZones_New] WHERE DropZoneID = '" + DropZoneID + "'";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var SQL = "SELECT * FROM [dbo].[DropZones_New] WHERE DropZoneID = '" + DropZoneID + "'";
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
                         DropZone.DropZoneID = new Guid(rdr["DropZoneID"].ToString());
@@ -1424,6 +1422,7 @@ namespace FPSService.SQL
                         DropZone.Capacity = Convert.ToInt32(rdr["Capacity"]);
                         DropZone.Position = rdr["Position"].ToString();
                     }
+
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -1433,7 +1432,8 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Retrieving DropZone " + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "Error Retrieving DropZone " + Environment.NewLine + ex, true);
             }
 
             return DropZone;
@@ -1441,19 +1441,19 @@ namespace FPSService.SQL
 
         public List<CallBoxes_New> RetreiveCallBoxes()
         {
-            List<CallBoxes_New> CallBoxes = new List<CallBoxes_New>();
-            logger = new Logging.EventLogger();
+            var CallBoxes = new List<CallBoxes_New>();
+            logger = new EventLogger();
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    string SQL = "SELECT * FROM [dbo].[CallBoxes_New]";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var SQL = "SELECT * FROM [dbo].[CallBoxes_New]";
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        CallBoxes_New CallBox = new CallBoxes_New();
+                        var CallBox = new CallBoxes_New();
                         CallBox.CallBoxID = new Guid(rdr["CallBoxID"].ToString());
                         CallBox.TelephoneNumber = rdr["TelephoneNumber"].ToString();
                         CallBox.Location = rdr["Location"].ToString();
@@ -1464,6 +1464,7 @@ namespace FPSService.SQL
                         CallBox.SignNumber = rdr["SignNumber"].ToString();
                         CallBoxes.Add(CallBox);
                     }
+
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -1473,7 +1474,8 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error RetrieveCallBoxes " + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "Error RetrieveCallBoxes " + Environment.NewLine + ex, true);
             }
 
             return CallBoxes;
@@ -1481,16 +1483,16 @@ namespace FPSService.SQL
 
         public CallBoxes_New RetreiveCallBox(Guid CallBoxID)
         {
-            CallBoxes_New CallBox = new CallBoxes_New();
-            logger = new Logging.EventLogger();
+            var CallBox = new CallBoxes_New();
+            logger = new EventLogger();
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    string SQL = "SELECT * FROM [dbo].[CallBoxes_New] WHERE CallBoxID = '" + CallBoxID + "'";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var SQL = "SELECT * FROM [dbo].[CallBoxes_New] WHERE CallBoxID = '" + CallBoxID + "'";
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
                         CallBox.CallBoxID = new Guid(rdr["CallBoxID"].ToString());
@@ -1502,6 +1504,7 @@ namespace FPSService.SQL
                         CallBox.Position = rdr["Position"].ToString();
                         CallBox.SignNumber = rdr["SignNumber"].ToString();
                     }
+
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -1511,7 +1514,8 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error RetrieveCallBox " + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "Error RetrieveCallBox " + Environment.NewLine + ex, true);
             }
 
             return CallBox;
@@ -1519,19 +1523,19 @@ namespace FPSService.SQL
 
         public List<Five11Signs> RetreiveFive11Signs()
         {
-            List<Five11Signs> Five11Signs = new List<Five11Signs>();
-            logger = new Logging.EventLogger();
+            var Five11Signs = new List<Five11Signs>();
+            logger = new EventLogger();
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    string SQL = "SELECT * FROM [dbo].[Five11Signs]";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var SQL = "SELECT * FROM [dbo].[Five11Signs]";
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        Five11Signs Five11Sign = new Five11Signs();
+                        var Five11Sign = new Five11Signs();
                         Five11Sign.Five11SignID = new Guid(rdr["Five11SignID"].ToString());
                         Five11Sign.TelephoneNumber = rdr["TelephoneNumber"].ToString();
                         Five11Sign.Location = rdr["Location"].ToString();
@@ -1542,6 +1546,7 @@ namespace FPSService.SQL
                         Five11Sign.SignNumber = rdr["SignNumber"].ToString();
                         Five11Signs.Add(Five11Sign);
                     }
+
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -1551,7 +1556,8 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error RetrieveFive11Signs " + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "Error RetrieveFive11Signs " + Environment.NewLine + ex, true);
             }
 
             return Five11Signs;
@@ -1559,16 +1565,16 @@ namespace FPSService.SQL
 
         public Five11Signs RetreiveFive11Sign(Guid Five11SignID)
         {
-            Five11Signs Five11Sign = new Five11Signs();
-            logger = new Logging.EventLogger();
+            var Five11Sign = new Five11Signs();
+            logger = new EventLogger();
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    string SQL = "SELECT * FROM [dbo].[Five11Signs] WHERE Five11SignID = '" + Five11SignID + "'";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var SQL = "SELECT * FROM [dbo].[Five11Signs] WHERE Five11SignID = '" + Five11SignID + "'";
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
                         Five11Sign.Five11SignID = new Guid(rdr["Five11SignID"].ToString());
@@ -1580,6 +1586,7 @@ namespace FPSService.SQL
                         Five11Sign.Position = rdr["Position"].ToString();
                         Five11Sign.SignNumber = rdr["SignNumber"].ToString();
                     }
+
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -1589,11 +1596,13 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error RetrieveFive11Sign " + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "Error RetrieveFive11Sign " + Environment.NewLine + ex, true);
             }
 
             return Five11Sign;
         }
+
         /*
         public List<BeatData.BeatClass> LoadBeats()
         {
@@ -1628,20 +1637,21 @@ namespace FPSService.SQL
             { return null; }
         }
         */
+
         #endregion
 
         #region " SQL Writes "
 
         public void ClearAlarm(Guid DriverID, Guid VehicleID, string AlarmType)
         {
-            logger = new Logging.EventLogger();
+            logger = new EventLogger();
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("ClearAlarm", conn);
+                    var cmd = new SqlCommand("ClearAlarm", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@DriverID", DriverID.ToString());
                     cmd.Parameters.AddWithValue("@VehicleID", VehicleID.ToString());
@@ -1653,50 +1663,48 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "ERROR CLEARING ALARM: " + Environment.NewLine +
-                    ex.ToString(), true);
+                logger.LogEvent(DateTime.Now + Environment.NewLine + "ERROR CLEARING ALARM: " + Environment.NewLine +
+                                ex, true);
             }
         }
 
         public string GetUserName(Guid UserID)
         {
-            logger = new Logging.EventLogger();
-            string UserName = "Unknown User";
+            logger = new EventLogger();
+            var UserName = "Unknown User";
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
 
-                    string SQL = "SELECT FirstName FROM Users WHERE UserID = '" + UserID + "'";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    object retVal = cmd.ExecuteScalar();
-                    if (retVal != DBNull.Value && retVal != null)
-                    {
-                        UserName = cmd.ExecuteScalar().ToString();
-                    }
+                    var SQL = "SELECT FirstName FROM Users WHERE UserID = '" + UserID + "'";
+                    var cmd = new SqlCommand(SQL, conn);
+                    var retVal = cmd.ExecuteScalar();
+                    if (retVal != DBNull.Value && retVal != null) UserName = cmd.ExecuteScalar().ToString();
 
                     conn.Close();
                 }
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "ERROR FINDING UserName: " + Environment.NewLine +
-                                   ex.ToString(), true);
+                logger.LogEvent(DateTime.Now + Environment.NewLine + "ERROR FINDING UserName: " + Environment.NewLine +
+                                ex, true);
             }
+
             return UserName;
         }
 
         public void UnExcuseAlarm(Guid DriverID, Guid VehicleID, string AlarmType, string Comments, string BeatNumber)
         {
-            logger = new Logging.EventLogger();
+            logger = new EventLogger();
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("UnExcuseAlarm", conn);
+                    var cmd = new SqlCommand("UnExcuseAlarm", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@DriverID", DriverID.ToString());
                     cmd.Parameters.AddWithValue("@VehicleID", VehicleID.ToString());
@@ -1711,21 +1719,21 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "ERROR UNEXCUSING ALARM: " + Environment.NewLine +
-                    ex.ToString(), true);
+                logger.LogEvent(DateTime.Now + Environment.NewLine + "ERROR UNEXCUSING ALARM: " + Environment.NewLine +
+                                ex, true);
             }
         }
 
         public void ExcuseAlarm(Guid DriverID, Guid VehicleID, string AlarmType, string Comments, string BeatNumber)
         {
-            logger = new Logging.EventLogger();
+            logger = new EventLogger();
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("ExcuseAlarm", conn);
+                    var cmd = new SqlCommand("ExcuseAlarm", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@DriverID", DriverID.ToString());
                     cmd.Parameters.AddWithValue("@VehicleID", VehicleID.ToString());
@@ -1740,33 +1748,34 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "ERROR EXCUSING ALARM: " + Environment.NewLine +
-                    ex.ToString(), true);
+                logger.LogEvent(DateTime.Now + Environment.NewLine + "ERROR EXCUSING ALARM: " + Environment.NewLine +
+                                ex, true);
             }
         }
 
         public void LogTruckMessage(TruckMessage thisMessage)
         {
-            logger = new Logging.EventLogger();
-            string TruckNumber = "NA";
-            string BeatNumber = "NA";
-            string DriverName = "NA";
-            TowTruck.TowTruck t = DataClasses.GlobalData.FindTowTruck(thisMessage.TruckIP);
+            logger = new EventLogger();
+            var TruckNumber = "NA";
+            var BeatNumber = "NA";
+            var DriverName = "NA";
+            var t = GlobalData.FindTowTruck(thisMessage.TruckIP);
             if (t != null)
             {
                 TruckNumber = t.TruckNumber;
                 BeatNumber = t.assignedBeat.BeatNumber;
                 DriverName = t.Driver.FirstName + " " + t.Driver.FirstName;
             }
+
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("LogTruckMessage", conn);
+                    var cmd = new SqlCommand("LogTruckMessage", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@MessageID", thisMessage.MessageID.ToString());
-                    cmd.Parameters.AddWithValue("@TruckIP", thisMessage.TruckIP.ToString());
+                    cmd.Parameters.AddWithValue("@TruckIP", thisMessage.TruckIP);
                     cmd.Parameters.AddWithValue("@MessageText", thisMessage.MessageText);
                     cmd.Parameters.AddWithValue("@SentTime", thisMessage.SentTime.ToString());
                     cmd.Parameters.AddWithValue("@UserID", thisMessage.UserID.ToString());
@@ -1780,20 +1789,21 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "ERROR LOGGING TRUCK MESSAGE: " + thisMessage.MessageText + Environment.NewLine +
-                    ex.ToString(), true);
+                logger.LogEvent(DateTime.Now + Environment.NewLine + "ERROR LOGGING TRUCK MESSAGE: " +
+                                thisMessage.MessageText + Environment.NewLine +
+                                ex, true);
             }
         }
 
         public void AckTruckMessage(TruckMessage thisMessage)
         {
-            logger = new Logging.EventLogger();
+            logger = new EventLogger();
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("AckTruckMessage", conn);
+                    var cmd = new SqlCommand("AckTruckMessage", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@MessageID", thisMessage.MessageID.ToString());
                     cmd.Parameters.AddWithValue("@AckTime", thisMessage.AckedTime.ToString());
@@ -1804,20 +1814,21 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "ERROR ACKING TRUCK MESSAGE: " + thisMessage.MessageID.ToString() + Environment.NewLine +
-                    ex.ToString(), true);
+                logger.LogEvent(DateTime.Now + Environment.NewLine + "ERROR ACKING TRUCK MESSAGE: " +
+                                thisMessage.MessageID + Environment.NewLine +
+                                ex, true);
             }
         }
 
         public void LogAlarm(string AlarmType, DateTime AlarmTime, Guid DriverID, Guid VehicleID, Guid BeatID)
         {
-            logger = new Logging.EventLogger();
+            logger = new EventLogger();
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("LogAlarm", conn);
+                    var cmd = new SqlCommand("LogAlarm", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@AlarmType", AlarmType);
                     cmd.Parameters.AddWithValue("@AlarmTime", AlarmTime.ToString());
@@ -1831,19 +1842,19 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + "Error logging alarm" + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(DateTime.Now + "Error logging alarm" + Environment.NewLine + ex, true);
             }
         }
 
         public void SetBreakTime(Guid DriverID, string Type, int TotalMinutes)
         {
-            logger = new Logging.EventLogger();
+            logger = new EventLogger();
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("UpdateBreaks", conn);
+                    var cmd = new SqlCommand("UpdateBreaks", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@BreakType", Type);
                     cmd.Parameters.AddWithValue("@additionalMinutes", TotalMinutes);
@@ -1855,20 +1866,20 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + "Error writing break time" + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(DateTime.Now + "Error writing break time" + Environment.NewLine + ex, true);
             }
         }
 
         public void SetVarValue(string VarName, string VarValue)
         {
-            logger = new Logging.EventLogger();
+            logger = new EventLogger();
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    string SQL = "UPDATE Vars SET VarValue = '" + VarValue + "' WHERE VarName = '" + VarName + "'";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
+                    var SQL = "UPDATE Vars SET VarValue = '" + VarValue + "' WHERE VarName = '" + VarName + "'";
+                    var cmd = new SqlCommand(SQL, conn);
                     cmd.ExecuteNonQuery();
                     conn.Close();
                     cmd = null;
@@ -1876,52 +1887,52 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + "Error writing " + VarName + " value to " + VarValue + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + "Error writing " + VarName + " value to " + VarValue + Environment.NewLine + ex,
+                    true);
             }
         }
 
         public void LogGPS(string SQL, ArrayList arrParams)
         {
-            logger = new Logging.EventLogger();
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            logger = new EventLogger();
+            using (var conn = new SqlConnection(ConnStr))
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
+                    var cmd = new SqlCommand(SQL, conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    for (int i = 0; i < arrParams.Count; i++)
+                    for (var i = 0; i < arrParams.Count; i++)
                     {
-                        string[] splitter = arrParams[i].ToString().Split('^');
-                        cmd.Parameters.AddWithValue(splitter[0].ToString(), splitter[1].ToString());
+                        var splitter = arrParams[i].ToString().Split('^');
+                        cmd.Parameters.AddWithValue(splitter[0], splitter[1]);
                     }
+
                     cmd.ExecuteNonQuery();
                     conn.Close();
                 }
                 catch (Exception ex)
                 {
-                    string paramList = string.Empty;
-                    for (int i = 0; i < arrParams.Count; i++)
-                    {
-                        paramList += arrParams[i].ToString() + Environment.NewLine;
-                    }
-                    logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + ex.ToString() + Environment.NewLine + paramList, true);
-                    if (conn.State == ConnectionState.Open)
-                    { conn.Close(); }
+                    var paramList = string.Empty;
+                    for (var i = 0; i < arrParams.Count; i++) paramList += arrParams[i] + Environment.NewLine;
+                    logger.LogEvent(DateTime.Now + Environment.NewLine + ex + Environment.NewLine + paramList, true);
+                    if (conn.State == ConnectionState.Open) conn.Close();
                 }
             }
         }
 
-        public void LogStatusChange(string DriverName, string VehicleID, string Status, DateTime TimeStamp, string BeatNumber)
+        public void LogStatusChange(string DriverName, string VehicleID, string Status, DateTime TimeStamp,
+            string BeatNumber)
         {
-            logger = new Logging.EventLogger();
+            logger = new EventLogger();
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("LogStatus", conn);
+                    var cmd = new SqlCommand("LogStatus", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@DriverName", DriverName);
                     cmd.Parameters.AddWithValue("@VehicleID", VehicleID);
@@ -1936,21 +1947,21 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Logging Off Status Change " + DriverName +
-                    " " + VehicleID + " " + Status + " " + TimeStamp.ToString() +
-                       Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Logging Off Status Change " + DriverName +
+                                " " + VehicleID + " " + Status + " " + TimeStamp +
+                                Environment.NewLine + ex, true);
             }
         }
 
         public void LogOffBeat(Guid DriverID, string VehicleNumber, DateTime OffBeatTime, SqlGeography location)
         {
-            logger = new Logging.EventLogger();
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            logger = new EventLogger();
+            using (var conn = new SqlConnection(ConnStr))
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("LogOffBeatAlert", conn);
+                    var cmd = new SqlCommand("LogOffBeatAlert", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@DriverID", DriverID);
                     cmd.Parameters.AddWithValue("@VehicleNumber", VehicleNumber);
@@ -1962,21 +1973,22 @@ namespace FPSService.SQL
                 }
                 catch (Exception ex)
                 {
-                    logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Logging Off Beat " + VehicleNumber +
-                       Environment.NewLine + ex.ToString(), true);
+                    logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Logging Off Beat " + VehicleNumber +
+                                    Environment.NewLine + ex, true);
                 }
             }
         }
 
-        public void LogSpeeding(Guid DriverID, string VehicleNumber, double LoggedSpeed, double MaxSpeed, DateTime speedingTime, SqlGeography location)
+        public void LogSpeeding(Guid DriverID, string VehicleNumber, double LoggedSpeed, double MaxSpeed,
+            DateTime speedingTime, SqlGeography location)
         {
-            logger = new Logging.EventLogger();
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            logger = new EventLogger();
+            using (var conn = new SqlConnection(ConnStr))
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("LogSpeedingAlert", conn);
+                    var cmd = new SqlCommand("LogSpeedingAlert", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@DriverID", DriverID);
                     cmd.Parameters.AddWithValue("@VehicleNumber", VehicleNumber);
@@ -1990,21 +2002,21 @@ namespace FPSService.SQL
                 }
                 catch (Exception ex)
                 {
-                    logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Logging Speeding " + VehicleNumber +
-                        Environment.NewLine + ex.ToString(), true);
+                    logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Logging Speeding " + VehicleNumber +
+                                    Environment.NewLine + ex, true);
                 }
             }
         }
 
         public void FixTruckNumber(string IPAddress, string TruckNumber, Guid ContractorID)
         {
-            logger = new Logging.EventLogger();
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            logger = new EventLogger();
+            using (var conn = new SqlConnection(ConnStr))
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("FixTruckNumber", conn);
+                    var cmd = new SqlCommand("FixTruckNumber", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IPAddress", IPAddress);
                     cmd.Parameters.AddWithValue("@VehicleNumber", TruckNumber);
@@ -2014,22 +2026,23 @@ namespace FPSService.SQL
                 }
                 catch (Exception ex)
                 {
-                    logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Fixing Truck Number " + TruckNumber + " IP Address: " + IPAddress +
-                        Environment.NewLine + ex.ToString(), true);
+                    logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Fixing Truck Number " + TruckNumber +
+                                    " IP Address: " + IPAddress +
+                                    Environment.NewLine + ex, true);
                 }
             }
         }
 
         public void LogDriverEntry(string driverName, string truckNumber, string title, string details, string Mac)
         {
-            logger = new Logging.EventLogger();
+            logger = new EventLogger();
 
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("PostDriverAppLogEntry", conn);
+                    var cmd = new SqlCommand("PostDriverAppLogEntry", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@DriverName", driverName);
                     cmd.Parameters.AddWithValue("@TruckNumber", truckNumber);
@@ -2043,21 +2056,21 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "ERROR LOGGING DRIVER LOG " + Environment.NewLine +
-                    ex.ToString(), true);
+                logger.LogEvent(DateTime.Now + Environment.NewLine + "ERROR LOGGING DRIVER LOG " + Environment.NewLine +
+                                ex, true);
             }
         }
 
         public string CreateSegment(BeatSegment_New segment)
         {
-            logger = new Logging.EventLogger();
-            string ret = "success";
+            logger = new EventLogger();
+            var ret = "success";
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("UpdateSegment", conn);
+                    var cmd = new SqlCommand("UpdateSegment", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@BeatSegmentID", segment.BeatSegmentID);
                     cmd.Parameters.AddWithValue("@CHPDescription", segment.CHPDescription);
@@ -2075,7 +2088,9 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "ERROR CREATING NEW SEGMENT " + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "ERROR CREATING NEW SEGMENT " + Environment.NewLine + ex,
+                    true);
                 ret = "failure: " + ex;
             }
 
@@ -2084,14 +2099,14 @@ namespace FPSService.SQL
 
         public string UpdateSegment(BeatSegment_New segment)
         {
-            logger = new Logging.EventLogger();
-            string ret = "success";
+            logger = new EventLogger();
+            var ret = "success";
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("UpdateSegment", conn);
+                    var cmd = new SqlCommand("UpdateSegment", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@BeatSegmentID", segment.BeatSegmentID);
                     cmd.Parameters.AddWithValue("@CHPDescription", segment.CHPDescription);
@@ -2109,7 +2124,9 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "ERROR CREATING NEW SEGMENT " + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "ERROR CREATING NEW SEGMENT " + Environment.NewLine + ex,
+                    true);
                 ret = "failure: " + ex;
             }
 
@@ -2118,16 +2135,16 @@ namespace FPSService.SQL
 
         public string DeleteSegment(Guid SegmentID)
         {
-            BeatSegment_New segment = new BeatSegment_New();
-            string ret = "success";
+            var segment = new BeatSegment_New();
+            var ret = "success";
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    string SQL = "DELETE FROM [dbo].[BeatSegments_New] WHERE BeatSegmentID = '" + SegmentID + "'";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var SQL = "DELETE FROM [dbo].[BeatSegments_New] WHERE BeatSegmentID = '" + SegmentID + "'";
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -2145,7 +2162,8 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error RetrieveAllSegments" + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "Error RetrieveAllSegments" + Environment.NewLine + ex, true);
 
                 ret = "failure";
             }
@@ -2155,15 +2173,15 @@ namespace FPSService.SQL
 
         public string CreateBeat(Beats_New beat)
         {
-            logger = new Logging.EventLogger();
-            string ret = "success";
+            logger = new EventLogger();
+            var ret = "success";
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
                     //Update Beat
-                    SqlCommand cmd = new SqlCommand("UpdateBeat", conn);
+                    var cmd = new SqlCommand("UpdateBeat", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@BeatID", beat.BeatID);
                     cmd.Parameters.AddWithValue("@Active", beat.Active);
@@ -2186,7 +2204,7 @@ namespace FPSService.SQL
                     cmd.ExecuteNonQuery();
                     //Add beat segment associations
                     cmd = null;
-                    foreach (BeatSegment_New bs in beat.BeatSegments)
+                    foreach (var bs in beat.BeatSegments)
                     {
                         cmd = new SqlCommand("AssociateBeatSegment", conn);
                         cmd.CommandType = CommandType.StoredProcedure;
@@ -2195,12 +2213,78 @@ namespace FPSService.SQL
                         cmd.ExecuteNonQuery();
                         cmd = null;
                     }
+
                     conn.Close();
                 }
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "ERROR CREATING/UPDATING NEW BEAT " + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "ERROR CREATING/UPDATING NEW BEAT " + Environment.NewLine + ex,
+                    true);
+                ret = "failure: " + ex;
+            }
+
+            return ret;
+        }
+
+        public string CreateBeat2(Beats_New2 beat)
+        {
+            logger = new EventLogger();
+            var ret = "success";
+            try
+            {
+                using (var conn = new SqlConnection(ConnStr))
+                {
+                    conn.Open();
+                    //Update Beat
+                    var cmd = new SqlCommand("UpdateBeat", conn)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    cmd.Parameters.AddWithValue("@BeatID", beat.BeatID);
+                    cmd.Parameters.AddWithValue("@Active", beat.Active);
+
+                    cmd.Parameters.AddWithValue("@FreewayID", beat.FreewayID);
+                    cmd.Parameters.AddWithValue("@BeatDescription", beat.BeatDescription);
+                    cmd.Parameters.AddWithValue("@BeatNumber", beat.BeatNumber);
+                    cmd.Parameters.AddWithValue("@LastUpdate", beat.LastUpdate);
+                    cmd.Parameters.AddWithValue("@LastUpdateBy", beat.LastUpdateBy);
+                    cmd.Parameters.AddWithValue("@IsTemporary", beat.IsTemporary);
+                    cmd.Parameters.AddWithValue("@BeatColor", beat.BeatColor);
+                    cmd.Parameters.AddWithValue("@StartDate", beat.StartDate);
+                    cmd.Parameters.AddWithValue("@EndDate", beat.EndDate);
+                    cmd.ExecuteNonQuery();
+                    cmd = null;
+
+                    cmd = new SqlCommand("ClearBeatBeatSegments", conn)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    cmd.Parameters.AddWithValue("@BeatID", beat.BeatID);
+                    cmd.ExecuteNonQuery();
+                    //Add beat segment associations
+                    cmd = null;
+                    foreach (var beatSegmentId in beat.BeatSegments)
+                    {
+                        cmd = new SqlCommand("AssociateBeatSegment", conn)
+                        {
+                            CommandType = CommandType.StoredProcedure
+                        };
+                        cmd.Parameters.AddWithValue("@BeatID", beat.BeatID);
+                        cmd.Parameters.AddWithValue("@BeatSegmentID", beatSegmentId);
+                        cmd.ExecuteNonQuery();
+                        cmd = null;
+                    }
+
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "ERROR CREATING/UPDATING NEW BEAT " + Environment.NewLine + ex,
+                    true);
                 ret = "failure: " + ex;
             }
 
@@ -2209,16 +2293,16 @@ namespace FPSService.SQL
 
         public string DeleteBeat(Guid BeatID)
         {
-            string ret = "success";
+            var ret = "success";
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
 
-                    string SQL = "DELETE FROM [dbo].[BeatBeatSegments] WHERE BeatID = '" + BeatID + "'";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var SQL = "DELETE FROM [dbo].[BeatBeatSegments] WHERE BeatID = '" + BeatID + "'";
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     rdr.Close();
 
                     SQL = "DELETE FROM [dbo].[Beats_New] WHERE BeatID = '" + BeatID + "'";
@@ -2236,7 +2320,8 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Deleting Beat " + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Deleting Beat " + Environment.NewLine + ex,
+                    true);
 
                 ret = "failure";
             }
@@ -2246,15 +2331,15 @@ namespace FPSService.SQL
 
         public string UpdateYard(Yard_New yard)
         {
-            logger = new Logging.EventLogger();
-            string ret = "success";
+            logger = new EventLogger();
+            var ret = "success";
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
                     //Update yard
-                    SqlCommand cmd = new SqlCommand("UpdateYard", conn);
+                    var cmd = new SqlCommand("UpdateYard", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@TowTruckYardID", yard.YardID);
                     cmd.Parameters.AddWithValue("@Location", yard.Location);
@@ -2270,7 +2355,9 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "ERROR CREATING/UPDATING NEW YARD " + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "ERROR CREATING/UPDATING NEW YARD " + Environment.NewLine + ex,
+                    true);
                 ret = "failure: " + ex;
             }
 
@@ -2279,15 +2366,15 @@ namespace FPSService.SQL
 
         public string DeleteYard(Guid YardID)
         {
-            string ret = "success";
+            var ret = "success";
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    string SQL = "DELETE FROM [dbo].[TowTruckYard_New] WHERE TowTruckYardID = '" + YardID + "'";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var SQL = "DELETE FROM [dbo].[TowTruckYard_New] WHERE TowTruckYardID = '" + YardID + "'";
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -2296,7 +2383,8 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Deleting Yard " + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Deleting Yard " + Environment.NewLine + ex,
+                    true);
 
                 ret = "failure";
             }
@@ -2306,15 +2394,15 @@ namespace FPSService.SQL
 
         public string UpdateDropZone(DropZone_New DropZone)
         {
-            logger = new Logging.EventLogger();
-            string ret = "success";
+            logger = new EventLogger();
+            var ret = "success";
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
                     //Update yard
-                    SqlCommand cmd = new SqlCommand("UpdateDropZone", conn);
+                    var cmd = new SqlCommand("UpdateDropZone", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@DropZoneID", DropZone.DropZoneID);
                     cmd.Parameters.AddWithValue("@Location", DropZone.Location);
@@ -2333,7 +2421,9 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "ERROR CREATING/UPDATING NEW DROPZONE " + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "ERROR CREATING/UPDATING NEW DROPZONE " + Environment.NewLine +
+                    ex, true);
                 ret = "failure: " + ex;
             }
 
@@ -2342,15 +2432,15 @@ namespace FPSService.SQL
 
         public string DeleteDropZone(Guid DropZoneID)
         {
-            string ret = "success";
+            var ret = "success";
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    string SQL = "DELETE FROM [dbo].[DropZones_New] WHERE DropZoneID = '" + DropZoneID + "'";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var SQL = "DELETE FROM [dbo].[DropZones_New] WHERE DropZoneID = '" + DropZoneID + "'";
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -2359,7 +2449,8 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Deleting DropZone " + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "Error Deleting DropZone " + Environment.NewLine + ex, true);
 
                 ret = "failure";
             }
@@ -2369,15 +2460,15 @@ namespace FPSService.SQL
 
         public string UpdateCallBox(CallBoxes_New CallBox)
         {
-            logger = new Logging.EventLogger();
-            string ret = "success";
+            logger = new EventLogger();
+            var ret = "success";
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
                     //Update yard
-                    SqlCommand cmd = new SqlCommand("UpdateCallBox", conn);
+                    var cmd = new SqlCommand("UpdateCallBox", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@CallBoxID", CallBox.CallBoxID);
                     cmd.Parameters.AddWithValue("@TelephoneNumber", CallBox.Location);
@@ -2394,7 +2485,9 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "ERROR CREATING/UPDATING NEW CALLBOX " + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "ERROR CREATING/UPDATING NEW CALLBOX " + Environment.NewLine +
+                    ex, true);
                 ret = "failure: " + ex;
             }
 
@@ -2403,15 +2496,15 @@ namespace FPSService.SQL
 
         public string DeleteCallBox(Guid CallBoxID)
         {
-            string ret = "success";
+            var ret = "success";
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    string SQL = "DELETE FROM [dbo].[CallBoxes_New] WHERE CallBoxID = '" + CallBoxID + "'";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var SQL = "DELETE FROM [dbo].[CallBoxes_New] WHERE CallBoxID = '" + CallBoxID + "'";
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -2420,7 +2513,8 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Deleting CallBox " + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "Error Deleting CallBox " + Environment.NewLine + ex, true);
 
                 ret = "failure";
             }
@@ -2430,15 +2524,15 @@ namespace FPSService.SQL
 
         public string UpdateFive11Sign(Five11Signs Five11Sign)
         {
-            logger = new Logging.EventLogger();
-            string ret = "success";
+            logger = new EventLogger();
+            var ret = "success";
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
                     //Update yard
-                    SqlCommand cmd = new SqlCommand("UpdateFive11Sign", conn);
+                    var cmd = new SqlCommand("UpdateFive11Sign", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Five11Signid", Five11Sign.Five11SignID);
                     cmd.Parameters.AddWithValue("@TelephoneNumber", Five11Sign.TelephoneNumber);
@@ -2455,7 +2549,9 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "ERROR CREATING/UPDATING NEW CALLBOX " + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "ERROR CREATING/UPDATING NEW CALLBOX " + Environment.NewLine +
+                    ex, true);
                 ret = "failure: " + ex;
             }
 
@@ -2464,15 +2560,15 @@ namespace FPSService.SQL
 
         public string DeleteFive11Sign(Guid Five11SignID)
         {
-            string ret = "success";
+            var ret = "success";
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    string SQL = "DELETE FROM [dbo].[Five11Signs] WHERE Five11SignID = '" + Five11SignID + "'";
-                    SqlCommand cmd = new SqlCommand(SQL, conn);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var SQL = "DELETE FROM [dbo].[Five11Signs] WHERE Five11SignID = '" + Five11SignID + "'";
+                    var cmd = new SqlCommand(SQL, conn);
+                    var rdr = cmd.ExecuteReader();
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -2481,67 +2577,66 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Deleting CallBox " + Environment.NewLine + ex.ToString(), true);
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "Error Deleting CallBox " + Environment.NewLine + ex, true);
 
                 ret = "failure";
             }
 
             return ret;
         }
+
         #endregion
 
         #region " SQL Stored Procs "
 
         public void RunProc(string ProcName, ArrayList arrParams)
         {
-            logger = new Logging.EventLogger();
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            logger = new EventLogger();
+            using (var conn = new SqlConnection(ConnStr))
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(ProcName, conn);
+                    var cmd = new SqlCommand(ProcName, conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     if (arrParams.Count > 0)
-                    {
-                        for (int i = 0; i < arrParams.Count; i++)
+                        for (var i = 0; i < arrParams.Count; i++)
                         {
-                            string[] splitter = arrParams[i].ToString().Split('~');
-                            cmd.Parameters.AddWithValue(splitter[0].ToString(), splitter[1].ToString());
+                            var splitter = arrParams[i].ToString().Split('~');
+                            cmd.Parameters.AddWithValue(splitter[0], splitter[1]);
                         }
-                    }
+
                     cmd.ExecuteNonQuery();
                     cmd = null;
                     conn.Close();
                 }
                 catch (Exception ex)
                 {
-                    string Params = "";
+                    var Params = "";
                     if (arrParams.Count > 0)
-                    {
-                        for (int i = 0; i < arrParams.Count; i++)
-                        {
-                            Params += arrParams[i].ToString() + Environment.NewLine;
-                        }
-                    }
-                    logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error running proc: " + ProcName + " Params:" + Params +
-                        Environment.NewLine + ex.ToString(), true);
+                        for (var i = 0; i < arrParams.Count; i++)
+                            Params += arrParams[i] + Environment.NewLine;
+                    logger.LogEvent(DateTime.Now + Environment.NewLine + "Error running proc: " + ProcName +
+                                    " Params:" + Params +
+                                    Environment.NewLine + ex, true);
                 }
             }
         }
 
-        public void LogEarlyRollIn(Guid DriverID, string _reason, Guid BeatID, string _vehicleID, DateTime timeStamp, string CHPLogNumber, string _exceptionType)
+        public void LogEarlyRollIn(Guid DriverID, string _reason, Guid BeatID, string _vehicleID, DateTime timeStamp,
+            string CHPLogNumber, string _exceptionType)
         {
             //this was originally specced to handle only early roll ins and was later adapted to handle mistimed events in general
             //we support late log on, roll out, on patrol, early roll in, and early log off.  All functionality works essentially the
             //same and gets logged into the EarlyRollIns table in the fsp database.
-            logger = new Logging.EventLogger();
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            logger = new EventLogger();
+            using (var conn = new SqlConnection(ConnStr))
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("LogEarlyRollIn", conn);
+                    var cmd = new SqlCommand("LogEarlyRollIn", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@DriverID", DriverID.ToString());
                     cmd.Parameters.AddWithValue("@Reason", _reason);
@@ -2556,21 +2651,22 @@ namespace FPSService.SQL
                 }
                 catch (Exception ex)
                 {
-                    logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error logging Early Login for Driver: " + DriverID.ToString() + Environment.NewLine +
-                        "Reason: " + _reason + Environment.NewLine + Environment.NewLine + ex.ToString(), true);
+                    logger.LogEvent(DateTime.Now + Environment.NewLine + "Error logging Early Login for Driver: " +
+                                    DriverID + Environment.NewLine +
+                                    "Reason: " + _reason + Environment.NewLine + Environment.NewLine + ex, true);
                 }
             }
         }
 
         public void LogEvent(Guid DriverID, string EventType)
         {
-            logger = new Logging.EventLogger();
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            logger = new EventLogger();
+            using (var conn = new SqlConnection(ConnStr))
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("LogDriverEvent", conn);
+                    var cmd = new SqlCommand("LogDriverEvent", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@DriverID", DriverID);
                     cmd.Parameters.AddWithValue("@EventType", EventType);
@@ -2580,22 +2676,23 @@ namespace FPSService.SQL
                 }
                 catch (Exception ex)
                 {
-                    logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "LogEvent Error" + Environment.NewLine + ex.ToString(), true);
+                    logger.LogEvent(DateTime.Now + Environment.NewLine + "LogEvent Error" + Environment.NewLine + ex,
+                        true);
                 }
             }
         }
 
         public DateTime GetLastEventTime(string DriverID, string EventType)
         {
-            logger = new Logging.EventLogger();
-            DateTime lastTime = Convert.ToDateTime("01/01/2001 00:00:00");
+            logger = new EventLogger();
+            var lastTime = Convert.ToDateTime("01/01/2001 00:00:00");
 
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            using (var conn = new SqlConnection(ConnStr))
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("GetEventTime", conn);
+                    var cmd = new SqlCommand("GetEventTime", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@EventType", EventType);
                     cmd.Parameters.AddWithValue("@DriverID", DriverID);
@@ -2605,7 +2702,8 @@ namespace FPSService.SQL
                 }
                 catch (Exception ex)
                 {
-                    logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "GetLastEventTime Error" + Environment.NewLine + ex.ToString(), true);
+                    logger.LogEvent(
+                        DateTime.Now + Environment.NewLine + "GetLastEventTime Error" + Environment.NewLine + ex, true);
                 }
             }
 
@@ -2614,103 +2712,116 @@ namespace FPSService.SQL
 
         public int GetBreakDuration(string DriverID)
         {
-            logger = new Logging.EventLogger();
-            int BreakDuration = 0;
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            logger = new EventLogger();
+            var BreakDuration = 0;
+            using (var conn = new SqlConnection(ConnStr))
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("GetBreakDuration", conn);
+                    var cmd = new SqlCommand("GetBreakDuration", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@DriverID", DriverID.ToString());
+                    cmd.Parameters.AddWithValue("@DriverID", DriverID);
                     BreakDuration = Convert.ToInt32(cmd.ExecuteScalar());
                     cmd = null;
                     conn.Close();
                 }
                 catch (Exception ex)
                 {
-                    logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "GetBreakDuration Error" + Environment.NewLine + ex.ToString(), true);
+                    logger.LogEvent(
+                        DateTime.Now + Environment.NewLine + "GetBreakDuration Error" + Environment.NewLine + ex, true);
                     return 0;
                 }
             }
+
             return BreakDuration;
         }
 
         public bool CheckLogon(string IPAddr, string FSPID, string Password)
         {
-            bool valid = false;
-            logger = new Logging.EventLogger();
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            var valid = false;
+            logger = new EventLogger();
+            using (var conn = new SqlConnection(ConnStr))
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("CheckLogon", conn);
+                    var cmd = new SqlCommand("CheckLogon", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@FSPID", FSPID);
                     cmd.Parameters.AddWithValue("@password", Password);
-                    string Output = Convert.ToString(cmd.ExecuteScalar());
+                    var Output = Convert.ToString(cmd.ExecuteScalar());
                     if (Output == "1")
-                    { valid = true; }
+                    {
+                        valid = true;
+                    }
                     else
                     {
                         valid = false;
-                        logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "An invalid logon was attempted from " + IPAddr, true);
+                        logger.LogEvent(
+                            DateTime.Now + Environment.NewLine + "An invalid logon was attempted from " + IPAddr, true);
                     }
+
                     conn.Close();
                 }
                 catch (Exception ex)
                 {
-                    logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "CheckLogon Error" + Environment.NewLine + ex.ToString(), true);
+                    logger.LogEvent(DateTime.Now + Environment.NewLine + "CheckLogon Error" + Environment.NewLine + ex,
+                        true);
                 }
-
             }
+
             return valid;
         }
 
-        public TowTruck.AssignedBeat GetAssignedBeat(Guid VehicleID)
+        public AssignedBeat GetAssignedBeat(Guid VehicleID)
         {
-            TowTruck.AssignedBeat thisAssignedBeat = new TowTruck.AssignedBeat();
-            logger = new Logging.EventLogger();
+            var thisAssignedBeat = new AssignedBeat();
+            logger = new EventLogger();
             thisAssignedBeat.BeatID = new Guid("00000000-0000-0000-0000-000000000000");
             thisAssignedBeat.Loaded = true;
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("GetVehicleAssignedBeat", conn);
+                    var cmd = new SqlCommand("GetVehicleAssignedBeat", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@FleetVehicleID", VehicleID.ToString());
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
                         thisAssignedBeat.BeatID = new Guid(rdr["BeatID"].ToString());
                         thisAssignedBeat.BeatExtent = SqlGeography.Deserialize(rdr.GetSqlBytes(1));
                         thisAssignedBeat.BeatNumber = rdr["BeatNumber"].ToString();
                     }
+
                     conn.Close();
                 }
             }
             catch (Exception ex)
-            { logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Getting Assigned Beat" + Environment.NewLine + ex.ToString(), true); }
+            {
+                logger.LogEvent(
+                    DateTime.Now + Environment.NewLine + "Error Getting Assigned Beat" + Environment.NewLine + ex,
+                    true);
+            }
+
             return thisAssignedBeat;
         }
 
-        public TowTruck.TowTruckDriver GetDriver(string FSPID)
+        public TowTruckDriver GetDriver(string FSPID)
         {
-            TowTruck.TowTruckDriver thisDriver = new TowTruck.TowTruckDriver();
-            logger = new Logging.EventLogger();
+            var thisDriver = new TowTruckDriver();
+            logger = new EventLogger();
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (var conn = new SqlConnection(ConnStr))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("GetDriver", conn);
+                    var cmd = new SqlCommand("GetDriver", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@FSPIDNumber", FSPID);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+                    var rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
                         thisDriver.DriverID = new Guid(rdr["DriverID"].ToString());
@@ -2720,6 +2831,7 @@ namespace FPSService.SQL
                         thisDriver.AssignedBeat = new Guid(rdr["AssignedBeat"].ToString());
                         thisDriver.BeatScheduleID = new Guid(rdr["BeatScheduleID"].ToString());
                     }
+
                     rdr.Close();
                     rdr = null;
                     cmd = null;
@@ -2727,11 +2839,14 @@ namespace FPSService.SQL
                 }
             }
             catch (Exception ex)
-            { logger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "Error Getting Driver" + Environment.NewLine + ex.ToString(), true); }
+            {
+                logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Getting Driver" + Environment.NewLine + ex,
+                    true);
+            }
+
             return thisDriver;
         }
 
         #endregion
-
     }
 }

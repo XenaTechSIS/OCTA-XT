@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://38.124.164.212:9007/TowTruckService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/FPSService" />
-  <xs:import schemaLocation="http://38.124.164.212:9007/TowTruckService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-  <xs:import schemaLocation="http://38.124.164.212:9007/TowTruckService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://localhost:50138/TowTruckService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/FPSService" />
+  <xs:import schemaLocation="http://localhost:50138/TowTruckService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://localhost:50138/TowTruckService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:element name="CurrentTrucks">
     <xs:complexType>
       <xs:sequence />
@@ -408,10 +408,24 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="UpdateBeat2">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="beat" nillable="true" type="q30:Beats_New2" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateBeat2Response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="UpdateBeat2Result" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="DeleteBeat">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q30="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="BeatID" type="q30:guid" />
+        <xs:element xmlns:q31="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="BeatID" type="q31:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -430,28 +444,28 @@
   <xs:element name="RetreiveAllYardsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="RetreiveAllYardsResult" nillable="true" type="q31:ArrayOfYard_New" />
+        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="RetreiveAllYardsResult" nillable="true" type="q32:ArrayOfYard_New" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetreiveYard">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q32="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="TowTruckYardID" type="q32:guid" />
+        <xs:element xmlns:q33="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="TowTruckYardID" type="q33:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetreiveYardResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="RetreiveYardResult" nillable="true" type="q33:Yard_New" />
+        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="RetreiveYardResult" nillable="true" type="q34:Yard_New" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="CreateYard">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="Yard" nillable="true" type="q34:Yard_New" />
+        <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="Yard" nillable="true" type="q35:Yard_New" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -465,7 +479,7 @@
   <xs:element name="UpdateYard">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="Yard" nillable="true" type="q35:Yard_New" />
+        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="Yard" nillable="true" type="q36:Yard_New" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -479,7 +493,7 @@
   <xs:element name="DeleteYard">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q36="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="YardID" type="q36:guid" />
+        <xs:element xmlns:q37="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="YardID" type="q37:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -498,28 +512,28 @@
   <xs:element name="RetreiveAllDZsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q37="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="RetreiveAllDZsResult" nillable="true" type="q37:ArrayOfDropZone_New" />
+        <xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="RetreiveAllDZsResult" nillable="true" type="q38:ArrayOfDropZone_New" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetreiveDZ">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q38="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="DropZoneID" type="q38:guid" />
+        <xs:element xmlns:q39="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="DropZoneID" type="q39:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetreiveDZResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q39="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="RetreiveDZResult" nillable="true" type="q39:DropZone_New" />
+        <xs:element xmlns:q40="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="RetreiveDZResult" nillable="true" type="q40:DropZone_New" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="CreateDropZone">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q40="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="Yard" nillable="true" type="q40:DropZone_New" />
+        <xs:element xmlns:q41="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="Yard" nillable="true" type="q41:DropZone_New" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -533,7 +547,7 @@
   <xs:element name="UpdateDropZone">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q41="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="Yard" nillable="true" type="q41:DropZone_New" />
+        <xs:element xmlns:q42="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="Yard" nillable="true" type="q42:DropZone_New" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -547,7 +561,7 @@
   <xs:element name="DeleteDropZone">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q42="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="DropZoneID" type="q42:guid" />
+        <xs:element xmlns:q43="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="DropZoneID" type="q43:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -566,28 +580,28 @@
   <xs:element name="RetreiveCallBoxesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q43="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="RetreiveCallBoxesResult" nillable="true" type="q43:ArrayOfCallBoxes_New" />
+        <xs:element xmlns:q44="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="RetreiveCallBoxesResult" nillable="true" type="q44:ArrayOfCallBoxes_New" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetreiveCallBox">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q44="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="CallBoxID" type="q44:guid" />
+        <xs:element xmlns:q45="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="CallBoxID" type="q45:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetreiveCallBoxResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q45="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="RetreiveCallBoxResult" nillable="true" type="q45:CallBoxes_New" />
+        <xs:element xmlns:q46="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="RetreiveCallBoxResult" nillable="true" type="q46:CallBoxes_New" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="CreateCallBox">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q46="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="Yard" nillable="true" type="q46:CallBoxes_New" />
+        <xs:element xmlns:q47="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="Yard" nillable="true" type="q47:CallBoxes_New" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -601,7 +615,7 @@
   <xs:element name="UpdateCallBox">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q47="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="Yard" nillable="true" type="q47:CallBoxes_New" />
+        <xs:element xmlns:q48="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="Yard" nillable="true" type="q48:CallBoxes_New" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -615,7 +629,7 @@
   <xs:element name="DeleteCallBox">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q48="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="DropZoneID" type="q48:guid" />
+        <xs:element xmlns:q49="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="DropZoneID" type="q49:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -634,28 +648,28 @@
   <xs:element name="RetreiveFive11SignsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q49="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="RetreiveFive11SignsResult" nillable="true" type="q49:ArrayOfFive11Signs" />
+        <xs:element xmlns:q50="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="RetreiveFive11SignsResult" nillable="true" type="q50:ArrayOfFive11Signs" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetreiveFive11Sign">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q50="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="Five11SignID" type="q50:guid" />
+        <xs:element xmlns:q51="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="Five11SignID" type="q51:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetreiveFive11SignResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q51="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="RetreiveFive11SignResult" nillable="true" type="q51:Five11Signs" />
+        <xs:element xmlns:q52="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="RetreiveFive11SignResult" nillable="true" type="q52:Five11Signs" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="CreateFive11Sign">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q52="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="Five11Sign" nillable="true" type="q52:Five11Signs" />
+        <xs:element xmlns:q53="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="Five11Sign" nillable="true" type="q53:Five11Signs" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -669,7 +683,7 @@
   <xs:element name="UpdateFive11Sign">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q53="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="Five11Sign" nillable="true" type="q53:Five11Signs" />
+        <xs:element xmlns:q54="http://schemas.datacontract.org/2004/07/FPSService" minOccurs="0" name="Five11Sign" nillable="true" type="q54:Five11Signs" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -683,7 +697,7 @@
   <xs:element name="DeleteFive11Sign">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q54="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="Five11SignID" type="q54:guid" />
+        <xs:element xmlns:q55="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="Five11SignID" type="q55:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

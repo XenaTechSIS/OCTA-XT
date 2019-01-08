@@ -1492,6 +1492,20 @@ namespace FPSService
             return result;
         }
 
+        public string UpdateBeat2(Beats_New2 beat)
+        {
+            beat.StartDate = DateTime.Now;
+            beat.EndDate = DateTime.Now.AddYears(25);
+            beat.FreewayID = 0;
+           
+            var sql = new SQLCode();
+            var result = sql.CreateBeat2(beat);
+            Beats.LoadBeats();
+
+            return result;
+        }
+
+
         public List<Beats_New> RetreiveAllBeats()
         {
             var Beats = new List<Beats_New>();

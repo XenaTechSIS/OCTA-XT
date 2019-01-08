@@ -5,8 +5,10 @@
     font-weight: bold;
     padding: 0;
     border: 1px solid #600000;
-    border-radius: 1px 1px 1px 1px 1px 1px 1px 1px;
     -webkit-border-radius: 5px;
+    /*border-radius: 1px 1px 1px 1px 1px 1px 1px 1px;*/
+    -ms-border-radius: 1px;
+    border-radius: 1px;
     color: #c0c0c0;
     background-color: #202020;
 }

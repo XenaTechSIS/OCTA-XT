@@ -1392,13 +1392,13 @@
     <Content Include="Service References\TowTruckServiceRef\FSP.Web.TowTruckServiceRef.Yard_New.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <None Include="Service References\TowTruckServiceRef\TowTruckService.disco" />
     <None Include="Service References\TowTruckServiceRef\configuration91.svcinfo" />
     <None Include="Service References\TowTruckServiceRef\configuration.svcinfo" />
     <None Include="Service References\TowTruckServiceRef\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\TowTruckServiceRef\TowTruckService1.disco" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1438,20 +1438,20 @@
     <Content Include="Views\EmailReport\Edit.cshtml" />
     <Content Include="Views\EmailReport\Delete.cshtml" />
     <Content Include="Views\Incident\Index.cshtml" />
-    <None Include="Service References\TowTruckServiceRef\TowTruckService.wsdl" />
-    <None Include="Service References\TowTruckServiceRef\TowTruckService.xsd">
+    <None Include="Service References\TowTruckServiceRef\TowTruckService1.wsdl" />
+    <None Include="Service References\TowTruckServiceRef\TowTruckService5.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\TowTruckServiceRef\TowTruckService1.xsd">
+    <None Include="Service References\TowTruckServiceRef\TowTruckService51.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\TowTruckServiceRef\TowTruckService2.xsd">
+    <None Include="Service References\TowTruckServiceRef\TowTruckService52.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\TowTruckServiceRef\TowTruckService3.xsd">
+    <None Include="Service References\TowTruckServiceRef\TowTruckService53.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\TowTruckServiceRef\TowTruckService4.xsd">
+    <None Include="Service References\TowTruckServiceRef\TowTruckService54.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Web.Acceptance.config">

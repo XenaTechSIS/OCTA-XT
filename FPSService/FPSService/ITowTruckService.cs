@@ -114,6 +114,9 @@ namespace FPSService
         string UpdateBeat(Beats_New beat);
 
         [OperationContract]
+        string UpdateBeat2(Beats_New2 beat);
+
+        [OperationContract]
         string DeleteBeat(Guid BeatID);
 
         [OperationContract]
@@ -891,6 +894,37 @@ namespace FPSService
 
         [DataMember] public List<BeatSegment_New> BeatSegments { get; set; }
     }
+
+    [DataContract]
+    public class Beats_New2
+    {
+        [DataMember] public Guid BeatID { get; set; }
+
+        [DataMember] public bool Active { get; set; }
+
+        [DataMember] public string BeatExtent { get; set; }
+
+        [DataMember] public int FreewayID { get; set; }
+
+        [DataMember] public string BeatDescription { get; set; }
+
+        [DataMember] public string BeatNumber { get; set; }
+
+        [DataMember] public DateTime LastUpdate { get; set; }
+
+        [DataMember] public string LastUpdateBy { get; set; }
+
+        [DataMember] public bool IsTemporary { get; set; }
+
+        [DataMember] public string BeatColor { get; set; }
+
+        [DataMember] public DateTime StartDate { get; set; }
+
+        [DataMember] public DateTime EndDate { get; set; }
+
+        [DataMember] public List<Guid> BeatSegments { get; set; }
+    }
+
 
     [DataContract]
     public class latLng
