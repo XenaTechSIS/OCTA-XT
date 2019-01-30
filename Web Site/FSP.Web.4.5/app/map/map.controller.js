@@ -117,7 +117,7 @@
          $scope.map.setZoom(zoom);
       }
 
-      function checkForAlarms() {         
+      function checkForAlarms() {
          trucksService.getTrucksRefreshRate().then(function (result) {
 
             if ($scope.haveAlarms === false && result === true) {
@@ -137,9 +137,9 @@
          });
       }
 
-      function getTruckRefreshRate() {         
-         trucksService.getTrucksRefreshRate().then(function (result) {            
-            if (!isNaN(result)) refreshRate = Number(result);            
+      function getTruckRefreshRate() {
+         trucksService.getTrucksRefreshRate().then(function (result) {
+            if (!isNaN(result)) refreshRate = Number(result);
             getTrucks();
             $interval(function () {
                getTrucks();
@@ -358,75 +358,6 @@
          setMapControls();
       };
 
-      $scope.checkIfUserIsAdmin = function () {
-         generalService.currentUserIsAdmin().then(function (result) {
-            $scope.currentUserIsAdmin = result;
-            //console.log('Current user is admin: %s', $scope.currentUserIsAdmin);
-         });
-      };
-
-      $scope.toggleAllFilters = function () {
-         //console.log("Toggle all filters %s", $scope.allFiltersChecked);
-         $scope.onPatrolChecked = $scope.allFiltersChecked;
-         $scope.driverLoggedOnChecked = $scope.allFiltersChecked;
-         $scope.onAssistChecked = $scope.allFiltersChecked;
-         $scope.onBreakLunchChecked = $scope.allFiltersChecked;
-         $scope.onRollOutInChecked = $scope.allFiltersChecked;
-         $scope.notLoggedOnChecked = $scope.allFiltersChecked;
-      };
-
-      $scope.clearContractorName = function () {
-         $scope.contractorNameFilter = "";
-      };
-
-      //user actions
-      $scope.follow = function (truckId) {
-         //console.log("FOLLOW truck: %s", truckId);
-         if (!truckId) return;
-         $scope.truckToBeFollowed = utilService.findArrayElement($scope.trucks, "id", truckId);
-         if (!$scope.truckToBeFollowed) return;
-
-         updateMap(new google.maps.LatLng($scope.truckToBeFollowed.lat, $scope.truckToBeFollowed.lon), ZOOM_15);
-      };
-
-      $scope.stopFollow = function () {
-         $scope.truckToBeFollowed = "";
-         updateMap(new google.maps.LatLng(DEFAULT_MAP_CENTER_LAT, DEFAULT_MAP_CENTER_LON), ZOOM_11);
-      };
-
-      $scope.zoomTo = function (truckId) {
-         //console.log("ZOOM truck: %s", truckId);
-         if (!truckId) return;
-         var truckToBeZoomedTo = utilService.findArrayElement($scope.trucks, "id", truckId);
-         if (!truckToBeZoomedTo) return;
-
-         updateMap(new google.maps.LatLng(truckToBeZoomedTo.lat, truckToBeZoomedTo.lon), ZOOM_14);
-      };
-
-      $scope.filter = function () {
-         //console.log("Filter request");
-         $scope.filterApplied = true;
-         filterTrucks();
-         drawTruckMarkers();
-         cleanupTruckMarkers();
-      };
-
-      $scope.clearFilter = function () {
-         //console.log("Clear Filter");
-
-         $scope.filterApplied = false;
-         $scope.allFiltersChecked = true;
-         $scope.onPatrolChecked = true;
-         $scope.driverLoggedOnChecked = true;
-         $scope.onAssistChecked = true;
-         $scope.onBreakLunchChecked = true;
-         $scope.onRollOutInChecked = true;
-         $scope.notLoggedOnChecked = true;
-         $scope.contractorNameFilter = "";
-
-         getTrucks();
-      };
-
       $('#segments').on('show.bs.collapse', function () {
          //console.log("segments visible");
          $scope.hideMapData();
@@ -535,11 +466,80 @@
          $scope.resetMap();
       });
 
+      $scope.checkIfUserIsAdmin = function () {
+         generalService.currentUserIsAdmin().then(function (result) {
+            $scope.currentUserIsAdmin = result;
+            //console.log('Current user is admin: %s', $scope.currentUserIsAdmin);
+         });
+      };
+
+      $scope.toggleAllFilters = function () {
+         //console.log("Toggle all filters %s", $scope.allFiltersChecked);
+         $scope.onPatrolChecked = $scope.allFiltersChecked;
+         $scope.driverLoggedOnChecked = $scope.allFiltersChecked;
+         $scope.onAssistChecked = $scope.allFiltersChecked;
+         $scope.onBreakLunchChecked = $scope.allFiltersChecked;
+         $scope.onRollOutInChecked = $scope.allFiltersChecked;
+         $scope.notLoggedOnChecked = $scope.allFiltersChecked;
+      };
+
+      $scope.clearContractorName = function () {
+         $scope.contractorNameFilter = "";
+      };
+
+      //user actions
+      $scope.follow = function (truckId) {
+         //console.log("FOLLOW truck: %s", truckId);
+         if (!truckId) return;
+         $scope.truckToBeFollowed = utilService.findArrayElement($scope.trucks, "id", truckId);
+         if (!$scope.truckToBeFollowed) return;
+
+         updateMap(new google.maps.LatLng($scope.truckToBeFollowed.lat, $scope.truckToBeFollowed.lon), ZOOM_15);
+      };
+
+      $scope.stopFollow = function () {
+         $scope.truckToBeFollowed = "";
+         updateMap(new google.maps.LatLng(DEFAULT_MAP_CENTER_LAT, DEFAULT_MAP_CENTER_LON), ZOOM_11);
+      };
+
+      $scope.zoomTo = function (truckId) {
+         //console.log("ZOOM truck: %s", truckId);
+         if (!truckId) return;
+         var truckToBeZoomedTo = utilService.findArrayElement($scope.trucks, "id", truckId);
+         if (!truckToBeZoomedTo) return;
+
+         updateMap(new google.maps.LatLng(truckToBeZoomedTo.lat, truckToBeZoomedTo.lon), ZOOM_14);
+      };
+
+      $scope.filter = function () {
+         //console.log("Filter request");
+         $scope.filterApplied = true;
+         filterTrucks();
+         drawTruckMarkers();
+         cleanupTruckMarkers();
+      };
+
+      $scope.clearFilter = function () {
+         //console.log("Clear Filter");
+
+         $scope.filterApplied = false;
+         $scope.allFiltersChecked = true;
+         $scope.onPatrolChecked = true;
+         $scope.driverLoggedOnChecked = true;
+         $scope.onAssistChecked = true;
+         $scope.onBreakLunchChecked = true;
+         $scope.onRollOutInChecked = true;
+         $scope.notLoggedOnChecked = true;
+         $scope.contractorNameFilter = "";
+
+         getTrucks();
+      };
+
       $scope.resetMap = function () {
          removeAllMapEvents();
          updateMap(new google.maps.LatLng(DEFAULT_MAP_CENTER_LAT, DEFAULT_MAP_CENTER_LON), ZOOM_11);
       };
-
+      
       $scope.displayMapData = function (polygons, markers) {
          if (polygons) {
             $scope.polygons = polygons;
@@ -572,11 +572,11 @@
          $scope.selectedPolygon = {};
       };
 
-      $scope.setMapLocation = function (lat, lon, zoom) {    
+      $scope.setMapLocation = function (lat, lon, zoom) {
          updateMap(new google.maps.LatLng(lat, lon), zoom);
       };
 
-      $scope.setMarkerPosition = function (lat, lon) {     
+      $scope.setMarkerPosition = function (lat, lon) {
          if (!$scope.selectedMarker) return;
          var newLatLon = new google.maps.LatLng(lat, lon);
          $scope.selectedMarker.setPosition(newLatLon);
@@ -607,7 +607,7 @@
          });
       };
 
-      $scope.setEditMarker = function (id) {      
+      $scope.setEditMarker = function (id) {
          var marker = utilService.findArrayElement($scope.markers, "id", id);
          if (!marker) return;
          $scope.selectedMarker = marker; //angular.copy(marker);
@@ -621,7 +621,7 @@
          });
       };
 
-      $scope.setCancelEditPolygon = function (id, color) {      
+      $scope.setCancelEditPolygon = function (id, color) {
          $scope.selectedPolygon = utilService.findArrayElement($scope.polygons, "id", id);
          if (!$scope.selectedPolygon) return;
          $scope.selectedPolygon.setEditable(false);
@@ -633,7 +633,7 @@
          removeAllMapEvents();
       };
 
-      $scope.setCancelEditMarker = function (id) {       
+      $scope.setCancelEditMarker = function (id) {
          var marker = utilService.findArrayElement($scope.markers, "id", id);
          if (!marker) return;
          $scope.selectedMarker = marker; //angular.copy(marker);
@@ -643,7 +643,8 @@
          removeAllMapEvents();
       };
 
-      $scope.setNewPolygon = function (color) {         
+      //removes all other polygons
+      $scope.setNewPolygon = function (color) {
          $scope.hideMapData();
          $scope.selectedPolygon = {};
 
@@ -671,7 +672,49 @@
          $scope.polygons.push($scope.selectedPolygon);
       };
 
-      $scope.setNewMarker = function () {         
+      //keeps other polygons visible
+      $scope.setNewPolygon2 = function (color, polygons, markers) {
+
+         removeAllMapEvents();
+
+         $scope.selectedPolygon = {};
+         $scope.selectedPolygon = new google.maps.Polygon({
+            id: 'newPolygon',
+            strokeColor: color,
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: color,
+            fillOpacity: 0.35,
+            editable: true
+         });
+         $scope.selectedPolygon.setMap($scope.map);
+
+         google.maps.event.addListener($scope.selectedPolygon, 'dblclick', function (e) {
+            if (e.vertex === undefined) {
+               return;
+            }
+            $scope.selectedPolygon.getPath().removeAt(e.vertex);
+         });
+         google.maps.event.addListener($scope.map, 'click', function (e) {
+            var path = $scope.selectedPolygon.getPath();
+            path.push(e.latLng);
+         });
+
+         $scope.polygons.push($scope.selectedPolygon);
+      };
+
+      $scope.cancelNewPolygon = function () {
+         var newPolygon = utilService.findArrayElement($scope.polygons, 'id', 'newPolygon');
+         if (newPolygon) {
+            newPolygon.setEditable(false);
+            google.maps.event.clearListeners(newPolygon, 'dblclick');
+            newPolygon.setMap(null);
+            google.maps.event.clearListeners($scope.map, 'click');
+         }
+         $scope.selectedPolygon = {};
+      };
+
+      $scope.setNewMarker = function () {
          $scope.hideMapData();
 
          $scope.selectedMarker = new MarkerWithLabel({
@@ -695,7 +738,7 @@
          $scope.markers.push($scope.selectedMarker);
       };
 
-      $scope.makeAllPolygonsUneditable = function () {         
+      $scope.makeAllPolygonsUneditable = function () {
          $scope.polygons.forEach(function (polygon) {
             polygon.setEditable(false);
          });

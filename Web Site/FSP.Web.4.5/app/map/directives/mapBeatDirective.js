@@ -39,6 +39,8 @@
             scope.selectedPolygon = "";
             scope.selectedSegment = "";
 
+            scope.segmentPickerButtonTitle = "Edit Segment List";
+
             scope.beatCenterCoords = [];
 
             function buildDetailsContent(beat) {
@@ -309,6 +311,10 @@
                   return;
                }
                scope.selectedBeat = angular.copy(beat);
+               scope.selectedBeat.selectedSegmentIds = [];
+               scope.selectedBeat.BeatSegments.forEach(function (segment) {
+                  scope.selectedBeat.selectedSegmentIds.push(segment.BeatSegmentID);
+               });
                //08-09-2018
                //When seleting a beat, only show that beat and its segments                         
                buildPolygons(scope.selectedBeat);
@@ -319,6 +325,7 @@
 
             scope.setEdit = function () {
                scope.isEditing = true;
+               scope.segmentPickerButtonTitle = "Edit Segment List";
                console.log("Edit beat %s", scope.selectedBeatID);
             };
 
@@ -336,21 +343,23 @@
                scope.isBusySaving = true;
                mapService.saveBeat(scope.selectedBeat).then(function (response) {
                   scope.isBusySaving = false;
+                  scope.isEditing = false;                                                          
                   console.log('Save Beat result: %O', response);
-                  if (response.result === false || response.result === "false") {
+
+                  if (response === false || response === "false") {
                      console.error("Save Beat");
                      toastr.error('Failed to save Beat', 'Error');
+                  }
+                  else if (response.result === false || response.result === "false") {
+                     console.error("Save Beat");
+                     toastr.error('Failed to save Beat', 'Error');
+                     scope.triggerHideMapData();
+                     setTimeout(function () {
+                        scope.getBeatPolygons(true);
+                     }, 250);
                   } else {
                      console.log("Save Beat Success");
-                     toastr.success('Beat Saved', 'Success');
-                     scope.isEditing = false;
-                     scope.triggerSetCancelEditPolygon("beatPolygon" + scope.selectedBeat.BeatID, scope.selectedBeat.BeatColor);
-                     scope.triggerMakeAllPolygonsUneditable();
-
-                     // setTimeout(function () {
-                     //    scope.getBeatPolygons(false);
-                     // }, 500);
-
+                     toastr.success('Beat Saved', 'Success');                     
                      scope.triggerHideMapData();
                      setTimeout(function () {
                         scope.getBeatPolygons(true);
@@ -399,7 +408,7 @@
                   selectedSegmentIds: []
                };
                scope.isAdding = true;
-               scope.triggerSetNewPolygon(scope.selectedBeat.BeatColor);
+               scope.segmentPickerButtonTitle = "Add Segments";               
             };
 
             scope.add = function () {
@@ -408,15 +417,18 @@
                mapService.saveBeat(scope.selectedBeat).then(function (response) {
                   scope.isBusyAdding = false;
                   scope.isAdding = false;
-                  console.log('Add Beat result: %O', response);
-                  scope.selectedBeatID = response.record.BeatID;
-                  scope.triggerMakeAllPolygonsUneditable();
-                  scope.triggerHideMapData();
-                  if (response.result === false || response.result === "false") {
+                  console.log('Add Beat result: %O', response);                 
+                  
+                  if (response === false || response === "false") {
+                     console.error("Add Beat");
+                     toastr.error('Failed to add Beat', 'Error');
+                  }
+                  else if (response.result === false || response.result === "false") {
                      console.error("Add Beat");
                      toastr.error('Failed to add Beat', 'Error');
                   } else {
                      console.log("Add Beat Success");
+                     scope.selectedBeatID = response.record.BeatID;
                      toastr.success('Beat Added', 'Success');
                      scope.selectedBeat.selectedSegmentIds = [];
                      scope.selectedBeatID = "";

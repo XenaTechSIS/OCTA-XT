@@ -212,17 +212,17 @@ namespace ReportServer.Reports
                     dt.Columns.Add("Start Time", Type.GetType("System.String"));
                     dt.Columns.Add("End Time", Type.GetType("System.String"));
                     dt.Columns.Add("On Site Time", Type.GetType("System.String"));
-                    dt.Columns.Add("Customer Wait Time", Type.GetType("System.String"));
-                    dt.Columns.Add("Beat Number", Type.GetType("System.String"));
-                    dt.Columns.Add("Incident Number", Type.GetType("System.String"));
-                    dt.Columns.Add("Assist Number", Type.GetType("System.String"));
+                    dt.Columns.Add("Wait Time", Type.GetType("System.String"));
+                    dt.Columns.Add("Beat #", Type.GetType("System.String"));
+                    dt.Columns.Add("Incident #", Type.GetType("System.String"));
+                    dt.Columns.Add("Assist #", Type.GetType("System.String"));
                     dt.Columns.Add("Contractor", Type.GetType("System.String"));
-                    dt.Columns.Add("Truck Number", Type.GetType("System.String"));
+                    dt.Columns.Add("Truck #", Type.GetType("System.String"));
                     dt.Columns.Add("Driver Name", Type.GetType("System.String"));
-                    dt.Columns.Add("Assist Location (Segment #)", Type.GetType("System.String"));
+                    dt.Columns.Add("Freeway Segment", Type.GetType("System.String"));
                     dt.Columns.Add("Freeway", Type.GetType("System.String"));
-                    dt.Columns.Add("Dir", Type.GetType("System.String"));
-                    dt.Columns.Add("Dispatch Location Info", Type.GetType("System.String"));
+                    dt.Columns.Add("Location Description", Type.GetType("System.String"));
+                    dt.Columns.Add("Direction", Type.GetType("System.String"));
                     dt.Columns.Add("Lat", Type.GetType("System.String"));
                     dt.Columns.Add("Lon", Type.GetType("System.String"));
                     dt.Columns.Add("Vehicle Type Code", Type.GetType("System.String"));
@@ -238,6 +238,7 @@ namespace ReportServer.Reports
                     dt.Columns.Add("Tip", Type.GetType("System.String"));
                     dt.Columns.Add("Tip Detail", Type.GetType("System.String"));
                     dt.Columns.Add("Survery Num", Type.GetType("System.String"));
+                    dt.Columns.Add("CHP Log Number", Type.GetType("System.String"));
 
                     SqlDataReader rdr = cmd.ExecuteReader();
                     while (rdr.Read())
@@ -245,34 +246,35 @@ namespace ReportServer.Reports
                         DataRow row = dt.NewRow();
                         for (int i = 0; i < rdr.FieldCount; i++)
                         {
-                            if (i < 13)
-                            {
-                                row[i] = rdr[i].ToString();
-                            }
-                            else if (i == 13)
-                            {
-                                string[] splitter = rdr[i].ToString().Split(' ');
-                                if (splitter.Length > 3)
-                                {
-                                    row[13] = splitter[0].ToString();
-                                    string colData = "";
-                                    for (int iRecord = 2; iRecord < splitter.Length; iRecord++)
-                                    {
-                                        colData += splitter[iRecord].ToString() + " ";
-                                    }
-                                    colData = colData.Substring(0,colData.Length - 1);
-                                    row[14] = colData ;
-                                }
-                                else
-                                {
-                                    row[13] = rdr[i].ToString();
-                                    row[14] = rdr[i].ToString();
-                                }
-                            }
-                            else
-                            {
-                                row[i + 1] = rdr[i].ToString();
-                            }
+                            row[i] = rdr[i].ToString();
+                            //if (i < 13)
+                            //{
+                            //    row[i] = rdr[i].ToString();
+                            //}
+                            //else if (i == 13)
+                            //{
+                            //    string[] splitter = rdr[i].ToString().Split(' ');
+                            //    if (splitter.Length > 3)
+                            //    {
+                            //        row[13] = splitter[0].ToString();
+                            //        string colData = "";
+                            //        for (int iRecord = 2; iRecord < splitter.Length; iRecord++)
+                            //        {
+                            //            colData += splitter[iRecord].ToString() + " ";
+                            //        }
+                            //        colData = colData.Substring(0,colData.Length - 1);
+                            //        row[14] = colData ;
+                            //    }
+                            //    else
+                            //    {
+                            //        row[13] = rdr[i].ToString();
+                            //        row[14] = rdr[i].ToString();
+                            //    }
+                            //}
+                            //else
+                            //{
+                            //    row[i] = rdr[i].ToString();
+                            //}
                         }
                         dt.Rows.Add(row);
                     }
@@ -282,17 +284,17 @@ namespace ReportServer.Reports
                     //da = null;
                     if (ddlSortBy.Text == "Contractors")
                     {
-                        dt.DefaultView.Sort = "Contractor, Service Date, Incident Number, Assist Number ASC";
+                        dt.DefaultView.Sort = "Contractor, Service Date, Incident #, Assist # ASC";
                     }
 
                     else if (ddlSortBy.Text == "Assist Types")
                     {
-                        dt.DefaultView.Sort = "Assist Type, Service Date, Incident Number, Assist Number ASC";
+                        dt.DefaultView.Sort = "Assist Type, Service Date, Incident #, Assist # ASC";
                     }
 
                     else if (ddlSortBy.Text == "Incident Types")
                     {
-                        dt.DefaultView.Sort = "IncidentType, Service Date, Incident Number, Assist Number ASC";
+                        dt.DefaultView.Sort = "IncidentType, Service Date, Incident #, Assist # ASC";
                     }
 
                     else

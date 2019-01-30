@@ -233,7 +233,7 @@
             //we need "selectedPosition" only becauase we also want to allow
             //user to directly update LAT/LON
             scope.$watch("selectedMarker.position", function (newValue) {
-               if (newValue) {
+               if (newValue && scope.selectedPosition) {
                   scope.selectedPosition.lat = newValue.lat();
                   scope.selectedPosition.lng = newValue.lng();
                }

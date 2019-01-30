@@ -5,531 +5,530 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <TimeStampOfAssociatedLegacyPublishXmlFile />
     <_PublishTargetUrl>C:\deploy\OCTA\FSPService</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="Admin/CurrentBeats.aspx">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Admin/CurrentBeatSchedules.aspx">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Admin/CurrentIncidents.aspx">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Admin/Dashboard.aspx">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Admin/LogOffDriver.aspx">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Admin/Logon.aspx">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Admin/SetLeeways.aspx">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Admin/ShowBeats.aspx">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Admin/speedTester.htm">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Admin/TimeChecker.aspx">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Admin/TowTruckCheckList.aspx">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Admin/TowTruckSetup.aspx">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Admin/TruckAlarmStatus.aspx">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Admin/TruckDetail.aspx">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Admin/TruckMessages.aspx">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Admin/Yards.aspx">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="AJAXFSPService.svc">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="bin/FPSService.dll">
-      <publishTime>10/08/2018 09:09:46</publishTime>
+      <publishTime>12/04/2018 14:55:13</publishTime>
     </File>
     <File Include="bin/FPSService.pdb">
-      <publishTime>10/08/2018 09:09:46</publishTime>
+      <publishTime>12/04/2018 14:55:13</publishTime>
     </File>
     <File Include="bin/Microsoft.SqlServer.Types.dll">
-      <publishTime>12/10/2016 15:26:34</publishTime>
+      <publishTime>09/27/2018 09:33:46</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>01/28/2016 13:22:24</publishTime>
     </File>
     <File Include="bin/SqlServerTypes/x64/msvcr120.dll">
-      <publishTime>09/22/2018 08:59:34</publishTime>
+      <publishTime>10/23/2018 17:22:26</publishTime>
     </File>
     <File Include="bin/SqlServerTypes/x64/SqlServerSpatial140.dll">
-      <publishTime>09/22/2018 08:59:34</publishTime>
+      <publishTime>10/30/2018 12:52:01</publishTime>
     </File>
     <File Include="bin/SqlServerTypes/x86/msvcr120.dll">
-      <publishTime>09/22/2018 08:59:34</publishTime>
+      <publishTime>10/23/2018 17:22:26</publishTime>
     </File>
     <File Include="bin/SqlServerTypes/x86/SqlServerSpatial140.dll">
-      <publishTime>09/22/2018 08:59:34</publishTime>
+      <publishTime>10/30/2018 12:52:01</publishTime>
     </File>
     <File Include="bin/System.Data.Entity.dll">
-      <publishTime>11/05/2015 19:36:48</publishTime>
+      <publishTime>06/19/2015 23:14:56</publishTime>
     </File>
     <File Include="Client/Assist.html">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Client/css/ClientCSS.css">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Client/css/jqModal.css">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Client/css/reset.css">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Client/images/LATAShort.jpg">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Client/Logon.html">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Client/scripts/AssistScript.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Client/scripts/GlobalData.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Client/scripts/jqm-datebox-1.1.0.core.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Client/scripts/jqm-datebox-1.1.0.mode.flipbox.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Client/scripts/jqModal.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Client/scripts/jquery-1.8.2.min.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Client/scripts/jquery.ui.map.full.min.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Client/scripts/LogonScript.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Client/scripts/StatusScreen.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Client/scripts/StatusScript.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Client/Status.html">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Client/TimeTest.html">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="css/HoverTable.css">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="css/images/ui-bg_flat_0_aaaaaa_40x100.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="css/images/ui-bg_flat_0_eeeeee_40x100.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="css/images/ui-bg_flat_55_c0402a_40x100.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="css/images/ui-bg_flat_55_eeeeee_40x100.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="css/images/ui-bg_glass_100_f8f8f8_1x400.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="css/images/ui-bg_glass_35_dddddd_1x400.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="css/images/ui-bg_glass_60_eeeeee_1x400.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="css/images/ui-bg_inset-hard_75_999999_1x100.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="css/images/ui-bg_inset-soft_50_c9c9c9_1x100.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="css/images/ui-icons_3383bb_256x240.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="css/images/ui-icons_454545_256x240.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="css/images/ui-icons_70b2e1_256x240.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="css/images/ui-icons_999999_256x240.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="css/images/ui-icons_fbc856_256x240.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="css/jquery-ui-1.8.23.custom.css">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="css/SiteStyle.css">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="css/TowTruckCheckList.css">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="FSPService.svc">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Global.asax">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/25/2018 13:28:28</publishTime>
     </File>
     <File Include="Images/12-012 LOGO - LATA Trax_PNG-02.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Images/LATA Trax_icon_checkbox.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Images/LATAShort.jpg">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Images/LATATRAX LOGO.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Images/LATATRAX ScreenName.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Images/LATATRAX Tire.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Images/LATATRAX Tire2.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="RSSFeeder.svc">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Scripts/Ai2CanvasAnimation.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Scripts/bscHtml5.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Scripts/CurrentAssistsToTable.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Scripts/CurrentConnectsJSONtoTable.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Scripts/CurrentDrivers.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Scripts/CurrentIncidentsToTable.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Scripts/CurrentStateJSONtoTable.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Scripts/jquery-1.8.1.min.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Scripts/jquery-ui-1.8.23.custom.min.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Scripts/jquery.tablesorter.min.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Scripts/speedchecker.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Scripts/TimeFixer.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Scripts/TowTruckCheckList.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Scripts/TowTruckSetup.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Scripts/TruckDetail.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="SqlServerTypes/readme.htm">
-      <publishTime>09/22/2018 08:59:34</publishTime>
+      <publishTime>10/25/2018 08:27:31</publishTime>
     </File>
     <File Include="SqlServerTypes/x64/msvcr120.dll">
-      <publishTime>09/22/2018 08:59:34</publishTime>
+      <publishTime>10/23/2018 17:22:26</publishTime>
     </File>
     <File Include="SqlServerTypes/x64/SqlServerSpatial140.dll">
-      <publishTime>09/22/2018 08:59:34</publishTime>
+      <publishTime>10/30/2018 12:52:01</publishTime>
     </File>
     <File Include="SqlServerTypes/x86/msvcr120.dll">
-      <publishTime>09/22/2018 08:59:34</publishTime>
+      <publishTime>10/23/2018 17:22:26</publishTime>
     </File>
     <File Include="SqlServerTypes/x86/SqlServerSpatial140.dll">
-      <publishTime>09/22/2018 08:59:34</publishTime>
+      <publishTime>10/30/2018 12:52:01</publishTime>
     </File>
     <File Include="TabletClient/Assist.html">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/ClientCSS.css">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/images/ui-bg_flat_30_cccccc_40x100.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/images/ui-bg_flat_50_5c5c5c_40x100.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/images/ui-bg_glass_20_555555_1x400.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/images/ui-bg_glass_40_0078a3_1x400.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/images/ui-bg_glass_40_ffc73d_1x400.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/images/ui-bg_gloss-wave_25_333333_500x100.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/images/ui-bg_highlight-soft_80_eeeeee_1x100.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/images/ui-bg_inset-soft_25_000000_1x100.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/images/ui-bg_inset-soft_30_f58400_1x100.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/images/ui-icons_222222_256x240.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/images/ui-icons_4b8e0b_256x240.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/images/ui-icons_a83300_256x240.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/images/ui-icons_cccccc_256x240.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/images/ui-icons_ffffff_256x240.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/at.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/bars.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/book.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/calendar.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/camera.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/chart.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/chat.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/check.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/clock.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/cog.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/document.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/down.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/error.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/folder.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/heart.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/help.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/home.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/info.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/key.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/lamp.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/left.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/magnifier.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/mail.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/minus.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/pen.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/pin.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/plus.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/quote.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/reload.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/right.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/star.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/tag.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/trash.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/unlock.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/up.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/user.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/window.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/img/wrench.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/jqModal.css">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/jquery-fallr-1.3.css">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/jquery-ui-1.9.2.custom.min.css">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/jquery.ptTimeSelect.css">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/css/reset.css">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/EarlyRollIn.html">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/images/LATAShort.jpg">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/images/stripetile.png">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/Logon.html">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/scripts/AssistScript.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/scripts/EarlyRollIn.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/scripts/GlobalData.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/scripts/jqModal.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/scripts/jquery-1.8.2.min.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/scripts/jquery-fallr-1.3.min.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/scripts/jquery-ui-1.9.1.custom.min.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/scripts/jquery.jplayer.min.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/scripts/jquery.ptTimeSelect.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/scripts/jquery.ui.map.full.min.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/scripts/LogonScript.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/scripts/playSounds.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/scripts/StatusScript.js">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/sounds/Alarm.mp3">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/SoundTest.html">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TabletClient/Status.html">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="TowTruckService.svc">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>10/08/2018 09:04:13</publishTime>
+      <publishTime>12/04/2018 14:55:15</publishTime>
     </File>
     <File Include="WebSite/CurrentConnects.aspx">
-      <publishTime>07/14/2018 09:25:02</publishTime>
+      <publishTime>10/23/2018 15:37:29</publishTime>
     </File>
   </ItemGroup>
 </Project>

@@ -1,15 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
-using System.Web.Security;
-using System.Web.SessionState;
+using FPSService.BeatData;
+using FPSService.DataClasses;
+using FPSService.Logging;
+using FPSService.MiscData;
+using FPSService.SQL;
+using FPSService.UDP;
+using SqlServerTypes;
 
 namespace FPSService
 {
-    public class Global : System.Web.HttpApplication
+    public class Global : HttpApplication
     {
-
         protected void Application_Start(object sender, EventArgs e)
         {
           
@@ -46,7 +48,6 @@ namespace FPSService
 
         protected void Session_Start(object sender, EventArgs e)
         {
-
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)
@@ -58,34 +59,31 @@ namespace FPSService
             if (HttpContext.Current.Request.HttpMethod == "OPTIONS")
             {
                 HttpContext.Current.Response.AddHeader("Access-Control-Allow-Methods",
-                              "GET, POST");
+                    "GET, POST");
                 HttpContext.Current.Response.AddHeader("Access-Control-Allow-Headers",
-                              "Content-Type, Accept");
+                    "Content-Type, Accept");
                 HttpContext.Current.Response.AddHeader("Access-Control-Max-Age",
-                              "1728000");
+                    "1728000");
                 HttpContext.Current.Response.End();
             }
         }
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
-
         }
 
         protected void Application_Error(object sender, EventArgs e)
         {
-
         }
 
         protected void Session_End(object sender, EventArgs e)
         {
-
         }
 
         protected void Application_End(object sender, EventArgs e)
         {
-            Logging.EventLogger myLogger = new Logging.EventLogger();
-            myLogger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "FSP Service Has Stopped", false);
+            var myLogger = new EventLogger();
+            myLogger.LogEvent(DateTime.Now + Environment.NewLine + "FSP Service Has Stopped", false);
         }
     }
 }

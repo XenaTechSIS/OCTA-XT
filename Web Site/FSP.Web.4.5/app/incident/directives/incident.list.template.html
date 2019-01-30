@@ -49,6 +49,57 @@
             ng-click="updateSortColumn('AssistNumber')">
             Assist #
          </th>
+
+         <th class="nowrap"
+            ng-show="columns[9].show"
+            ng-click="updateSortColumn('Assists.Color')">
+            Vehicle Color
+         </th>
+         <th class="nowrap"
+            ng-show="columns[10].show"
+            ng-click="updateSortColumn('Assists.LicensePlate')">
+            Vehicle License Plate
+         </th>
+         <th class="nowrap"
+            ng-show="columns[11].show"
+            ng-click="updateSortColumn('Assists.Make')">
+            Vehicle Make
+         </th>
+         <th class="nowrap"
+            ng-show="columns[12].show"
+            ng-click="updateSortColumn('Assists.DropZone')">
+            Drop Zone
+         </th>
+         <th class="nowrap"
+            ng-show="columns[13].show"
+            ng-click="updateSortColumn('Assists.DispatchTime')">
+            Dispatch Time
+         </th>
+         <th class="nowrap"
+            ng-show="columns[14].show"
+            ng-click="updateSortColumn('Assists.State')">
+            State
+         </th>
+         <th class="nowrap"
+            ng-show="columns[15].show"
+            ng-click="updateSortColumn('Assists.CustomerLastName')">
+            Customer Last Name
+         </th>
+         <th class="nowrap"
+            ng-show="columns[16].show"
+            ng-click="updateSortColumn('Assists.CustomerWaitTime')">
+            Customer Wait Time
+         </th>
+         <th class="nowrap"
+            ng-show="columns[17].show"
+            ng-click="updateSortColumn('Assists.Tip')">
+            Tip
+         </th>
+         <th class="nowrap"
+            ng-show="columns[18].show"
+            ng-click="updateSortColumn('Assists.TipDetail')">
+            Tip Detail
+         </th>
       </tr>
    </thead>
    <tbody>
@@ -79,7 +130,37 @@
             {{incident.ContractCompanyName}}
          </td>
          <td ng-show="columns[8].show">
-            {{incident.AssistNumber}}
+            {{incident.Assists.AssistNumber}}
+         </td>
+         <td ng-show="columns[9].show">
+            {{incident.Assists.Color}}
+         </td>
+         <td ng-show="columns[10].show">
+            {{incident.Assists.LicensePlate}}
+         </td>
+         <td ng-show="columns[11].show">
+            {{incident.Assists.Make}}
+         </td>
+         <td ng-show="columns[12].show">
+            {{incident.Assists.DropZone}}
+         </td>
+         <td ng-show="columns[13].show">
+            {{incident.Assists.DispatchTime|datetimefilter}}
+         </td>
+         <td ng-show="columns[14].show">
+            {{incident.Assists.State}}
+         </td>
+         <td ng-show="columns[15].show">
+            {{incident.Assists.CustomerLastName}}
+         </td>
+         <td ng-show="columns[16].show">
+            {{incident.Assists.CustomerWaitTime}}
+         </td>
+         <td ng-show="columns[17].show">
+            {{incident.Assists.Tip}}
+         </td>
+         <td ng-show="columns[18].show">
+            {{incident.Assists.TipDetail}}
          </td>
       </tr>
    </tbody>

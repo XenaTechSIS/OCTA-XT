@@ -23,11 +23,6 @@ namespace FSP.Web.Controllers
             return View();
         }
 
-        public ActionResult IndexOld()
-        {
-            return View();
-        }
-
         #region yards
 
         [HttpGet]
@@ -247,6 +242,8 @@ namespace FSP.Web.Controllers
             }
             catch (Exception ex)
             {
+                Util.RemoveFromCache(CacheKeySegments);
+                Util.RemoveFromCache(CacheKeySegments2);
                 Util.LogError($"SaveSegment Error: {ex.Message}");
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
@@ -267,6 +264,8 @@ namespace FSP.Web.Controllers
             }
             catch (Exception ex)
             {
+                Util.RemoveFromCache(CacheKeySegments);
+                Util.RemoveFromCache(CacheKeySegments2);
                 Util.LogError($"DeleteSegment Error: {ex.Message}, {ex.Message}");
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
@@ -339,38 +338,7 @@ namespace FSP.Web.Controllers
                             dbBeat.BeatNumber = data.BeatNumber;
                             dbBeat.BeatDescription = data.BeatDescription;
                             dbBeat.BeatColor = data.BeatColor;
-
-                            if (data.BeatSegments != null)
-                            {
-                                dbBeat.BeatSegments = data.BeatSegments;
-                                //var rawSegments = service.RetreiveAllSegments();
-
-                                //foreach (var segment in dbBeat.BeatSegments)
-                                //{
-                                //    try
-                                //    {
-                                //        var dbSegment = rawSegments.FirstOrDefault(p => p.BeatSegmentID == segment.BeatSegmentID);
-                                //        if (dbSegment == null)
-                                //        {
-                                //            continue;
-                                //        }
-
-                                //        dbSegment.Color = data.BeatColor;
-                                //        dbSegment.LastUpdate = DateTime.Now.ToString();
-                                //        dbSegment.LastUpdateBy = HttpContext.User.Identity.Name;
-                                //        var updateSegmentResult = service.UpdateSegment(dbSegment);
-                                //    }
-                                //    catch (Exception e)
-                                //    {
-                                //        Debug.WriteLine(e.Message);
-                                //    }
-                                //}
-                            }
-                            else
-                            {
-                                dbBeat.BeatSegments = new BeatSegment_New[0];
-                            }
-
+                            dbBeat.BeatSegments = data.BeatSegments ?? new BeatSegment_New[0];
                             dbBeat.LastUpdate = DateTime.Now;
                             dbBeat.LastUpdateBy = HttpContext.User.Identity.Name;
 
@@ -384,7 +352,27 @@ namespace FSP.Web.Controllers
                                 dbBeat.EndDate = DateTime.Now;
                             }
 
-                            var updateResult = service.UpdateBeat(dbBeat);
+                            var dbBeat2 = new Beats_New2
+                            {
+                                Active = dbBeat.Active,
+                                BeatColor = dbBeat.BeatColor,
+                                BeatDescription = dbBeat.BeatDescription,
+                                BeatExtent = dbBeat.BeatExtent,
+                                BeatID = dbBeat.BeatID,
+                                BeatNumber = dbBeat.BeatNumber,
+                                BeatSegments = data.BeatSegments?.Select(p => p.BeatSegmentID).ToArray(),
+                                EndDate = dbBeat.EndDate,
+                                ExtensionData = dbBeat.ExtensionData,
+                                FreewayID = dbBeat.FreewayID,
+                                IsTemporary = dbBeat.IsTemporary,
+                                LastUpdate = dbBeat.LastUpdate,
+                                LastUpdateBy = dbBeat.LastUpdateBy,
+                                StartDate = dbBeat.StartDate
+                            };
+
+                            var updateResult = service.UpdateBeat2(dbBeat2);
+
+                            Util.RemoveFromCache(CacheKeyBeats);
 
                             var response = new
                             {
@@ -410,7 +398,26 @@ namespace FSP.Web.Controllers
                     data.FreewayID = 0;
                     data.Active = true;
 
-                    var createResult = service.UpdateBeat(data);
+
+                    var data2 = new Beats_New2
+                    {
+                        Active = data.Active,
+                        BeatColor = data.BeatColor,
+                        BeatDescription = data.BeatDescription,
+                        BeatExtent = data.BeatExtent,
+                        BeatID = data.BeatID,
+                        BeatNumber = data.BeatNumber,
+                        BeatSegments = data.BeatSegments.Select(p => p.BeatSegmentID).ToArray(),
+                        EndDate = data.EndDate,
+                        ExtensionData = data.ExtensionData,
+                        FreewayID = data.FreewayID,
+                        IsTemporary = data.IsTemporary,
+                        LastUpdate = data.LastUpdate,
+                        LastUpdateBy = data.LastUpdateBy,
+                        StartDate = data.StartDate
+                    };
+
+                    var createResult = service.UpdateBeat2(data2);
 
                     var newBeat = service.RetreiveAllBeats().FirstOrDefault(p => p.BeatID == data.BeatID);
 
@@ -427,6 +434,7 @@ namespace FSP.Web.Controllers
             }
             catch (Exception ex)
             {
+                Util.RemoveFromCache(CacheKeyBeats);
                 Util.LogError($"Save Beat Error: {ex.Message}");
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
@@ -446,10 +454,10 @@ namespace FSP.Web.Controllers
             }
             catch (Exception ex)
             {
+                Util.RemoveFromCache(CacheKeyBeats);
                 Util.LogError($"Delete Beat Error: {ex.Message}, {ex.Message}");
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
-
         }
 
         #endregion
