@@ -12,6 +12,8 @@ namespace FPSService
 
         protected void Application_Start(object sender, EventArgs e)
         {
+          
+            SqlServerTypes.Utilities.LoadNativeAssemblies(Server.MapPath("~/bin"));
             UDP.UDPServer myServer = new UDP.UDPServer();
             DataClasses.TowTruckCleanser myCleanser = new DataClasses.TowTruckCleanser();
             
@@ -40,8 +42,6 @@ namespace FPSService
             BeatData.YardClass.LoadYards();
             DataClasses.BulkLogger myBulkLogger = new DataClasses.BulkLogger();
             DataClasses.TruckDumper myDumper = new DataClasses.TruckDumper();
-
-            SqlServerTypes.Utilities.LoadNativeAssemblies(Server.MapPath("~/bin"));
         }
 
         protected void Session_Start(object sender, EventArgs e)
