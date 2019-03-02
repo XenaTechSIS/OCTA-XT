@@ -14,36 +14,36 @@ namespace FPSService
     {
         protected void Application_Start(object sender, EventArgs e)
         {
-            Utilities.LoadNativeAssemblies(Server.MapPath("~/bin"));
-
-            var myServer = new UDPServer();
-            var myCleanser = new TowTruckCleanser();
-
-            var myCheck = new LogonCheck();
-            var myLogger = new EventLogger();
-            myLogger.LogEvent(DateTime.Now + Environment.NewLine + "FSP Service Started", false);
+          
+            SqlServerTypes.Utilities.LoadNativeAssemblies(Server.MapPath("~/bin"));
+            UDP.UDPServer myServer = new UDP.UDPServer();
+            DataClasses.TowTruckCleanser myCleanser = new DataClasses.TowTruckCleanser();
+            
+            MiscData.LogonCheck myCheck = new MiscData.LogonCheck();
+            Logging.EventLogger myLogger = new Logging.EventLogger();
+            myLogger.LogEvent(DateTime.Now.ToString() + Environment.NewLine + "FSP Service Started", false);
             //Data loaded once during run of application.
-            var mySql = new SQLCode();
-            var speedingValue = Convert.ToInt32(mySql.GetVarValue("Speeding"));
-            GlobalData.SpeedingValue = speedingValue;
-            mySql.LoadCode1098s();
-            mySql.LoadFreeways();
-            mySql.LoadIncidentTypes();
-            mySql.LoadLocationCoding();
-            mySql.LoadServiceTypes();
-            mySql.LoadTowLocations();
-            mySql.LoadTrafficSpeeds();
-            mySql.LoadVehiclePositions();
-            mySql.LoadVehicleTypes();
-            mySql.LoadContractors();
-            mySql.LoadLeeways();
-            mySql.LoadBeatSchedules();
-            mySql.LoadDropZones();
-            Beats.LoadBeats();
-            Beats.LoadBeatSegments();
-            YardClass.LoadYards();
-            var myBulkLogger = new BulkLogger();
-            var myDumper = new TruckDumper();
+            SQL.SQLCode mySQL = new SQL.SQLCode();
+            int SpeedingValue = Convert.ToInt32(mySQL.GetVarValue("Speeding"));
+            DataClasses.GlobalData.SpeedingValue = SpeedingValue;
+            mySQL.LoadCode1098s();
+            mySQL.LoadFreeways();
+            mySQL.LoadIncidentTypes();
+            mySQL.LoadLocationCoding();
+            mySQL.LoadServiceTypes();
+            mySQL.LoadTowLocations();
+            mySQL.LoadTrafficSpeeds();
+            mySQL.LoadVehiclePositions();
+            mySQL.LoadVehicleTypes();
+            mySQL.LoadContractors();
+            mySQL.LoadDropZones();
+            mySQL.LoadLeeways();
+            mySQL.LoadBeatSchedules();
+            BeatData.Beats.LoadBeats();
+            BeatData.Beats.LoadBeatSegments();
+            BeatData.YardClass.LoadYards();
+            DataClasses.BulkLogger myBulkLogger = new DataClasses.BulkLogger();
+            DataClasses.TruckDumper myDumper = new DataClasses.TruckDumper();
         }
 
         protected void Session_Start(object sender, EventArgs e)
