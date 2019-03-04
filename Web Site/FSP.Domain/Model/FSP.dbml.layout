@@ -143,21 +143,21 @@
         <classShapeMoniker Id="b9fcae16-3ce7-43a9-a4ae-2647a266047d" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.75 : 11.1931469726562); (5.79166666666667 : 11.1931469726562 : JumpStart); (6.08333333333333 : 11.1931469726562 : JumpEnd); (6.125 : 11.1931469726562); (6.125 : 9.5); (6.16666666666667 : 9.5 : JumpStart); (6.33333333333333 : 9.5 : JumpEnd); (7.453123 : 9.5); (7.453123 : 8.13621256510417)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(5.75 : 11.1931469726562); (6.125 : 11.1931469726562); (6.125 : 9.5); (6.16666666666667 : 9.5 : JumpStart); (6.33333333333333 : 9.5 : JumpEnd); (7.453123 : 9.5); (7.453123 : 8.13621256510417)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/FSPDataContext/Location/Location_Incident" />
       <nodes>
         <classShapeMoniker Id="cc5d4aa3-fbe2-4e8b-94aa-8a28280f70ca" />
         <classShapeMoniker Id="b9fcae16-3ce7-43a9-a4ae-2647a266047d" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(17.75 : 16.4431469726563); (18.2291666666667 : 16.4431469726563 : JumpStart); (18.3958333333333 : 16.4431469726563 : JumpEnd); (18.5 : 16.4431469726563)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(17.75 : 16.4431469726563); (18.5 : 16.4431469726563)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/FSPDataContext/ServiceType/ServiceType_Assist" />
       <nodes>
         <classShapeMoniker Id="cf7faee5-2edb-4cb1-9d6f-66b802c9d8a2" />
         <classShapeMoniker Id="0fa60b63-e711-43c4-8900-daf4b998a987" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(17.75 : 18.9286612955729); (18.2291666666667 : 18.9286612955729 : JumpStart); (18.3958333333333 : 18.9286612955729 : JumpEnd); (18.5 : 18.9286612955729)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(17.75 : 18.9286612955729); (18.5 : 18.9286612955729)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/FSPDataContext/TowLocation/TowLocation_Assist" />
       <nodes>
         <classShapeMoniker Id="1cfc3668-55a0-4b9a-8e07-539f0d596fc4" />
@@ -285,7 +285,7 @@
         <elementListCompartment Id="ad469dea-5e08-43c2-8924-a1f8d5dc57e3" absoluteBounds="4.14, 19.21, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(4.8593735 : 18.75); (4.8593735 : 17.1422456282552); (9.88541666666667 : 17.1422456282552 : JumpStart); (10.0520833333333 : 17.1422456282552 : JumpEnd); (12.5 : 17.1422456282552)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(4.8593735 : 18.75); (4.8593735 : 17.1422456282552); (5.57291866666667 : 17.1422456282552 : JumpStart); (5.73958533333333 : 17.1422456282552 : JumpEnd); (12.5 : 17.1422456282552)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/FSPDataContext/Contractor/Contractor_ContractorInsurance" />
       <nodes>
         <classShapeMoniker Id="b8ab188d-6452-4d97-a033-54719e51629a" />
@@ -331,10 +331,10 @@
         <classShapeMoniker Id="329997f5-736b-4ad2-b277-6b522ac38052" />
       </nodes>
     </associationConnector>
-    <classShape Id="6f35f8d9-175b-497a-88f1-c7c443a92df2" absoluteBounds="3.75, 2.375, 2, 1.3862939453125">
+    <classShape Id="6f35f8d9-175b-497a-88f1-c7c443a92df2" absoluteBounds="3.375, 3.75, 2, 1.3862939453125">
       <DataClassMoniker Name="/FSPDataContext/TruckState" />
       <nestedChildShapes>
-        <elementListCompartment Id="da0e0969-2745-4f13-a5a1-51a14b0f21c6" absoluteBounds="3.7649999999999997, 2.835, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="da0e0969-2745-4f13-a5a1-51a14b0f21c6" absoluteBounds="3.3899999999999997, 4.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="82db0545-c570-4e7b-9496-d1e8a392dcde" absoluteBounds="6.625, 13.25, 2, 1.1939925130208333">
@@ -396,14 +396,14 @@
         <elementListCompartment Id="d777de9a-2e24-4ac5-927a-2503969d11a2" absoluteBounds="9.765, 21.085, 1.9700000000000002, 5.6338297526041661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(9.75 : 25.09375); (7.98958333333333 : 25.09375 : JumpStart); (7.82291666666667 : 25.09375 : JumpEnd); (6.125 : 25.09375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(9.75 : 25.09375); (6.125 : 25.09375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/FSPDataContext/FleetVehicle/FleetVehicle_CHPInspection" />
       <nodes>
         <classShapeMoniker Id="4c2da91d-90cf-4116-9008-507eb04a81fa" />
         <classShapeMoniker Id="8bfabaff-0458-48a4-ba97-4db9e0f9d384" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(6.125 : 21.3087296842448); (7.82291666666667 : 21.3087296842448 : JumpStart); (7.98958333333333 : 21.3087296842448 : JumpEnd); (9.75 : 21.3087296842448)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(6.125 : 21.3087296842448); (9.75 : 21.3087296842448)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/FSPDataContext/Contractor/Contractor_FleetVehicle" />
       <nodes>
         <classShapeMoniker Id="b8ab188d-6452-4d97-a033-54719e51629a" />
@@ -416,7 +416,7 @@
         <elementListCompartment Id="f5a75e75-c289-4dcb-ba40-d5b488275609" absoluteBounds="18.515, 7.085, 1.9700000000000002, 3.7108154296875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.656252 : 18.75); (5.656252 : 16.3862939453125); (6.25 : 16.3862939453125); (6.25 : 9.2612939453125); (14.4166685416667 : 9.2612939453125 : JumpStart); (14.5833352083333 : 9.2612939453125 : JumpEnd); (15.25 : 9.2612939453125); (15.25 : 8); (18.125 : 8); (18.125 : 8.76040771484375); (18.5 : 8.76040771484375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(5.656252 : 18.75); (5.656252 : 16.3862939453125); (6.25 : 16.3862939453125); (6.25 : 9.2612939453125); (15.25 : 9.2612939453125); (15.25 : 8); (18.125 : 8); (18.125 : 8.76040771484375); (18.5 : 8.76040771484375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/FSPDataContext/Contractor/Contractor_DriverInteraction" />
       <nodes>
         <classShapeMoniker Id="b8ab188d-6452-4d97-a033-54719e51629a" />
@@ -526,5 +526,11 @@
         <classShapeMoniker Id="8c9df11c-a3d9-435a-88c3-16914b1e2be8" />
       </nodes>
     </associationConnector>
+    <classShape Id="b5067b00-8911-4736-a59b-1b4385be6f1f" absoluteBounds="4, 0.5, 2, 3.1170068359375">
+      <DataClassMoniker Name="/FSPDataContext/Beats_New" />
+      <nestedChildShapes>
+        <elementListCompartment Id="88902e69-fc4a-448b-b93f-5e19117c1f7b" absoluteBounds="4.015, 0.96, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

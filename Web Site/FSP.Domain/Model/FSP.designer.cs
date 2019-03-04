@@ -162,10 +162,13 @@ namespace FSP.Domain.Model
     partial void InsertAEReportType(AEReportType instance);
     partial void UpdateAEReportType(AEReportType instance);
     partial void DeleteAEReportType(AEReportType instance);
+    partial void InsertBeats_New(Beats_New instance);
+    partial void UpdateBeats_New(Beats_New instance);
+    partial void DeleteBeats_New(Beats_New instance);
     #endregion
 		
 		public FSPDataContext() : 
-				base(global::FSP.Domain.Properties.Settings.Default.fspConnectionString, mappingSource)
+				base(global::FSP.Domain.Properties.Settings.Default.fspConnectionString1, mappingSource)
 		{
 			OnCreated();
 		}
@@ -591,6 +594,14 @@ namespace FSP.Domain.Model
 			get
 			{
 				return this.GetTable<AEReportType>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Beats_New> Beats_News
+		{
+			get
+			{
+				return this.GetTable<Beats_New>();
 			}
 		}
 		
@@ -13423,6 +13434,332 @@ namespace FSP.Domain.Model
 		{
 			this.SendPropertyChanging();
 			entity.AEReportType = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Beats_New")]
+	public partial class Beats_New : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _BeatID;
+		
+		private bool _Active;
+		
+		private string _BeatExtent;
+		
+		private int _FreewayID;
+		
+		private string _BeatDescription;
+		
+		private string _BeatNumber;
+		
+		private System.Nullable<System.DateTime> _LastUpdate;
+		
+		private string _LastUpdateBy;
+		
+		private System.Nullable<bool> _IsTemporary;
+		
+		private string _BeatColor;
+		
+		private System.Nullable<System.DateTime> _StartDate;
+		
+		private System.Nullable<System.DateTime> _EndDate;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnBeatIDChanging(System.Guid value);
+    partial void OnBeatIDChanged();
+    partial void OnActiveChanging(bool value);
+    partial void OnActiveChanged();
+    partial void OnBeatExtentChanging(string value);
+    partial void OnBeatExtentChanged();
+    partial void OnFreewayIDChanging(int value);
+    partial void OnFreewayIDChanged();
+    partial void OnBeatDescriptionChanging(string value);
+    partial void OnBeatDescriptionChanged();
+    partial void OnBeatNumberChanging(string value);
+    partial void OnBeatNumberChanged();
+    partial void OnLastUpdateChanging(System.Nullable<System.DateTime> value);
+    partial void OnLastUpdateChanged();
+    partial void OnLastUpdateByChanging(string value);
+    partial void OnLastUpdateByChanged();
+    partial void OnIsTemporaryChanging(System.Nullable<bool> value);
+    partial void OnIsTemporaryChanged();
+    partial void OnBeatColorChanging(string value);
+    partial void OnBeatColorChanged();
+    partial void OnStartDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnStartDateChanged();
+    partial void OnEndDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnEndDateChanged();
+    #endregion
+		
+		public Beats_New()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BeatID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid BeatID
+		{
+			get
+			{
+				return this._BeatID;
+			}
+			set
+			{
+				if ((this._BeatID != value))
+				{
+					this.OnBeatIDChanging(value);
+					this.SendPropertyChanging();
+					this._BeatID = value;
+					this.SendPropertyChanged("BeatID");
+					this.OnBeatIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit NOT NULL")]
+		public bool Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BeatExtent", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string BeatExtent
+		{
+			get
+			{
+				return this._BeatExtent;
+			}
+			set
+			{
+				if ((this._BeatExtent != value))
+				{
+					this.OnBeatExtentChanging(value);
+					this.SendPropertyChanging();
+					this._BeatExtent = value;
+					this.SendPropertyChanged("BeatExtent");
+					this.OnBeatExtentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FreewayID", DbType="Int NOT NULL")]
+		public int FreewayID
+		{
+			get
+			{
+				return this._FreewayID;
+			}
+			set
+			{
+				if ((this._FreewayID != value))
+				{
+					this.OnFreewayIDChanging(value);
+					this.SendPropertyChanging();
+					this._FreewayID = value;
+					this.SendPropertyChanged("FreewayID");
+					this.OnFreewayIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BeatDescription", DbType="VarChar(500)")]
+		public string BeatDescription
+		{
+			get
+			{
+				return this._BeatDescription;
+			}
+			set
+			{
+				if ((this._BeatDescription != value))
+				{
+					this.OnBeatDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._BeatDescription = value;
+					this.SendPropertyChanged("BeatDescription");
+					this.OnBeatDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BeatNumber", DbType="VarChar(50)")]
+		public string BeatNumber
+		{
+			get
+			{
+				return this._BeatNumber;
+			}
+			set
+			{
+				if ((this._BeatNumber != value))
+				{
+					this.OnBeatNumberChanging(value);
+					this.SendPropertyChanging();
+					this._BeatNumber = value;
+					this.SendPropertyChanged("BeatNumber");
+					this.OnBeatNumberChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastUpdate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> LastUpdate
+		{
+			get
+			{
+				return this._LastUpdate;
+			}
+			set
+			{
+				if ((this._LastUpdate != value))
+				{
+					this.OnLastUpdateChanging(value);
+					this.SendPropertyChanging();
+					this._LastUpdate = value;
+					this.SendPropertyChanged("LastUpdate");
+					this.OnLastUpdateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastUpdateBy", DbType="VarChar(50)")]
+		public string LastUpdateBy
+		{
+			get
+			{
+				return this._LastUpdateBy;
+			}
+			set
+			{
+				if ((this._LastUpdateBy != value))
+				{
+					this.OnLastUpdateByChanging(value);
+					this.SendPropertyChanging();
+					this._LastUpdateBy = value;
+					this.SendPropertyChanged("LastUpdateBy");
+					this.OnLastUpdateByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsTemporary", DbType="Bit")]
+		public System.Nullable<bool> IsTemporary
+		{
+			get
+			{
+				return this._IsTemporary;
+			}
+			set
+			{
+				if ((this._IsTemporary != value))
+				{
+					this.OnIsTemporaryChanging(value);
+					this.SendPropertyChanging();
+					this._IsTemporary = value;
+					this.SendPropertyChanged("IsTemporary");
+					this.OnIsTemporaryChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BeatColor", DbType="VarChar(50)")]
+		public string BeatColor
+		{
+			get
+			{
+				return this._BeatColor;
+			}
+			set
+			{
+				if ((this._BeatColor != value))
+				{
+					this.OnBeatColorChanging(value);
+					this.SendPropertyChanging();
+					this._BeatColor = value;
+					this.SendPropertyChanged("BeatColor");
+					this.OnBeatColorChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> StartDate
+		{
+			get
+			{
+				return this._StartDate;
+			}
+			set
+			{
+				if ((this._StartDate != value))
+				{
+					this.OnStartDateChanging(value);
+					this.SendPropertyChanging();
+					this._StartDate = value;
+					this.SendPropertyChanged("StartDate");
+					this.OnStartDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> EndDate
+		{
+			get
+			{
+				return this._EndDate;
+			}
+			set
+			{
+				if ((this._EndDate != value))
+				{
+					this.OnEndDateChanging(value);
+					this.SendPropertyChanging();
+					this._EndDate = value;
+					this.SendPropertyChanged("EndDate");
+					this.OnEndDateChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	

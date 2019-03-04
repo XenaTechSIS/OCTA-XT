@@ -1,186 +1,188 @@
 ﻿<div ng-show="!isAdding">
-  <div class="form-group"
-    ng-show="isBusyGetting">
-    Loading 511s...
-    <i class="fa fa-refresh fa-spin"></i>
-  </div>
-  <div class="form-group"
-    ng-hide="isBusyGetting">
-    <input type="text"
-      ng-model="nameFilter"
-      class="form-control"
-      placeholder="Type to filter" />
-    <br>
-    <select class="form-control"
-      ng-model="selectedFiveElevenSignID"
-      ng-change="setSelectedFiveEleven()"
-      ng-disabled="five11s.length === 0 || isEditing"
-      size="5">
-      <option value="">
-        --Select 511 Sign--
-      </option>
-      <option ng-repeat="five11 in five11s|filter:nameFilter"
-        value="{{five11.Five11SignID}}">{{five11.SignNumber}}</option>
-    </select>
-  </div>
+    <div class="form-group"
+         ng-show="isBusyGetting">
+        Loading 511s...
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+    <div class="form-group"
+         ng-hide="isBusyGetting">
+        <input type="text"
+               ng-model="nameFilter"
+               class="form-control"
+               placeholder="Type to filter" />
+        <br>
+        <select class="form-control"
+                ng-model="selectedFiveElevenSignID"
+                ng-change="setSelectedFiveEleven()"
+                ng-disabled="five11s.length === 0 || isEditing"
+                size="5">
+            <option value="">
+                --Select 511 Sign--
+            </option>
+            <option ng-repeat="five11 in five11s|filter:nameFilter"
+                    value="{{five11.Five11SignID}}">
+                {{five11.SignNumber}}
+            </option>
+        </select>
+    </div>
 </div>
 <!-- <pre>{{selectedFiveElevenSignID}}</pre>
 <pre>{{five11s|json}}</pre> -->
 
 <form name="pageConfig.five11Form"
-  novalidate>
-  <!--input form-->
-  <div ng-show="selectedFive11">
-    <div class="form-group"
-      ng-class="{'has-error': pageConfig.five11Form.SignNumber.$invalid}">
-      Sign Number
-      <input ng-model="selectedFive11.SignNumber"
-        type="text"
-        required
-        name="SignNumber"
-        class="form-control"
-        ng-disabled="!isEditing && !isAdding" />
-    </div>
-    <div class="form-group"
-      ng-class="{'has-error': pageConfig.five11Form.Comments.$invalid}">
-      Comments
-      <textarea ng-model="selectedFive11.Comments"
-        class="form-control"
-        name="Comments"
-        required
-        ng-disabled="!isEditing && !isAdding"></textarea>
-    </div>
-    <div class="form-group"
-      ng-class="{'has-error': pageConfig.five11Form.Location.$invalid}">
-      Location
-      <textarea ng-model="selectedFive11.Location"
-        class="form-control"
-        required
-        name="Location"
-        ng-disabled="!isEditing && !isAdding"></textarea>
-    </div>
-    <div class="form-group"
-      ng-class="{'has-error': pageConfig.five11Form.FreewayID.$invalid}">
-      Freeway
-      <input ng-model="selectedFive11.FreewayID"
-        type="text"
-        required
-        class="form-control"
-        name="FreewayID"
-        ng-disabled="!isEditing && !isAdding" />
-    </div>
-    <div class="form-group"
-      ng-class="{'has-error': pageConfig.five11Form.SiteType.$invalid}">
-      Site Type
-      <input ng-model="selectedFive11.SiteType"
-        type="text"
-        required
-        class="form-control"
-        name="SiteType"
-        ng-disabled="!isEditing && !isAdding" />
-    </div>
-    <div class="form-group"
-      ng-class="{'has-error': pageConfig.five11Form.TelephoneNumber.$invalid}">
-      Phone Number
-      <input ng-model="selectedFive11.TelephoneNumber"
-        required
-        name="TelephoneNumber"
-        type="text"
-        mask="(999) 999-9999"
-        clean="false"
-        class="form-control"
-        ng-disabled="!isEditing && !isAdding" />
-    </div>
-    <div class="form-group"
-      ng-class="{'has-error': pageConfig.five11Form.lat.$invalid}">
-      Latitude
-      <span style="display:none">{{selectedMarker.position.lat()}}</span>
-      <input ng-model="selectedPosition.lat"
-        name="lat"
-        type="text"
-        required
-        class="form-control"
-        ng-disabled="!isEditing && !isAdding" />
-    </div>
-    <div class="form-group"
-      ng-class="{'has-error': pageConfig.five11Form.lng.$invalid}">
-      Longitude
-      <span style="display:none">{{selectedMarker.position.lng()}}</span>
-      <input ng-model="selectedPosition.lng"
-        name="lng"
-        type="text"
-        required
-        class="form-control"
-        ng-disabled="!isEditing && !isAdding" />
-    </div>
-  </div>
-
-  <div ng-show="canEdit">
-    <!--edit existing-->
-    <div class="form-group"
-      ng-show="selectedFive11 && !isAdding">
-      <button ng-show="!isEditing"
-        ng-click="setEdit()"
-        class="btn btn-primary btn-sm">
-        <i class="fa fa-pencil">
-        </i> Edit 511 Sign
-      </button>
-      <button ng-show="isEditing"
-        ng-click="save()"
-        ng-disabled="isBusySaving || isBusyDeleting || pageConfig.five11Form.$invalid"
-        class="btn btn-primary btn-sm">
-        <i class="fa fa-check"
-          ng-hide="isBusySaving">
-        </i>
-        <i class="fa fa-refresh fa-spin"
-          ng-show="isBusySaving">
-        </i>
-        Save
-      </button>
-      <button ng-show="isEditing"
-        ng-disabled="isBusySaving || isBusyDeleting"
-        ng-click="delete()"
-        class="btn btn-danger btn-sm">
-        <i class="fa fa-trash"
-          ng-hide="isBusyDeleting">
-        </i>
-        <i class="fa fa-refresh fa-spin"
-          ng-show="isBusyDeleting">
-        </i>
-        Delete
-      </button>
-      <button ng-show="isEditing"
-        ng-click="cancelEdit()"
-        class="btn btn-default btn-sm">
-        Cancel
-      </button>
+      novalidate>
+    <!--input form-->
+    <div ng-show="selectedFive11">
+        <div class="form-group"
+             ng-class="{'has-error': pageConfig.five11Form.SignNumber.$invalid}">
+            Sign Number
+            <input ng-model="selectedFive11.SignNumber"
+                   type="text"
+                   required
+                   name="SignNumber"
+                   class="form-control"
+                   ng-disabled="!isEditing && !isAdding" />
+        </div>
+        <div class="form-group"
+             ng-class="{'has-error': pageConfig.five11Form.Comments.$invalid}">
+            Comments
+            <textarea ng-model="selectedFive11.Comments"
+                      class="form-control"
+                      name="Comments"
+                      required
+                      ng-disabled="!isEditing && !isAdding"></textarea>
+        </div>
+        <div class="form-group"
+             ng-class="{'has-error': pageConfig.five11Form.Location.$invalid}">
+            Location
+            <textarea ng-model="selectedFive11.Location"
+                      class="form-control"
+                      required
+                      name="Location"
+                      ng-disabled="!isEditing && !isAdding"></textarea>
+        </div>
+        <div class="form-group"
+             ng-class="{'has-error': pageConfig.five11Form.FreewayID.$invalid}">
+            Freeway
+            <input ng-model="selectedFive11.FreewayID"
+                   type="text"
+                   required
+                   class="form-control"
+                   name="FreewayID"
+                   ng-disabled="!isEditing && !isAdding" />
+        </div>
+        <div class="form-group"
+             ng-class="{'has-error': pageConfig.five11Form.SiteType.$invalid}">
+            Site Type
+            <input ng-model="selectedFive11.SiteType"
+                   type="text"
+                   required
+                   class="form-control"
+                   name="SiteType"
+                   ng-disabled="!isEditing && !isAdding" />
+        </div>
+        <div class="form-group"
+             ng-class="{'has-error': pageConfig.five11Form.TelephoneNumber.$invalid}">
+            Phone Number
+            <input ng-model="selectedFive11.TelephoneNumber"
+                   required
+                   name="TelephoneNumber"
+                   type="text"
+                   mask="(999) 999-9999"
+                   clean="false"
+                   class="form-control"
+                   ng-disabled="!isEditing && !isAdding" />
+        </div>
+        <div class="form-group"
+             ng-class="{'has-error': pageConfig.five11Form.lat.$invalid}">
+            Latitude
+            <span style="display:none">{{selectedMarker.position.lat()}}</span>
+            <input ng-model="selectedPosition.lat"
+                   name="lat"
+                   type="text"
+                   required
+                   class="form-control"
+                   ng-disabled="!isEditing && !isAdding" />
+        </div>
+        <div class="form-group"
+             ng-class="{'has-error': pageConfig.five11Form.lng.$invalid}">
+            Longitude
+            <span style="display:none">{{selectedMarker.position.lng()}}</span>
+            <input ng-model="selectedPosition.lng"
+                   name="lng"
+                   type="text"
+                   required
+                   class="form-control"
+                   ng-disabled="!isEditing && !isAdding" />
+        </div>
     </div>
 
-    <!--add new-->
-    <div class="form-group"
-      ng-show="!isEditing">
-      <button ng-hide="selectedFive11"
-        ng-click="prepareNew()"
-        class="btn btn-success btn-sm">
-        <i class="fa fa-plus"></i> Add 511 Sign
-      </button>
-      <button ng-show="!isEditing && isAdding"
-        ng-click="add()"
-        ng-disabled="isBusyAdding || pageConfig.five11Form.$invalid"
-        class="btn btn-success btn-sm">
-        <i class="fa fa-check"
-          ng-hide="isBusyAdding">
-        </i>
-        <i class="fa fa-refresh fa-spin"
-          ng-show="isBusyAdding">
-        </i>
-        Save
-      </button>
-      <button ng-show="!isEditing && isAdding"
-        ng-click="cancelAdd()"
-        class="btn btn-default btn-sm">
-        Cancel
-      </button>
+    <div ng-show="canEdit">
+        <!--edit existing-->
+        <div class="form-group"
+             ng-show="selectedFive11 && !isAdding">
+            <button ng-show="!isEditing"
+                    ng-click="setEdit()"
+                    class="btn btn-primary btn-sm">
+                <i class="fa fa-pencil">
+                </i> Edit 511 Sign
+            </button>
+            <button ng-show="isEditing"
+                    ng-click="save()"
+                    ng-disabled="isBusySaving || isBusyDeleting || pageConfig.five11Form.$invalid"
+                    class="btn btn-primary btn-sm">
+                <i class="fa fa-check"
+                   ng-hide="isBusySaving">
+                </i>
+                <i class="fa fa-refresh fa-spin"
+                   ng-show="isBusySaving">
+                </i>
+                Save
+            </button>
+            <button ng-show="isEditing"
+                    ng-disabled="isBusySaving || isBusyDeleting"
+                    ng-click="delete()"
+                    class="btn btn-danger btn-sm">
+                <i class="fa fa-trash"
+                   ng-hide="isBusyDeleting">
+                </i>
+                <i class="fa fa-refresh fa-spin"
+                   ng-show="isBusyDeleting">
+                </i>
+                Delete
+            </button>
+            <button ng-show="isEditing"
+                    ng-click="cancelEdit()"
+                    class="btn btn-default btn-sm">
+                Cancel
+            </button>
+        </div>
+
+        <!--add new-->
+        <div class="form-group"
+             ng-show="!isEditing">
+            <button ng-hide="selectedFive11"
+                    ng-click="prepareNew()"
+                    class="btn btn-success btn-sm">
+                <i class="fa fa-plus"></i> Add 511 Sign
+            </button>
+            <button ng-show="!isEditing && isAdding"
+                    ng-click="add()"
+                    ng-disabled="isBusyAdding || pageConfig.five11Form.$invalid"
+                    class="btn btn-success btn-sm">
+                <i class="fa fa-check"
+                   ng-hide="isBusyAdding">
+                </i>
+                <i class="fa fa-refresh fa-spin"
+                   ng-show="isBusyAdding">
+                </i>
+                Save
+            </button>
+            <button ng-show="!isEditing && isAdding"
+                    ng-click="cancelAdd()"
+                    class="btn btn-default btn-sm">
+                Cancel
+            </button>
+        </div>
     </div>
-  </div>
 </form>

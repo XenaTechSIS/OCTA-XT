@@ -33,6 +33,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.gMapControl1 = new GMap.NET.WindowsForms.GMapControl();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.chkLeaveTrail = new System.Windows.Forms.CheckBox();
             this.cboBeats = new System.Windows.Forms.ComboBox();
             this.lblSelectBeat = new System.Windows.Forms.Label();
             this.cboPlaybackSpeed = new System.Windows.Forms.ComboBox();
@@ -53,7 +54,6 @@
             this.gvData = new System.Windows.Forms.DataGridView();
             this.tmrPlayback = new System.Windows.Forms.Timer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.chkLeaveTrail = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -138,6 +138,17 @@
             this.splitContainer2.Size = new System.Drawing.Size(1188, 207);
             this.splitContainer2.SplitterDistance = 346;
             this.splitContainer2.TabIndex = 16;
+            // 
+            // chkLeaveTrail
+            // 
+            this.chkLeaveTrail.AutoSize = true;
+            this.chkLeaveTrail.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkLeaveTrail.Location = new System.Drawing.Point(13, 160);
+            this.chkLeaveTrail.Name = "chkLeaveTrail";
+            this.chkLeaveTrail.Size = new System.Drawing.Size(79, 17);
+            this.chkLeaveTrail.TabIndex = 33;
+            this.chkLeaveTrail.Text = "Leave Trail";
+            this.chkLeaveTrail.UseVisualStyleBackColor = true;
             // 
             // cboBeats
             // 
@@ -335,17 +346,6 @@
             // 
             this.tmrPlayback.Interval = 30000;
             this.tmrPlayback.Tick += new System.EventHandler(this.tmrPlayback_Tick);
-            // 
-            // chkLeaveTrail
-            // 
-            this.chkLeaveTrail.AutoSize = true;
-            this.chkLeaveTrail.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkLeaveTrail.Location = new System.Drawing.Point(13, 160);
-            this.chkLeaveTrail.Name = "chkLeaveTrail";
-            this.chkLeaveTrail.Size = new System.Drawing.Size(79, 17);
-            this.chkLeaveTrail.TabIndex = 33;
-            this.chkLeaveTrail.Text = "Leave Trail";
-            this.chkLeaveTrail.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 

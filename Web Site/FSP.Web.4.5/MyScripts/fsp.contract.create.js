@@ -1,4 +1,4 @@
-﻿/// <reference path="../Scripts/knockout-2.2.1.js" />
+﻿/// <reference path="../Scripts/knockout-3.4.2.js.js" />
 /// <reference path="../Scripts/jquery.validate-vsdoc.js" />
 
 var ContractCreateViewModel = function () {
@@ -12,7 +12,8 @@ var ContractCreateViewModel = function () {
 
     self.loadBeats = function () {
 
-        var url = $("#websitePath").attr("data-websitePath") + '/Beats/GetAll';
+        //var url = $("#websitePath").attr("data-websitePath") + '/Beats/GetAll';
+        var url = '/Beats/GetAll';
 
         self.beats([]);
         
@@ -26,7 +27,8 @@ var ContractCreateViewModel = function () {
 
     self.loadSelectedBeats = function () {
         var contractId = $("#Contract_ContractID").val();
-        var url = $("#websitePath").attr("data-websitePath") + '/Beats/GetBeatsByContractId?id=' + contractId;
+        //var url = $("#websitePath").attr("data-websitePath") + '/Beats/GetBeatsByContractId?id=' + contractId;
+        var url = '/Beats/GetBeatsByContractId?id=' + contractId;
 
         self.selectedBeats([]);
 

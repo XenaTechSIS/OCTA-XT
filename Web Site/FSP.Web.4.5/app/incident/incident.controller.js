@@ -36,7 +36,7 @@
             show: true
          });
          $scope.columns.push({
-            name: 'Dispatch Summary Message',
+            name: 'Comments',
             show: true
          });
          $scope.columns.push({

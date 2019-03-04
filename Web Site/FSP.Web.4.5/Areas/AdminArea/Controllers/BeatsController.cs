@@ -20,7 +20,7 @@ namespace FSP.Web.Areas.AdminArea.Controllers
 
         public ActionResult GetAll()
         {
-            var query = from q in dc.vBeats
+            var query = from q in dc.Beats_News
                         orderby q.BeatNumber
                         select new
                         {
@@ -32,7 +32,7 @@ namespace FSP.Web.Areas.AdminArea.Controllers
 
         public ActionResult GetBeatsByContractId(Guid id)
         {
-            var query = from q in dc.vBeats
+            var query = from q in dc.Beats_News
                         join c in dc.ContractsBeats on q.BeatID equals c.BeatID
                         where c.ContractID.Equals(id)
                         orderby q.BeatNumber
