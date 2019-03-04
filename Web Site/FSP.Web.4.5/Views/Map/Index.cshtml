@@ -1,4 +1,6 @@
 ﻿@{
+    /**/
+
     ViewBag.Title = "LATATrax | Map";
 }
 
@@ -11,6 +13,12 @@
 
         <div class="mapTopNavigation">
             <form class="form-inline text-center">
+                <button class="btn btn-default" ng-click="hideSideNav()" ng-show="!sideNavIsHidden">
+                    <i class="fa fa-arrow-circle-left"></i>
+                </button>
+                <button class="btn btn-default" ng-click="showSideNav()" ng-show="sideNavIsHidden">
+                    <i class="fa fa-arrow-circle-right"></i>
+                </button>
                 <button class="btn btn-danger" ng-click="stopFollow()" ng-show="truckToBeFollowed && truckToBeFollowed.lat && truckToBeFollowed.lon">
                     Stop Following {{truckToBeFollowed.truckNumber}}
                 </button>
@@ -39,7 +47,7 @@
             </form>
         </div>
 
-        <div class="mapSideNavigation">
+        <div class="mapSideNavigation" ng-class="{'hiddenMapSideNavigation':sideNavIsHidden,'mapSideNavigation':!sideNavIsHidden}">
             <div class="panel-group"
                  id="accordion"
                  role="tablist"
@@ -268,7 +276,7 @@
             </div>
         </div>
 
-        <div id="googleMap" class="googleMap"></div>
+        <div id="googleMap" class="googleMap" ng-class="{'googleMapFull':sideNavIsHidden,'googleMap':!sideNavIsHidden}"></div>
 
         <div class="modal fade"
              id="filterModal"
