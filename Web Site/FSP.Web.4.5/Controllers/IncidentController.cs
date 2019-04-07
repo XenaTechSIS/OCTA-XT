@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using FSP.Domain.Model;
 using FSP.Web.Filters;
@@ -20,35 +21,39 @@ namespace FSP.Web.Controllers
                 {
                     contractorName = dc.Contractors.FirstOrDefault(p => p.ContractorID == user.ContractorID)?.ContractCompanyName;
                 }
-            }
-
-            using (var service = new TowTruckServiceClient())
-            {
-                var rawIncidents = service.getIncidentData();
-
-                var incidents = from q in rawIncidents
-                                select new
-                                {
-                                    q.IncidentID,
-                                    q.IsIncidentComplete,
-                                    q.IsAcked,
-                                    //UI fields
-                                    q.IncidentNumber,
-                                    q.BeatNumber,
-                                    q.TruckNumber,
-                                    q.DriverName,
-                                    q.DispatchComments,
-                                    Timestamp = q.Timestamp.ToString(),
-                                    q.State,
-                                    q.contractor.ContractCompanyName,
-                                    q.Assists
-                                };
-
-                if (!string.IsNullOrEmpty(contractorName))
+                
+                using (var service = new TowTruckServiceClient())
                 {
-                    incidents = incidents.Where(p => p.ContractCompanyName == contractorName);
+                    var rawIncidents = service.GetIncidentData().ToList();
+
+                    var incidents = from q in rawIncidents                                    
+                                    select new
+                                    {
+                                        q.IncidentID,                                                                                
+                                        q.IncidentNumber,
+                                        q.BeatNumber,
+                                        q.TruckNumber,
+                                        q.DriverName,
+                                        q.DispatchComments,
+                                        Timestamp = q.Timestamp.ToString(),
+                                        q.State,
+                                        q.ContractorName,
+                                        q.ContractCompanyName,
+                                        q.Assist,
+                                        q.LocationDescription,
+                                        q.Direction,
+                                        q.VehicleTypeName,
+                                        q.IncidentTypeName,
+                                        q.AssistTypeName
+                                    };
+                    
+
+                    if (!string.IsNullOrEmpty(contractorName))
+                    {
+                        incidents = incidents.Where(p => p.ContractorName == contractorName);
+                    }
+                    return Json(incidents.OrderBy(p => p.BeatNumber), JsonRequestBehavior.AllowGet);
                 }
-                return Json(incidents.OrderBy(p => p.BeatNumber), JsonRequestBehavior.AllowGet);
             }
         }
 

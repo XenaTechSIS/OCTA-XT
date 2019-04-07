@@ -1,8 +1,8 @@
-﻿using System;
+﻿using FPSService.MiscData;
+using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.ServiceModel;
-using FPSService.MiscData;
 
 namespace FPSService
 {
@@ -81,7 +81,7 @@ namespace FPSService
         void SendMessage(TruckMessage thisMessage);
 
         [OperationContract]
-        List<IncidentDisplay> getIncidentData();
+        List<IncidentDisplay> GetIncidentData();
 
         [OperationContract]
         void ResetAlarm(string _vehicleNumber, string _alarm);
@@ -591,34 +591,23 @@ namespace FPSService
     public class IncidentDisplay
     {
         [DataMember] public Guid IncidentID { get; set; }
-
         [DataMember] public string IncidentNumber { get; set; }
-
-        [DataMember] public string AssistNumber { get; set; }
-
         [DataMember] public string BeatNumber { get; set; }
-
         [DataMember] public string TruckNumber { get; set; }
-
         [DataMember] public string DriverName { get; set; }
-
         [DataMember] public string DispatchComments { get; set; }
-
         [DataMember] public DateTime Timestamp { get; set; }
-
         [DataMember] public string State { get; set; }
-
         [DataMember] public string DispatchNumber { get; set; }
-
         [DataMember] public string ContractorName { get; set; }
+        [DataMember] public string ContractCompanyName { get; set; }
+        [DataMember] public Assist Assist { get; set; }
 
-        [DataMember] public bool IsIncidentComplete { get; set; }
-
-        [DataMember] public bool IsAcked { get; set; }
-
-        [DataMember] public Contractors contractor { get; set; }
-
-        [DataMember] public Assist Assists { get; set; }
+        [DataMember] public string LocationDescription { get; set; }
+        [DataMember] public string Direction { get; set; }
+        [DataMember] public string VehicleTypeName { get; set; }
+        [DataMember] public string IncidentTypeName { get; set; }
+        [DataMember] public string AssistTypeName { get; set; }
     }
 
     #endregion

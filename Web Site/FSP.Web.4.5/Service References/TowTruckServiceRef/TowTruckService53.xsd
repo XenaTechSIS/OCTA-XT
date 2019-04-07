@@ -42,11 +42,4 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Assist" nillable="true" type="tns:Assist" />
-  <xs:complexType name="Contractors">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="ContractCompanyName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ContractorID" type="ser:guid" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="Contractors" nillable="true" type="tns:Contractors" />
 </xs:schema>

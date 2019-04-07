@@ -1,9 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using FPSService.TowTruck;
-using System.Collections;
 
 namespace FPSService.DataClasses
 {
@@ -48,7 +46,7 @@ namespace FPSService.DataClasses
         public static void AddTruckMessage(TruckMessage thisMessage)
         {
             SQL.SQLCode mySQL = new SQL.SQLCode();
-            TruckMessage foundMessage = theseMessages.Find(delegate(TruckMessage myMessage) { return myMessage.MessageID == thisMessage.MessageID; });
+            TruckMessage foundMessage = theseMessages.Find(delegate (TruckMessage myMessage) { return myMessage.MessageID == thisMessage.MessageID; });
             if (foundMessage == null)
             {
                 theseMessages.Add(thisMessage);
@@ -76,7 +74,7 @@ namespace FPSService.DataClasses
 
         public static void AckTruckMessage(Guid MessageID)
         {
-            TruckMessage foundMessage = theseMessages.Find(delegate(TruckMessage myMessage) { return myMessage.MessageID == MessageID; });
+            TruckMessage foundMessage = theseMessages.Find(delegate (TruckMessage myMessage) { return myMessage.MessageID == MessageID; });
             foundMessage.Acked = true;
             foundMessage.AckedTime = DateTime.Now;
             SQL.SQLCode mySQL = new SQL.SQLCode();
@@ -89,7 +87,7 @@ namespace FPSService.DataClasses
 
         public static void RemoveCover(string BeatName)
         {
-            MiscData.CoveredBeat foundBeat = CoveredBeats.Find(delegate(MiscData.CoveredBeat myBeat) { return myBeat.BeatNumber == BeatName; });
+            MiscData.CoveredBeat foundBeat = CoveredBeats.Find(delegate (MiscData.CoveredBeat myBeat) { return myBeat.BeatNumber == BeatName; });
             if (foundBeat != null)
             {
                 CoveredBeats.Remove(foundBeat);
@@ -98,7 +96,7 @@ namespace FPSService.DataClasses
 
         public static void RemoveCoverByTruck(string TruckNumber)
         {
-            MiscData.CoveredBeat foundBeat = CoveredBeats.Find(delegate(MiscData.CoveredBeat myBeat) { return myBeat.TruckNumber == TruckNumber; });
+            MiscData.CoveredBeat foundBeat = CoveredBeats.Find(delegate (MiscData.CoveredBeat myBeat) { return myBeat.TruckNumber == TruckNumber; });
             if (foundBeat != null)
             {
                 CoveredBeats.Remove(foundBeat);
@@ -120,7 +118,7 @@ namespace FPSService.DataClasses
 
         public static void AddCover(string TruckNumber, string BeatName)
         {
-            MiscData.CoveredBeat foundBeat = CoveredBeats.Find(delegate(MiscData.CoveredBeat thisBeat) { return thisBeat.BeatNumber == BeatName; });
+            MiscData.CoveredBeat foundBeat = CoveredBeats.Find(delegate (MiscData.CoveredBeat thisBeat) { return thisBeat.BeatNumber == BeatName; });
             if (foundBeat == null)
             {
                 MiscData.CoveredBeat myBeat = new MiscData.CoveredBeat();
@@ -137,7 +135,7 @@ namespace FPSService.DataClasses
         public static Guid GetContractorID(string ContractorName)
         {
             Guid ContractorID = new Guid("00000000-0000-0000-0000-000000000000");
-            foreach(MiscData.Contractors contractor in Contractors)
+            foreach (MiscData.Contractors contractor in Contractors)
             {
                 if (contractor.ContractCompanyName == ContractorName)
                 {
@@ -169,7 +167,7 @@ namespace FPSService.DataClasses
             UDP.SendMessage msgAck = new UDP.SendMessage();
             try
             {
-                TowTruck.TowTruck foundTruck = currentTrucks.Find(delegate(TowTruck.TowTruck myTruck)
+                TowTruck.TowTruck foundTruck = currentTrucks.Find(delegate (TowTruck.TowTruck myTruck)
                 {
                     return myTruck.Identifier == thisTruck.Identifier;
                 });
@@ -204,13 +202,13 @@ namespace FPSService.DataClasses
 
         public static TowTruck.TowTruck FindTowTruck(string _ipaddress)
         {
-            TowTruck.TowTruck thisFoundTruck = currentTrucks.Find(delegate(TowTruck.TowTruck t) { return t.Identifier == _ipaddress; });
+            TowTruck.TowTruck thisFoundTruck = currentTrucks.Find(delegate (TowTruck.TowTruck t) { return t.Identifier == _ipaddress; });
             return thisFoundTruck;
         }
 
         public static TowTruck.TowTruck FindTowTruckByVehicleNumber(string _vehicleNumber)
         {
-            TowTruck.TowTruck thisFoundTruck = currentTrucks.Find(delegate(TowTruck.TowTruck t) { return t.TruckNumber == _vehicleNumber; });
+            TowTruck.TowTruck thisFoundTruck = currentTrucks.Find(delegate (TowTruck.TowTruck t) { return t.TruckNumber == _vehicleNumber; });
             if (thisFoundTruck != null)
             {
                 return thisFoundTruck;
@@ -223,14 +221,14 @@ namespace FPSService.DataClasses
 
         public static TowTruck.TowTruck FindTowTruckByTruckID(Guid TruckID)
         {
-            TowTruck.TowTruck thisFoundTruck = currentTrucks.Find(delegate(TowTruck.TowTruck t) { return t.Extended.FleetVehicleID == TruckID; });
+            TowTruck.TowTruck thisFoundTruck = currentTrucks.Find(delegate (TowTruck.TowTruck t) { return t.Extended.FleetVehicleID == TruckID; });
             return thisFoundTruck;
         }
 
         public static string FindTowTruckStatusByID(Guid TruckID)
         {
             string CurrentStatus = "UNKNOWN";
-            TowTruck.TowTruck thisFoundTruck = currentTrucks.Find(delegate(TowTruck.TowTruck t){return t.Extended.FleetVehicleID == TruckID;});
+            TowTruck.TowTruck thisFoundTruck = currentTrucks.Find(delegate (TowTruck.TowTruck t) { return t.Extended.FleetVehicleID == TruckID; });
             if (thisFoundTruck != null)
             {
                 CurrentStatus = thisFoundTruck.Status.VehicleStatus;
@@ -240,7 +238,7 @@ namespace FPSService.DataClasses
 
         public static void RemoveTowTruck(string _ipaddress)
         {
-            TowTruck.TowTruck thisFoundTruck = currentTrucks.Find(delegate(TowTruck.TowTruck t) { return t.Identifier == _ipaddress; });
+            TowTruck.TowTruck thisFoundTruck = currentTrucks.Find(delegate (TowTruck.TowTruck t) { return t.Identifier == _ipaddress; });
             if (thisFoundTruck != null)
             {
                 currentTrucks.Remove(thisFoundTruck);
@@ -249,20 +247,20 @@ namespace FPSService.DataClasses
 
         public static void RemoveTowTruckByTruckID(string TruckNumber)
         {
-            TowTruck.TowTruck thisFoundTruck = currentTrucks.Find(delegate(TowTruck.TowTruck t) { return t.TruckNumber == TruckNumber; });
+            TowTruck.TowTruck thisFoundTruck = currentTrucks.Find(delegate (TowTruck.TowTruck t) { return t.TruckNumber == TruckNumber; });
             if (thisFoundTruck != null)
             { currentTrucks.Remove(thisFoundTruck); }
         }
 
         public static void UpdateTowTruck(string _ipdress, TowTruck.TowTruck thisTruck)
         {
-            TowTruck.TowTruck thisFoundTruck = currentTrucks.Find(delegate(TowTruck.TowTruck t) { return t.Identifier == _ipdress; });
+            TowTruck.TowTruck thisFoundTruck = currentTrucks.Find(delegate (TowTruck.TowTruck t) { return t.Identifier == _ipdress; });
             thisFoundTruck = thisTruck;
         }
 
         public static string FindContractorByTruckNumber(string TruckNumber)
         {
-            TowTruck.TowTruck thisFoundTruck = currentTrucks.Find(delegate(TowTruck.TowTruck t) { return t.TruckNumber == TruckNumber; });
+            TowTruck.TowTruck thisFoundTruck = currentTrucks.Find(delegate (TowTruck.TowTruck t) { return t.TruckNumber == TruckNumber; });
             if (thisFoundTruck != null)
             {
                 return thisFoundTruck.Extended.ContractorName;
@@ -304,10 +302,10 @@ namespace FPSService.DataClasses
         public static void UpdateIncidentBeat(Guid _IncidentiD, Guid _FleetVehicleID)
         {
             string BeatNumber = "";
-            MiscData.Incident thisFoundIncident = Incidents.Find(delegate(MiscData.Incident i) { return i.IncidentID == _IncidentiD; });
+            MiscData.Incident thisFoundIncident = Incidents.Find(delegate (MiscData.Incident i) { return i.IncidentID == _IncidentiD; });
             if (thisFoundIncident != null)
             {
-                TowTruck.TowTruck thisFoundTruck = currentTrucks.Find(delegate(TowTruck.TowTruck t) { return t.Extended.FleetVehicleID == _FleetVehicleID; });
+                TowTruck.TowTruck thisFoundTruck = currentTrucks.Find(delegate (TowTruck.TowTruck t) { return t.Extended.FleetVehicleID == _FleetVehicleID; });
                 if (thisFoundTruck != null)
                 {
                     BeatNumber = thisFoundTruck.assignedBeat.BeatNumber;
@@ -320,7 +318,7 @@ namespace FPSService.DataClasses
         {
             try
             {
-                MiscData.Incident thisFoundIncident = Incidents.Find(delegate(MiscData.Incident i) { return i.IncidentID == thisIncident.IncidentID; });
+                MiscData.Incident thisFoundIncident = Incidents.Find(delegate (MiscData.Incident i) { return i.IncidentID == thisIncident.IncidentID; });
                 if (thisFoundIncident != null)
                 {
                     var _incident = Incidents.Find(i => i.IncidentID == thisIncident.IncidentID);
@@ -365,7 +363,7 @@ namespace FPSService.DataClasses
         {
             try
             {
-                MiscData.Incident thisFoundIncident = Incidents.Find(delegate(MiscData.Incident i) { return i.IncidentID == thisIncident.IncidentID; });
+                MiscData.Incident thisFoundIncident = Incidents.Find(delegate (MiscData.Incident i) { return i.IncidentID == thisIncident.IncidentID; });
                 if (thisFoundIncident == null)
                 {
                     Incidents.Add(thisIncident);
@@ -499,7 +497,7 @@ namespace FPSService.DataClasses
 
         public static void ClearIndicent(Guid _IncidentID)
         {
-            MiscData.Incident thisFoundIncident = Incidents.Find(delegate(MiscData.Incident i) { return i.IncidentID == _IncidentID; });
+            MiscData.Incident thisFoundIncident = Incidents.Find(delegate (MiscData.Incident i) { return i.IncidentID == _IncidentID; });
             if (thisFoundIncident == null)
             {
                 return;
@@ -519,7 +517,7 @@ namespace FPSService.DataClasses
 
         public static Guid FindIncidentCreatorFromAssist(Guid _IncidentID)
         {
-            MiscData.Incident thisFoundIncident = Incidents.Find(delegate(MiscData.Incident i) { return i.IncidentID == _IncidentID; });
+            MiscData.Incident thisFoundIncident = Incidents.Find(delegate (MiscData.Incident i) { return i.IncidentID == _IncidentID; });
             if (thisFoundIncident == null)
             {
                 Guid newGuid = new Guid("00000000-0000-0000-0000-000000000000");
@@ -533,7 +531,7 @@ namespace FPSService.DataClasses
 
         public static MiscData.Incident FindIncidentByID(Guid _IncidentID)
         {
-            MiscData.Incident thisFoundIncident = Incidents.Find(delegate(MiscData.Incident i) { return i.IncidentID == _IncidentID; });
+            MiscData.Incident thisFoundIncident = Incidents.Find(delegate (MiscData.Incident i) { return i.IncidentID == _IncidentID; });
             if (thisFoundIncident == null)
             {
                 return null;
@@ -576,7 +574,7 @@ namespace FPSService.DataClasses
             {
                 return; //assists must be assigned to incidents
             }
-            MiscData.Assist thisFoundAssist = Assists.Find(delegate(MiscData.Assist a) { return a.AssistID == thisAssist.AssistID; });
+            MiscData.Assist thisFoundAssist = Assists.Find(delegate (MiscData.Assist a) { return a.AssistID == thisAssist.AssistID; });
             if (thisFoundAssist == null)
             {
                 Assists.Add(thisAssist);
@@ -865,7 +863,7 @@ namespace FPSService.DataClasses
 
         public static void RemoveAssist(Guid _AssistID)
         {
-            MiscData.Assist thisFoundAssist = Assists.Find(delegate(MiscData.Assist a) { return a.AssistID == _AssistID; });
+            MiscData.Assist thisFoundAssist = Assists.Find(delegate (MiscData.Assist a) { return a.AssistID == _AssistID; });
             if (thisFoundAssist != null)
             {
                 Assists.Remove(thisFoundAssist);
@@ -874,7 +872,7 @@ namespace FPSService.DataClasses
 
         public static MiscData.Assist FindAssistByID(Guid _AssistID)
         {
-            MiscData.Assist thisFoundAssist = Assists.Find(delegate(MiscData.Assist a) { return a.AssistID == _AssistID; });
+            MiscData.Assist thisFoundAssist = Assists.Find(delegate (MiscData.Assist a) { return a.AssistID == _AssistID; });
             return thisFoundAssist;
         }
 
@@ -899,7 +897,7 @@ namespace FPSService.DataClasses
 
         public static string FindFreewayNameByID(int FreewayID)
         {
-            MiscData.Freeway thisFoundFreeway = Freeways.Find(delegate(MiscData.Freeway f) { return f.FreewayID == FreewayID; });
+            MiscData.Freeway thisFoundFreeway = Freeways.Find(delegate (MiscData.Freeway f) { return f.FreewayID == FreewayID; });
             if (thisFoundFreeway != null)
             {
                 return thisFoundFreeway.FreewayName;
@@ -912,7 +910,7 @@ namespace FPSService.DataClasses
 
         public static string FindLocationNameByID(Guid _LocationID)
         {
-            MiscData.LocationCoding thisFoundLocation = LocationCodes.Find(delegate(MiscData.LocationCoding l) { return l.LocationID == _LocationID; });
+            MiscData.LocationCoding thisFoundLocation = LocationCodes.Find(delegate (MiscData.LocationCoding l) { return l.LocationID == _LocationID; });
             if (thisFoundLocation != null)
             {
                 return thisFoundLocation.Location;
@@ -925,7 +923,7 @@ namespace FPSService.DataClasses
 
         public static string FindVehiclePositionNameByID(Guid _VehiclePositionID)
         {
-            MiscData.VehiclePosition thisFoundPosition = VehiclePositions.Find(delegate(MiscData.VehiclePosition vp) { return vp.VehiclePositionID == _VehiclePositionID; });
+            MiscData.VehiclePosition thisFoundPosition = VehiclePositions.Find(delegate (MiscData.VehiclePosition vp) { return vp.VehiclePositionID == _VehiclePositionID; });
             if (thisFoundPosition != null)
             {
                 return thisFoundPosition.VehiclePositionName;
@@ -938,7 +936,7 @@ namespace FPSService.DataClasses
 
         public static string FindIncidentTypeNameByID(Guid _IncidentTypeID)
         {
-            MiscData.IncidentType thisFoundType = IncidentTypes.Find(delegate(MiscData.IncidentType it) { return it.IncidentTypeID == _IncidentTypeID; });
+            MiscData.IncidentType thisFoundType = IncidentTypes.Find(delegate (MiscData.IncidentType it) { return it.IncidentTypeID == _IncidentTypeID; });
             if (thisFoundType != null)
             { return thisFoundType.IncidentTypeName; }
             else
@@ -947,18 +945,18 @@ namespace FPSService.DataClasses
 
         public static string FindIncidentNumberByID(Guid _IncidentID)
         {
-            MiscData.Incident thisFoundIncident = Incidents.Find(delegate(MiscData.Incident i) { return i.IncidentID == _IncidentID; });
-            if(thisFoundIncident != null)
+            MiscData.Incident thisFoundIncident = Incidents.Find(delegate (MiscData.Incident i) { return i.IncidentID == _IncidentID; });
+            if (thisFoundIncident != null)
             {
                 return thisFoundIncident.IncidentNumber;
             }
             else
-            {return "Unknown";}
+            { return "Unknown"; }
         }
 
         public static string FindBeatNumberByID(Guid _IncidentID)
         {
-            MiscData.Incident thisFoundIncident = Incidents.Find(delegate(MiscData.Incident i) { return i.IncidentID == _IncidentID; });
+            MiscData.Incident thisFoundIncident = Incidents.Find(delegate (MiscData.Incident i) { return i.IncidentID == _IncidentID; });
             if (thisFoundIncident != null)
             {
                 return thisFoundIncident.BeatNumber;
@@ -969,7 +967,7 @@ namespace FPSService.DataClasses
 
         public static string FindTrafficSpeedNameByID(Guid _TrafficSpeedID)
         {
-            MiscData.TrafficSpeed thisFoundSpeed = TrafficSpeeds.Find(delegate(MiscData.TrafficSpeed ts) { return ts.TrafficSpeedID == _TrafficSpeedID; });
+            MiscData.TrafficSpeed thisFoundSpeed = TrafficSpeeds.Find(delegate (MiscData.TrafficSpeed ts) { return ts.TrafficSpeedID == _TrafficSpeedID; });
             if (thisFoundSpeed != null)
             { return thisFoundSpeed.TrafficSpeedName; }
             else
@@ -978,7 +976,7 @@ namespace FPSService.DataClasses
 
         public static string FindServiceTypeNameByID(Guid _ServiceTypeID)
         {
-            MiscData.ServiceType thisFoundType = ServiceTypes.Find(delegate(MiscData.ServiceType st) { return st.ServiceTypeID == _ServiceTypeID; });
+            MiscData.ServiceType thisFoundType = ServiceTypes.Find(delegate (MiscData.ServiceType st) { return st.ServiceTypeID == _ServiceTypeID; });
             if (thisFoundType != null)
             { return thisFoundType.ServiceTypeName; }
             else
@@ -987,7 +985,7 @@ namespace FPSService.DataClasses
 
         public static string FindVehicleTypeNameByID(Guid _VehicleTypeID)
         {
-            MiscData.VehicleType thisFoundType = VehicleTypes.Find(delegate(MiscData.VehicleType vt) { return vt.VehicleTypeID == _VehicleTypeID; });
+            MiscData.VehicleType thisFoundType = VehicleTypes.Find(delegate (MiscData.VehicleType vt) { return vt.VehicleTypeID == _VehicleTypeID; });
             if (thisFoundType != null)
             { return thisFoundType.VehicleTypeName; }
             else
@@ -996,7 +994,7 @@ namespace FPSService.DataClasses
 
         public static string FindTowLocationNameByID(Guid _TowLocationID)
         {
-            MiscData.TowLocation thisFoundLocation = TowLocations.Find(delegate(MiscData.TowLocation tl) { return tl.TowLocationID == _TowLocationID; });
+            MiscData.TowLocation thisFoundLocation = TowLocations.Find(delegate (MiscData.TowLocation tl) { return tl.TowLocationID == _TowLocationID; });
             if (thisFoundLocation != null)
             { return thisFoundLocation.TowLocationName; }
             else
@@ -1005,7 +1003,7 @@ namespace FPSService.DataClasses
 
         public static string FindContractorNameByID(Guid _ContractorID)
         {
-            MiscData.Contractors thisFoundContractor = Contractors.Find(delegate(MiscData.Contractors c) { return c.ContractorID == _ContractorID; });
+            MiscData.Contractors thisFoundContractor = Contractors.Find(delegate (MiscData.Contractors c) { return c.ContractorID == _ContractorID; });
             if (thisFoundContractor != null)
             { return thisFoundContractor.ContractCompanyName; }
             else
@@ -1014,7 +1012,7 @@ namespace FPSService.DataClasses
 
         public static string FindTruckNumberByID(Guid _FleetVehicleID)
         {
-            TowTruck.TowTruck thisFoundTruck = currentTrucks.Find(delegate(TowTruck.TowTruck t) { return t.Extended.FleetVehicleID == _FleetVehicleID; });
+            TowTruck.TowTruck thisFoundTruck = currentTrucks.Find(delegate (TowTruck.TowTruck t) { return t.Extended.FleetVehicleID == _FleetVehicleID; });
             if (thisFoundTruck != null)
             { return thisFoundTruck.TruckNumber; }
             else
@@ -1027,7 +1025,7 @@ namespace FPSService.DataClasses
 
         public static void ForceDriverLogoff(Guid _DriverID)
         {
-            TowTruck.TowTruck thisFoundTruck = currentTrucks.Find(delegate(TowTruck.TowTruck t) { return t.Driver.DriverID == _DriverID; });
+            TowTruck.TowTruck thisFoundTruck = currentTrucks.Find(delegate (TowTruck.TowTruck t) { return t.Driver.DriverID == _DriverID; });
             if (thisFoundTruck != null)
             {
                 thisFoundTruck.Status.VehicleStatus = "Waiting for Driver Login";
@@ -1052,7 +1050,7 @@ namespace FPSService.DataClasses
 
         public static void AddBeatSchedule(MiscData.BeatSchedule thisSchedule)
         {
-            MiscData.BeatSchedule foundSchedule = theseSchedules.Find(delegate(MiscData.BeatSchedule mySchedule) { return mySchedule.BeatScheduleID == thisSchedule.BeatScheduleID && mySchedule.BeatID == thisSchedule.BeatID; });
+            MiscData.BeatSchedule foundSchedule = theseSchedules.Find(delegate (MiscData.BeatSchedule mySchedule) { return mySchedule.BeatScheduleID == thisSchedule.BeatScheduleID && mySchedule.BeatID == thisSchedule.BeatID; });
             if (foundSchedule == null)
             {
                 theseSchedules.Add(thisSchedule);
@@ -1069,14 +1067,14 @@ namespace FPSService.DataClasses
             MiscData.BeatSchedule foundSchedule;
             if (dtToday == "Saturday" || dtToday == "Sunday")
             {
-                foundSchedule = theseSchedules.Find(delegate(MiscData.BeatSchedule mySchedule)
+                foundSchedule = theseSchedules.Find(delegate (MiscData.BeatSchedule mySchedule)
                 {
                     return mySchedule.BeatID == BeatID && mySchedule.Logon <= DateTime.Now && mySchedule.LogOff >= DateTime.Now && mySchedule.Weekday == false;
                 });
             }
             else
             {
-                foundSchedule = theseSchedules.Find(delegate(MiscData.BeatSchedule mySchedule)
+                foundSchedule = theseSchedules.Find(delegate (MiscData.BeatSchedule mySchedule)
                 {
                     return mySchedule.BeatID == BeatID && mySchedule.Logon <= DateTime.Now && mySchedule.LogOff >= DateTime.Now && mySchedule.Weekday == true;
                 });
