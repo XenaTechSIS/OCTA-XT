@@ -129,11 +129,11 @@
   <wsdl:message name="ITowTruckService_SendMessage_OutputMessage">
     <wsdl:part name="parameters" element="tns:SendMessageResponse" />
   </wsdl:message>
-  <wsdl:message name="ITowTruckService_getIncidentData_InputMessage">
-    <wsdl:part name="parameters" element="tns:getIncidentData" />
+  <wsdl:message name="ITowTruckService_GetIncidentData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetIncidentData" />
   </wsdl:message>
-  <wsdl:message name="ITowTruckService_getIncidentData_OutputMessage">
-    <wsdl:part name="parameters" element="tns:getIncidentDataResponse" />
+  <wsdl:message name="ITowTruckService_GetIncidentData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetIncidentDataResponse" />
   </wsdl:message>
   <wsdl:message name="ITowTruckService_ResetAlarm_InputMessage">
     <wsdl:part name="parameters" element="tns:ResetAlarm" />
@@ -408,9 +408,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ITowTruckService/SendMessage" message="tns:ITowTruckService_SendMessage_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ITowTruckService/SendMessageResponse" message="tns:ITowTruckService_SendMessage_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="getIncidentData">
-      <wsdl:input wsaw:Action="http://tempuri.org/ITowTruckService/getIncidentData" message="tns:ITowTruckService_getIncidentData_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ITowTruckService/getIncidentDataResponse" message="tns:ITowTruckService_getIncidentData_OutputMessage" />
+    <wsdl:operation name="GetIncidentData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITowTruckService/GetIncidentData" message="tns:ITowTruckService_GetIncidentData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITowTruckService/GetIncidentDataResponse" message="tns:ITowTruckService_GetIncidentData_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="ResetAlarm">
       <wsdl:input wsaw:Action="http://tempuri.org/ITowTruckService/ResetAlarm" message="tns:ITowTruckService_ResetAlarm_InputMessage" />
@@ -723,8 +723,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="getIncidentData">
-      <soap:operation soapAction="http://tempuri.org/ITowTruckService/getIncidentData" style="document" />
+    <wsdl:operation name="GetIncidentData">
+      <soap:operation soapAction="http://tempuri.org/ITowTruckService/GetIncidentData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

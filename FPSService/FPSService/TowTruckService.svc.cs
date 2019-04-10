@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel.Activation;
-using FPSService.BeatData;
+﻿using FPSService.BeatData;
 using FPSService.DataClasses;
 using FPSService.Logging;
 using FPSService.MiscData;
 using FPSService.SQL;
 using FPSService.TowTruck;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.ServiceModel.Activation;
 
 namespace FPSService
 {
@@ -352,40 +352,38 @@ namespace FPSService
             return myTrucks;
         }
 
-        public List<IncidentDisplay> getIncidentData()
+        public List<IncidentDisplay> GetIncidentData()
         {
             var idl = new List<IncidentDisplay>();
             var mySQL = new SQLCode();
-            foreach (var ta in GlobalData.Assists)
+            foreach (var assist in GlobalData.Assists)
             {
-                var inc = GlobalData.FindIncidentByID(ta.IncidentID);
-                var tt = GlobalData.FindTowTruckByTruckID(ta.FleetVehicleID);
+                var incident = GlobalData.FindIncidentByID(assist.IncidentID);
+                var towTruck = GlobalData.FindTowTruckByTruckID(assist.FleetVehicleID);
+                var incidentType = GlobalData.FindIncidentTypeNameByID(assist.IncidentTypeID);
+                var vehicleType = GlobalData.FindVehicleTypeNameByID(assist.VehicleTypeID);
+                var contractCompanyName = GlobalData.Contractors.FirstOrDefault(c => c.ContractorID == assist.ContractorID)?.ContractCompanyName;
 
                 var State = "Not Connected";
-                if (tt != null) State = tt.Status.VehicleStatus;
+                if (towTruck != null) State = towTruck.Status.VehicleStatus;
 
-                if (inc != null)
+                if (incident != null)
                 {
-                    var id = new IncidentDisplay();
-                    id.IncidentID = inc.IncidentID;
-                    id.IncidentNumber = inc.IncidentNumber;
-                    id.AssistNumber = ta.AssistNumber;
-                    id.BeatNumber = inc.BeatNumber;
-                    //id.TruckNumber = tt.TruckNumber;
-                    //id.DriverName = tt.Driver.LastName + ", " + tt.Driver.FirstName;
-                    id.TruckNumber = mySQL.GetTruckNumberByID(ta.FleetVehicleID);
-                    id.DriverName = mySQL.FindDriverNameByID(ta.DriverID);
-                    id.DispatchComments = inc.Description;
-                    id.Timestamp = inc.TimeStamp;
-                    id.DispatchNumber = inc.IncidentNumber;
-                    //id.ContractorName = tt.Extended.ContractorName;
-                    id.ContractorName = GlobalData.FindContractorNameByID(ta.ContractorID);
-                    id.IsIncidentComplete = ta.AssistComplete;
-                    id.State = State;
-                    id.IsAcked = ta.Acked;
-                    id.contractor = GlobalData.Contractors.Where(c => c.ContractorID == ta.ContractorID)
-                        .FirstOrDefault();
-                    id.Assists = GlobalData.FindAssistByID(ta.AssistID);
+                    var id = new IncidentDisplay
+                    {
+                        Incident = incident,
+                        Assist = assist,
+
+                        TruckNumber = mySQL.GetTruckNumberByID(assist.FleetVehicleID),
+                        DriverName = mySQL.FindDriverNameByID(assist.DriverID),
+                        State = State,
+
+                        ContractorName = GlobalData.FindContractorNameByID(assist.ContractorID),
+                        ContractCompanyName = contractCompanyName,
+
+                        VehicleTypeName = vehicleType,
+                        IncidentTypeName = incidentType
+                    };
                     idl.Add(id);
                 }
             }
@@ -1497,7 +1495,7 @@ namespace FPSService
             beat.StartDate = DateTime.Now;
             beat.EndDate = DateTime.Now.AddYears(25);
             beat.FreewayID = 0;
-           
+
             var sql = new SQLCode();
             var result = sql.CreateBeat2(beat);
             Beats.LoadBeats();

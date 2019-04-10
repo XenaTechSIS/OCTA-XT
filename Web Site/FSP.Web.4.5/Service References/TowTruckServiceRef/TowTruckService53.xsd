@@ -42,11 +42,22 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Assist" nillable="true" type="tns:Assist" />
-  <xs:complexType name="Contractors">
+  <xs:complexType name="Incident">
     <xs:sequence>
-      <xs:element minOccurs="0" name="ContractCompanyName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ContractorID" type="ser:guid" />
+      <xs:element minOccurs="0" name="BeatNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BeatSegmentID" type="ser:guid" />
+      <xs:element minOccurs="0" name="CreatedBy" type="ser:guid" />
+      <xs:element minOccurs="0" name="CrossStreet1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CrossStreet2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Direction" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FreewayID" type="xs:int" />
+      <xs:element minOccurs="0" name="IncidentID" type="ser:guid" />
+      <xs:element minOccurs="0" name="IncidentNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Location" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LocationID" type="ser:guid" />
+      <xs:element minOccurs="0" name="TimeStamp" type="xs:dateTime" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="Contractors" nillable="true" type="tns:Contractors" />
+  <xs:element name="Incident" nillable="true" type="tns:Incident" />
 </xs:schema>

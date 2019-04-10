@@ -1,167 +1,207 @@
 ﻿<h3>
-   {{title}}
+    {{title}}
 </h3>
 <table class="table table-striped table-hover table-bordered">
-   <thead>
-      <tr class="idosomething">
-         <th class="nowrap"
-            ng-show="columns[0].show"
-            ng-click="updateSortColumn('BeatNumber')">
-            Beat #
-         </th>
-         <th class="nowrap"
-            ng-show="columns[1].show"
-            ng-click="updateSortColumn('TruckNumber')">
-            Truck #
-         </th>
-         <th class="nowrap"
-            ng-show="columns[2].show"
-            ng-click="updateSortColumn('DriverName')">
-            Driver
-         </th>
-         <th class="nowrap"
-            ng-show="columns[3].show"
-            ng-click="updateSortColumn('DispatchComments')">
-            Comments 
-         </th>
-         <th class="nowrap"
-            ng-show="columns[4].show"
-            ng-click="updateSortColumn('Timestamp')">
-            Time
-         </th>
-         <th class="nowrap"
-            ng-show="columns[5].show"
-            ng-click="updateSortColumn('IncidentNumber')">
-            Dispatch #
-         </th>
-         <th class="nowrap"
-            ng-show="columns[6].show"
-            ng-click="updateSortColumn('State')">
-            State
-         </th>
-         <th class="nowrap"
-            ng-show="columns[7].show"
-            ng-click="updateSortColumn('ContractCompanyName')">
-            Contractor
-         </th>
-         <th class="nowrap"
-            ng-show="columns[8].show"
-            ng-click="updateSortColumn('AssistNumber')">
-            Assist #
-         </th>
+    <thead>
+        <tr class="idosomething">
+            <th class="nowrap"
+                ng-show="columns[0].show"
+                ng-click="updateSortColumn('BeatNumber')">
+                Beat #
+            </th>
+            <th class="nowrap"
+                ng-show="columns[1].show"
+                ng-click="updateSortColumn('TruckNumber')">
+                Truck #
+            </th>
+            <th class="nowrap"
+                ng-show="columns[2].show"
+                ng-click="updateSortColumn('DriverName')">
+                Driver
+            </th>
+            <th class="nowrap"
+                ng-show="columns[3].show"
+                ng-click="updateSortColumn('Timestamp')">
+                Time
+            </th>
+            <th class="nowrap"
+                ng-show="columns[4].show"
+                ng-click="updateSortColumn('LocationDescription')">
+                Location Description
+            </th>
+            <th class="nowrap"
+                ng-show="columns[5].show"
+                ng-click="updateSortColumn('Direction')">
+                Direction
+            </th>
+            <th class="nowrap"
+                ng-show="columns[6].show"
+                ng-click="updateSortColumn('VehicleTypeName')">
+                Vehicle Type
+            </th>
+            <th class="nowrap"
+                ng-show="columns[7].show"
+                ng-click="updateSortColumn('IncidentTypeName')">
+                Incident Type
+            </th>
+            <th class="nowrap"
+                ng-show="columns[8].show"
+                ng-click="updateSortColumn('AssistTypeName')">
+                Assist Type
+            </th>
+            <th class="nowrap"
+                ng-show="columns[9].show"
+                ng-click="updateSortColumn('Assist.Make')">
+                Vehicle Make
+            </th>
+            <th class="nowrap"
+                ng-show="columns[10].show"
+                ng-click="updateSortColumn('Assist.Color')">
+                Vehicle Color
+            </th>
+            <th class="nowrap"
+                ng-show="columns[11].show"
+                ng-click="updateSortColumn('Assist.LicensePlate')">
+                Vehicle License Plate
+            </th>
+            <th class="nowrap"
+                ng-show="columns[12].show"
+                ng-click="updateSortColumn('DispatchComments')">
+                Comments
+            </th>
 
-         <th class="nowrap"
-            ng-show="columns[9].show"
-            ng-click="updateSortColumn('Assists.Color')">
-            Vehicle Color
-         </th>
-         <th class="nowrap"
-            ng-show="columns[10].show"
-            ng-click="updateSortColumn('Assists.LicensePlate')">
-            Vehicle License Plate
-         </th>
-         <th class="nowrap"
-            ng-show="columns[11].show"
-            ng-click="updateSortColumn('Assists.Make')">
-            Vehicle Make
-         </th>
-         <th class="nowrap"
-            ng-show="columns[12].show"
-            ng-click="updateSortColumn('Assists.DropZone')">
-            Drop Zone
-         </th>
-         <th class="nowrap"
-            ng-show="columns[13].show"
-            ng-click="updateSortColumn('Assists.DispatchTime')">
-            Dispatch Time
-         </th>
-         <th class="nowrap"
-            ng-show="columns[14].show"
-            ng-click="updateSortColumn('Assists.State')">
-            State
-         </th>
-         <th class="nowrap"
-            ng-show="columns[15].show"
-            ng-click="updateSortColumn('Assists.CustomerLastName')">
-            Customer Last Name
-         </th>
-         <th class="nowrap"
-            ng-show="columns[16].show"
-            ng-click="updateSortColumn('Assists.CustomerWaitTime')">
-            Customer Wait Time
-         </th>
-         <th class="nowrap"
-            ng-show="columns[17].show"
-            ng-click="updateSortColumn('Assists.Tip')">
-            Tip
-         </th>
-         <th class="nowrap"
-            ng-show="columns[18].show"
-            ng-click="updateSortColumn('Assists.TipDetail')">
-            Tip Detail
-         </th>
-      </tr>
-   </thead>
-   <tbody>
-      <tr ng-repeat="incident in incidents|orderBy:sortColumn:predicate">
-         <td ng-show="columns[0].show">
-            {{incident.BeatNumber}}
-         </td>
-         <td ng-show="columns[1].show">
-            {{incident.TruckNumber}}
-         </td>
-         <td ng-show="columns[2].show">
-            {{incident.DriverName}}
-         </td>
-         <td ng-show="columns[3].show"
-            class="dispatch-comments">
-            {{incident.DispatchComments}}
-         </td>
-         <td ng-show="columns[4].show">
-            {{incident.Timestamp}}
-         </td>
-         <td ng-show="columns[5].show">
-            {{incident.IncidentNumber}}
-         </td>
-         <td ng-show="columns[6].show">
-            {{incident.State}}
-         </td>
-         <td ng-show="columns[7].show">
-            {{incident.ContractCompanyName}}
-         </td>
-         <td ng-show="columns[8].show">
-            {{incident.Assists.AssistNumber}}
-         </td>
-         <td ng-show="columns[9].show">
-            {{incident.Assists.Color}}
-         </td>
-         <td ng-show="columns[10].show">
-            {{incident.Assists.LicensePlate}}
-         </td>
-         <td ng-show="columns[11].show">
-            {{incident.Assists.Make}}
-         </td>
-         <td ng-show="columns[12].show">
-            {{incident.Assists.DropZone}}
-         </td>
-         <td ng-show="columns[13].show">
-            {{incident.Assists.DispatchTime|datetimefilter}}
-         </td>
-         <td ng-show="columns[14].show">
-            {{incident.Assists.State}}
-         </td>
-         <td ng-show="columns[15].show">
-            {{incident.Assists.CustomerLastName}}
-         </td>
-         <td ng-show="columns[16].show">
-            {{incident.Assists.CustomerWaitTime}}
-         </td>
-         <td ng-show="columns[17].show">
-            {{incident.Assists.Tip}}
-         </td>
-         <td ng-show="columns[18].show">
-            {{incident.Assists.TipDetail}}
-         </td>
-      </tr>
-   </tbody>
+            <th class="nowrap"
+                ng-show="columns[13].show"
+                ng-click="updateSortColumn('IncidentNumber')">
+                Dispatch #
+            </th>
+            <th class="nowrap"
+                ng-show="columns[14].show"
+                ng-click="updateSortColumn('State')">
+                State
+            </th>
+            <th class="nowrap"
+                ng-show="columns[15].show"
+                ng-click="updateSortColumn('ContractCompanyName')">
+                Contractor
+            </th>
+            <th class="nowrap"
+                ng-show="columns[16].show"
+                ng-click="updateSortColumn('AssistNumber')">
+                Assist #
+            </th>
+            <th class="nowrap"
+                ng-show="columns[17].show"
+                ng-click="updateSortColumn('Assist.DropZone')">
+                Drop Zone
+            </th>
+            <th class="nowrap"
+                ng-show="columns[18].show"
+                ng-click="updateSortColumn('Assist.DispatchTime')">
+                Dispatch Time
+            </th>
+            <th class="nowrap"
+                ng-show="columns[19].show"
+                ng-click="updateSortColumn('Assist.State')">
+                State
+            </th>
+            <th class="nowrap"
+                ng-show="columns[20].show"
+                ng-click="updateSortColumn('Assist.CustomerLastName')">
+                Customer Last Name
+            </th>
+            <th class="nowrap"
+                ng-show="columns[21].show"
+                ng-click="updateSortColumn('Assist.CustomerWaitTime')">
+                Customer Wait Time
+            </th>
+            <th class="nowrap"
+                ng-show="columns[22].show"
+                ng-click="updateSortColumn('Assist.Tip')">
+                Tip
+            </th>
+            <th class="nowrap"
+                ng-show="columns[23].show"
+                ng-click="updateSortColumn('Assist.TipDetail')">
+                Tip Detail
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="record in records|orderBy:sortColumn:predicate">
+            <td ng-show="columns[0].show">
+                {{record.Incident.BeatNumber}}
+            </td>
+            <td ng-show="columns[1].show">
+                {{record.TruckNumber}}
+            </td>
+            <td ng-show="columns[2].show">
+                {{record.DriverName}}
+            </td>
+            <td ng-show="columns[3].show">
+                {{record.Incident.Timestamp|date}}
+            </td>
+            <td ng-show="columns[4].show">
+                {{record.Incident.Location}} {{record.Incident.CrossStreet1}}
+            </td>
+            <td ng-show="columns[5].show">
+                {{record.Incident.Direction}}
+            </td>
+            <td ng-show="columns[6].show">
+                {{record.VehicleTypeName}}
+            </td>
+            <td ng-show="columns[7].show">
+                {{record.IncidentTypeName}}
+            </td>
+            <td ng-show="columns[8].show">
+                {{record.Assist.SelectedServices}}
+            </td>
+            <td ng-show="columns[9].show">
+                {{record.Assist.Make}}
+            </td>
+            <td ng-show="columns[10].show">
+                {{record.Assist.Color}}
+            </td>
+            <td ng-show="columns[11].show">
+                {{record.Assist.LicensePlate}}
+            </td>
+            <td ng-show="columns[12].show"
+                class="dispatch-comments">
+                {{record.Incident.Description}}
+            </td>
+            <td ng-show="columns[13].show">
+                {{record.Incident.IncidentNumber}}
+            </td>
+            <td ng-show="columns[14].show">
+                {{record.State}}
+            </td>
+            <td ng-show="columns[15].show">
+                {{record.ContractCompanyName}}
+            </td>
+            <td ng-show="columns[16].show">
+                {{record.Assist.AssistNumber}}
+            </td>
+            <td ng-show="columns[17].show">
+                {{record.Assist.DropZone}}
+            </td>
+            <td ng-show="columns[18].show">
+                {{record.Assist.DispatchTime|datetimefilter}}
+            </td>
+            <td ng-show="columns[19].show">
+                {{record.Assist.State}}
+            </td>
+            <td ng-show="columns[20].show">
+                {{record.Assist.CustomerLastName}}
+            </td>
+            <td ng-show="columns[21].show">
+                {{record.Assist.CustomerWaitTime}}
+            </td>
+            <td ng-show="columns[22].show">
+                {{record.Assist.Tip}}
+            </td>
+            <td ng-show="columns[23].show">
+                {{record.Assist.TipDetail}}
+            </td>
+        </tr>
+    </tbody>
 </table>

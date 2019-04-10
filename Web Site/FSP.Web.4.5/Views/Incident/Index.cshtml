@@ -7,7 +7,7 @@
 <div ng-app="octaApp" ng-cloak>
     <div ng-controller="incidentController">
         <div class="row">
-            <div class="col-sm-3">                
+            <div class="col-sm-3">
                 <div class="incident-page-header-container">
                     {{header}} <i class="fa fa-spinner fa-spin" ng-show="isBusyGettingIncidents"></i>
                 </div>
@@ -45,22 +45,22 @@
                 </a>
             </div>
         </div>
-        
+
         <br />
-              
+
         <incident-list ng-if="showDispatched"
                        title="dispatchedIncidentsTitle"
-                       incidents="dispatchedIncidents"
+                       records="dispatchedIncidents"
                        columns="columns"></incident-list>
 
         <incident-list ng-if="showActive"
                        title="activeIncidentsTitle"
-                       incidents="activeIncidents"
+                       records="activeIncidents"
                        columns="columns"></incident-list>
 
         <incident-list ng-if="showTodays"
                        title="todaysCompletedTitle"
-                       incidents="todaysCompletedIncidents"
+                       records="todaysCompletedIncidents"
                        columns="columns"></incident-list>
 
 
