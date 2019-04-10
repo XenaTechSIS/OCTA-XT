@@ -1,7 +1,7 @@
 ﻿(function () {
   'use strict';
-  angular.module("octaApp.incident").controller("incidentController", ['$scope', '$rootScope', '$filter', '$interval', 'incidentService', incidentController]);
-  function incidentController($scope, $rootScope, $filter, $interval, incidentService) {
+  angular.module("octaApp.incident").controller("incidentController", ['$scope', '$filter', '$interval', 'incidentService', incidentController]);
+  function incidentController($scope, $filter, $interval, incidentService) {
     var refreshIntervalInMilliseconds = 30000;
     $scope.header = "Incidents";
     $scope.showDispatched = false;
@@ -138,7 +138,7 @@
     };
 
     $scope.getIncidents = function () {
-      console.log('%cGetting incidents', 'color:red');
+      console.log('%cGetting incidents', 'color:yellow');
       $scope.isBusyGettingIncidents = true;
       incidentService.getIncidents().then(function (rawIncidents) {
         $scope.isBusyGettingIncidents = false;

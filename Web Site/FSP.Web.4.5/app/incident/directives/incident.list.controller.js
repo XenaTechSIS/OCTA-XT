@@ -7,7 +7,7 @@
          restrict: 'E',
          templateUrl: $(".websiteUrl").text().trim() + '/app/incident/directives/incident.list.template.html',
          scope: {
-            incidents: "=",
+            records: "=",
             title: "=",
             columns: "="
          },

@@ -4755,46 +4755,22 @@ namespace FSP.Web.TowTruckServiceRef {
         private FSP.Web.TowTruckServiceRef.Assist AssistField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string AssistTypeNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string BeatNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ContractCompanyNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ContractorNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DirectionField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DispatchCommentsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DispatchNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string DriverNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Guid IncidentIDField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string IncidentNumberField;
+        private FSP.Web.TowTruckServiceRef.Incident IncidentField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string IncidentTypeNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string LocationDescriptionField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string StateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime TimestampField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string TruckNumberField;
@@ -4826,32 +4802,6 @@ namespace FSP.Web.TowTruckServiceRef {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string AssistTypeName {
-            get {
-                return this.AssistTypeNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.AssistTypeNameField, value) != true)) {
-                    this.AssistTypeNameField = value;
-                    this.RaisePropertyChanged("AssistTypeName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string BeatNumber {
-            get {
-                return this.BeatNumberField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BeatNumberField, value) != true)) {
-                    this.BeatNumberField = value;
-                    this.RaisePropertyChanged("BeatNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string ContractCompanyName {
             get {
                 return this.ContractCompanyNameField;
@@ -4878,45 +4828,6 @@ namespace FSP.Web.TowTruckServiceRef {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Direction {
-            get {
-                return this.DirectionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DirectionField, value) != true)) {
-                    this.DirectionField = value;
-                    this.RaisePropertyChanged("Direction");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DispatchComments {
-            get {
-                return this.DispatchCommentsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DispatchCommentsField, value) != true)) {
-                    this.DispatchCommentsField = value;
-                    this.RaisePropertyChanged("DispatchComments");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DispatchNumber {
-            get {
-                return this.DispatchNumberField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DispatchNumberField, value) != true)) {
-                    this.DispatchNumberField = value;
-                    this.RaisePropertyChanged("DispatchNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string DriverName {
             get {
                 return this.DriverNameField;
@@ -4930,27 +4841,14 @@ namespace FSP.Web.TowTruckServiceRef {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Guid IncidentID {
+        public FSP.Web.TowTruckServiceRef.Incident Incident {
             get {
-                return this.IncidentIDField;
+                return this.IncidentField;
             }
             set {
-                if ((this.IncidentIDField.Equals(value) != true)) {
-                    this.IncidentIDField = value;
-                    this.RaisePropertyChanged("IncidentID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string IncidentNumber {
-            get {
-                return this.IncidentNumberField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IncidentNumberField, value) != true)) {
-                    this.IncidentNumberField = value;
-                    this.RaisePropertyChanged("IncidentNumber");
+                if ((object.ReferenceEquals(this.IncidentField, value) != true)) {
+                    this.IncidentField = value;
+                    this.RaisePropertyChanged("Incident");
                 }
             }
         }
@@ -4969,19 +4867,6 @@ namespace FSP.Web.TowTruckServiceRef {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string LocationDescription {
-            get {
-                return this.LocationDescriptionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.LocationDescriptionField, value) != true)) {
-                    this.LocationDescriptionField = value;
-                    this.RaisePropertyChanged("LocationDescription");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string State {
             get {
                 return this.StateField;
@@ -4990,19 +4875,6 @@ namespace FSP.Web.TowTruckServiceRef {
                 if ((object.ReferenceEquals(this.StateField, value) != true)) {
                     this.StateField = value;
                     this.RaisePropertyChanged("State");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime Timestamp {
-            get {
-                return this.TimestampField;
-            }
-            set {
-                if ((this.TimestampField.Equals(value) != true)) {
-                    this.TimestampField = value;
-                    this.RaisePropertyChanged("Timestamp");
                 }
             }
         }
@@ -5618,6 +5490,243 @@ namespace FSP.Web.TowTruckServiceRef {
                 if ((this.x1098Field.Equals(value) != true)) {
                     this.x1098Field = value;
                     this.RaisePropertyChanged("x1098");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Incident", Namespace="http://schemas.datacontract.org/2004/07/FPSService.MiscData")]
+    [System.SerializableAttribute()]
+    public partial class Incident : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BeatNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid BeatSegmentIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid CreatedByField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CrossStreet1Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CrossStreet2Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DirectionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int FreewayIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid IncidentIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IncidentNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LocationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid LocationIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime TimeStampField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BeatNumber {
+            get {
+                return this.BeatNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BeatNumberField, value) != true)) {
+                    this.BeatNumberField = value;
+                    this.RaisePropertyChanged("BeatNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid BeatSegmentID {
+            get {
+                return this.BeatSegmentIDField;
+            }
+            set {
+                if ((this.BeatSegmentIDField.Equals(value) != true)) {
+                    this.BeatSegmentIDField = value;
+                    this.RaisePropertyChanged("BeatSegmentID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid CreatedBy {
+            get {
+                return this.CreatedByField;
+            }
+            set {
+                if ((this.CreatedByField.Equals(value) != true)) {
+                    this.CreatedByField = value;
+                    this.RaisePropertyChanged("CreatedBy");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CrossStreet1 {
+            get {
+                return this.CrossStreet1Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CrossStreet1Field, value) != true)) {
+                    this.CrossStreet1Field = value;
+                    this.RaisePropertyChanged("CrossStreet1");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CrossStreet2 {
+            get {
+                return this.CrossStreet2Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CrossStreet2Field, value) != true)) {
+                    this.CrossStreet2Field = value;
+                    this.RaisePropertyChanged("CrossStreet2");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Direction {
+            get {
+                return this.DirectionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DirectionField, value) != true)) {
+                    this.DirectionField = value;
+                    this.RaisePropertyChanged("Direction");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int FreewayID {
+            get {
+                return this.FreewayIDField;
+            }
+            set {
+                if ((this.FreewayIDField.Equals(value) != true)) {
+                    this.FreewayIDField = value;
+                    this.RaisePropertyChanged("FreewayID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid IncidentID {
+            get {
+                return this.IncidentIDField;
+            }
+            set {
+                if ((this.IncidentIDField.Equals(value) != true)) {
+                    this.IncidentIDField = value;
+                    this.RaisePropertyChanged("IncidentID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string IncidentNumber {
+            get {
+                return this.IncidentNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IncidentNumberField, value) != true)) {
+                    this.IncidentNumberField = value;
+                    this.RaisePropertyChanged("IncidentNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Location {
+            get {
+                return this.LocationField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LocationField, value) != true)) {
+                    this.LocationField = value;
+                    this.RaisePropertyChanged("Location");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid LocationID {
+            get {
+                return this.LocationIDField;
+            }
+            set {
+                if ((this.LocationIDField.Equals(value) != true)) {
+                    this.LocationIDField = value;
+                    this.RaisePropertyChanged("LocationID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime TimeStamp {
+            get {
+                return this.TimeStampField;
+            }
+            set {
+                if ((this.TimeStampField.Equals(value) != true)) {
+                    this.TimeStampField = value;
+                    this.RaisePropertyChanged("TimeStamp");
                 }
             }
         }

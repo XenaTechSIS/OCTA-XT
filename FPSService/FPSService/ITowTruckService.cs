@@ -590,24 +590,15 @@ namespace FPSService
     [DataContract]
     public class IncidentDisplay
     {
-        [DataMember] public Guid IncidentID { get; set; }
-        [DataMember] public string IncidentNumber { get; set; }
-        [DataMember] public string BeatNumber { get; set; }
+        [DataMember] public Incident Incident { get; set; }
+        [DataMember] public Assist Assist { get; set; }
         [DataMember] public string TruckNumber { get; set; }
         [DataMember] public string DriverName { get; set; }
-        [DataMember] public string DispatchComments { get; set; }
-        [DataMember] public DateTime Timestamp { get; set; }
         [DataMember] public string State { get; set; }
-        [DataMember] public string DispatchNumber { get; set; }
         [DataMember] public string ContractorName { get; set; }
         [DataMember] public string ContractCompanyName { get; set; }
-        [DataMember] public Assist Assist { get; set; }
-
-        [DataMember] public string LocationDescription { get; set; }
-        [DataMember] public string Direction { get; set; }
         [DataMember] public string VehicleTypeName { get; set; }
         [DataMember] public string IncidentTypeName { get; set; }
-        [DataMember] public string AssistTypeName { get; set; }
     }
 
     #endregion

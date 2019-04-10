@@ -362,7 +362,6 @@ namespace FPSService
                 var towTruck = GlobalData.FindTowTruckByTruckID(assist.FleetVehicleID);
                 var incidentType = GlobalData.FindIncidentTypeNameByID(assist.IncidentTypeID);
                 var vehicleType = GlobalData.FindVehicleTypeNameByID(assist.VehicleTypeID);
-                var towLocation = GlobalData.FindTowLocationNameByID(assist.TowLocationID);
                 var contractCompanyName = GlobalData.Contractors.FirstOrDefault(c => c.ContractorID == assist.ContractorID)?.ContractCompanyName;
 
                 var State = "Not Connected";
@@ -372,24 +371,18 @@ namespace FPSService
                 {
                     var id = new IncidentDisplay
                     {
-                        IncidentID = incident.IncidentID,
-                        IncidentNumber = incident.IncidentNumber,
-                        BeatNumber = incident.BeatNumber,
+                        Incident = incident,
+                        Assist = assist,
+
                         TruckNumber = mySQL.GetTruckNumberByID(assist.FleetVehicleID),
                         DriverName = mySQL.FindDriverNameByID(assist.DriverID),
-                        DispatchComments = incident.Description,
-                        Timestamp = incident.TimeStamp,
-                        DispatchNumber = incident.IncidentNumber,
                         State = State,
 
                         ContractorName = GlobalData.FindContractorNameByID(assist.ContractorID),
                         ContractCompanyName = contractCompanyName,
-                        Assist = assist,
-                        LocationDescription = towLocation,
-                        Direction = incident.Direction,
+
                         VehicleTypeName = vehicleType,
-                        IncidentTypeName = incidentType,
-                        AssistTypeName = ""
+                        IncidentTypeName = incidentType
                     };
                     idl.Add(id);
                 }

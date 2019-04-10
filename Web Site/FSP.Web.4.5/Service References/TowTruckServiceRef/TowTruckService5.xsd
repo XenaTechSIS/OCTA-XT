@@ -391,20 +391,12 @@
   <xs:complexType name="IncidentDisplay">
     <xs:sequence>
       <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/FPSService.MiscData" minOccurs="0" name="Assist" nillable="true" type="q2:Assist" />
-      <xs:element minOccurs="0" name="AssistTypeName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="BeatNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ContractCompanyName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ContractorName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Direction" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="DispatchComments" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="DispatchNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DriverName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="IncidentID" type="ser:guid" />
-      <xs:element minOccurs="0" name="IncidentNumber" nillable="true" type="xs:string" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/FPSService.MiscData" minOccurs="0" name="Incident" nillable="true" type="q3:Incident" />
       <xs:element minOccurs="0" name="IncidentTypeName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="LocationDescription" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="State" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Timestamp" type="xs:dateTime" />
       <xs:element minOccurs="0" name="TruckNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="VehicleTypeName" nillable="true" type="xs:string" />
     </xs:sequence>
@@ -464,7 +456,7 @@
       <xs:element minOccurs="0" name="BeatExtent" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BeatID" type="ser:guid" />
       <xs:element minOccurs="0" name="BeatNumber" nillable="true" type="xs:string" />
-      <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="BeatSegments" nillable="true" type="q3:ArrayOfguid" />
+      <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="BeatSegments" nillable="true" type="q4:ArrayOfguid" />
       <xs:element minOccurs="0" name="EndDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="FreewayID" type="xs:int" />
       <xs:element minOccurs="0" name="IsTemporary" type="xs:boolean" />
