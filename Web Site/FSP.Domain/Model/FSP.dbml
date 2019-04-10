@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="fsp" Class="FSPDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=38.124.164.213\\OCTA,5815;Initial Catalog=fsp;Persist Security Info=True;User ID=sa" SettingsObjectName="FSP.Domain.Properties.Settings" SettingsPropertyName="fspConnectionString1" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=38.124.164.211\octa,5815;Initial Catalog=fsp;Persist Security Info=True;User ID=sa" SettingsObjectName="FSP.Domain.Properties.Settings" SettingsPropertyName="fspConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Assists" Member="Assists">
     <Type Name="Assist">
       <Column Name="AssistID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />

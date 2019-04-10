@@ -37,24 +37,42 @@ namespace FSPPlayback
             {
                 int id = Convert.ToInt32(row.Cells[0].Value);
                 GPSTrack currentTrack = GlobalData.allTrack[id];
-                gMapControl1.Position = new PointLatLng(currentTrack.Lat, currentTrack.Lon);
+                //gMapControl1.Position = new PointLatLng(currentTrack.Lat, currentTrack.Lon);
                 gMapControl1.Overlays.Clear();
-                GMapOverlay overlay = new GMapOverlay(gMapControl1, "base");
-                GMapMarkerGoogleGreen home = new GMapMarkerGoogleGreen(new PointLatLng(currentTrack.Lat, currentTrack.Lon));
-                overlay.Markers.Add(home);
-                gMapControl1.Overlays.Add(overlay);
+                gMapControl1.Position = new PointLatLng(currentTrack.Lat, currentTrack.Lon);
+                GMap.NET.WindowsForms.GMapOverlay markers = new GMap.NET.WindowsForms.GMapOverlay("markers");
+                GMap.NET.WindowsForms.GMapMarker marker =
+                    new GMap.NET.WindowsForms.Markers.GMarkerGoogle(
+                        new GMap.NET.PointLatLng(currentTrack.Lat, currentTrack.Lon),
+                        GMap.NET.WindowsForms.Markers.GMarkerGoogleType.red_small);
+                markers.Markers.Add(marker);
+                gMapControl1.Overlays.Add(markers);
+                //GMapOverlay overlay = new GMapOverlay(gMapControl1, "base");
+                //GMapMarkerGoogleGreen home = new GMapMarkerGoogleGreen(new PointLatLng(currentTrack.Lat, currentTrack.Lon));
+                //overlay.Markers.Add(home);
+                //gMapControl1.Overlays.Add(overlay);
             }
         }
 
         private void InitMap()
         {
-            gMapControl1.MapProvider = GMap.NET.MapProviders.OpenStreetMapProvider.Instance;
-            GMaps.Instance.Mode = AccessMode.ServerOnly;
-            gMapControl1.Position = new PointLatLng(35.0844, -106.6506);
-            GMapOverlay overlay = new GMapOverlay(gMapControl1, "base");
-            GMapMarkerGoogleGreen home = new GMapMarkerGoogleGreen(new PointLatLng(35.0844, -106.6506));
-            overlay.Markers.Add(home);
-            gMapControl1.Overlays.Add(overlay);
+            gMapControl1.MapProvider = GMap.NET.MapProviders.GoogleMapProvider.Instance;
+            GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerOnly;
+            gMapControl1.Position = new PointLatLng(33.779576, -117.867921);
+            gMapControl1.Zoom = 13;
+            gMapControl1.ShowCenter = false;
+            GMap.NET.WindowsForms.GMapOverlay markers = new GMap.NET.WindowsForms.GMapOverlay("markers");
+            GMap.NET.WindowsForms.GMapMarker marker =
+                new GMap.NET.WindowsForms.Markers.GMarkerGoogle(
+                    new GMap.NET.PointLatLng(33.779576, -117.867921),
+                    GMap.NET.WindowsForms.Markers.GMarkerGoogleType.blue_pushpin);
+            markers.Markers.Add(marker);
+            gMapControl1.Overlays.Add(markers);
+
+            //GMapOverlay overlay = new GMapOverlay(gMapControl1, "base");
+            //GMapMarkerGoogleGreen home = new GMapMarkerGoogleGreen(new PointLatLng(35.0844, -106.6506));
+            //overlay.Markers.Add(home);
+            //gMapControl1.Overlays.Add(overlay);
         }
 
         private void LoadBeats()
@@ -125,10 +143,19 @@ namespace FSPPlayback
             {
                 gMapControl1.Overlays.Clear();
             }
-            GMapOverlay overlay = new GMapOverlay(gMapControl1, "base");
-            GMapMarkerGoogleGreen home = new GMapMarkerGoogleGreen(new PointLatLng(currentTrack.Lat, currentTrack.Lon));
-            overlay.Markers.Add(home);
-            gMapControl1.Overlays.Add(overlay);
+            GMap.NET.WindowsForms.GMapOverlay markers = new GMap.NET.WindowsForms.GMapOverlay("markers");
+            GMap.NET.WindowsForms.GMapMarker marker =
+                new GMap.NET.WindowsForms.Markers.GMarkerGoogle(
+                    new GMap.NET.PointLatLng(currentTrack.Lat, currentTrack.Lon),
+                    GMap.NET.WindowsForms.Markers.GMarkerGoogleType.red_small);
+            markers.Markers.Add(marker);
+            gMapControl1.Overlays.Add(markers);
+
+            //GMapOverlay overlay = new GMapOverlay(gMapControl1, "base");
+            //GMapMarkerGoogleGreen home = new GMapMarkerGoogleGreen(new PointLatLng(currentTrack.Lat, currentTrack.Lon));
+            //overlay.Markers.Add(home);
+            //gMapControl1.Overlays.Add(overlay);
+
             foreach (DataGridViewRow row in gvData.Rows)
             {
                 if (Convert.ToInt32(row.Cells[0].Value) == iNum)
@@ -169,12 +196,22 @@ namespace FSPPlayback
                 mySQL.LoadTrackingData(cboTrucks.Text, dtStart, dtEnd, LogonOnly);
                 gvData.DataSource = GlobalData.allTrack;
                 GPSTrack firstTrack = GlobalData.allTrack[0];
-                gMapControl1.Position = new PointLatLng(firstTrack.Lat, firstTrack.Lon);
+
                 gMapControl1.Overlays.Clear();
-                GMapOverlay overlay = new GMapOverlay(gMapControl1, "base");
-                GMapMarkerGoogleGreen home = new GMapMarkerGoogleGreen(new PointLatLng(firstTrack.Lat, firstTrack.Lon));
-                overlay.Markers.Add(home);
-                gMapControl1.Overlays.Add(overlay);
+                gMapControl1.Position = new PointLatLng(firstTrack.Lat, firstTrack.Lon);
+
+                GMap.NET.WindowsForms.GMapOverlay markers = new GMap.NET.WindowsForms.GMapOverlay("markers");
+                GMap.NET.WindowsForms.GMapMarker marker =
+                    new GMap.NET.WindowsForms.Markers.GMarkerGoogle(
+                        new GMap.NET.PointLatLng(firstTrack.Lat, firstTrack.Lon),
+                        GMap.NET.WindowsForms.Markers.GMarkerGoogleType.red_small);
+                markers.Markers.Add(marker);
+                gMapControl1.Overlays.Add(markers);
+
+                //GMapOverlay overlay = new GMapOverlay(gMapControl1, "base");
+                //GMapMarkerGoogleGreen home = new GMapMarkerGoogleGreen(new PointLatLng(firstTrack.Lat, firstTrack.Lon));
+                //overlay.Markers.Add(home);
+                //gMapControl1.Overlays.Add(overlay);
                 iEventCount = GlobalData.allTrack.Count - 1;
                 foreach (DataGridViewRow row in gvData.Rows)
                 {
@@ -214,12 +251,22 @@ namespace FSPPlayback
                 mySQL.LoadTrackingDataByBeat(cboBeats.Text, dtStart, dtEnd, LogonOnly);
                 gvData.DataSource = GlobalData.allTrack;
                 GPSTrack firstTrack = GlobalData.allTrack[0];
-                gMapControl1.Position = new PointLatLng(firstTrack.Lat, firstTrack.Lon);
+
                 gMapControl1.Overlays.Clear();
-                GMapOverlay overlay = new GMapOverlay(gMapControl1, "base");
-                GMapMarkerGoogleGreen home = new GMapMarkerGoogleGreen(new PointLatLng(firstTrack.Lat, firstTrack.Lon));
-                overlay.Markers.Add(home);
-                gMapControl1.Overlays.Add(overlay);
+                gMapControl1.Position = new PointLatLng(firstTrack.Lat, firstTrack.Lon);
+
+                GMap.NET.WindowsForms.GMapOverlay markers = new GMap.NET.WindowsForms.GMapOverlay("markers");
+                GMap.NET.WindowsForms.GMapMarker marker =
+                    new GMap.NET.WindowsForms.Markers.GMarkerGoogle(
+                        new GMap.NET.PointLatLng(firstTrack.Lat, firstTrack.Lon),
+                        GMap.NET.WindowsForms.Markers.GMarkerGoogleType.red_small);
+                markers.Markers.Add(marker);
+                gMapControl1.Overlays.Add(markers);
+
+                //GMapOverlay overlay = new GMapOverlay(gMapControl1, "base");
+                //GMapMarkerGoogleGreen home = new GMapMarkerGoogleGreen(new PointLatLng(firstTrack.Lat, firstTrack.Lon));
+                //overlay.Markers.Add(home);
+                //gMapControl1.Overlays.Add(overlay);
                 iEventCount = GlobalData.allTrack.Count - 1;
                 foreach (DataGridViewRow row in gvData.Rows)
                 {

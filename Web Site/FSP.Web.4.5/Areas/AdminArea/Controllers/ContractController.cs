@@ -150,7 +150,7 @@ namespace FSP.Web.Areas.AdminArea.Controllers
         public ActionResult Index()
         {
             var dbContracts = _db.Contracts.OrderBy(p => p.Contractor.ContractCompanyName).ToList();
-            var dbBeats = _db.vBeats.OrderBy(p => p.BeatNumber).ToList();
+            var dbBeats = _db.Beats_News.Where(p => p.Active).OrderBy(p => p.BeatNumber).ToList();
             var dbContractsBeats = _db.ContractsBeats.ToList();
 
             var model = new ContractIndexViewModel();

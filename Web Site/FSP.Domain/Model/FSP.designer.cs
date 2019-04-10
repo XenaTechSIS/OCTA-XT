@@ -168,7 +168,7 @@ namespace FSP.Domain.Model
     #endregion
 		
 		public FSPDataContext() : 
-				base(global::FSP.Domain.Properties.Settings.Default.fspConnectionString1, mappingSource)
+				base(global::FSP.Domain.Properties.Settings.Default.fspConnectionString, mappingSource)
 		{
 			OnCreated();
 		}

@@ -74,7 +74,7 @@ namespace FSP.Web.Areas.AdminArea.Controllers
                 }
 
                 return RedirectToAction("Index");
-            }
+            } 
 
             var contractors = db.Contractors.OrderBy(p => p.ContractCompanyName).ToList();
 

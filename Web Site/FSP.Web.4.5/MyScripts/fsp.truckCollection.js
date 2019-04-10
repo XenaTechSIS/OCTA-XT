@@ -42,7 +42,7 @@ lata.FspWeb.prototype.startTruckService = function () {
 
             }, "json");
 
-    }
+    };
 
     //add or update lmt in corridor lmt list
     fspWeb.addOrUpdateTruck = function (dbTruck) {
