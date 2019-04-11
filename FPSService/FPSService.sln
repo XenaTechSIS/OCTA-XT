@@ -8,15 +8,30 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{75ED60C7-02C2-4D39-9E76-825E0903FA7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{75ED60C7-02C2-4D39-9E76-825E0903FA7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75ED60C7-02C2-4D39-9E76-825E0903FA7C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{75ED60C7-02C2-4D39-9E76-825E0903FA7C}.Debug|x64.Build.0 = Debug|Any CPU
+		{75ED60C7-02C2-4D39-9E76-825E0903FA7C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{75ED60C7-02C2-4D39-9E76-825E0903FA7C}.Debug|x86.Build.0 = Debug|Any CPU
 		{75ED60C7-02C2-4D39-9E76-825E0903FA7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75ED60C7-02C2-4D39-9E76-825E0903FA7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75ED60C7-02C2-4D39-9E76-825E0903FA7C}.Release|x64.ActiveCfg = Release|Any CPU
+		{75ED60C7-02C2-4D39-9E76-825E0903FA7C}.Release|x64.Build.0 = Release|Any CPU
+		{75ED60C7-02C2-4D39-9E76-825E0903FA7C}.Release|x86.ActiveCfg = Release|Any CPU
+		{75ED60C7-02C2-4D39-9E76-825E0903FA7C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1FEE8B41-54BD-4B14-830A-93364178152A}
 	EndGlobalSection
 EndGlobal
