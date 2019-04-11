@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSPPlayback", "FSPPlayback\FSPPlayback.csproj", "{BEEDB3FF-4AC6-4B54-B96A-2BA0BC6C933B}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "FSPPBInstaller", "FSPPBInstaller\FSPPBInstaller.vdproj", "{F2C721AA-BE9C-4DE3-9135-8BC8DBF8F48D}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "FSP_PB_Installer", "FSP_PB_Installer\FSP_PB_Installer.vdproj", "{BF88D133-18E4-4534-99CB-4F72871B0C2A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{BEEDB3FF-4AC6-4B54-B96A-2BA0BC6C933B}.Release|x64.Build.0 = Release|x64
 		{BEEDB3FF-4AC6-4B54-B96A-2BA0BC6C933B}.Release|x86.ActiveCfg = Release|x86
 		{BEEDB3FF-4AC6-4B54-B96A-2BA0BC6C933B}.Release|x86.Build.0 = Release|x86
-		{F2C721AA-BE9C-4DE3-9135-8BC8DBF8F48D}.Debug|x64.ActiveCfg = Debug
-		{F2C721AA-BE9C-4DE3-9135-8BC8DBF8F48D}.Debug|x86.ActiveCfg = Debug
-		{F2C721AA-BE9C-4DE3-9135-8BC8DBF8F48D}.Release|x64.ActiveCfg = Release
-		{F2C721AA-BE9C-4DE3-9135-8BC8DBF8F48D}.Release|x86.ActiveCfg = Release
+		{BF88D133-18E4-4534-99CB-4F72871B0C2A}.Debug|x64.ActiveCfg = Debug
+		{BF88D133-18E4-4534-99CB-4F72871B0C2A}.Debug|x86.ActiveCfg = Debug
+		{BF88D133-18E4-4534-99CB-4F72871B0C2A}.Release|x64.ActiveCfg = Release
+		{BF88D133-18E4-4534-99CB-4F72871B0C2A}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
