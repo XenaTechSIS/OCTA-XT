@@ -37,12 +37,12 @@ namespace FSP.Web.Helpers
             var applicationPath = HttpContext.Current.Request.ApplicationPath;
 
 #if(DEBUG)
-            applicationPath = "http://" + HttpContext.Current.Request.Url.Authority;
-            //applicationPath = "http://" + HttpContext.Current.Request.Url.Authority + "/octafsp/";
+            //applicationPath = "http://" + HttpContext.Current.Request.Url.Authority;
+            applicationPath = "http://" + HttpContext.Current.Request.Url.Authority + "/octafsp/";
 #endif
             var currentControllerName = (string)helper.ViewContext.RouteData.Values["controller"];
             var currentActionName = (string)helper.ViewContext.RouteData.Values["action"];
-            
+
             //Home
             sb.Append($"<li class='{(currentControllerName == "Home" ? "active" : "")}'><a href='{applicationPath}/Home/Index'>Home</a></li>");
 
@@ -120,7 +120,7 @@ namespace FSP.Web.Helpers
                 sb.Append($"<li><a href='{dashboardUrl}' target='_blank'>Dashboard</a></li>");
             sb.Append($"<li><a href='{applicationPath}/EmailReport/Index'>Email Reports</a></li>");
             sb.Append($"<li><a href='{applicationPath}/Report/Index'>Reports</a></li>");
-            sb.Append($"<li><a href='{applicationPath}/Survey/Index'>Survey</a></li>");            
+            sb.Append($"<li><a href='{applicationPath}/Survey/Index'>Survey</a></li>");
             sb.Append("</ul>");
             sb.Append("</li>");
 

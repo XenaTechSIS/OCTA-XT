@@ -2,7 +2,7 @@
   'use strict';
   angular.module("octaApp.incident").controller("incidentController", ['$scope', '$filter', '$interval', 'incidentService', incidentController]);
   function incidentController($scope, $filter, $interval, incidentService) {
-    var refreshIntervalInMilliseconds = 30000;
+    var refreshIntervalInMilliseconds = 300000;
     $scope.header = "Incidents";
     $scope.showDispatched = false;
     $scope.showActive = false;
@@ -142,11 +142,15 @@
       $scope.isBusyGettingIncidents = true;
       incidentService.getIncidents().then(function (rawIncidents) {
         $scope.isBusyGettingIncidents = false;
-        console.log(rawIncidents);
         $scope.incidents = rawIncidents;
-        $scope.dispatchedIncidents = $filter('filter')($scope.incidents, { IsAcked: false });
-        $scope.activeIncidents = $filter('filter')($scope.incidents, { IsAcked: true, IsIncidentComplete: false });
-        $scope.todaysCompletedIncidents = $filter('filter')($scope.incidents, { IsIncidentComplete: true });
+        $scope.dispatchedIncidents = $filter('filter')($scope.incidents, { Assist: { Acked: false } });
+        $scope.activeIncidents = $filter('filter')($scope.incidents, { Assist: { Acked: true, AssistComplete: false }, });
+        $scope.todaysCompletedIncidents = $filter('filter')($scope.incidents, { Assist: { AssistComplete: true } });
+
+        console.log('All Incidents %O', $scope.incidents);
+        console.log('Dispatched Incidents %O', $scope.dispatchedIncidents);
+        console.log('Active Incidents %O', $scope.activeIncidents);
+        console.log("Today's Completed Incidents %O", $scope.todaysCompletedIncidents);
       });
     };
 

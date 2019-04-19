@@ -599,6 +599,7 @@ namespace FPSService
         [DataMember] public string ContractCompanyName { get; set; }
         [DataMember] public string VehicleTypeName { get; set; }
         [DataMember] public string IncidentTypeName { get; set; }
+        [DataMember] public List<string> SelectedService { get; set; }
     }
 
     #endregion

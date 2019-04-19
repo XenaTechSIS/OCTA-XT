@@ -4770,6 +4770,9 @@ namespace FSP.Web.TowTruckServiceRef {
         private string IncidentTypeNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string[] SelectedServiceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string StateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -4862,6 +4865,19 @@ namespace FSP.Web.TowTruckServiceRef {
                 if ((object.ReferenceEquals(this.IncidentTypeNameField, value) != true)) {
                     this.IncidentTypeNameField = value;
                     this.RaisePropertyChanged("IncidentTypeName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string[] SelectedService {
+            get {
+                return this.SelectedServiceField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SelectedServiceField, value) != true)) {
+                    this.SelectedServiceField = value;
+                    this.RaisePropertyChanged("SelectedService");
                 }
             }
         }
