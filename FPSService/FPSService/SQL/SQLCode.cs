@@ -1,4 +1,10 @@
-﻿using System;
+﻿using FPSService.BeatData;
+using FPSService.DataClasses;
+using FPSService.Logging;
+using FPSService.MiscData;
+using FPSService.TowTruck;
+using Microsoft.SqlServer.Types;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
@@ -6,12 +12,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Linq;
-using FPSService.BeatData;
-using FPSService.DataClasses;
-using FPSService.Logging;
-using FPSService.MiscData;
-using FPSService.TowTruck;
-using Microsoft.SqlServer.Types;
 
 namespace FPSService.SQL
 {
@@ -610,7 +610,7 @@ namespace FPSService.SQL
 
         public string GetTruckNumberByID(Guid FleetVehicleID)
         {
-            var TruckNumber = "";
+            var TruckNumber = "Not Found";
             try
             {
                 using (var conn = new SqlConnection(ConnStr))
@@ -626,8 +626,7 @@ namespace FPSService.SQL
             }
             catch (Exception ex)
             {
-                logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Getting Next Survey Number " +
-                                Environment.NewLine + ex, true);
+                //logger.LogEvent(DateTime.Now + Environment.NewLine + "Error Getting Next Survey Number " + Environment.NewLine + ex, true);
             }
 
             return TruckNumber;
@@ -1025,7 +1024,7 @@ namespace FPSService.SQL
         public string FindDriverNameByID(Guid ID)
         {
             logger = new EventLogger();
-            var DriverName = "";
+            var DriverName = "Not Found";
             try
             {
                 using (var conn = new SqlConnection(ConnStr))

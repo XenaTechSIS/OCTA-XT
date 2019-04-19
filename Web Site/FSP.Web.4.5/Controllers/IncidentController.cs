@@ -39,7 +39,8 @@ namespace FSP.Web.Controllers
                                         q.ContractCompanyName,
 
                                         q.VehicleTypeName,
-                                        q.IncidentTypeName
+                                        q.IncidentTypeName,
+                                        q.SelectedService
                                     };
 
 

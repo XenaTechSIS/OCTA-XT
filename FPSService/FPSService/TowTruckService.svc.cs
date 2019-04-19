@@ -358,34 +358,56 @@ namespace FPSService
             var mySQL = new SQLCode();
             foreach (var assist in GlobalData.Assists)
             {
-                var incident = GlobalData.FindIncidentByID(assist.IncidentID);
-                var towTruck = GlobalData.FindTowTruckByTruckID(assist.FleetVehicleID);
-                var incidentType = GlobalData.FindIncidentTypeNameByID(assist.IncidentTypeID);
-                var vehicleType = GlobalData.FindVehicleTypeNameByID(assist.VehicleTypeID);
-                var contractCompanyName = GlobalData.Contractors.FirstOrDefault(c => c.ContractorID == assist.ContractorID)?.ContractCompanyName;
-
-                var State = "Not Connected";
-                if (towTruck != null) State = towTruck.Status.VehicleStatus;
-
-                if (incident != null)
+                try
                 {
-                    var id = new IncidentDisplay
+                    var incident = GlobalData.FindIncidentByID(assist.IncidentID);
+                    var towTruck = GlobalData.FindTowTruckByTruckID(assist.FleetVehicleID);
+                    var incidentType = GlobalData.FindIncidentTypeNameByID(assist.IncidentTypeID);
+                    var vehicleType = GlobalData.FindVehicleTypeNameByID(assist.VehicleTypeID);
+                    var contractCompanyName = GlobalData.Contractors.FirstOrDefault(c => c.ContractorID == assist.ContractorID)?.ContractCompanyName;
+
+                    var State = "Not Connected";
+                    if (towTruck != null) State = towTruck.Status.VehicleStatus;
+
+                    var selectedServices = new List<string>();
+                    if (assist.SelectedServices != null && assist.SelectedServices.Any())
                     {
-                        Incident = incident,
-                        Assist = assist,
+                        foreach (var selectedService in assist.SelectedServices)
+                        {
+                            var selecedServiceId = Guid.Parse(selectedService);
+                            var service = GlobalData.FindServiceTypeNameByID(selecedServiceId);
+                            if (string.IsNullOrEmpty(service)) continue;
+                            selectedServices.Add(service);
+                        }
+                    }
 
-                        TruckNumber = mySQL.GetTruckNumberByID(assist.FleetVehicleID),
-                        DriverName = mySQL.FindDriverNameByID(assist.DriverID),
-                        State = State,
+                    if (incident != null)
+                    {
+                        var truckNumber = mySQL.GetTruckNumberByID(assist.FleetVehicleID);
+                        var driverName = mySQL.FindDriverNameByID(assist.DriverID);
+                        var contractorName = GlobalData.FindContractorNameByID(assist.ContractorID);
 
-                        ContractorName = GlobalData.FindContractorNameByID(assist.ContractorID),
-                        ContractCompanyName = contractCompanyName,
+                        var id = new IncidentDisplay
+                        {
+                            Incident = incident,
+                            Assist = assist,
 
-                        VehicleTypeName = vehicleType,
-                        IncidentTypeName = incidentType
-                    };
-                    idl.Add(id);
+                            TruckNumber = truckNumber,
+                            DriverName = driverName,
+                            State = State,
+
+                            ContractorName = contractorName,
+                            ContractCompanyName = contractCompanyName,
+
+                            VehicleTypeName = vehicleType,
+                            IncidentTypeName = incidentType,
+                            SelectedService = selectedServices
+                        };
+                        idl.Add(id);
+                    }
                 }
+                catch { }
+
             }
 
             return idl;

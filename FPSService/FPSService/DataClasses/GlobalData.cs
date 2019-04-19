@@ -976,11 +976,17 @@ namespace FPSService.DataClasses
 
         public static string FindServiceTypeNameByID(Guid _ServiceTypeID)
         {
-            MiscData.ServiceType thisFoundType = ServiceTypes.Find(delegate (MiscData.ServiceType st) { return st.ServiceTypeID == _ServiceTypeID; });
-            if (thisFoundType != null)
-            { return thisFoundType.ServiceTypeName; }
-            else
-            { return "Unknown"; }
+            var returnValue = "Not Found";
+            try
+            {
+                MiscData.ServiceType thisFoundType = ServiceTypes.Find(delegate (MiscData.ServiceType st) { return st.ServiceTypeID == _ServiceTypeID; });
+                if (thisFoundType != null)
+                {
+                    returnValue = thisFoundType.ServiceTypeName;
+                }
+            }
+            catch { }
+            return returnValue;
         }
 
         public static string FindVehicleTypeNameByID(Guid _VehicleTypeID)
@@ -1003,11 +1009,17 @@ namespace FPSService.DataClasses
 
         public static string FindContractorNameByID(Guid _ContractorID)
         {
-            MiscData.Contractors thisFoundContractor = Contractors.Find(delegate (MiscData.Contractors c) { return c.ContractorID == _ContractorID; });
-            if (thisFoundContractor != null)
-            { return thisFoundContractor.ContractCompanyName; }
-            else
-            { return "Unknown"; }
+            var returnValue = "Not Found";
+            try
+            {
+                MiscData.Contractors thisFoundContractor = Contractors.Find(delegate (MiscData.Contractors c) { return c.ContractorID == _ContractorID; });
+                if (thisFoundContractor != null)
+                {
+                    returnValue = thisFoundContractor.ContractCompanyName;
+                }
+            }
+            catch { }
+            return returnValue;
         }
 
         public static string FindTruckNumberByID(Guid _FleetVehicleID)
