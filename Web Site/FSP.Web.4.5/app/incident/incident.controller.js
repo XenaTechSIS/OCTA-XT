@@ -2,7 +2,7 @@
   'use strict';
   angular.module("octaApp.incident").controller("incidentController", ['$scope', '$filter', '$interval', 'incidentService', incidentController]);
   function incidentController($scope, $filter, $interval, incidentService) {
-    var refreshIntervalInMilliseconds = 300000;
+    var refreshIntervalInMilliseconds = 30000;
     $scope.header = "Incidents";
     $scope.showDispatched = false;
     $scope.showActive = false;
@@ -45,11 +45,11 @@
       });
       $scope.columns.push({
         name: 'Direction',
-        show: true
+        show: false
       });
       $scope.columns.push({
         name: 'Vehicle Type',
-        show: true
+        show: false
       });
       $scope.columns.push({
         name: 'Incident Type',
