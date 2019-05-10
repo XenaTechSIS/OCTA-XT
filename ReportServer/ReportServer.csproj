@@ -79,6 +79,7 @@
     <Content Include="Reports\ReportMain.aspx" />
     <Content Include="Reports\Schedules.aspx" />
     <Content Include="Reports\Speeding.aspx" />
+    <Content Include="Reports\TipReport.aspx" />
     <Content Include="Reports\TruckMessages.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
@@ -203,6 +204,13 @@
     </Compile>
     <Compile Include="Reports\Speeding.aspx.designer.cs">
       <DependentUpon>Speeding.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\TipReport.aspx.cs">
+      <DependentUpon>TipReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\TipReport.aspx.designer.cs">
+      <DependentUpon>TipReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports\TruckMessages.aspx.cs">
       <DependentUpon>TruckMessages.aspx</DependentUpon>

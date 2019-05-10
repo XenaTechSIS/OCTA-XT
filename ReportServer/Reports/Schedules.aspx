@@ -19,44 +19,52 @@
     </script>
 </head>
 <body>
-    <form id="form1" runat="server">
     <img src="../img/octa_survey%20layout_header.png" alt="octaheader" />
-    <header>Schedules Report</header>
     <div>
-        <asp:Label ID="Label1" runat="server" Text="Select Start Date"></asp:Label>
-        <input type="text" value="01/01/2013" id="startDT" runat="server"/>
-        <br />
-        <asp:CheckBox ID="chkFilterExpired" runat="server" TextAlign="Left" Text="Filter Expired"/>
+        <a href="ReportMain.aspx">Home</a>
     </div>
 
-    <div>
-        <asp:Button ID="btnGetReport" runat="server" Text="Get Report" 
-            onclick="btnGetReport_Click"/>
-        <asp:Button ID="btnExportExcel" runat="server" 
-            Text="Export Excel (Wait for data to load)" onclick="btnExportExcel_Click" />
-    </div>
-    <div>
-    <a href="ReportMain.aspx">Home</a>
-    <hr />
-    </div>
-    <div id="tableDiv">
-    
-        <asp:GridView ID="gvData" runat="server" CellPadding="4" ForeColor="#333333" 
-            GridLines="None">
-            <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
-            <EditRowStyle BackColor="#999999" />
-            <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-            <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="Black" />
-            <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
-            <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
-            <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
-            <SortedAscendingCellStyle BackColor="#E9E7E2" />
-            <SortedAscendingHeaderStyle BackColor="#506C8C" />
-            <SortedDescendingCellStyle BackColor="#FFFDF8" />
-            <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
-        </asp:GridView>
-    
-    </div>
+    <legend>Schedules Report</legend>
+
+    <form id="form1" runat="server" class="form-horizontal">
+        <div class="control-group">
+            <asp:Label ID="Label1" runat="server" Text="Select Start Date" class="control-label"></asp:Label>
+            <div class="controls">
+                <input type="text" value="01/01/2013" id="startDT" runat="server" />
+                <br />
+                <label class="checkbox">
+                    <asp:CheckBox ID="chkFilterExpired" runat="server" TextAlign="Left" />
+                    Filter Expired
+                </label>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <asp:Button ID="btnGetReport" runat="server" Text="Get Report"
+                    OnClick="btnGetReport_Click" CssClass="btn btn-primary" />
+                <asp:Button ID="btnExportExcel" runat="server"
+                    Text="Export Excel (Wait for data to load)" OnClick="btnExportExcel_Click" CssClass="btn btn-primary" />
+            </div>
+        </div>
+
+        <div id="tableDiv">
+
+            <asp:GridView ID="gvData" runat="server" CellPadding="4" ForeColor="#333333"
+                GridLines="None">
+                <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
+                <EditRowStyle BackColor="#999999" />
+                <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="Black" />
+                <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+                <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+                <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+                <SortedAscendingCellStyle BackColor="#E9E7E2" />
+                <SortedAscendingHeaderStyle BackColor="#506C8C" />
+                <SortedDescendingCellStyle BackColor="#FFFDF8" />
+                <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
+            </asp:GridView>
+
+        </div>
     </form>
 </body>
 </html>

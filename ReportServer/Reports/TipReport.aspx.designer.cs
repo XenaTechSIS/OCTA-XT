@@ -10,7 +10,7 @@
 namespace ReportServer.Reports {
     
     
-    public partial class Logon {
+    public partial class TipReport {
         
         /// <summary>
         /// form1 control.
@@ -31,13 +31,13 @@ namespace ReportServer.Reports {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// txtUserName control.
+        /// startDT control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtUserName;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText startDT;
         
         /// <summary>
         /// Label2 control.
@@ -49,30 +49,66 @@ namespace ReportServer.Reports {
         protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
-        /// txtPassword control.
+        /// endDT control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPassword;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText endDT;
         
         /// <summary>
-        /// btnGo control.
+        /// lblSelectTrucks control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnGo;
+        protected global::System.Web.UI.WebControls.Label lblSelectTrucks;
         
         /// <summary>
-        /// errPanel control.
+        /// ddlTrucks control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel errPanel;
+        protected global::System.Web.UI.WebControls.DropDownList ddlTrucks;
+        
+        /// <summary>
+        /// btnLoadTrucks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnLoadTrucks;
+        
+        /// <summary>
+        /// btnGetReport control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnGetReport;
+        
+        /// <summary>
+        /// btnExportExcel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnExportExcel;
+        
+        /// <summary>
+        /// gvData control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvData;
     }
 }

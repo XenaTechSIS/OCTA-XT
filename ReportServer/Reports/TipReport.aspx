@@ -1,10 +1,10 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Speeding.aspx.cs" Inherits="ReportServer.Reports.Speeding" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="TipReport.aspx.cs" Inherits="ReportServer.Reports.TipReport" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head id="Head1" runat="server">
-    <title>Speeding Report</title>
+<head runat="server">
+    <title>Truck Messages</title>
     <script src="../Scripts/jquery-1.9.1.js" type="text/javascript"></script>
     <script src="../Scripts/jquery-ui-1.10.0.custom.js" type="text/javascript"></script>
     <script src="../Scripts/bootstrap.js" type="text/javascript"></script>
@@ -16,7 +16,6 @@
             $('#startDT').datepicker();
             $('#endDT').datepicker();
         });
-
     </script>
 </head>
 <body>
@@ -25,7 +24,7 @@
         <a href="ReportMain.aspx">Home</a>
     </div>
 
-    <legend>Speeding Report</legend>
+    <legend>Tip Report</legend>
 
     <form id="form1" runat="server" class="form-horizontal">
         <div class="control-group">
@@ -41,11 +40,19 @@
             </div>
         </div>
         <div class="control-group">
+            <asp:Label ID="lblSelectTrucks" Text="Select Trucks" runat="server" class="control-label"></asp:Label>
             <div class="controls">
-                <asp:Button ID="btnGetReport" runat="server" Text="Get Report"
-                    OnClick="btnGetReport_Click" CssClass="btn btn-primary" />
+                <asp:DropDownList ID="ddlTrucks" runat="server"></asp:DropDownList>
+                <asp:Button ID="btnLoadTrucks" runat="server" OnClick="btnLoadTrucks_Click"
+                    Text="Load Trucks" CssClass="btn btn-warning" />
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <asp:Button ID="btnGetReport" runat="server" Text="Get Report" OnClick="btnGetReport_Click" CssClass="btn btn-primary" />
                 <asp:Button ID="btnExportExcel" runat="server"
-                    Text="Export Excel (Wait for data to load)" OnClick="btnExportExcel_Click" CssClass="btn btn-primary" />
+                    Text="Export Excel (Wait for data to load)"
+                    OnClick="btnExportExcel_Click" CssClass="btn btn-primary" />
             </div>
         </div>
 

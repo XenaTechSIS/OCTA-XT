@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Data;
-using System.Data.SqlClient;
-using System.Configuration;
 using System.Collections;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
 
 namespace ReportServer.Classes
 {
@@ -15,12 +12,12 @@ namespace ReportServer.Classes
         {
             ReportData thisReport = new ReportData();
 
-            string ConnStr = Classes.SQLConn.GetConnString("PROD");
+            string ConnStr = SQLConn.GetConnString("PROD");
             string SQL = "SELECT ReportName, ConnString, SQL, cmdType, parameters FROM Reports WHERE ReportName = '" + ReportName + "'";
             using (SqlConnection conn = new SqlConnection(ConnStr))
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand(SQL,conn);
+                SqlCommand cmd = new SqlCommand(SQL, conn);
                 SqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
@@ -50,7 +47,7 @@ namespace ReportServer.Classes
         public List<ReportData> GetAllReports()
         {
             List<ReportData> theseReports = new List<ReportData>();
-            string ConnStr = Classes.SQLConn.GetConnString("PROD");
+            string ConnStr = SQLConn.GetConnString("PROD");
             string SQL = "SELECT ReportName, ConnString, SQL, cmdType, parameters FROM Reports";
             using (SqlConnection conn = new SqlConnection(ConnStr))
             {
@@ -59,11 +56,13 @@ namespace ReportServer.Classes
                 SqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    ReportData thisReport = new ReportData();
-                    thisReport.ReportName = rdr["ReportName"].ToString();
-                    thisReport.ConnString = rdr["ConnString"].ToString();
-                    thisReport.SQL = rdr["SQL"].ToString();
-                    thisReport.cmdType = rdr["cmdType"].ToString();
+                    ReportData thisReport = new ReportData
+                    {
+                        ReportName = rdr["ReportName"].ToString(),
+                        ConnString = rdr["ConnString"].ToString(),
+                        SQL = rdr["SQL"].ToString(),
+                        cmdType = rdr["cmdType"].ToString()
+                    };
                     if (rdr["parameters"] != DBNull.Value)
                     {
                         ArrayList Params = new ArrayList();

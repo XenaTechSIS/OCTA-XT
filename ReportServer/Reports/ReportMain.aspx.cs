@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace ReportServer.Reports
 {
@@ -62,6 +57,10 @@ namespace ReportServer.Reports
             if (ddlReports.Text == "Combined Driver CHP Comment Report")
             {
                 Response.Redirect("CombinedReport.aspx");
+            }
+            if (ddlReports.Text == "Tip Report")
+            {
+                Response.Redirect("TipReport.aspx");
             }
         }
     }
