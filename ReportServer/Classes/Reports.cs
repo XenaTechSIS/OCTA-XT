@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 
 namespace ReportServer.Classes
@@ -15,19 +12,17 @@ namespace ReportServer.Classes
         public static void GetReports()
         {
             theseReports.Clear();
-            SQLCode mySQL = new SQLCode();
+            var mySQL = new SQLCode();
             theseReports = mySQL.GetAllReports();
-            mySQL = null;
         }
 
         public static ReportData GetReportDataByName(string ReportName)
         {
-            SQLCode mySQL = new SQLCode();
-            ReportData thisReport = mySQL.getReportDataByName(ReportName);
-            mySQL = null;
+            var mySQL = new SQLCode();
+            var thisReport = mySQL.getReportDataByName(ReportName);
             return thisReport;
         }
     }
 
-    
+
 }

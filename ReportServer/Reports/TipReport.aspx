@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Truck Messages</title>
+    <title>Tip Report</title>
     <script src="../Scripts/jquery-1.9.1.js" type="text/javascript"></script>
     <script src="../Scripts/jquery-ui-1.10.0.custom.js" type="text/javascript"></script>
     <script src="../Scripts/bootstrap.js" type="text/javascript"></script>
@@ -38,15 +38,7 @@
             <div class="controls">
                 <input type="text" value="01/01/2013" id="endDT" runat="server" onclick="return endDT_onclick()" />
             </div>
-        </div>
-        <div class="control-group">
-            <asp:Label ID="lblSelectTrucks" Text="Select Trucks" runat="server" class="control-label"></asp:Label>
-            <div class="controls">
-                <asp:DropDownList ID="ddlTrucks" runat="server"></asp:DropDownList>
-                <asp:Button ID="btnLoadTrucks" runat="server" OnClick="btnLoadTrucks_Click"
-                    Text="Load Trucks" CssClass="btn btn-warning" />
-            </div>
-        </div>
+        </div>      
         <div class="control-group">
             <div class="controls">
                 <asp:Button ID="btnGetReport" runat="server" Text="Get Report" OnClick="btnGetReport_Click" CssClass="btn btn-primary" />

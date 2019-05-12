@@ -37,60 +37,10 @@ namespace ReportServer.Reports
             }
         }
 
-        private void LoadTrucks()
-        {
-            this.ddlTrucks.Items.Clear();
-            this.ddlTrucks.Items.Add("All");
-            string dtStart = this.startDT.Value + " 00:00:00";
-            string dtEnd = this.endDT.Value + " 23:59:59";
-            if (string.IsNullOrEmpty(dtStart))
-            {
-                dtStart = DateTime.Now.ToString();
-            }
-            if (string.IsNullOrEmpty(dtEnd))
-            {
-                dtEnd = DateTime.Now.ToString();
-            }
-            using (SqlConnection conn = new SqlConnection(Classes.SQLConn.GetConnString(this.thisReport.ConnString)))
-            {
-                try
-                {
-                    conn.Open();
-                    SqlCommand cmd = new SqlCommand("GetTrucks", conn)
-                    {
-                        CommandType = CommandType.StoredProcedure
-                    };
-                    cmd.Parameters.AddWithValue("@dtStart", dtStart);
-                    cmd.Parameters.AddWithValue("@dtEnd", dtEnd);
-                    SqlDataReader rdr = cmd.ExecuteReader();
-                    while (rdr.Read())
-                    {
-                        if (!string.IsNullOrEmpty(rdr[0].ToString()))
-                        {
-                            this.ddlTrucks.Items.Add(rdr[0].ToString());
-                        }
-                    }
-                    rdr.Close();
-                    rdr = null;
-                    cmd = null;
-                    conn.Close();
-                }
-                catch (Exception ex)
-                {
-                    this.Response.Write(ex.ToString());
-                }
-            }
-        }
-
-        protected void btnLoadTrucks_Click(object sender, EventArgs e)
-        {
-            this.LoadTrucks();
-        }
-
         protected void btnGetReport_Click(object sender, EventArgs e)
         {
-            string dtStart = this.startDT.Value + " 00:00:00";
-            string dtEnd = this.endDT.Value + " 23:59:59";
+            var dtStart = this.startDT.Value + " 00:00:00";
+            var dtEnd = this.endDT.Value + " 23:59:59";
             if (string.IsNullOrEmpty(dtStart))
             {
                 dtStart = DateTime.Now.ToString();
@@ -99,21 +49,21 @@ namespace ReportServer.Reports
             {
                 dtEnd = DateTime.Now.ToString();
             }
-            string truckNum = this.ddlTrucks.Text;
-            DataTable dt = new DataTable();
+
+            var dt = new DataTable();
             try
             {
-                using (SqlConnection conn = new SqlConnection(Classes.SQLConn.GetConnString(this.thisReport.ConnString)))
+                using (var conn = new SqlConnection(Classes.SQLConn.GetConnString(this.thisReport.ConnString)))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("GetTruckMessages", conn)
+                    var cmd = new SqlCommand("GetTipReport", conn)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
                     cmd.Parameters.AddWithValue("@dtStart", dtStart);
                     cmd.Parameters.AddWithValue("@dtEnd", dtEnd);
-                    cmd.Parameters.AddWithValue("@truckNum", truckNum);
-                    SqlDataReader rdr = cmd.ExecuteReader();
+
+                    var rdr = cmd.ExecuteReader();
                     for (int i = 0; i < rdr.FieldCount; i++)
                     {
                         dt.Columns.Add(rdr.GetName(i).ToString(), Type.GetType("System.String"));
@@ -121,7 +71,7 @@ namespace ReportServer.Reports
 
                     while (rdr.Read())
                     {
-                        DataRow row = dt.NewRow();
+                        var row = dt.NewRow();
                         for (int i = 0; i < rdr.FieldCount; i++)
                         {
                             row[i] = rdr[i].ToString();

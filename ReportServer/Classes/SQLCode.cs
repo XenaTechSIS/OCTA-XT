@@ -10,15 +10,15 @@ namespace ReportServer.Classes
     {
         public ReportData getReportDataByName(string ReportName)
         {
-            ReportData thisReport = new ReportData();
+            var thisReport = new ReportData();
 
-            string ConnStr = SQLConn.GetConnString("PROD");
-            string SQL = "SELECT ReportName, ConnString, SQL, cmdType, parameters FROM Reports WHERE ReportName = '" + ReportName + "'";
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            var connStr = SQLConn.GetConnString("PROD");
+            var sql = "SELECT ReportName, ConnString, SQL, cmdType, parameters FROM Reports WHERE ReportName = '" + ReportName + "'";
+            using (var conn = new SqlConnection(connStr))
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand(SQL, conn);
-                SqlDataReader rdr = cmd.ExecuteReader();
+                var cmd = new SqlCommand(sql, conn);
+                var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
                     thisReport.ReportName = rdr["ReportName"].ToString();
@@ -46,17 +46,17 @@ namespace ReportServer.Classes
 
         public List<ReportData> GetAllReports()
         {
-            List<ReportData> theseReports = new List<ReportData>();
-            string ConnStr = SQLConn.GetConnString("PROD");
-            string SQL = "SELECT ReportName, ConnString, SQL, cmdType, parameters FROM Reports";
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            var theseReports = new List<ReportData>();
+            var connStr = SQLConn.GetConnString("PROD");
+            var sql = "SELECT ReportName, ConnString, SQL, cmdType, parameters FROM Reports";
+            using (var conn = new SqlConnection(connStr))
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand(SQL, conn);
-                SqlDataReader rdr = cmd.ExecuteReader();
+                var cmd = new SqlCommand(sql, conn);
+                var rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    ReportData thisReport = new ReportData
+                    var thisReport = new ReportData
                     {
                         ReportName = rdr["ReportName"].ToString(),
                         ConnString = rdr["ConnString"].ToString(),
@@ -65,8 +65,8 @@ namespace ReportServer.Classes
                     };
                     if (rdr["parameters"] != DBNull.Value)
                     {
-                        ArrayList Params = new ArrayList();
-                        string[] parmList = rdr["parameters"].ToString().Split('|');
+                        var Params = new ArrayList();
+                        var parmList = rdr["parameters"].ToString().Split('|');
                         for (int i = 0; i < parmList.Count(); i++)
                         {
                             Params.Add(parmList[i].ToString());
