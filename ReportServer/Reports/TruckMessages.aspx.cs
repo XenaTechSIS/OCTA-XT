@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using System.Web.UI;
 
 namespace ReportServer.Reports
 {
-    public partial class TruckMessages : System.Web.UI.Page
+    public partial class TruckMessages : Page
     {
 
         Classes.ReportData thisReport;
@@ -68,7 +64,7 @@ namespace ReportServer.Reports
                     SqlDataReader rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        if(!string.IsNullOrEmpty(rdr[0].ToString()))
+                        if (!string.IsNullOrEmpty(rdr[0].ToString()))
                         {
                             ddlTrucks.Items.Add(rdr[0].ToString());
                         }

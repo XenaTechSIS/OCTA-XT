@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using System.Linq;
+using System.Web.UI;
 
 namespace ReportServer.Reports
 {
-    public partial class DriverAndBeatHoursNew : System.Web.UI.Page
+    public partial class DriverAndBeatHoursNew : Page
     {
         private string connFSP = "Initial Catalog=fsp;Data Source=octa-prod\\octa,5815;user id=sa;password=C@pt@1n@mer1c@";
         private List<DriverStatus> Stati = new List<DriverStatus>();
@@ -167,7 +165,7 @@ namespace ReportServer.Reports
                         }
                     }
                 }
-                    #endregion
+                #endregion
                 foreach (DriverData ddFound in uniqueDrivers)
                 {
                     #region " need another loop "

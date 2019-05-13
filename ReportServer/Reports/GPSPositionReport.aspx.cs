@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data.SqlClient;
 using System.Data;
+using System.Data.SqlClient;
 using System.IO;
-using System.Configuration;
+using System.Web.UI;
 
 namespace ReportServer.Reports
 {
-    public partial class GPSPositionReport : System.Web.UI.Page
+    public partial class GPSPositionReport : Page
     {
         Classes.ReportData thisReport;
         protected void Page_Load(object sender, EventArgs e)
@@ -59,7 +54,7 @@ namespace ReportServer.Reports
                     {
                         for (int i = 0; i < thisReport.parameters.Count; i++)
                         {
-                            if(thisReport.parameters[i].ToString() == "@dtStart")
+                            if (thisReport.parameters[i].ToString() == "@dtStart")
                             {
                                 cmd.Parameters.AddWithValue(thisReport.parameters[i].ToString(), dtStart);
                             }

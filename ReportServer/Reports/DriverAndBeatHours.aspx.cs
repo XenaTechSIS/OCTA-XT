@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using System.Web.UI;
 
 namespace ReportServer.Reports
 {
-    public partial class DriverAndBeatHours : System.Web.UI.Page
+    public partial class DriverAndBeatHours : Page
     {
         private string connFSP = "Initial Catalog=fsp;Data Source=octa-prod\\octa,5815;user id=sa;password=C@pt@1n@mer1c@";
         protected void Page_Load(object sender, EventArgs e)
@@ -227,54 +223,54 @@ namespace ReportServer.Reports
 
             foreach (DriverBeat db in dbList)
             {
-                
-                    DateTime rollout = Convert.ToDateTime("01/01/2001 00:00:00");
-                    DateTime RollIn = Convert.ToDateTime("01/01/2001 00:00:00");
-                    DateTime OnPatrol = Convert.ToDateTime(db.Date + " " + db.OnPatrol);
-                    DateTime LogOff = Convert.ToDateTime(db.Date + " " + db.LogOff);;
-                    //driver hours = LogOff - RollOut - Lunch
-                    //beat hours = rollin - onpatrol
-                    if (db.RollOut != null)
-                    {
-                        rollout = Convert.ToDateTime(db.Date + " " + db.RollOut);
-                    }
-                    else if (db.OnPatrol != null)
-                    {
-                        rollout = Convert.ToDateTime(db.Date + " " + db.OnPatrol);
-                    }
-                    else
-                    {
-                        //leave it alone.
-                    }
 
-                    if (db.RollIn != null)
-                    {
-                        RollIn = Convert.ToDateTime(db.Date + " " + db.RollIn);
-                    }
-                    else
-                    {
-                        RollIn = Convert.ToDateTime("01/01/2001 00:00:00");
-                    }
+                DateTime rollout = Convert.ToDateTime("01/01/2001 00:00:00");
+                DateTime RollIn = Convert.ToDateTime("01/01/2001 00:00:00");
+                DateTime OnPatrol = Convert.ToDateTime(db.Date + " " + db.OnPatrol);
+                DateTime LogOff = Convert.ToDateTime(db.Date + " " + db.LogOff); ;
+                //driver hours = LogOff - RollOut - Lunch
+                //beat hours = rollin - onpatrol
+                if (db.RollOut != null)
+                {
+                    rollout = Convert.ToDateTime(db.Date + " " + db.RollOut);
+                }
+                else if (db.OnPatrol != null)
+                {
+                    rollout = Convert.ToDateTime(db.Date + " " + db.OnPatrol);
+                }
+                else
+                {
+                    //leave it alone.
+                }
 
-                    if (rollout == Convert.ToDateTime("01/01/2001 00:00:00"))
-                    {
-                        db.DriverHours = 0;
-                    }
-                    else
-                    {
-                        TimeSpan tsDriverHours = LogOff - rollout;
-                        db.DriverHours = Math.Round(((tsDriverHours.TotalMinutes) - db.LunchMinutes) / 60, 2);
-                    }
+                if (db.RollIn != null)
+                {
+                    RollIn = Convert.ToDateTime(db.Date + " " + db.RollIn);
+                }
+                else
+                {
+                    RollIn = Convert.ToDateTime("01/01/2001 00:00:00");
+                }
 
-                    if (RollIn == Convert.ToDateTime("01/01/2001 00:00:00"))
-                    {
-                        db.BeatHours = 0;
-                    }
-                    else
-                    {
-                        TimeSpan tsBeatHours = RollIn - OnPatrol;
-                        db.BeatHours = Math.Round((tsBeatHours.TotalMinutes) / 60, 2);
-                    }
+                if (rollout == Convert.ToDateTime("01/01/2001 00:00:00"))
+                {
+                    db.DriverHours = 0;
+                }
+                else
+                {
+                    TimeSpan tsDriverHours = LogOff - rollout;
+                    db.DriverHours = Math.Round(((tsDriverHours.TotalMinutes) - db.LunchMinutes) / 60, 2);
+                }
+
+                if (RollIn == Convert.ToDateTime("01/01/2001 00:00:00"))
+                {
+                    db.BeatHours = 0;
+                }
+                else
+                {
+                    TimeSpan tsBeatHours = RollIn - OnPatrol;
+                    db.BeatHours = Math.Round((tsBeatHours.TotalMinutes) / 60, 2);
+                }
             }
             gvData.DataSource = dbList;
             gvData.DataBind();

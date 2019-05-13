@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.IO;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
+using System.Web.UI;
 
 namespace ReportServer.Reports
 {
-    public partial class EarlyRollIns : System.Web.UI.Page
+    public partial class EarlyRollIns : Page
     {
         Classes.ReportData thisReport;
         protected void Page_Load(object sender, EventArgs e)
@@ -37,11 +33,11 @@ namespace ReportServer.Reports
                 string cDateVal = Month + "/" + Day + "/" + Year;
                 startDT.Value = cDateVal;
                 endDT.Value = cDateVal;
-                
+
                 LoadDrivers();
                 LoadBeats();
             }
-            
+
 
         }
 
@@ -175,11 +171,11 @@ namespace ReportServer.Reports
                                 cmd.Parameters.AddWithValue(thisReport.parameters[i].ToString(), ddlBeatNumber.Text);
                             }
 
-                            if(thisReport.parameters[i].ToString() == "@DriverLastName")
+                            if (thisReport.parameters[i].ToString() == "@DriverLastName")
                             {
                                 cmd.Parameters.AddWithValue(thisReport.parameters[i].ToString(), lastName);
                             }
-                            if(thisReport.parameters[i].ToString() == "@DriverFirstName")
+                            if (thisReport.parameters[i].ToString() == "@DriverFirstName")
                             {
                                 cmd.Parameters.AddWithValue(thisReport.parameters[i].ToString(), firstName);
                             }
