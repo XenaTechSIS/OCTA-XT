@@ -1,10 +1,10 @@
-﻿using System;
+﻿using FSP.Domain.Model;
+using FSP.Web.Filters;
+using System;
 using System.Data.Entity;
 using System.Data.Linq;
 using System.Linq;
 using System.Web.Mvc;
-using FSP.Domain.Model;
-using FSP.Web.Filters;
 
 namespace FSP.Web.Controllers
 {
@@ -13,17 +13,14 @@ namespace FSP.Web.Controllers
     {
         private readonly FSPDataContext db = new FSPDataContext();
 
-        //
-        // GET: /Junk/Create
-
         public ActionResult Create()
         {
             var users = from q in db.Users
-                select new
-                {
-                    q.Email,
-                    FullName = q.FirstName + " " + q.LastName
-                };
+                        select new
+                        {
+                            q.Email,
+                            FullName = q.FirstName + " " + q.LastName
+                        };
 
             ViewBag.AERecipientEmail = new SelectList(users.OrderBy(p => p.FullName), "Email", "FullName");
             ViewBag.AEFrequencyID = new SelectList(db.AEFrequencies.OrderBy(p => p.AEFrequencyName), "AEFrequencyID",
@@ -36,9 +33,6 @@ namespace FSP.Web.Controllers
                 "ContractCompanyName");
             return View();
         }
-
-        //
-        // POST: /Junk/Create
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -58,11 +52,11 @@ namespace FSP.Web.Controllers
             }
 
             var users = from q in db.Users
-                select new
-                {
-                    q.Email,
-                    FullName = q.FirstName + " " + q.LastName
-                };
+                        select new
+                        {
+                            q.Email,
+                            FullName = q.FirstName + " " + q.LastName
+                        };
 
             ViewBag.AERecipientEmail = new SelectList(users.OrderBy(p => p.FullName), "Email", "FullName");
 
@@ -77,18 +71,12 @@ namespace FSP.Web.Controllers
             return View(aerecipient);
         }
 
-        //
-        // GET: /Junk/Delete/5
-
         public ActionResult Delete(Guid? id = null)
         {
             var aerecipient = db.AERecipients.FirstOrDefault(p => p.AERecipientID == id);
             if (aerecipient == null) return HttpNotFound();
             return View(aerecipient);
         }
-
-        //
-        // POST: /Junk/Delete/5
 
         [HttpPost]
         [ActionName("Delete")]
@@ -100,19 +88,6 @@ namespace FSP.Web.Controllers
             db.SubmitChanges();
             return RedirectToAction("Index");
         }
-
-        //
-        // GET: /Junk/Details/5
-
-        //public ActionResult Details(Guid? id = null)
-        //{
-        //    var aerecipient = db.AERecipients.FirstOrDefault(p => p.AERecipientID == id);
-        //    if (aerecipient == null) return HttpNotFound();
-        //    return View(aerecipient);
-        //}
-
-        //
-        // GET: /Junk/Edit/5
 
         public ActionResult Edit(Guid? id = null)
         {
@@ -128,9 +103,6 @@ namespace FSP.Web.Controllers
                 "ContractCompanyName", aerecipient.AEContractorID);
             return View(aerecipient);
         }
-
-        //
-        // POST: /Junk/Edit/5
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -161,8 +133,6 @@ namespace FSP.Web.Controllers
             return View(aerecipient);
         }
 
-        //
-        // GET: /Junk/
 
         public ActionResult Index()
         {
