@@ -62,6 +62,10 @@ namespace ReportServer.Reports
             {
                 Response.Redirect("TipReport.aspx");
             }
+            if (ddlReports.Text == "Overtime Report")
+            {
+                Response.Redirect("OvertimeReport.aspx");
+            }
         }
     }
 }

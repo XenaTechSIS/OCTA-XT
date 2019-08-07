@@ -31,6 +31,7 @@
                     <asp:ListItem>Speeding Report</asp:ListItem>
                     <asp:ListItem>Truck Messages Report</asp:ListItem>
                     <asp:ListItem>Tip Report</asp:ListItem>
+                    <asp:ListItem>Overtime Report</asp:ListItem>
                 </asp:DropDownList>
             </div>
         </div>

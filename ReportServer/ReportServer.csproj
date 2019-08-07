@@ -76,6 +76,7 @@
     <Content Include="Reports\EarlyRollIns.aspx" />
     <Content Include="Reports\GPSPositionReport.aspx" />
     <Content Include="Reports\Logon.aspx" />
+    <Content Include="Reports\OvertimeReport.aspx" />
     <Content Include="Reports\ReportMain.aspx" />
     <Content Include="Reports\Schedules.aspx" />
     <Content Include="Reports\Speeding.aspx" />
@@ -183,6 +184,13 @@
     </Compile>
     <Compile Include="Reports\Logon.aspx.designer.cs">
       <DependentUpon>Logon.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\OvertimeReport.aspx.cs">
+      <DependentUpon>OvertimeReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\OvertimeReport.aspx.designer.cs">
+      <DependentUpon>OvertimeReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports\ReportMain.aspx.cs">
       <DependentUpon>ReportMain.aspx</DependentUpon>
