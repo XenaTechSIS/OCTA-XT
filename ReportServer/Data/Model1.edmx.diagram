@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d063fe4ffee54935b06234e1f6ff8d93" Name="Diagram1">
+        <EntityTypeShape EntityType="fspModel.BeatBeatSchedule" Width="1.5" PointX="3" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="fspModel.Beat" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="fspModel.BeatSchedule" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="fspModel.Contract" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="fspModel.Driver" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="fspModel.Incident" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="fspModel.FK_BeatBeatSchedules_Beats" ManuallyRouted="false" />
+        <AssociationConnector Association="fspModel.FK_BeatBeatSchedules_BeatSchedules" ManuallyRouted="false" />
+        <AssociationConnector Association="fspModel.FK_Contracts_Beats" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="fspModel.Contractor" Width="1.5" PointX="0.75" PointY="2.625" />
+        <AssociationConnector Association="fspModel.FK_Contracts_Contractors" />
+        <AssociationConnector Association="fspModel.FK_Drivers_Contractors" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

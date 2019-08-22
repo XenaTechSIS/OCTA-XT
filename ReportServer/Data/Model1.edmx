@@ -1,0 +1,593 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="fspModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BeatBeatSchedules">
+          <Key>
+            <PropertyRef Name="BeatBeatScheduleID" />
+          </Key>
+          <Property Name="BeatBeatScheduleID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="BeatID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="BeatScheduleID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Beats">
+          <Key>
+            <PropertyRef Name="BeatID" />
+          </Key>
+          <Property Name="BeatID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="BeatExtent" Type="geography" Nullable="false" />
+          <Property Name="FreewayID" Type="int" Nullable="false" />
+          <Property Name="BeatDescription" Type="varchar" MaxLength="500" />
+          <Property Name="BeatNumber" Type="varchar" MaxLength="50" />
+          <Property Name="LastUpdate" Type="datetime" />
+          <Property Name="LastUpdateBy" Type="varchar" MaxLength="50" />
+          <Property Name="IsTemporary" Type="bit" />
+          <Property Name="BeatColor" Type="varchar" MaxLength="50" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="BeatSchedules">
+          <Key>
+            <PropertyRef Name="BeatScheduleID" />
+          </Key>
+          <Property Name="BeatScheduleID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ScheduleName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Weekday" Type="bit" Nullable="false" />
+          <Property Name="Logon" Type="time" Precision="7" Nullable="false" />
+          <Property Name="RollOut" Type="time" Precision="7" Nullable="false" />
+          <Property Name="OnPatrol" Type="time" Precision="7" Nullable="false" />
+          <Property Name="RollIn" Type="time" Precision="7" Nullable="false" />
+          <Property Name="LogOff" Type="time" Precision="7" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" Nullable="false" />
+          <Property Name="BreakDuration" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Contractors">
+          <Key>
+            <PropertyRef Name="ContractorID" />
+          </Key>
+          <Property Name="ContractorID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="OfficeTelephone" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="MCPNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MCPExpiration" Type="date" Nullable="false" />
+          <Property Name="Comments" Type="varchar" MaxLength="500" />
+          <Property Name="ContractCompanyName" Type="varchar" MaxLength="100" />
+          <Property Name="City" Type="varchar" MaxLength="50" />
+          <Property Name="State" Type="varchar" MaxLength="2" />
+          <Property Name="Zip" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Contracts">
+          <Key>
+            <PropertyRef Name="ContractID" />
+          </Key>
+          <Property Name="ContractID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" Nullable="false" />
+          <Property Name="MaxObligation" Type="money" Nullable="false" />
+          <Property Name="AgreementNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="BeatID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ContractorID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Drivers">
+          <Key>
+            <PropertyRef Name="DriverID" />
+          </Key>
+          <Property Name="DriverID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ContractorID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FSPIDNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProgramStartDate" Type="date" Nullable="false" />
+          <Property Name="TrainingCompletionDate" Type="date" />
+          <Property Name="DOB" Type="date" Nullable="false" />
+          <Property Name="LicenseExpirationDate" Type="date" Nullable="false" />
+          <Property Name="DL64ExpirationDate" Type="date" Nullable="false" />
+          <Property Name="MedicalCardExpirationDate" Type="date" Nullable="false" />
+          <Property Name="LastPullNoticeDate" Type="date" />
+          <Property Name="DateAdded" Type="date" Nullable="false" />
+          <Property Name="UDF" Type="varchar" MaxLength="500" />
+          <Property Name="Comments" Type="varchar" MaxLength="500" />
+          <Property Name="ContractorEndDate" Type="date" />
+          <Property Name="ProgramEndDate" Type="date" />
+          <Property Name="ContractorStartDate" Type="date" />
+          <Property Name="BeatID" Type="uniqueidentifier" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DL64Number" Type="nvarchar" MaxLength="50" />
+          <Property Name="DriversLicenseNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="AddedtoC3Database" Type="datetime" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Incidents">
+          <Key>
+            <PropertyRef Name="IncidentID" />
+          </Key>
+          <Property Name="IncidentID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ApproximateLocation" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="FreewayID" Type="int" Nullable="false" />
+          <Property Name="LocationID" Type="uniqueidentifier" />
+          <Property Name="BeatSegmentID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TimeStamp" Type="time" Precision="7" />
+          <Property Name="DateStamp" Type="date" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="500" />
+          <Property Name="IncidentNumber" Type="varchar" MaxLength="50" />
+          <Property Name="LastModified" Type="datetime" Nullable="false" />
+          <Property Name="Location" Type="varchar" MaxLength="100" />
+          <Property Name="CrossStreet1" Type="varchar" MaxLength="100" />
+          <Property Name="CrossStreet2" Type="varchar" MaxLength="100" />
+          <Property Name="Direction" Type="varchar" MaxLength="50" />
+          <Property Name="BeatNumber" Type="varchar" MaxLength="50" />
+          <Property Name="DispatchNumber" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_BeatBeatSchedules_Beats">
+          <End Role="Beats" Type="Self.Beats" Multiplicity="1" />
+          <End Role="BeatBeatSchedules" Type="Self.BeatBeatSchedules" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Beats">
+              <PropertyRef Name="BeatID" />
+            </Principal>
+            <Dependent Role="BeatBeatSchedules">
+              <PropertyRef Name="BeatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BeatBeatSchedules_BeatSchedules">
+          <End Role="BeatSchedules" Type="Self.BeatSchedules" Multiplicity="1" />
+          <End Role="BeatBeatSchedules" Type="Self.BeatBeatSchedules" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BeatSchedules">
+              <PropertyRef Name="BeatScheduleID" />
+            </Principal>
+            <Dependent Role="BeatBeatSchedules">
+              <PropertyRef Name="BeatScheduleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contracts_Beats">
+          <End Role="Beats" Type="Self.Beats" Multiplicity="1" />
+          <End Role="Contracts" Type="Self.Contracts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Beats">
+              <PropertyRef Name="BeatID" />
+            </Principal>
+            <Dependent Role="Contracts">
+              <PropertyRef Name="BeatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contracts_Contractors">
+          <End Role="Contractors" Type="Self.Contractors" Multiplicity="1" />
+          <End Role="Contracts" Type="Self.Contracts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contractors">
+              <PropertyRef Name="ContractorID" />
+            </Principal>
+            <Dependent Role="Contracts">
+              <PropertyRef Name="ContractorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Drivers_Contractors">
+          <End Role="Contractors" Type="Self.Contractors" Multiplicity="1" />
+          <End Role="Drivers" Type="Self.Drivers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contractors">
+              <PropertyRef Name="ContractorID" />
+            </Principal>
+            <Dependent Role="Drivers">
+              <PropertyRef Name="ContractorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="fspModelStoreContainer">
+          <EntitySet Name="BeatBeatSchedules" EntityType="Self.BeatBeatSchedules" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Beats" EntityType="Self.Beats" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BeatSchedules" EntityType="Self.BeatSchedules" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contractors" EntityType="Self.Contractors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contracts" EntityType="Self.Contracts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Drivers" EntityType="Self.Drivers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Incidents" EntityType="Self.Incidents" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BeatBeatSchedules_Beats" Association="Self.FK_BeatBeatSchedules_Beats">
+            <End Role="Beats" EntitySet="Beats" />
+            <End Role="BeatBeatSchedules" EntitySet="BeatBeatSchedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BeatBeatSchedules_BeatSchedules" Association="Self.FK_BeatBeatSchedules_BeatSchedules">
+            <End Role="BeatSchedules" EntitySet="BeatSchedules" />
+            <End Role="BeatBeatSchedules" EntitySet="BeatBeatSchedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contracts_Beats" Association="Self.FK_Contracts_Beats">
+            <End Role="Beats" EntitySet="Beats" />
+            <End Role="Contracts" EntitySet="Contracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contracts_Contractors" Association="Self.FK_Contracts_Contractors">
+            <End Role="Contractors" EntitySet="Contractors" />
+            <End Role="Contracts" EntitySet="Contracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Drivers_Contractors" Association="Self.FK_Drivers_Contractors">
+            <End Role="Contractors" EntitySet="Contractors" />
+            <End Role="Drivers" EntitySet="Drivers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="fspModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BeatBeatSchedule">
+          <Key>
+            <PropertyRef Name="BeatBeatScheduleID" />
+          </Key>
+          <Property Name="BeatBeatScheduleID" Type="Guid" Nullable="false" />
+          <Property Name="BeatID" Type="Guid" Nullable="false" />
+          <Property Name="BeatScheduleID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Beat" Relationship="Self.FK_BeatBeatSchedules_Beats" FromRole="BeatBeatSchedules" ToRole="Beats" />
+          <NavigationProperty Name="BeatSchedule" Relationship="Self.FK_BeatBeatSchedules_BeatSchedules" FromRole="BeatBeatSchedules" ToRole="BeatSchedules" />
+        </EntityType>
+        <EntityType Name="Beat">
+          <Key>
+            <PropertyRef Name="BeatID" />
+          </Key>
+          <Property Name="BeatID" Type="Guid" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="BeatExtent" Type="Geography" Nullable="false" />
+          <Property Name="FreewayID" Type="Int32" Nullable="false" />
+          <Property Name="BeatDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="BeatNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastUpdate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsTemporary" Type="Boolean" />
+          <Property Name="BeatColor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="BeatBeatSchedules" Relationship="Self.FK_BeatBeatSchedules_Beats" FromRole="Beats" ToRole="BeatBeatSchedules" />
+          <NavigationProperty Name="Contracts" Relationship="Self.FK_Contracts_Beats" FromRole="Beats" ToRole="Contracts" />
+        </EntityType>
+        <EntityType Name="BeatSchedule">
+          <Key>
+            <PropertyRef Name="BeatScheduleID" />
+          </Key>
+          <Property Name="BeatScheduleID" Type="Guid" Nullable="false" />
+          <Property Name="ScheduleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Weekday" Type="Boolean" Nullable="false" />
+          <Property Name="Logon" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="RollOut" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="OnPatrol" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="RollIn" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="LogOff" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="BreakDuration" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BeatBeatSchedules" Relationship="Self.FK_BeatBeatSchedules_BeatSchedules" FromRole="BeatSchedules" ToRole="BeatBeatSchedules" />
+        </EntityType>
+        <EntityType Name="Contract">
+          <Key>
+            <PropertyRef Name="ContractID" />
+          </Key>
+          <Property Name="ContractID" Type="Guid" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="MaxObligation" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="AgreementNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BeatID" Type="Guid" Nullable="false" />
+          <Property Name="ContractorID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Beat" Relationship="Self.FK_Contracts_Beats" FromRole="Contracts" ToRole="Beats" />
+          <NavigationProperty Name="Contractor" Relationship="fspModel.FK_Contracts_Contractors" FromRole="Contract" ToRole="Contractor" />
+        </EntityType>
+        <EntityType Name="Driver">
+          <Key>
+            <PropertyRef Name="DriverID" />
+          </Key>
+          <Property Name="DriverID" Type="Guid" Nullable="false" />
+          <Property Name="ContractorID" Type="Guid" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FSPIDNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProgramStartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TrainingCompletionDate" Type="DateTime" Precision="0" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="LicenseExpirationDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DL64ExpirationDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="MedicalCardExpirationDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="LastPullNoticeDate" Type="DateTime" Precision="0" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UDF" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ContractorEndDate" Type="DateTime" Precision="0" />
+          <Property Name="ProgramEndDate" Type="DateTime" Precision="0" />
+          <Property Name="ContractorStartDate" Type="DateTime" Precision="0" />
+          <Property Name="BeatID" Type="Guid" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DL64Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DriversLicenseNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AddedtoC3Database" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Contractor" Relationship="fspModel.FK_Drivers_Contractors" FromRole="Driver" ToRole="Contractor" />
+        </EntityType>
+        <EntityType Name="Incident">
+          <Key>
+            <PropertyRef Name="IncidentID" />
+          </Key>
+          <Property Name="IncidentID" Type="Guid" Nullable="false" />
+          <Property Name="ApproximateLocation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FreewayID" Type="Int32" Nullable="false" />
+          <Property Name="LocationID" Type="Guid" />
+          <Property Name="BeatSegmentID" Type="Guid" Nullable="false" />
+          <Property Name="TimeStamp" Type="Time" Precision="7" />
+          <Property Name="DateStamp" Type="DateTime" Precision="0" />
+          <Property Name="CreatedBy" Type="Guid" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IncidentNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Location" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CrossStreet1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CrossStreet2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Direction" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BeatNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DispatchNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_BeatBeatSchedules_Beats">
+          <End Role="Beats" Type="Self.Beat" Multiplicity="1" />
+          <End Role="BeatBeatSchedules" Type="Self.BeatBeatSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Beats">
+              <PropertyRef Name="BeatID" />
+            </Principal>
+            <Dependent Role="BeatBeatSchedules">
+              <PropertyRef Name="BeatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BeatBeatSchedules_BeatSchedules">
+          <End Role="BeatSchedules" Type="Self.BeatSchedule" Multiplicity="1" />
+          <End Role="BeatBeatSchedules" Type="Self.BeatBeatSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BeatSchedules">
+              <PropertyRef Name="BeatScheduleID" />
+            </Principal>
+            <Dependent Role="BeatBeatSchedules">
+              <PropertyRef Name="BeatScheduleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contracts_Beats">
+          <End Role="Beats" Type="Self.Beat" Multiplicity="1" />
+          <End Role="Contracts" Type="Self.Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Beats">
+              <PropertyRef Name="BeatID" />
+            </Principal>
+            <Dependent Role="Contracts">
+              <PropertyRef Name="BeatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="fspEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BeatBeatSchedules" EntityType="Self.BeatBeatSchedule" />
+          <EntitySet Name="Beats" EntityType="Self.Beat" />
+          <EntitySet Name="BeatSchedules" EntityType="Self.BeatSchedule" />
+          <EntitySet Name="Contracts" EntityType="Self.Contract" />
+          <EntitySet Name="Drivers" EntityType="Self.Driver" />
+          <EntitySet Name="Incidents" EntityType="Self.Incident" />
+          <AssociationSet Name="FK_BeatBeatSchedules_Beats" Association="Self.FK_BeatBeatSchedules_Beats">
+            <End Role="Beats" EntitySet="Beats" />
+            <End Role="BeatBeatSchedules" EntitySet="BeatBeatSchedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BeatBeatSchedules_BeatSchedules" Association="Self.FK_BeatBeatSchedules_BeatSchedules">
+            <End Role="BeatSchedules" EntitySet="BeatSchedules" />
+            <End Role="BeatBeatSchedules" EntitySet="BeatBeatSchedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contracts_Beats" Association="Self.FK_Contracts_Beats">
+            <End Role="Beats" EntitySet="Beats" />
+            <End Role="Contracts" EntitySet="Contracts" />
+          </AssociationSet>
+          <EntitySet Name="Contractors" EntityType="fspModel.Contractor" />
+          <AssociationSet Name="FK_Contracts_Contractors" Association="fspModel.FK_Contracts_Contractors">
+            <End Role="Contractor" EntitySet="Contractors" />
+            <End Role="Contract" EntitySet="Contracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Drivers_Contractors" Association="fspModel.FK_Drivers_Contractors">
+            <End Role="Contractor" EntitySet="Contractors" />
+            <End Role="Driver" EntitySet="Drivers" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Contractor">
+          <Key>
+            <PropertyRef Name="ContractorID" />
+          </Key>
+          <Property Name="ContractorID" Type="Guid" Nullable="false" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="OfficeTelephone" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MCPNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MCPExpiration" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ContractCompanyName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Contracts" Relationship="fspModel.FK_Contracts_Contractors" FromRole="Contractor" ToRole="Contract" />
+          <NavigationProperty Name="Drivers" Relationship="fspModel.FK_Drivers_Contractors" FromRole="Contractor" ToRole="Driver" />
+        </EntityType>
+        <Association Name="FK_Contracts_Contractors">
+          <End Type="fspModel.Contractor" Role="Contractor" Multiplicity="1" />
+          <End Type="fspModel.Contract" Role="Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contractor">
+              <PropertyRef Name="ContractorID" />
+            </Principal>
+            <Dependent Role="Contract">
+              <PropertyRef Name="ContractorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Drivers_Contractors">
+          <End Type="fspModel.Contractor" Role="Contractor" Multiplicity="1" />
+          <End Type="fspModel.Driver" Role="Driver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contractor">
+              <PropertyRef Name="ContractorID" />
+            </Principal>
+            <Dependent Role="Driver">
+              <PropertyRef Name="ContractorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="fspModelStoreContainer" CdmEntityContainer="fspEntities">
+          <EntitySetMapping Name="BeatBeatSchedules">
+            <EntityTypeMapping TypeName="fspModel.BeatBeatSchedule">
+              <MappingFragment StoreEntitySet="BeatBeatSchedules">
+                <ScalarProperty Name="BeatBeatScheduleID" ColumnName="BeatBeatScheduleID" />
+                <ScalarProperty Name="BeatID" ColumnName="BeatID" />
+                <ScalarProperty Name="BeatScheduleID" ColumnName="BeatScheduleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Beats">
+            <EntityTypeMapping TypeName="fspModel.Beat">
+              <MappingFragment StoreEntitySet="Beats">
+                <ScalarProperty Name="BeatID" ColumnName="BeatID" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="BeatExtent" ColumnName="BeatExtent" />
+                <ScalarProperty Name="FreewayID" ColumnName="FreewayID" />
+                <ScalarProperty Name="BeatDescription" ColumnName="BeatDescription" />
+                <ScalarProperty Name="BeatNumber" ColumnName="BeatNumber" />
+                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
+                <ScalarProperty Name="IsTemporary" ColumnName="IsTemporary" />
+                <ScalarProperty Name="BeatColor" ColumnName="BeatColor" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BeatSchedules">
+            <EntityTypeMapping TypeName="fspModel.BeatSchedule">
+              <MappingFragment StoreEntitySet="BeatSchedules">
+                <ScalarProperty Name="BeatScheduleID" ColumnName="BeatScheduleID" />
+                <ScalarProperty Name="ScheduleName" ColumnName="ScheduleName" />
+                <ScalarProperty Name="Weekday" ColumnName="Weekday" />
+                <ScalarProperty Name="Logon" ColumnName="Logon" />
+                <ScalarProperty Name="RollOut" ColumnName="RollOut" />
+                <ScalarProperty Name="OnPatrol" ColumnName="OnPatrol" />
+                <ScalarProperty Name="RollIn" ColumnName="RollIn" />
+                <ScalarProperty Name="LogOff" ColumnName="LogOff" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="BreakDuration" ColumnName="BreakDuration" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contracts">
+            <EntityTypeMapping TypeName="fspModel.Contract">
+              <MappingFragment StoreEntitySet="Contracts">
+                <ScalarProperty Name="ContractID" ColumnName="ContractID" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="MaxObligation" ColumnName="MaxObligation" />
+                <ScalarProperty Name="AgreementNumber" ColumnName="AgreementNumber" />
+                <ScalarProperty Name="BeatID" ColumnName="BeatID" />
+                <ScalarProperty Name="ContractorID" ColumnName="ContractorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Drivers">
+            <EntityTypeMapping TypeName="fspModel.Driver">
+              <MappingFragment StoreEntitySet="Drivers">
+                <ScalarProperty Name="DriverID" ColumnName="DriverID" />
+                <ScalarProperty Name="ContractorID" ColumnName="ContractorID" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="FSPIDNumber" ColumnName="FSPIDNumber" />
+                <ScalarProperty Name="ProgramStartDate" ColumnName="ProgramStartDate" />
+                <ScalarProperty Name="TrainingCompletionDate" ColumnName="TrainingCompletionDate" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="LicenseExpirationDate" ColumnName="LicenseExpirationDate" />
+                <ScalarProperty Name="DL64ExpirationDate" ColumnName="DL64ExpirationDate" />
+                <ScalarProperty Name="MedicalCardExpirationDate" ColumnName="MedicalCardExpirationDate" />
+                <ScalarProperty Name="LastPullNoticeDate" ColumnName="LastPullNoticeDate" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="UDF" ColumnName="UDF" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="ContractorEndDate" ColumnName="ContractorEndDate" />
+                <ScalarProperty Name="ProgramEndDate" ColumnName="ProgramEndDate" />
+                <ScalarProperty Name="ContractorStartDate" ColumnName="ContractorStartDate" />
+                <ScalarProperty Name="BeatID" ColumnName="BeatID" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="DL64Number" ColumnName="DL64Number" />
+                <ScalarProperty Name="DriversLicenseNumber" ColumnName="DriversLicenseNumber" />
+                <ScalarProperty Name="AddedtoC3Database" ColumnName="AddedtoC3Database" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Incidents">
+            <EntityTypeMapping TypeName="fspModel.Incident">
+              <MappingFragment StoreEntitySet="Incidents">
+                <ScalarProperty Name="IncidentID" ColumnName="IncidentID" />
+                <ScalarProperty Name="ApproximateLocation" ColumnName="ApproximateLocation" />
+                <ScalarProperty Name="FreewayID" ColumnName="FreewayID" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="BeatSegmentID" ColumnName="BeatSegmentID" />
+                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
+                <ScalarProperty Name="DateStamp" ColumnName="DateStamp" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IncidentNumber" ColumnName="IncidentNumber" />
+                <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="CrossStreet1" ColumnName="CrossStreet1" />
+                <ScalarProperty Name="CrossStreet2" ColumnName="CrossStreet2" />
+                <ScalarProperty Name="Direction" ColumnName="Direction" />
+                <ScalarProperty Name="BeatNumber" ColumnName="BeatNumber" />
+                <ScalarProperty Name="DispatchNumber" ColumnName="DispatchNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contractors">
+            <EntityTypeMapping TypeName="fspModel.Contractor">
+              <MappingFragment StoreEntitySet="Contractors">
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="ContractCompanyName" ColumnName="ContractCompanyName" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="MCPExpiration" ColumnName="MCPExpiration" />
+                <ScalarProperty Name="MCPNumber" ColumnName="MCPNumber" />
+                <ScalarProperty Name="OfficeTelephone" ColumnName="OfficeTelephone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="ContractorID" ColumnName="ContractorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
