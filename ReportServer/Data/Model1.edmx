@@ -102,6 +102,18 @@
           <Property Name="AddedtoC3Database" Type="datetime" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="DriverStatus">
+          <Key>
+            <PropertyRef Name="DriverStatusID" />
+          </Key>
+          <Property Name="DriverStatusID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DriverName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="VehicleID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TimeStamp" Type="datetime" Nullable="false" />
+          <Property Name="BeatNumber" Type="varchar" MaxLength="50" />
+          <Property Name="ScheduleName" Type="varchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="Incidents">
           <Key>
             <PropertyRef Name="IncidentID" />
@@ -191,6 +203,7 @@
           <EntitySet Name="Contractors" EntityType="Self.Contractors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Contracts" EntityType="Self.Contracts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Drivers" EntityType="Self.Drivers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DriverStatus" EntityType="Self.DriverStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Incidents" EntityType="Self.Incidents" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_BeatBeatSchedules_Beats" Association="Self.FK_BeatBeatSchedules_Beats">
             <End Role="Beats" EntitySet="Beats" />
@@ -393,6 +406,7 @@
             <End Role="Contractor" EntitySet="Contractors" />
             <End Role="Driver" EntitySet="Drivers" />
           </AssociationSet>
+          <EntitySet Name="DriverStatus" EntityType="fspModel.DriverStatu" />
         </EntityContainer>
         <EntityType Name="Contractor">
           <Key>
@@ -435,6 +449,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="DriverStatu">
+          <Key>
+            <PropertyRef Name="DriverStatusID" />
+          </Key>
+          <Property Name="DriverStatusID" Type="Guid" Nullable="false" />
+          <Property Name="DriverName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="VehicleID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TimeStamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="BeatNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ScheduleName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -564,6 +590,19 @@
                 <ScalarProperty Name="OfficeTelephone" ColumnName="OfficeTelephone" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="ContractorID" ColumnName="ContractorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DriverStatus">
+            <EntityTypeMapping TypeName="fspModel.DriverStatu">
+              <MappingFragment StoreEntitySet="DriverStatus">
+                <ScalarProperty Name="ScheduleName" ColumnName="ScheduleName" />
+                <ScalarProperty Name="BeatNumber" ColumnName="BeatNumber" />
+                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="VehicleID" ColumnName="VehicleID" />
+                <ScalarProperty Name="DriverName" ColumnName="DriverName" />
+                <ScalarProperty Name="DriverStatusID" ColumnName="DriverStatusID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

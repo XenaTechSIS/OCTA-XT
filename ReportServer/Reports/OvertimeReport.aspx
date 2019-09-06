@@ -28,15 +28,21 @@
 
     <form id="form1" runat="server" class="form-horizontal">
         <div class="control-group">
-            <asp:Label ID="Label1" runat="server" Text="Select Start Date" class="control-label"></asp:Label>
+            <asp:Label ID="lblStartDate" runat="server" Text="Select Start Date" class="control-label"></asp:Label>
             <div class="controls">
                 <input type="text" value="01/01/2019" id="startDT" runat="server" />
             </div>
         </div>
         <div class="control-group">
-            <asp:Label ID="Label2" runat="server" Text="Select End Date" class="control-label"></asp:Label>
+            <asp:Label ID="lblEndDate" runat="server" Text="Select End Date" class="control-label"></asp:Label>
             <div class="controls">
                 <input type="text" value="12/31/2019" id="endDT" runat="server" onclick="return endDT_onclick()" />
+            </div>
+        </div>
+        <div class="control-group">
+            <asp:Label ID="lblThreshold" runat="server" Text="Threshold in Minutes" class="control-label"></asp:Label>
+            <div class="controls">                
+                <input type="text" value="5" id="txtThreshold" runat="server"  />
             </div>
         </div>
         <div class="control-group">

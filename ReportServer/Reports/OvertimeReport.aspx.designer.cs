@@ -22,13 +22,13 @@ namespace ReportServer.Reports {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// Label1 control.
+        /// lblStartDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label lblStartDate;
         
         /// <summary>
         /// startDT control.
@@ -40,13 +40,13 @@ namespace ReportServer.Reports {
         protected global::System.Web.UI.HtmlControls.HtmlInputText startDT;
         
         /// <summary>
-        /// Label2 control.
+        /// lblEndDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.Label lblEndDate;
         
         /// <summary>
         /// endDT control.
@@ -56,6 +56,24 @@ namespace ReportServer.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText endDT;
+        
+        /// <summary>
+        /// lblThreshold control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblThreshold;
+        
+        /// <summary>
+        /// txtThreshold control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtThreshold;
         
         /// <summary>
         /// btnGetReport control.
