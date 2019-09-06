@@ -167,6 +167,7 @@ namespace ReportServer.Reports
                                   join c in fspDatabase.Contractors on d.ContractorID equals c.ContractorID
                                   select new
                                   {
+                                      d.DriverID,
                                       DriverName = d.FirstName + " " + d.LastName,
                                       d.FSPIDNumber,
                                       ContractorName = c.ContractCompanyName
@@ -181,8 +182,18 @@ namespace ReportServer.Reports
                     p.ScheduleName
                 }).OrderByDescending(p => p.TimeStamp).ToList();
 
+                var allIncidents = fspDatabase.Incidents.Where(p => p.DateStamp >= start && p.DateStamp <= end).Select(i => new
+                {
+                    i.Location,
+                    i.DateStamp,
+                    i.TimeStamp,
+                    i.CreatedBy,
+                    i.BeatNumber
+                }).ToList();
+
 
                 dt.Columns.Add("Beat");
+                dt.Columns.Add("Last Incident Location");
                 dt.Columns.Add("Driver");
                 dt.Columns.Add("Callsign");
                 dt.Columns.Add("Contractor");
@@ -193,27 +204,47 @@ namespace ReportServer.Reports
 
                 foreach (var driverRollIn in driverRollIns)
                 {
+                    var date = Convert.ToDateTime(driverRollIn.TimeStamp).ToShortDateString();
+                    var actualRollIn = Convert.ToDateTime(driverRollIn.TimeStamp).ToString("HH:mm:ss");
+
                     var driver = allDrivers.FirstOrDefault(p => p.DriverName == driverRollIn.DriverName);
                     if (driver == null) continue;
 
                     var schedule = allBeatSchedules.FirstOrDefault(p => p.ScheduleName == driverRollIn.ScheduleName);
                     if (schedule == null) continue;
 
-                    var row = dt.NewRow();
-                    row[0] = driverRollIn.BeatNumber;
-                    row[1] = driverRollIn.DriverName;
-                    row[2] = driver.FSPIDNumber;
-                    row[3] = driver.ContractorName;
-                    row[4] = Convert.ToDateTime(driverRollIn.TimeStamp).ToShortDateString();
-                    row[5] = Convert.ToDateTime(driverRollIn.TimeStamp).ToString("HH:mm:ss");
-                    row[6] = schedule.RollIn;
+                    var dateStamp = Convert.ToDateTime(driverRollIn.TimeStamp);
+                    var driverBeatIncidents = allIncidents.Where(p => p.CreatedBy == driver.DriverID && p.BeatNumber == driverRollIn.BeatNumber).OrderByDescending(p => p.TimeStamp).ToList();
 
                     var excessTime = driverRollIn.TimeStamp.TimeOfDay - schedule.RollIn;
                     var excessTimeInMinutes = Math.Round(excessTime.TotalMinutes);
 
                     if (excessTimeInMinutes <= 0 || excessTimeInMinutes <= threshold) continue;
 
-                    row[7] = $"{excessTimeInMinutes} minutes";
+                    var lastIncidentLocation = "";
+
+                    foreach (var driverBeatIncident in driverBeatIncidents)
+                    {
+                        var incidentDate = Convert.ToDateTime(driverBeatIncident.DateStamp);
+                        var rollInDate = Convert.ToDateTime(driverRollIn.TimeStamp);
+
+                        if (incidentDate.ToString("yyyy-MM-DD") == rollInDate.ToString("yyyy-MM-DD"))
+                        {
+                            lastIncidentLocation = driverBeatIncident.Location;
+                            break;
+                        }
+                    }
+
+                    var row = dt.NewRow();
+                    row[0] = driverRollIn.BeatNumber;
+                    row[1] = lastIncidentLocation;
+                    row[2] = driverRollIn.DriverName;
+                    row[3] = driver.FSPIDNumber;
+                    row[4] = driver.ContractorName;
+                    row[5] = date;
+                    row[6] = actualRollIn;
+                    row[7] = schedule.RollIn;
+                    row[8] = $"{excessTimeInMinutes} minutes";
                     dt.Rows.Add(row);
                 }
 
