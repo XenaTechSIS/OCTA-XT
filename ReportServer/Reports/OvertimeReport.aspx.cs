@@ -117,106 +117,6 @@ namespace ReportServer.Reports
             var dt = this.BuildResultTable(dtStart, dtEnd, threshold);
             this.gvData.DataSource = dt;
             this.gvData.DataBind();
-
-            //try
-            //{
-            //    using (var fspDatabase = new fspEntities())
-            //    {
-            //        var allBeatSchedules = (from b in fspDatabase.Beats
-            //                                join bbs in fspDatabase.BeatBeatSchedules on b.BeatID equals bbs.BeatID
-            //                                join bs in fspDatabase.BeatSchedules on bbs.BeatScheduleID equals bs.BeatScheduleID
-            //                                select new
-            //                                {
-            //                                    b.BeatNumber,
-            //                                    bs.ScheduleName,
-            //                                    bs.Logon,
-            //                                    bs.RollIn
-            //                                }).OrderBy(p => p.Logon).ToList();
-
-
-
-            //        var incidents = (from i in fspDatabase.Incidents
-            //                         join d in fspDatabase.Drivers on i.CreatedBy equals d.DriverID
-            //                         join c in fspDatabase.Contractors on d.ContractorID equals c.ContractorID
-            //                         where i.DateStamp >= dtStart && i.DateStamp <= dtEnd
-            //                         select new
-            //                         {
-            //                             i.BeatNumber,
-            //                             i.Location,
-            //                             Driver = d.LastName + ", " + d.FirstName,
-            //                             Callsign = d.FSPIDNumber,
-            //                             Contractor = c.ContractCompanyName,
-            //                             i.DateStamp,
-            //                             i.TimeStamp
-            //                         }).OrderByDescending(p => p.DateStamp).ThenByDescending(p => p.TimeStamp).ToList();
-
-
-            //        var dt = new DataTable();
-            //        dt.Columns.Add("Beat");
-            //        dt.Columns.Add("Location");
-            //        dt.Columns.Add("Driver");
-            //        dt.Columns.Add("Callsign");
-            //        dt.Columns.Add("Contractor");
-            //        dt.Columns.Add("Incident Date");
-            //        dt.Columns.Add("Incident Time");
-            //        dt.Columns.Add("Schedule Roll-In");
-            //        dt.Columns.Add("Overtime");
-
-            //        foreach (var incident in incidents)
-            //        {
-            //            var row = dt.NewRow();
-
-            //            row[0] = incident.BeatNumber;
-            //            row[1] = incident.Location;
-            //            row[2] = incident.Driver;
-            //            row[3] = incident.Callsign;
-            //            row[4] = incident.Contractor;
-            //            row[5] = Convert.ToDateTime(incident.DateStamp).ToShortDateString();
-            //            row[6] = incident.TimeStamp;
-
-            //            var beatSchedules = allBeatSchedules.Where(p => p.BeatNumber == incident.BeatNumber).ToList();
-
-            //            if (!beatSchedules.Any()) continue;
-
-            //            var numberOfTimesInsideSchedule = 0;
-            //            foreach (var bs in beatSchedules)
-            //            {
-            //                var logOffHour = bs.RollIn.Hours;
-            //                var logOffTotalMinutes = bs.RollIn.TotalMinutes;
-            //                if (logOffHour == 0) logOffTotalMinutes = logOffTotalMinutes + 2400;
-
-            //                var incidentTotalMinutes = incident.TimeStamp.Value.TotalMinutes;
-
-            //                if (incident.TimeStamp >= bs.Logon && incidentTotalMinutes <= logOffTotalMinutes)
-            //                {
-            //                    numberOfTimesInsideSchedule++;
-            //                }
-            //            }
-
-            //            if (numberOfTimesInsideSchedule > 0) continue;
-
-            //            var lastSchedule = beatSchedules.LastOrDefault();
-
-            //            var excessTime = incident.TimeStamp - lastSchedule.RollIn;
-            //            var excessTimeInMinutes = Math.Round(excessTime.Value.TotalMinutes);
-
-            //            int.TryParse(this.txtThreshold.Value, out var threshold);
-            //            if (excessTimeInMinutes <= 0 || excessTimeInMinutes < threshold) continue;
-
-            //            row[7] = lastSchedule.RollIn;
-            //            row[8] = $"{excessTimeInMinutes} minutes";
-            //            dt.Rows.Add(row);
-            //        }
-
-            //        this.gvData.DataSource = dt;
-            //        this.gvData.DataBind();
-
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    this.Response.Write(ex.ToString());
-            //}
         }
 
         public void ExportExcel()
@@ -288,14 +188,13 @@ namespace ReportServer.Reports
                 dt.Columns.Add("Contractor");
                 dt.Columns.Add("Date");
                 dt.Columns.Add("Actual Roll-In");
-                dt.Columns.Add("Schedule Roll-In");
+                dt.Columns.Add("Scheduled Roll-In");
                 dt.Columns.Add("Overtime");
 
                 foreach (var driverRollIn in driverRollIns)
                 {
                     var driver = allDrivers.FirstOrDefault(p => p.DriverName == driverRollIn.DriverName);
                     if (driver == null) continue;
-
 
                     var schedule = allBeatSchedules.FirstOrDefault(p => p.ScheduleName == driverRollIn.ScheduleName);
                     if (schedule == null) continue;
@@ -312,7 +211,7 @@ namespace ReportServer.Reports
                     var excessTime = driverRollIn.TimeStamp.TimeOfDay - schedule.RollIn;
                     var excessTimeInMinutes = Math.Round(excessTime.TotalMinutes);
 
-                    if (excessTimeInMinutes <= 0 || excessTimeInMinutes < threshold) continue;
+                    if (excessTimeInMinutes <= 0 || excessTimeInMinutes <= threshold) continue;
 
                     row[7] = $"{excessTimeInMinutes} minutes";
                     dt.Rows.Add(row);
