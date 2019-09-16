@@ -5,19 +5,22 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="d063fe4ffee54935b06234e1f6ff8d93" Name="Diagram1">
-        <EntityTypeShape EntityType="fspModel.BeatBeatSchedule" Width="2.125" PointX="2.625" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="fspModel.BeatBeatSchedule" Width="2.125" PointX="3" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="fspModel.Beat" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="fspModel.BeatSchedule" Width="1.5" PointX="3.375" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="fspModel.Contract" Width="1.5" PointX="2.875" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="fspModel.Driver" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="fspModel.Incident" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="fspModel.BeatSchedule" Width="1.5" PointX="3.25" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="fspModel.Contract" Width="1.5" PointX="2.75" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="fspModel.Driver" Width="1.5" PointX="6.125" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="fspModel.Incident" Width="2.625" PointX="14.5" PointY="4.875" IsExpanded="true" />
         <AssociationConnector Association="fspModel.FK_BeatBeatSchedules_Beats" ManuallyRouted="false" />
         <AssociationConnector Association="fspModel.FK_BeatBeatSchedules_BeatSchedules" ManuallyRouted="false" />
         <AssociationConnector Association="fspModel.FK_Contracts_Beats" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="fspModel.Contractor" Width="1.5" PointX="5.5" PointY="8.625" />
+        <EntityTypeShape EntityType="fspModel.Contractor" Width="1.5" PointX="6.125" PointY="9" />
         <AssociationConnector Association="fspModel.FK_Contracts_Contractors" />
         <AssociationConnector Association="fspModel.FK_Drivers_Contractors" />
-        <EntityTypeShape EntityType="fspModel.DriverStatu" Width="2.625" PointX="8.375" PointY="6.75" />
+        <EntityTypeShape EntityType="fspModel.DriverStatu" Width="2.625" PointX="12.625" PointY="1.625" />
+        <EntityTypeShape EntityType="fspModel.EarlyRollIn" Width="1.5" PointX="16.25" PointY="1.5" />
+        <EntityTypeShape EntityType="fspModel.Assist" Width="1.5" PointX="17.875" PointY="5.25" />
+        <AssociationConnector Association="fspModel.FK_Assists_Incidents" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

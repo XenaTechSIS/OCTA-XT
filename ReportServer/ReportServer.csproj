@@ -137,6 +137,9 @@
     <Compile Include="Classes\Reports.cs" />
     <Compile Include="Classes\SQLCode.cs" />
     <Compile Include="Classes\SQLConn.cs" />
+    <Compile Include="Data\Assist.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\Beat.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -156,6 +159,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\DriverStatu.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\EarlyRollIn.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\Incident.cs">

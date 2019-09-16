@@ -33,5 +33,7 @@ namespace ReportServer.Data
         public virtual DbSet<Incident> Incidents { get; set; }
         public virtual DbSet<Contractor> Contractors { get; set; }
         public virtual DbSet<DriverStatu> DriverStatus { get; set; }
+        public virtual DbSet<EarlyRollIn> EarlyRollIns { get; set; }
+        public virtual DbSet<Assist> Assists { get; set; }
     }
 }

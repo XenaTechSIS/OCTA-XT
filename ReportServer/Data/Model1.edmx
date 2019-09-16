@@ -5,6 +5,45 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="fspModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Assists">
+          <Key>
+            <PropertyRef Name="AssistID" />
+          </Key>
+          <Property Name="AssistID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IncidentID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DriverID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FleetVehicleID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DispatchTime" Type="datetime" />
+          <Property Name="CustomerWaitTime" Type="int" />
+          <Property Name="VehiclePositionID" Type="uniqueidentifier" />
+          <Property Name="IncidentTypeID" Type="uniqueidentifier" />
+          <Property Name="TrafficSpeedID" Type="uniqueidentifier" />
+          <Property Name="ServiceTypeID" Type="uniqueidentifier" />
+          <Property Name="DropZone" Type="varchar" MaxLength="50" />
+          <Property Name="Make" Type="varchar" MaxLength="50" />
+          <Property Name="VehicleTypeID" Type="uniqueidentifier" />
+          <Property Name="Color" Type="varchar" MaxLength="20" />
+          <Property Name="LicensePlate" Type="varchar" MaxLength="20" />
+          <Property Name="State" Type="varchar" MaxLength="20" />
+          <Property Name="StartOD" Type="float" />
+          <Property Name="EndOD" Type="float" />
+          <Property Name="TowLocationID" Type="uniqueidentifier" />
+          <Property Name="Tip" Type="varchar" MaxLength="50" />
+          <Property Name="TipDetail" Type="varchar" MaxLength="50" />
+          <Property Name="CustomerLastName" Type="varchar" MaxLength="50" />
+          <Property Name="Comments" Type="varchar" MaxLength="500" />
+          <Property Name="IsMDC" Type="bit" />
+          <Property Name="x1097" Type="datetime" />
+          <Property Name="x1098" Type="datetime" />
+          <Property Name="ContractorID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="LogNumber" Type="varchar" MaxLength="50" />
+          <Property Name="LastModified" Type="datetime" />
+          <Property Name="Lat" Type="float" />
+          <Property Name="Lon" Type="float" />
+          <Property Name="OnSiteTime" Type="datetime" />
+          <Property Name="SurveyNum" Type="varchar" MaxLength="100" />
+          <Property Name="AssistNumber" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="BeatBeatSchedules">
           <Key>
             <PropertyRef Name="BeatBeatScheduleID" />
@@ -114,6 +153,19 @@
           <Property Name="BeatNumber" Type="varchar" MaxLength="50" />
           <Property Name="ScheduleName" Type="varchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="EarlyRollIns">
+          <Key>
+            <PropertyRef Name="RollInID" />
+          </Key>
+          <Property Name="RollInID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DriverID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DateStamp" Type="datetime" Nullable="false" />
+          <Property Name="Explanation" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="CHPLogNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="BeatID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="VehicleID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ExceptionType" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Incidents">
           <Key>
             <PropertyRef Name="IncidentID" />
@@ -136,6 +188,18 @@
           <Property Name="BeatNumber" Type="varchar" MaxLength="50" />
           <Property Name="DispatchNumber" Type="varchar" MaxLength="50" />
         </EntityType>
+        <Association Name="FK_Assists_Incidents">
+          <End Role="Incidents" Type="Self.Incidents" Multiplicity="1" />
+          <End Role="Assists" Type="Self.Assists" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Incidents">
+              <PropertyRef Name="IncidentID" />
+            </Principal>
+            <Dependent Role="Assists">
+              <PropertyRef Name="IncidentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_BeatBeatSchedules_Beats">
           <End Role="Beats" Type="Self.Beats" Multiplicity="1" />
           <End Role="BeatBeatSchedules" Type="Self.BeatBeatSchedules" Multiplicity="*" />
@@ -197,6 +261,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="fspModelStoreContainer">
+          <EntitySet Name="Assists" EntityType="Self.Assists" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BeatBeatSchedules" EntityType="Self.BeatBeatSchedules" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Beats" EntityType="Self.Beats" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BeatSchedules" EntityType="Self.BeatSchedules" Schema="dbo" store:Type="Tables" />
@@ -204,7 +269,12 @@
           <EntitySet Name="Contracts" EntityType="Self.Contracts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Drivers" EntityType="Self.Drivers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DriverStatus" EntityType="Self.DriverStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EarlyRollIns" EntityType="Self.EarlyRollIns" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Incidents" EntityType="Self.Incidents" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Assists_Incidents" Association="Self.FK_Assists_Incidents">
+            <End Role="Incidents" EntitySet="Incidents" />
+            <End Role="Assists" EntitySet="Assists" />
+          </AssociationSet>
           <AssociationSet Name="FK_BeatBeatSchedules_Beats" Association="Self.FK_BeatBeatSchedules_Beats">
             <End Role="Beats" EntitySet="Beats" />
             <End Role="BeatBeatSchedules" EntitySet="BeatBeatSchedules" />
@@ -341,6 +411,7 @@
           <Property Name="Direction" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="BeatNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DispatchNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Assists" Relationship="fspModel.FK_Assists_Incidents" FromRole="Incident" ToRole="Assist" />
         </EntityType>
         <Association Name="FK_BeatBeatSchedules_Beats">
           <End Role="Beats" Type="Self.Beat" Multiplicity="1" />
@@ -407,6 +478,12 @@
             <End Role="Driver" EntitySet="Drivers" />
           </AssociationSet>
           <EntitySet Name="DriverStatus" EntityType="fspModel.DriverStatu" />
+          <EntitySet Name="EarlyRollIns" EntityType="fspModel.EarlyRollIn" />
+          <EntitySet Name="Assists" EntityType="fspModel.Assist" />
+          <AssociationSet Name="FK_Assists_Incidents" Association="fspModel.FK_Assists_Incidents">
+            <End Role="Incident" EntitySet="Incidents" />
+            <End Role="Assist" EntitySet="Assists" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Contractor">
           <Key>
@@ -461,6 +538,71 @@
           <Property Name="BeatNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ScheduleName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="EarlyRollIn">
+          <Key>
+            <PropertyRef Name="RollInID" />
+          </Key>
+          <Property Name="RollInID" Type="Guid" Nullable="false" />
+          <Property Name="DriverID" Type="Guid" Nullable="false" />
+          <Property Name="DateStamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Explanation" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="CHPLogNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BeatID" Type="Guid" Nullable="false" />
+          <Property Name="VehicleID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ExceptionType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Assist">
+          <Key>
+            <PropertyRef Name="AssistID" />
+          </Key>
+          <Property Name="AssistID" Type="Guid" Nullable="false" />
+          <Property Name="IncidentID" Type="Guid" Nullable="false" />
+          <Property Name="DriverID" Type="Guid" Nullable="false" />
+          <Property Name="FleetVehicleID" Type="Guid" Nullable="false" />
+          <Property Name="DispatchTime" Type="DateTime" Precision="3" />
+          <Property Name="CustomerWaitTime" Type="Int32" />
+          <Property Name="VehiclePositionID" Type="Guid" />
+          <Property Name="IncidentTypeID" Type="Guid" />
+          <Property Name="TrafficSpeedID" Type="Guid" />
+          <Property Name="ServiceTypeID" Type="Guid" />
+          <Property Name="DropZone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Make" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VehicleTypeID" Type="Guid" />
+          <Property Name="Color" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LicensePlate" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="StartOD" Type="Double" />
+          <Property Name="EndOD" Type="Double" />
+          <Property Name="TowLocationID" Type="Guid" />
+          <Property Name="Tip" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TipDetail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IsMDC" Type="Boolean" />
+          <Property Name="x1097" Type="DateTime" Precision="3" />
+          <Property Name="x1098" Type="DateTime" Precision="3" />
+          <Property Name="ContractorID" Type="Guid" Nullable="false" />
+          <Property Name="LogNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastModified" Type="DateTime" Precision="3" />
+          <Property Name="Lat" Type="Double" />
+          <Property Name="Lon" Type="Double" />
+          <Property Name="OnSiteTime" Type="DateTime" Precision="3" />
+          <Property Name="SurveyNum" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AssistNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Incident" Relationship="fspModel.FK_Assists_Incidents" FromRole="Assist" ToRole="Incident" />
+        </EntityType>
+        <Association Name="FK_Assists_Incidents">
+          <End Type="fspModel.Incident" Role="Incident" Multiplicity="1" />
+          <End Type="fspModel.Assist" Role="Assist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Incident">
+              <PropertyRef Name="IncidentID" />
+            </Principal>
+            <Dependent Role="Assist">
+              <PropertyRef Name="IncidentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -603,6 +745,60 @@
                 <ScalarProperty Name="VehicleID" ColumnName="VehicleID" />
                 <ScalarProperty Name="DriverName" ColumnName="DriverName" />
                 <ScalarProperty Name="DriverStatusID" ColumnName="DriverStatusID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EarlyRollIns">
+            <EntityTypeMapping TypeName="fspModel.EarlyRollIn">
+              <MappingFragment StoreEntitySet="EarlyRollIns">
+                <ScalarProperty Name="ExceptionType" ColumnName="ExceptionType" />
+                <ScalarProperty Name="VehicleID" ColumnName="VehicleID" />
+                <ScalarProperty Name="BeatID" ColumnName="BeatID" />
+                <ScalarProperty Name="CHPLogNumber" ColumnName="CHPLogNumber" />
+                <ScalarProperty Name="Explanation" ColumnName="Explanation" />
+                <ScalarProperty Name="DateStamp" ColumnName="DateStamp" />
+                <ScalarProperty Name="DriverID" ColumnName="DriverID" />
+                <ScalarProperty Name="RollInID" ColumnName="RollInID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Assists">
+            <EntityTypeMapping TypeName="fspModel.Assist">
+              <MappingFragment StoreEntitySet="Assists">
+                <ScalarProperty Name="AssistNumber" ColumnName="AssistNumber" />
+                <ScalarProperty Name="SurveyNum" ColumnName="SurveyNum" />
+                <ScalarProperty Name="OnSiteTime" ColumnName="OnSiteTime" />
+                <ScalarProperty Name="Lon" ColumnName="Lon" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+                <ScalarProperty Name="LogNumber" ColumnName="LogNumber" />
+                <ScalarProperty Name="ContractorID" ColumnName="ContractorID" />
+                <ScalarProperty Name="x1098" ColumnName="x1098" />
+                <ScalarProperty Name="x1097" ColumnName="x1097" />
+                <ScalarProperty Name="IsMDC" ColumnName="IsMDC" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="CustomerLastName" ColumnName="CustomerLastName" />
+                <ScalarProperty Name="TipDetail" ColumnName="TipDetail" />
+                <ScalarProperty Name="Tip" ColumnName="Tip" />
+                <ScalarProperty Name="TowLocationID" ColumnName="TowLocationID" />
+                <ScalarProperty Name="EndOD" ColumnName="EndOD" />
+                <ScalarProperty Name="StartOD" ColumnName="StartOD" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="LicensePlate" ColumnName="LicensePlate" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="VehicleTypeID" ColumnName="VehicleTypeID" />
+                <ScalarProperty Name="Make" ColumnName="Make" />
+                <ScalarProperty Name="DropZone" ColumnName="DropZone" />
+                <ScalarProperty Name="ServiceTypeID" ColumnName="ServiceTypeID" />
+                <ScalarProperty Name="TrafficSpeedID" ColumnName="TrafficSpeedID" />
+                <ScalarProperty Name="IncidentTypeID" ColumnName="IncidentTypeID" />
+                <ScalarProperty Name="VehiclePositionID" ColumnName="VehiclePositionID" />
+                <ScalarProperty Name="CustomerWaitTime" ColumnName="CustomerWaitTime" />
+                <ScalarProperty Name="DispatchTime" ColumnName="DispatchTime" />
+                <ScalarProperty Name="FleetVehicleID" ColumnName="FleetVehicleID" />
+                <ScalarProperty Name="DriverID" ColumnName="DriverID" />
+                <ScalarProperty Name="IncidentID" ColumnName="IncidentID" />
+                <ScalarProperty Name="AssistID" ColumnName="AssistID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

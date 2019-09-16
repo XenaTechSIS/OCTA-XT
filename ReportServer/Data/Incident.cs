@@ -14,6 +14,12 @@ namespace ReportServer.Data
     
     public partial class Incident
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Incident()
+        {
+            this.Assists = new HashSet<Assist>();
+        }
+    
         public System.Guid IncidentID { get; set; }
         public string ApproximateLocation { get; set; }
         public int FreewayID { get; set; }
@@ -31,5 +37,8 @@ namespace ReportServer.Data
         public string Direction { get; set; }
         public string BeatNumber { get; set; }
         public string DispatchNumber { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Assist> Assists { get; set; }
     }
 }

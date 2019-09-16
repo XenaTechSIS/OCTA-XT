@@ -184,6 +184,7 @@ namespace ReportServer.Reports
 
                 var allIncidents = fspDatabase.Incidents.Where(p => p.DateStamp >= start && p.DateStamp <= end).Select(i => new
                 {
+                    i.IncidentID,
                     i.Location,
                     i.DateStamp,
                     i.TimeStamp,
@@ -194,9 +195,11 @@ namespace ReportServer.Reports
 
                 dt.Columns.Add("Beat");
                 dt.Columns.Add("Last Incident Location");
+                dt.Columns.Add("Contractor");
                 dt.Columns.Add("Driver");
                 dt.Columns.Add("FSP ID Number");
-                dt.Columns.Add("Contractor");
+                dt.Columns.Add("Log Number");
+                dt.Columns.Add("Comments");
                 dt.Columns.Add("Date");
                 dt.Columns.Add("Actual Roll-In");
                 dt.Columns.Add("Scheduled Roll-In");
@@ -222,7 +225,8 @@ namespace ReportServer.Reports
                     if (excessTimeInMinutes <= 0 || excessTimeInMinutes <= threshold) continue;
 
                     var lastIncidentLocation = "";
-
+                    var assistLogNumber = "";
+                    var assistComments = "";
                     foreach (var driverBeatIncident in driverBeatIncidents)
                     {
                         var incidentDate = Convert.ToDateTime(driverBeatIncident.DateStamp);
@@ -231,6 +235,13 @@ namespace ReportServer.Reports
                         if (incidentDate.ToString("yyyy-MM-DD") == rollInDate.ToString("yyyy-MM-DD"))
                         {
                             lastIncidentLocation = driverBeatIncident.Location;
+                            var assist = fspDatabase.Assists.FirstOrDefault(p => p.IncidentID == driverBeatIncident.IncidentID);
+                            if (assist != null)
+                            {
+                                assistLogNumber = assist.LogNumber;
+                                assistComments = assist.Comments;
+                            }
+
                             break;
                         }
                     }
@@ -238,13 +249,15 @@ namespace ReportServer.Reports
                     var row = dt.NewRow();
                     row[0] = driverRollIn.BeatNumber;
                     row[1] = lastIncidentLocation;
-                    row[2] = driverRollIn.DriverName;
-                    row[3] = driver.FSPIDNumber;
-                    row[4] = driver.ContractorName;
-                    row[5] = date;
-                    row[6] = actualRollIn;
-                    row[7] = schedule.RollIn;
-                    row[8] = $"{excessTimeInMinutes} minutes";
+                    row[2] = driver.ContractorName;
+                    row[3] = driverRollIn.DriverName;
+                    row[4] = driver.FSPIDNumber;
+                    row[5] = assistLogNumber;
+                    row[6] = assistComments;
+                    row[7] = date;
+                    row[8] = actualRollIn;
+                    row[9] = schedule.RollIn;
+                    row[10] = $"{excessTimeInMinutes} minutes";
                     dt.Rows.Add(row);
                 }
 
