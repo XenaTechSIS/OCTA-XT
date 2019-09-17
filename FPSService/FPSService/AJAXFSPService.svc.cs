@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.ServiceModel;
@@ -10,6 +13,7 @@ using System.Web.Script.Serialization;
 using System.Xml.Serialization;
 using FPSService.TowTruck;
 using Microsoft.SqlServer.Types;
+using Newtonsoft.Json;
 
 namespace FPSService
 {
@@ -1909,6 +1913,145 @@ namespace FPSService
 
             SQL.SQLCode mySQL = new SQL.SQLCode();
             mySQL.LogDriverEntry(driverName, truckNumber, title, details, Mac);
+        }
+        #endregion
+
+        #region PlayBack
+
+        [OperationContract]
+        [WebGet]
+        public string GetPlayBackBeats()
+        {
+            List<MiscData.ClientBeat> myBeats = new List<MiscData.ClientBeat>();
+           
+            foreach (BeatData.Beat thisBeat in BeatData.Beats.AllBeats.Where(tm => !tm.BeatNumber.Contains("test")))
+            {
+                MiscData.ClientBeat thisClient = new MiscData.ClientBeat();
+                thisClient.BeatID = thisBeat.BeatID;
+                thisClient.BeatName = thisBeat.BeatNumber;
+                myBeats.Add(thisClient);
+            }
+
+            myBeats.OrderBy(x => x.BeatName).ToList();
+
+            return JsonConvert.SerializeObject(myBeats);
+        }
+        
+        [OperationContract]
+        [WebGet]
+        public List<string> GetTrucks(DateTime dtStart, DateTime dtEnd)
+        {
+            List<string> myTrucks = new List<string>();
+            string connS = string.Empty;
+            TimeSpan ts = dtStart - DateTime.Now;
+            int startDay = ts.Days;
+            if (startDay < 0)
+            {
+                connS = ConfigurationManager.AppSettings["strArchive"];
+            }
+            else
+            {
+                connS = ConfigurationManager.AppSettings["strConn"];
+            }
+
+            using (SqlConnection conn = new SqlConnection(connS))
+            {
+                try
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("GetPlaybackTrucks", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@dtStart", dtStart.ToString());
+                    cmd.Parameters.AddWithValue("@dtEnd", dtEnd.ToString());
+                    cmd.CommandTimeout = 0;
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        myTrucks.Add(rdr[0].ToString());
+                    }
+                    rdr.Close();
+                    rdr = null;
+                    cmd = null;
+                    conn.Close();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.ToString());
+                }
+            }
+
+            return myTrucks;
+        }
+
+        [OperationContract]
+        [WebGet]
+        public List<string> GetTrackingData(DateTime dtStart, DateTime dtEnd)
+        {
+            string connS = string.Empty;
+            TimeSpan ts = dtStart - DateTime.Now;
+            int startDay = ts.Days;
+
+            if (startDay < 0)
+            {
+                connS = ConfigurationManager.AppSettings["strArchive"];
+            }
+            else
+            {
+                connS = ConfigurationManager.AppSettings["strConn"];
+            }
+
+            try
+            {
+                GlobalData.allTrack.Clear();
+                using (SqlConnection conn = new SqlConnection(connS))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("GetPlaybackByVehicle", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    int LogonVal = 0;
+                    if (OnlyLoggedOn == true)
+                    {
+                        LogonVal = 1;
+                    }
+                    cmd.Parameters.AddWithValue("@VehicleID", VehicleID);
+                    cmd.Parameters.AddWithValue("@dtStart", dtStart.ToString());
+                    cmd.Parameters.AddWithValue("@dtEnd", dtEnd.ToString());
+                    cmd.Parameters.AddWithValue("@logonOnly", LogonVal.ToString());
+                    cmd.CommandTimeout = 0;
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    int i = 0;
+                    while (rdr.Read())
+                    {
+                        GPSTrack thisGPS = new GPSTrack();
+                        thisGPS.ID = i;
+                        thisGPS.Direction = double.Parse(rdr["Direction"].ToString());
+                        thisGPS.VehicleStatus = rdr["VehicleStatus"].ToString();
+                        thisGPS.timeStamp = Convert.ToDateTime(rdr["timeStamp"]).ToString("HH:mm:ss");
+                        //thisGPS.timeStamp = Convert.ToDateTime(rdr["timeStamp"]).ToString("HH:MM:ss");
+                        thisGPS.VehicleID = rdr["VehicleID"].ToString();
+                        thisGPS.Speed = double.Parse(rdr["Speed"].ToString());
+                        thisGPS.DriverName = rdr["Driver Name"].ToString();
+                        thisGPS.ContractCompanyName = rdr["ContractCompanyName"].ToString();
+                        thisGPS.IPAddress = rdr["IPAddress"].ToString();
+                        thisGPS.Lat = double.Parse(rdr["Lat"].ToString());
+                        thisGPS.Lon = double.Parse(rdr["Lon"].ToString());
+                        thisGPS.SpeedingValue = double.Parse(rdr["SpeedingValue"].ToString());
+                        thisGPS.SpeedingTime = Convert.ToDateTime(rdr["SpeedingTime"].ToString());
+                        thisGPS.OutOfBoundsMessage = rdr["OutofBoundsMessage"].ToString();
+                        thisGPS.BeatNumber = rdr["Beat"].ToString();
+                        i += 1;
+                        GlobalData.allTrack.Add(thisGPS);
+                    }
+                    rdr.Close();
+                    rdr = null;
+                    cmd = null;
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
         #endregion
     }

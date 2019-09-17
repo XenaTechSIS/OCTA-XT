@@ -6,7 +6,6 @@ using System.Timers;
 using System.Configuration;
 using System.Web.Script.Serialization;
 using System.ServiceModel;
-using Newtonsoft.Json;
 
 namespace FPSService.DataClasses
 {
