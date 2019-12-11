@@ -11,6 +11,7 @@ using System.ServiceModel.Channels;
 using System.ServiceModel.Web;
 using System.Web.Script.Serialization;
 using System.Xml.Serialization;
+using FPSService.DataClasses;
 using FPSService.TowTruck;
 using Microsoft.SqlServer.Types;
 using Newtonsoft.Json;
@@ -1985,11 +1986,12 @@ namespace FPSService
 
         [OperationContract]
         [WebGet]
-        public List<string> GetTrackingData(DateTime dtStart, DateTime dtEnd)
+        public List<GPSTrack> GetTrackingData(DateTime dtStart, DateTime dtEnd, string VehicleID, bool OnlyLoggedOn)
         {
             string connS = string.Empty;
             TimeSpan ts = dtStart - DateTime.Now;
             int startDay = ts.Days;
+            List<GPSTrack> GPSTracks = new List<GPSTrack>();
 
             if (startDay < 0)
             {
@@ -2001,8 +2003,7 @@ namespace FPSService
             }
 
             try
-            {
-                GlobalData.allTrack.Clear();
+            {                
                 using (SqlConnection conn = new SqlConnection(connS))
                 {
                     conn.Open();
@@ -2040,13 +2041,88 @@ namespace FPSService
                         thisGPS.OutOfBoundsMessage = rdr["OutofBoundsMessage"].ToString();
                         thisGPS.BeatNumber = rdr["Beat"].ToString();
                         i += 1;
-                        GlobalData.allTrack.Add(thisGPS);
+                        GPSTracks.Add(thisGPS);
                     }
                     rdr.Close();
                     rdr = null;
                     cmd = null;
                     conn.Close();
                 }
+
+                return GPSTracks;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+
+        [OperationContract]
+        [WebGet]
+        public List<GPSTrack> GetTrackingDataByBeat(DateTime dtStart, DateTime dtEnd, string BeatNumber, bool OnlyLoggedOn)
+        {
+            string connS = string.Empty;
+            TimeSpan ts = dtStart - DateTime.Now;
+            int startDay = ts.Days;
+            List<GPSTrack> GPSTracks = new List<GPSTrack>();
+
+            if (startDay < 0)
+            {
+                connS = ConfigurationManager.AppSettings["strArchive"];
+            }
+            else
+            {
+                connS = ConfigurationManager.AppSettings["strConn"];
+            }
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connS))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("GetPlaybackByBeat", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    int LogonVal = 0;
+                    if (OnlyLoggedOn == true)
+                    {
+                        LogonVal = 1;
+                    }
+
+                    cmd.Parameters.AddWithValue("@BeatNumber", BeatNumber);
+                    cmd.Parameters.AddWithValue("@dtStart", dtStart.ToString());
+                    cmd.Parameters.AddWithValue("@dtEnd", dtEnd.ToString());
+                    cmd.Parameters.AddWithValue("@logonOnly", LogonVal.ToString());
+                    cmd.CommandTimeout = 0;
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    int i = 0;
+                    while (rdr.Read())
+                    {
+                        GPSTrack thisGPS = new GPSTrack();
+                        thisGPS.ID = i;
+                        thisGPS.Direction = double.Parse(rdr["Direction"].ToString());
+                        thisGPS.VehicleStatus = rdr["VehicleStatus"].ToString();
+                        thisGPS.timeStamp = Convert.ToDateTime(rdr["timeStamp"].ToString()).ToString("HH:mm:ss");
+                        thisGPS.VehicleID = rdr["VehicleID"].ToString();
+                        thisGPS.Speed = double.Parse(rdr["Speed"].ToString());
+                        thisGPS.DriverName = rdr["Driver Name"].ToString();
+                        thisGPS.ContractCompanyName = rdr["ContractCompanyName"].ToString();
+                        thisGPS.IPAddress = rdr["IPAddress"].ToString();
+                        thisGPS.Lat = double.Parse(rdr["Lat"].ToString());
+                        thisGPS.Lon = double.Parse(rdr["Lon"].ToString());
+                        thisGPS.SpeedingValue = double.Parse(rdr["SpeedingValue"].ToString());
+                        thisGPS.SpeedingTime = Convert.ToDateTime(rdr["SpeedingTime"].ToString());
+                        thisGPS.OutOfBoundsMessage = rdr["OutofBoundsMessage"].ToString();
+                        thisGPS.BeatNumber = rdr["Beat"].ToString();
+                        i += 1;
+                        GPSTracks.Add(thisGPS);
+                    }
+                    rdr.Close();
+                    rdr = null;
+                    cmd = null;
+                    conn.Close();
+                }
+
+                return GPSTracks;
             }
             catch (Exception ex)
             {

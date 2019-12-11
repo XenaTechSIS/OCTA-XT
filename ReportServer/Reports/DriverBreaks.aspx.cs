@@ -58,7 +58,7 @@ namespace ReportServer.Reports
                 ContractorName = ddlContractors.Text;
             }
             string SQL = "GetDriversForBreaks";
-            using (SqlConnection conn = new SqlConnection(Classes.SQLConn.GetConnString(thisReport.ConnString)))
+            using (SqlConnection conn = new SqlConnection(Classes.SQLConn.GetConnString("ARCHIVE")))
             {
                 try
                 {

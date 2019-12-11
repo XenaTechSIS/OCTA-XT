@@ -419,6 +419,7 @@
     <Compile Include="DataClasses\BulkLogger.cs" />
     <Compile Include="DataClasses\ClientClasses.cs" />
     <Compile Include="DataClasses\GlobalData.cs" />
+    <Compile Include="DataClasses\GPSTrack.cs" />
     <Compile Include="DataClasses\TowTruckCleanser.cs" />
     <Compile Include="DataClasses\TruckDumper.cs" />
     <Compile Include="FSPService.svc.cs">

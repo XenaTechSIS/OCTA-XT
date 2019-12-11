@@ -30,6 +30,12 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnStopPlayback = new System.Windows.Forms.Button();
+            this.btnStartPlayback = new System.Windows.Forms.Button();
+            this.chkLeaveTrail = new System.Windows.Forms.CheckBox();
+            this.cboPlaybackSpeed = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnLoadPlayback = new System.Windows.Forms.Button();
             this.chkLogon = new System.Windows.Forms.CheckBox();
@@ -46,14 +52,17 @@
             this.label3 = new System.Windows.Forms.Label();
             this.datePickerFrom = new System.Windows.Forms.DateTimePicker();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.gMapControl1 = new GMap.NET.WindowsForms.GMapControl();
             this.gvData = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gvData)).BeginInit();
@@ -70,6 +79,7 @@
             // 
             this.splitContainer1.Panel1.AutoScroll = true;
             this.splitContainer1.Panel1.BackColor = System.Drawing.Color.Gray;
+            this.splitContainer1.Panel1.Controls.Add(this.groupBox3);
             this.splitContainer1.Panel1.Controls.Add(this.groupBox2);
             this.splitContainer1.Panel1.Controls.Add(this.groupBox1);
             this.splitContainer1.Panel1MinSize = 0;
@@ -83,6 +93,78 @@
             this.splitContainer1.SplitterWidth = 10;
             this.splitContainer1.TabIndex = 0;
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.btnStopPlayback);
+            this.groupBox3.Controls.Add(this.btnStartPlayback);
+            this.groupBox3.Controls.Add(this.chkLeaveTrail);
+            this.groupBox3.Controls.Add(this.cboPlaybackSpeed);
+            this.groupBox3.Controls.Add(this.label1);
+            this.groupBox3.Location = new System.Drawing.Point(15, 661);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(489, 203);
+            this.groupBox3.TabIndex = 7;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Playback";
+            // 
+            // btnStopPlayback
+            // 
+            this.btnStopPlayback.Location = new System.Drawing.Point(246, 112);
+            this.btnStopPlayback.Name = "btnStopPlayback";
+            this.btnStopPlayback.Size = new System.Drawing.Size(217, 49);
+            this.btnStopPlayback.TabIndex = 16;
+            this.btnStopPlayback.Text = "Stop Playback";
+            this.btnStopPlayback.UseVisualStyleBackColor = true;
+            this.btnStopPlayback.Click += new System.EventHandler(this.BtnStopPlayback_Click);
+            // 
+            // btnStartPlayback
+            // 
+            this.btnStartPlayback.Location = new System.Drawing.Point(13, 112);
+            this.btnStartPlayback.Name = "btnStartPlayback";
+            this.btnStartPlayback.Size = new System.Drawing.Size(218, 49);
+            this.btnStartPlayback.TabIndex = 15;
+            this.btnStartPlayback.Text = "Start Playback";
+            this.btnStartPlayback.UseVisualStyleBackColor = true;
+            this.btnStartPlayback.Click += new System.EventHandler(this.BtnStartPlayback_Click);
+            // 
+            // chkLeaveTrail
+            // 
+            this.chkLeaveTrail.AutoSize = true;
+            this.chkLeaveTrail.Location = new System.Drawing.Point(322, 51);
+            this.chkLeaveTrail.Name = "chkLeaveTrail";
+            this.chkLeaveTrail.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.chkLeaveTrail.Size = new System.Drawing.Size(141, 29);
+            this.chkLeaveTrail.TabIndex = 14;
+            this.chkLeaveTrail.Text = "Leave Trail:";
+            this.chkLeaveTrail.UseVisualStyleBackColor = true;
+            // 
+            // cboPlaybackSpeed
+            // 
+            this.cboPlaybackSpeed.FormattingEnabled = true;
+            this.cboPlaybackSpeed.Items.AddRange(new object[] {
+            "1x",
+            "2x",
+            "3x",
+            "4x",
+            "5x",
+            "10x",
+            "20x",
+            "50x",
+            "LightSpeed"});
+            this.cboPlaybackSpeed.Location = new System.Drawing.Point(175, 48);
+            this.cboPlaybackSpeed.Name = "cboPlaybackSpeed";
+            this.cboPlaybackSpeed.Size = new System.Drawing.Size(122, 32);
+            this.cboPlaybackSpeed.TabIndex = 12;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(8, 51);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(161, 25);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "Playback Speed:";
+            // 
             // groupBox2
             // 
             this.groupBox2.BackColor = System.Drawing.Color.Transparent;
@@ -93,7 +175,7 @@
             this.groupBox2.Controls.Add(this.cboBeats);
             this.groupBox2.Controls.Add(this.lblBeatSelect);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.857143F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(15, 336);
+            this.groupBox2.Location = new System.Drawing.Point(15, 361);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(490, 258);
             this.groupBox2.TabIndex = 6;
@@ -165,7 +247,7 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.datePickerFrom);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.857143F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(14, 11);
+            this.groupBox1.Location = new System.Drawing.Point(14, 16);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(490, 309);
             this.groupBox1.TabIndex = 5;
@@ -241,6 +323,10 @@
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.gMapControl1);
+            // 
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.gvData);
@@ -248,10 +334,32 @@
             this.splitContainer2.SplitterDistance = 844;
             this.splitContainer2.TabIndex = 0;
             // 
+            // gMapControl1
+            // 
+            this.gMapControl1.AutoSize = true;
+            this.gMapControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.gMapControl1.Bearing = 0F;
+            this.gMapControl1.CanDragMap = true;
+            this.gMapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gMapControl1.GrayScaleMode = false;
+            this.gMapControl1.LevelsKeepInMemmory = 5;
+            this.gMapControl1.Location = new System.Drawing.Point(0, 0);
+            this.gMapControl1.MarkersEnabled = true;
+            this.gMapControl1.MaxZoom = 2;
+            this.gMapControl1.MinZoom = 2;
+            this.gMapControl1.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
+            this.gMapControl1.Name = "gMapControl1";
+            this.gMapControl1.NegativeMode = false;
+            this.gMapControl1.PolygonsEnabled = true;
+            this.gMapControl1.RetryLoadTile = 0;
+            this.gMapControl1.RoutesEnabled = true;
+            this.gMapControl1.ShowTileGridLines = false;
+            this.gMapControl1.Size = new System.Drawing.Size(1596, 844);
+            this.gMapControl1.TabIndex = 0;
+            this.gMapControl1.Zoom = 2D;
+            // 
             // gvData
             // 
-            this.gvData.AllowUserToAddRows = false;
-            this.gvData.AllowUserToDeleteRows = false;
             this.gvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gvData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gvData.Location = new System.Drawing.Point(0, 0);
@@ -260,7 +368,7 @@
             this.gvData.RowHeadersWidth = 72;
             this.gvData.RowTemplate.Height = 31;
             this.gvData.Size = new System.Drawing.Size(1596, 606);
-            this.gvData.TabIndex = 0;
+            this.gvData.TabIndex = 10;
             // 
             // Form1
             // 
@@ -276,10 +384,14 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel1.PerformLayout();
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
@@ -308,6 +420,13 @@
         private System.Windows.Forms.Button btnLoadPlayback;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.DataGridView gvData;
+        private GMap.NET.WindowsForms.GMapControl gMapControl1;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.ComboBox cboPlaybackSpeed;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnStopPlayback;
+        private System.Windows.Forms.Button btnStartPlayback;
+        private System.Windows.Forms.CheckBox chkLeaveTrail;
     }
 }
 
