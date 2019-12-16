@@ -41,6 +41,15 @@ namespace ReportServer.Reports
         {
             var dtStart = this.startDT.Value + " 00:00:00";
             var dtEnd = this.endDT.Value + " 23:59:59";
+            string DBC = "PROD";
+            DateTime now = DateTime.Now;
+            DateTime start = DateTime.Parse(dtStart);
+            
+            if(start < now.AddDays(-30))
+            {
+                DBC = "ARCHIVE";
+            }
+
 
             if (string.IsNullOrEmpty(dtStart))
             {
@@ -54,7 +63,7 @@ namespace ReportServer.Reports
             var dt = new DataTable();
             try
             {
-                using (var conn = new SqlConnection(Classes.SQLConn.GetConnString("Archive")))
+                using (var conn = new SqlConnection(Classes.SQLConn.GetConnString(DBC)))
                 {
                     conn.Open();
                     var cmd = new SqlCommand("GetTipReport", conn)
