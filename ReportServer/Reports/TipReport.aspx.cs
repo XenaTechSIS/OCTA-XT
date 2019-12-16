@@ -41,6 +41,7 @@ namespace ReportServer.Reports
         {
             var dtStart = this.startDT.Value + " 00:00:00";
             var dtEnd = this.endDT.Value + " 23:59:59";
+
             if (string.IsNullOrEmpty(dtStart))
             {
                 dtStart = DateTime.Now.ToString();
@@ -53,7 +54,7 @@ namespace ReportServer.Reports
             var dt = new DataTable();
             try
             {
-                using (var conn = new SqlConnection(Classes.SQLConn.GetConnString(this.thisReport.ConnString)))
+                using (var conn = new SqlConnection(Classes.SQLConn.GetConnString("Archive")))
                 {
                     conn.Open();
                     var cmd = new SqlCommand("GetTipReport", conn)
