@@ -256,7 +256,7 @@ var ViewModel = function () {
         var url = $(".websiteUrl").text().trim() + '/AssistAdmin/GetContractors';
         $.get(url,
                function (contractors) {
-
+                   [datestamp]
                    $('#ddlContractors').html('');
 
                    var selItem = '<option value="-1">--Select--</option>';

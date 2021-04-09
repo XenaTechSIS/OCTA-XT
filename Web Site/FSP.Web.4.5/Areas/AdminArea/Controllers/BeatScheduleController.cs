@@ -23,6 +23,11 @@ namespace FSP.Web.Areas.AdminArea.Controllers
             return View();
         }
 
+        public ActionResult Create()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult Save(String BeatID, String SelectedSchedules, String StartDate, String EndDate)
         {

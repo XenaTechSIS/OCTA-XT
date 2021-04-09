@@ -63,7 +63,7 @@ namespace ReportServer.Reports
             var dt = new DataTable();
             try
             {
-                using (var conn = new SqlConnection(Classes.SQLConn.GetConnString(DBC)))
+                using (var conn = new SqlConnection(Classes.SQLConn.GetConnString("PROD")))
                 {
                     conn.Open();
                     var cmd = new SqlCommand("GetTipReport", conn)

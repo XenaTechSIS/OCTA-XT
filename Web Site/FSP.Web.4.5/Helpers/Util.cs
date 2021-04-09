@@ -122,13 +122,15 @@ namespace FSP.Web.Helpers
             var toEmailAddress = ConfigurationManager.AppSettings["OCTAAdminEmailAddress"];
             var toName = ConfigurationManager.AppSettings["OCTAAdminName"];
 
-            var fromAddress = new MailAddress("latatrax@gmail.com", "LATA Trax");
+            //var fromAddress = new MailAddress("latatrax@gmail.com", "LATA Trax");
+            var fromAddress = new MailAddress("support@xenatech.com", "XT Support");
+            //const string fromPassword = "L@T@2013";
+            const string fromPassword = "se4%RDdr5$ES";
             var toAddress = new MailAddress(toEmailAddress, toName);
-            const string fromPassword = "L@T@2013";
 
             var smtp = new SmtpClient
             {
-                Host = "smtp.gmail.com",
+                Host = "smtp.office365.com",
                 Port = 587,
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,

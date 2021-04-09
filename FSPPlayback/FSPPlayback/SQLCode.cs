@@ -10,7 +10,7 @@ namespace FSPPlayback
     class SQLCode
     {
         string strConn = "Initial Catalog=fsp;Data Source=38.124.164.211\\OCTA,5815;User Id=sa;Password=C@pt@1n@mer1c@";
-        string strArchive = "Initial Catalog=fspArchive;Data Source=38.124.164.212\\OCTA,5815;User Id=sa;Password=J@bb@Th3Hu22";
+        string strArchive = "Initial Catalog=fspArchive;Data Source=38.124.164.211\\OCTA,5815;User Id=sa;Password=J@bb@Th3Hu22";
 
         public List<GPSTrack> GetTracking(string VehicleID, DateTime dtStart, DateTime dtEnd, bool OnlyLoggedOn)
         {
