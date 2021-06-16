@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Linq;
 using System.Diagnostics;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace FSP.Web.Areas.AdminArea.Controllers
         public ActionResult Create()
         {
             ViewBag.Contractors = db.Contractors.OrderBy(p => p.ContractCompanyName).ToList();
-            ViewBag.FleetVehicles = db.FleetVehicles.OrderBy(p => p.VehicleNumber).ToList();
+            ViewBag.FleetVehicles = db.FleetVehicles.Where(i => i.IPAddress.Trim() != "RETIRED").OrderBy(p => p.VehicleNumber).ToList();
             ViewBag.CHPOfficers = db.CHPOfficers.OrderBy(p => p.OfficerLastName).ToList();
             ViewBag.InspectionTypes = db.InspectionTypes.OrderBy(p => p.InspectionType1).ToList();
             return View();
@@ -43,7 +44,7 @@ namespace FSP.Web.Areas.AdminArea.Controllers
             }
 
             ViewBag.Contractors = db.Contractors.OrderBy(p => p.ContractCompanyName).ToList();
-            ViewBag.FleetVehicles = db.FleetVehicles.OrderBy(p => p.VehicleNumber).ToList();
+            ViewBag.FleetVehicles = db.FleetVehicles.Where(i => i.IPAddress.Trim() != "RETIRED").OrderBy(p => p.VehicleNumber).ToList();
             ViewBag.CHPOfficers = db.CHPOfficers.OrderBy(p => p.OfficerLastName).ToList();
             ViewBag.InspectionTypes = db.InspectionTypes.OrderBy(p => p.InspectionType1).ToList();
 
@@ -95,7 +96,7 @@ namespace FSP.Web.Areas.AdminArea.Controllers
         public ActionResult Edit(Guid id)
         {
             ViewBag.Contractors = db.Contractors.OrderBy(p => p.ContractCompanyName).ToList();
-            ViewBag.FleetVehicles = db.FleetVehicles.OrderBy(p => p.VehicleNumber).ToList();
+            ViewBag.FleetVehicles = db.FleetVehicles.Where(i => i.IPAddress.Trim() != "RETIRED").OrderBy(p => p.VehicleNumber).ToList();
             ViewBag.CHPOfficers = db.CHPOfficers.OrderBy(p => p.OfficerLastName).ToList();
             ViewBag.InspectionTypes = db.InspectionTypes.OrderBy(p => p.InspectionType1).ToList();
 
@@ -132,7 +133,7 @@ namespace FSP.Web.Areas.AdminArea.Controllers
             }
 
             ViewBag.Contractors = db.Contractors.OrderBy(p => p.ContractCompanyName).ToList();
-            ViewBag.FleetVehicles = db.FleetVehicles.OrderBy(p => p.VehicleNumber).ToList();
+            ViewBag.FleetVehicles = db.FleetVehicles.Where(i => i.IPAddress.Trim() != "RETIRED").OrderBy(p => p.VehicleNumber).ToList();
             ViewBag.CHPOfficers = db.CHPOfficers.OrderBy(p => p.OfficerLastName).ToList();
             ViewBag.InspectionTypes = db.InspectionTypes.OrderBy(p => p.InspectionType1).ToList();
 
@@ -142,9 +143,26 @@ namespace FSP.Web.Areas.AdminArea.Controllers
         //
         // GET: /AdminArea/Freeways/
 
-        public ActionResult Index()
+        public ActionResult Index(string filter)
         {
-            return View(db.CHPInspections.OrderByDescending(p => p.InspectionDate).ThenBy(p => p.FleetVehicle.FleetNumber).ToList());
+            List<CHPInspection> CHPInspections = new List<CHPInspection>();
+
+            if(filter == null)
+            {
+                CHPInspections = (from i in db.CHPInspections
+                                  join fv in db.FleetVehicles on i.FleetVehicleID equals fv.FleetVehicleID
+                                  where fv.IPAddress.Trim() != "RETIRED"
+                                  select i).ToList();
+            } else
+            {
+                CHPInspections = (from i in db.CHPInspections
+                                  join fv in db.FleetVehicles on i.FleetVehicleID equals fv.FleetVehicleID
+                                  where fv.IPAddress.Trim() != "RETIRED"
+                                  where fv.VehicleNumber.Contains(filter)
+                                  select i).ToList();
+            }
+
+            return View(CHPInspections.OrderByDescending(p => p.InspectionDate).ThenBy(p => p.FleetVehicle.FleetNumber).ToList());
         }
 
         protected override void Dispose(bool disposing)

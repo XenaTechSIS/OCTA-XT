@@ -4,7 +4,8 @@
     
 }
 <div>
-    @Html.ActionLink("Back to Driver Interactions", "Index")
+    @*@Html.ActionLink("Back to Driver Interactions", "Index")*@
+    <a href="javascript:history.back()">Back to Driver Interactions</a>
 </div>
 <h2>Edit "@Model.InteractionArea"</h2>
 @using (Html.BeginForm())
@@ -71,12 +72,13 @@
             @Html.LabelFor(model => model.InteractionDescription)
         </div>
         <div class="editor-field">
-            @Html.TextAreaFor(model => model.InteractionDescription, new { @class = "span4", rows = 5 })
+            @Html.TextAreaFor(model => model.InteractionDescription, new { style = "width: 50%; max-width: 100%;" })
             @Html.ValidationMessageFor(model => model.InteractionDescription)
         </div>
+
         <div class="editor-label">
         </div>
-        <div class="editor-field">
+        <div class="editor-field" style = "margin-left: 50px;">
             <label class="checkbox">
                 @Html.EditorFor(model => model.InspectionPassFail)
                 <label>Inspection Fail</label>
@@ -85,7 +87,7 @@
         </div>
         <div class="editor-label">
         </div>
-        <div class="editor-field">
+        <div class="editor-field" style="margin-left: 50px;">
             <label class="checkbox">
                 @Html.EditorFor(model => model.AccidentPreventable)
                 @Html.LabelFor(model => model.AccidentPreventable)
@@ -94,7 +96,7 @@
         </div>
         <div class="editor-label">
         </div>
-        <div class="editor-field">
+        <div class="editor-field" style="margin-left: 50px;">
             <label class="checkbox">
                 @Html.EditorFor(model => model.FollowupRequired)
                 @Html.LabelFor(model => model.FollowupRequired)
@@ -106,7 +108,7 @@
             @Html.LabelFor(model => model.FollowupDescription)
         </div>
         <div class="editor-field">
-            @Html.TextAreaFor(model => model.FollowupDescription, new { @class = "span4", rows = 5 })
+            @Html.TextAreaFor(model => model.FollowupDescription, new { style = "width: 50%; max-width: 100%;" })
             @Html.ValidationMessageFor(model => model.FollowupDescription)
         </div>
         <div class="editor-label">
@@ -127,7 +129,7 @@
             @Html.LabelFor(model => model.FollowupComments)
         </div>
         <div class="editor-field">
-            @Html.TextAreaFor(model => model.FollowupComments, new { @class = "span4", rows = 5 })
+            @Html.TextAreaFor(model => model.FollowupComments, new { style = "width: 50%; max-width: 100%;" })
             @Html.ValidationMessageFor(model => model.FollowupComments)
         </div>
         <div class="editor-label">
@@ -144,7 +146,7 @@
             @Html.TextBoxFor(model => model.BadgeID, new { @class = "span4" })
             @Html.ValidationMessageFor(model => model.BadgeID)
         </div>
-
+       <br /><br />
 
 
         <div class="form-actions">

@@ -11,6 +11,9 @@
           type="image/x-icon" />
     @Styles.Render("~/bundles/octa")
     @Scripts.Render("~/bundles/modernizr")
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css">
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -31,19 +34,40 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid">                       
+    <div class="container-fluid">
         <div class="websiteUrl hidden">
             @Request.Url.GetLeftPart(UriPartial.Authority)@Request.ApplicationPath
         </div>
-        @RenderBody()      
+        @RenderBody()
     </div>
-    
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/app")
     <script src="~/MyScripts/FSP.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/extensions/group-by-v2/bootstrap-table-group-by.min.js"></script>
     @RenderSection("featured", required: false)
     @RenderSection("scripts", required: false)
+    <script>
+        function customSort(sortName, sortOrder, data) {
+            var order = sortOrder === 'desc' ? -1 : 1
+            data.sort(function (a, b) {
+                var aa = +((a[sortName] + '').replace(/[^\d]/g, ''))
+                var bb = +((b[sortName] + '').replace(/[^\d]/g, ''))
+                if (aa < bb) {
+                    return order * -1
+                }
+                if (aa > bb) {
+                    return order
+                }
+                return 0
+            })
+        }
+    </script>
 </body>
 </html>

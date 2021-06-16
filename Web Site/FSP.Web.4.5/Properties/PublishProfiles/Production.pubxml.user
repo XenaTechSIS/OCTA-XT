@@ -9,7 +9,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <LastUsedPlatform>Any CPU</LastUsedPlatform>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <_PublishTargetUrl>C:\Deploy\OCTA\Web</_PublishTargetUrl>
-    <History>True|2021-04-09T23:05:40.2267501Z;True|2021-04-09T16:59:02.1215514-06:00;</History>
+    <History>True|2021-06-16T19:17:57.8937155Z;True|2021-04-28T16:34:09.4283883-06:00;True|2021-04-16T18:05:24.2280435-06:00;True|2021-04-16T13:24:46.5955141-06:00;True|2021-04-13T12:39:35.3467694-06:00;True|2021-04-09T17:05:40.2267501-06:00;True|2021-04-09T16:59:02.1215514-06:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="app/app.js">
@@ -133,7 +133,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/09/2021 16:49:36</publishTime>
     </File>
     <File Include="Areas/AdminArea/Views/CHPInspection/Create.cshtml">
-      <publishTime>06/24/2019 10:44:51</publishTime>
+      <publishTime>04/18/2021 17:28:48</publishTime>
     </File>
     <File Include="Areas/AdminArea/Views/CHPInspection/Delete.cshtml">
       <publishTime>06/24/2019 10:44:51</publishTime>
@@ -142,7 +142,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/24/2019 10:44:51</publishTime>
     </File>
     <File Include="Areas/AdminArea/Views/CHPInspection/Index.cshtml">
-      <publishTime>06/24/2019 10:44:51</publishTime>
+      <publishTime>04/13/2021 12:35:58</publishTime>
     </File>
     <File Include="Areas/AdminArea/Views/CHPOfficer/Create.cshtml">
       <publishTime>06/24/2019 10:44:51</publishTime>
@@ -211,7 +211,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/24/2019 10:44:51</publishTime>
     </File>
     <File Include="Areas/AdminArea/Views/DriverInteraction/Create.cshtml">
-      <publishTime>06/24/2019 10:44:51</publishTime>
+      <publishTime>04/17/2021 10:07:40</publishTime>
     </File>
     <File Include="Areas/AdminArea/Views/DriverInteraction/Delete.cshtml">
       <publishTime>06/24/2019 10:44:51</publishTime>
@@ -220,10 +220,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/24/2019 10:44:51</publishTime>
     </File>
     <File Include="Areas/AdminArea/Views/DriverInteraction/Edit.cshtml">
-      <publishTime>06/24/2019 10:44:51</publishTime>
+      <publishTime>04/28/2021 16:32:05</publishTime>
     </File>
     <File Include="Areas/AdminArea/Views/DriverInteraction/Index.cshtml">
-      <publishTime>06/24/2019 11:13:42</publishTime>
+      <publishTime>06/16/2021 13:17:02</publishTime>
     </File>
     <File Include="Areas/AdminArea/Views/DropZone/Create.cshtml">
       <publishTime>06/24/2019 10:44:51</publishTime>
@@ -237,20 +237,23 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Areas/AdminArea/Views/DropZone/Index.cshtml">
       <publishTime>06/24/2019 10:44:51</publishTime>
     </File>
+    <File Include="Areas/AdminArea/Views/FleetVehicle/Activate.cshtml">
+      <publishTime>04/28/2021 16:08:59</publishTime>
+    </File>
     <File Include="Areas/AdminArea/Views/FleetVehicle/Create.cshtml">
       <publishTime>06/24/2019 11:13:42</publishTime>
     </File>
     <File Include="Areas/AdminArea/Views/FleetVehicle/Delete.cshtml">
-      <publishTime>06/24/2019 10:44:51</publishTime>
+      <publishTime>04/13/2021 09:08:30</publishTime>
     </File>
     <File Include="Areas/AdminArea/Views/FleetVehicle/Details.cshtml">
       <publishTime>06/24/2019 10:44:51</publishTime>
     </File>
     <File Include="Areas/AdminArea/Views/FleetVehicle/Edit.cshtml">
-      <publishTime>06/24/2019 10:44:51</publishTime>
+      <publishTime>04/13/2021 09:50:31</publishTime>
     </File>
     <File Include="Areas/AdminArea/Views/FleetVehicle/Index.cshtml">
-      <publishTime>06/24/2019 10:44:51</publishTime>
+      <publishTime>04/28/2021 16:20:32</publishTime>
     </File>
     <File Include="Areas/AdminArea/Views/Freeway/Create.cshtml">
       <publishTime>06/24/2019 10:44:51</publishTime>
@@ -445,7 +448,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/24/2019 10:44:51</publishTime>
     </File>
     <File Include="Areas/AdminArea/Views/_ViewStart.cshtml">
-      <publishTime>06/24/2019 10:44:51</publishTime>
+      <publishTime>06/16/2021 11:09:18</publishTime>
     </File>
     <File Include="Assemblies/Microsoft.SqlServer.Types.dll">
       <publishTime>06/24/2019 11:13:42</publishTime>
@@ -457,10 +460,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>04/09/2021 17:05:34</publishTime>
+      <publishTime>06/16/2021 13:17:38</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>04/09/2021 17:05:34</publishTime>
+      <publishTime>06/16/2021 13:17:38</publishTime>
     </File>
     <File Include="bin/DotNetOpenAuth.AspNet.dll">
       <publishTime>12/05/2012 22:27:28</publishTime>
@@ -487,19 +490,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/23/2017 13:15:20</publishTime>
     </File>
     <File Include="bin/FSP.Common.dll">
-      <publishTime>04/09/2021 16:58:33</publishTime>
+      <publishTime>06/16/2021 13:17:33</publishTime>
     </File>
     <File Include="bin/FSP.Common.pdb">
-      <publishTime>04/09/2021 16:58:33</publishTime>
+      <publishTime>06/16/2021 13:17:33</publishTime>
     </File>
     <File Include="bin/FSP.Domain.dll">
-      <publishTime>04/09/2021 16:58:33</publishTime>
+      <publishTime>06/16/2021 13:17:33</publishTime>
     </File>
     <File Include="bin/FSP.Domain.dll.config">
       <publishTime>06/24/2019 11:13:42</publishTime>
     </File>
     <File Include="bin/FSP.Domain.pdb">
-      <publishTime>04/09/2021 16:58:33</publishTime>
+      <publishTime>06/16/2021 13:17:33</publishTime>
     </File>
     <File Include="bin/FSP.Web.4.5.dll">
       <publishTime>08/30/2013 09:08:40</publishTime>
@@ -508,10 +511,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/30/2013 09:08:40</publishTime>
     </File>
     <File Include="bin/FSP.Web.dll">
-      <publishTime>04/09/2021 17:05:30</publishTime>
+      <publishTime>06/16/2021 13:17:33</publishTime>
     </File>
     <File Include="bin/FSP.Web.pdb">
-      <publishTime>04/09/2021 17:05:30</publishTime>
+      <publishTime>06/16/2021 13:17:33</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.Core.dll">
       <publishTime>04/24/2018 12:47:38</publishTime>
@@ -1117,7 +1120,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/24/2019 11:13:42</publishTime>
     </File>
     <File Include="MyScripts/AssistEntry/AssistScript.js">
-      <publishTime>12/12/2020 16:02:08</publishTime>
+      <publishTime>04/13/2021 13:29:04</publishTime>
     </File>
     <File Include="MyScripts/AssistEntry/AssistScriptOld.js">
       <publishTime>12/18/2013 09:18:48</publishTime>
@@ -1186,7 +1189,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/16/2018 09:15:43</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>04/09/2021 17:05:32</publishTime>
+      <publishTime>06/16/2021 13:17:36</publishTime>
     </File>
     <File Include="Scripts/angular-animate.js">
       <publishTime>06/24/2019 11:13:42</publishTime>
@@ -3904,7 +3907,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/17/2013 19:32:21</publishTime>
     </File>
     <File Include="Views/CHPInformation/Index.cshtml">
-      <publishTime>06/24/2019 10:44:52</publishTime>
+      <publishTime>06/16/2021 08:03:08</publishTime>
     </File>
     <File Include="Views/Dispatch/Index.cshtml">
       <publishTime>06/24/2019 11:13:44</publishTime>
@@ -3945,8 +3948,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Shared/Unauthorized.cshtml">
       <publishTime>06/24/2019 10:44:52</publishTime>
     </File>
+    <File Include="Views/Shared/_Layout BT.cshtml">
+      <publishTime>06/16/2021 12:59:33</publishTime>
+    </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>06/24/2019 11:13:44</publishTime>
+      <publishTime>06/16/2021 11:20:49</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutAdmin.cshtml">
       <publishTime>12/27/2013 11:13:33</publishTime>

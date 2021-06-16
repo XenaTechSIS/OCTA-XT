@@ -27,12 +27,12 @@ namespace FSP.Domain.Model
         public Guid InteractionTypeID { get; set; }
 
         [Required]
-        [DisplayName("Interaction Location")]
+        [DisplayName("Interaction Description")]
         [StringLength(100)]
         public String InteractionArea { get; set; }
 
         [Required]
-        [DisplayName("Interaction Description")]
+        [DisplayName("Interaction Narrative")]
         [StringLength(500)]
         public String InteractionDescription { get; set; }
 
@@ -45,24 +45,24 @@ namespace FSP.Domain.Model
         public Boolean AccidentPreventable { get; set; }
 
         [Required]
-        [DisplayName("Followup Required")]
+        [DisplayName("Follow Up Required")]
         public Boolean FollowupRequired { get; set; }
        
-        [DisplayName("Followup Description")]
+        [DisplayName("Follow Up Narrative")]
         [StringLength(500)]
         public String FollowupDescription { get; set; }
       
-        [DisplayName("Followup Date")]
+        [DisplayName("Follow Up Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime? FollowupDate { get; set; }
 
-        [DisplayName("Followup Completion Date")]
+        [DisplayName("Follow Up Completion Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime? FollowupCompletionDate { get; set; }
 
-        [DisplayName("Followup Comments")]
+        [DisplayName("Follow Up Comments")]
         [StringLength(500)]
         public String FollowupComments { get; set; }
 

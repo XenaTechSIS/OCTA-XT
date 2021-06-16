@@ -1277,6 +1277,7 @@
     <Content Include="Scripts\i18n\angular-locale_zh.js" />
     <Content Include="Scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
+    <Content Include="Areas\AdminArea\Views\FleetVehicle\Activate.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -1454,6 +1455,7 @@
     <None Include="Service References\TowTruckServiceRef\TowTruckService54.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\Shared\_Layout BT.cshtml" />
     <None Include="Web.Acceptance.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -16,9 +16,34 @@ namespace FSP.Web.Areas.AdminArea.Controllers
     {
         FSPDataContext db = new FSPDataContext();
 
-        public ActionResult Index()
+        public ActionResult Index(string filter = null)
         {
+            DateTime ND = new DateTime();
+
+            if(filter == "All")
+            {
+                ND = DateTime.Now.AddYears(-20);
+            }
+            else if (filter == "90")
+            {
+                ND = DateTime.Now.AddDays(-90);
+            }
+            else if (filter == "60")
+            {
+                ND = DateTime.Now.AddDays(-60);
+            }
+            else if (filter == "30")
+            {
+                ND = DateTime.Now.AddDays(-30);
+            }
+            else 
+            {
+                ND = DateTime.Now.AddDays(-90);
+            }
+
+
             List<DriverInteraction> data = (from q in db.DriverInteractions
+                                            where q.InteractionDate >= ND
                                             orderby q.Contractor.ContractCompanyName, q.Driver.LastName
                                             select q).ToList();
 

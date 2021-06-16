@@ -1,51 +1,117 @@
 ﻿@model IEnumerable<FSP.Domain.Model.DriverInteraction>
-@{
-    ViewBag.Title = "Driver Interactions";
-}
+    @{
+        Layout = "~/Views/Shared/_Layout BT.cshtml";
+        ViewBag.Title = "Driver Interactions";
+    }
+    <p>
+        @Html.ActionLink("Add Driver Interaction", "Create")
+    </p>
 
-<p>
-    @Html.ActionLink("Add Driver Interaction", "Create")
-</p>
-<h2>Driver Interactions</h2>
-<table class="table table-bordered table-condensed table-striped sortable">
-    <thead>
-        <tr>
-            <th>Driver</th>
-            <th>Contractor</th>
-            <th>Interaction Date</th>
-            <th>Interaction Type</th>
-            <th>Inspection Fail</th>
-            <th>Interaction Area</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+    @using (Html.BeginForm())
+    {
+        <p>
+            @*Find by driver last name: @Html.TextBox("filter")*@
+            @Html.RadioButton("filter", "All") <span>All</span>
+            @Html.RadioButton("filter", "90", true) <span>90</span>
+            @Html.RadioButton("filter", "60") <span>60</span>
+            @Html.RadioButton("filter", "30") <span>30</span>
+        </p>
+        <input type="submit" value="Filter" />
+    }
+    <table data-toggle="table"
+           data-search="true"
+           data-show-fullscreen="true"
+           data-show-toggle="true"
+           data-show-columns="true"
+           data-show-columns-toggle-all="true"
+           data-detail-view="false"
+           data-sortable="true"
+           data-pagination="true"
+           data-page-size="25"
+           data-page-list="[10, 25, 50, 100, All]"
+           data-group-by="true"  
+           data-custom-sort="customSort"           
+           data-show-export="true">
+         <thead>
             <tr>
-                <td class="span3">
-                    @Html.DisplayFor(modelItem => item.Driver.LastName)<span>, </span>@Html.DisplayFor(modelItem => item.Driver.FirstName)
-                </td>
-                <td class="span3">
-                    @Html.DisplayFor(modelItem => item.Contractor.ContractCompanyName)
-                </td>
-                 <td class="span3">
-                    @Html.DisplayFor(modelItem => item.InteractionDate)
-                </td>
-                <td class="span2">
-                    @Html.DisplayFor(modelItem => item.InteractionType.InteractionType1)
-                </td>
-                <td class="span2">
-                    @Html.DisplayFor(modelItem => item.InspectionPassFail)
-                </td>
-                <td class="span3">
-                    @Html.DisplayFor(modelItem => item.InteractionArea)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.InteractionID }) | 
-                    @Html.ActionLink("Delete", "Delete", new { id = item.InteractionID })
-                </td>
+                <th>Driver</th>
+                <th>Contractor</th>
+                <th data-sortable="true">Interaction Date</th>
+                <th>Interaction Type</th>
+                <th>Inspection Fail</th>
+                <th data-sortable="true">Interaction Area</th>
+                <th>Modify</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="span3">
+                        @Html.DisplayFor(modelItem => item.Driver.LastName)<span>, </span>@Html.DisplayFor(modelItem => item.Driver.FirstName)
+                    </td>
+                    <td class="span3">
+                        @Html.DisplayFor(modelItem => item.Contractor.ContractCompanyName)
+                    </td>
+                    <td class="span3">
+                        @Html.DisplayFor(modelItem => item.InteractionDate)
+                    </td>
+                    <td class="span2">
+                        @Html.DisplayFor(modelItem => item.InteractionType.InteractionType1)
+                    </td>
+                    <td class="span2">
+                        @Html.DisplayFor(modelItem => item.InspectionPassFail)
+                    </td>
+                    <td class="span3">
+                        @Html.DisplayFor(modelItem => item.InteractionArea)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.InteractionID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.InteractionID })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @*<table class="table table-bordered table-condensed table-striped sortable">
+            <thead>
+                <tr>
+                    <th>Driver</th>
+                    <th>Contractor</th>
+                    <th>Interaction Date</th>
+                    <th>Interaction Type</th>
+                    <th>Inspection Fail</th>
+                    <th>Interaction Area</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="span3">
+                            @Html.DisplayFor(modelItem => item.Driver.LastName)<span>, </span>@Html.DisplayFor(modelItem => item.Driver.FirstName)
+                        </td>
+                        <td class="span3">
+                            @Html.DisplayFor(modelItem => item.Contractor.ContractCompanyName)
+                        </td>
+                        <td class="span3">
+                            @Html.DisplayFor(modelItem => item.InteractionDate)
+                        </td>
+                        <td class="span2">
+                            @Html.DisplayFor(modelItem => item.InteractionType.InteractionType1)
+                        </td>
+                        <td class="span2">
+                            @Html.DisplayFor(modelItem => item.InspectionPassFail)
+                        </td>
+                        <td class="span3">
+                            @Html.DisplayFor(modelItem => item.InteractionArea)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.InteractionID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.InteractionID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>*@

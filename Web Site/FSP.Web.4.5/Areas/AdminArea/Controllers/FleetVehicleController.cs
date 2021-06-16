@@ -21,9 +21,10 @@ namespace FSP.Web.Areas.AdminArea.Controllers
 
         public ActionResult Index()
         {                       
-            List<FleetVehicle> data = (from q in db.FleetVehicles
-                                      orderby q.VehicleNumber
-                                      select q).ToList();
+            var data = (from q in db.FleetVehicles
+                        orderby q.VehicleNumber
+                        select q).ToList();
+
             if (!String.IsNullOrEmpty(this.UsersContractorCompanyName))
                 data = data.Where(p => p.Contractor.ContractCompanyName == this.UsersContractorCompanyName).ToList();
 
@@ -155,7 +156,28 @@ namespace FSP.Web.Areas.AdminArea.Controllers
         public ActionResult DeleteConfirmed(Guid id)
         {
             FleetVehicle FleetVehicle = db.FleetVehicles.Single(r => r.FleetVehicleID == id);
-            db.FleetVehicles.DeleteOnSubmit(FleetVehicle);
+            FleetVehicle.IPAddress = "RETIRED";
+            //db.FleetVehicles.DeleteOnSubmit(FleetVehicle);
+            db.SubmitChanges();
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Activate(Guid id)
+        {
+            FleetVehicle FleetVehicle = db.FleetVehicles.Single(r => r.FleetVehicleID == id);
+            if (FleetVehicle == null)
+            {
+                return HttpNotFound();
+            }
+            return View(FleetVehicle);
+        }
+
+        [HttpPost, ActionName("Activate")]
+        public ActionResult ActivateConfirmed(Guid id)
+        {
+            FleetVehicle FleetVehicle = db.FleetVehicles.Single(r => r.FleetVehicleID == id);
+            FleetVehicle.IPAddress = "";
+            //db.FleetVehicles.DeleteOnSubmit(FleetVehicle);
             db.SubmitChanges();
             return RedirectToAction("Index");
         }

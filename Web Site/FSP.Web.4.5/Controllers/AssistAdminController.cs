@@ -35,7 +35,7 @@ namespace FSP.Web.Controllers
         //[OutputCache(Duration = 5)]
         public ActionResult GetDrivers()
         {
-            var data = from q in dc.Drivers
+            var data = from q in dc.Drivers.Where(q => q.IsActive == true)
                 select new
                 {
                     Id = q.DriverID,
@@ -125,7 +125,7 @@ namespace FSP.Web.Controllers
         //[OutputCache(Duration = 5)]
         public ActionResult GetVehicles()
         {
-            var data = from q in dc.FleetVehicles
+            var data = from q in dc.FleetVehicles.Where(q => q.IPAddress.Trim() != "RETIRED")
                 select new
                 {
                     Id = q.FleetVehicleID,

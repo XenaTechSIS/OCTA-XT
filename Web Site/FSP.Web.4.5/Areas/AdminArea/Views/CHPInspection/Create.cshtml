@@ -51,7 +51,7 @@
             @Html.LabelFor(model => model.InspectionNotes)
         </div>
         <div class="editor-field">
-            @Html.TextAreaFor(model => model.InspectionNotes, new { @class = "span4", rows = 5 })
+            @Html.TextAreaFor(model => model.InspectionNotes, new { style = "width: 50%; max-width: 100%;" })
             @Html.ValidationMessageFor(model => model.InspectionNotes)
         </div>
         <div class="form-actions">

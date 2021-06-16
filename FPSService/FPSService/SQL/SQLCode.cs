@@ -2470,7 +2470,7 @@ namespace FPSService.SQL
                     var cmd = new SqlCommand("UpdateCallBox", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@CallBoxID", CallBox.CallBoxID);
-                    cmd.Parameters.AddWithValue("@TelephoneNumber", CallBox.Location);
+                    cmd.Parameters.AddWithValue("@TelephoneNumber", CallBox.TelephoneNumber);
                     cmd.Parameters.AddWithValue("@Location", CallBox.Location);
                     cmd.Parameters.AddWithValue("@FreewayID", CallBox.FreewayID);
                     cmd.Parameters.AddWithValue("@SiteType", CallBox.SiteType);
