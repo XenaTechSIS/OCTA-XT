@@ -1278,6 +1278,7 @@
     <Content Include="Scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
     <Content Include="Areas\AdminArea\Views\FleetVehicle\Activate.cshtml" />
+    <Content Include="Areas\AdminArea\Views\DriverInteraction\Index2.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

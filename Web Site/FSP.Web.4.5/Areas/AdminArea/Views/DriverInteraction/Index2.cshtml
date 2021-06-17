@@ -1,0 +1,76 @@
+﻿@model IEnumerable<FSP.Domain.Model.DriverInteraction>
+    @{
+        ViewBag.Title = "Driver Interactions";
+    }
+
+    <p>
+        <a href='~/CHPInformation/Index'>Back to CHP</a>
+    </p>
+    <p>
+        @Html.ActionLink("Add Driver Interaction", "Create")
+    </p>
+    <h2>Driver Interactions</h2>
+    @using (Html.BeginForm())
+    {
+        <p>
+            Find by driver last name: @Html.TextBox("filter")
+            <input type="submit" value="Search" />
+        </p>
+    }
+    <hr />
+    @foreach (FSP.Domain.Model.Driver driver in @ViewBag.Drivers)
+    {
+        <a class="" data-toggle="collapse" href="#@driver.DriverID" role="button" aria-expanded="false" aria-controls="collapseExample">
+            >> @driver.LastName, @driver.FirstName : @driver.Contractor.ContractCompanyName
+        </a>
+        <div class="collapse" id="@driver.DriverID">
+            <div class="card card-body">
+                <table class="table table-bordered table-condensed table-striped sortable">
+                    <thead>
+                        <tr>
+                            <th>Driver</th>
+                            <th>Contractor</th>
+                            <th>Interaction Date</th>
+                            <th>Interaction Type</th>
+                            <th>Inspection Fail</th>
+                            <th>Interaction Description</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            if (item.Driver.DriverID == driver.DriverID)
+                            {
+                                <tr class="">
+                                    <td class="span3">
+                                        @Html.DisplayFor(modelItem => item.Driver.LastName)<span>, </span>@Html.DisplayFor(modelItem => item.Driver.FirstName)
+                                    </td>
+                                    <td class="span3">
+                                        @Html.DisplayFor(modelItem => item.Contractor.ContractCompanyName)
+                                    </td>
+                                    <td class="span3">
+                                        @Html.DisplayFor(modelItem => item.InteractionDate)
+                                    </td>
+                                    <td class="span2">
+                                        @Html.DisplayFor(modelItem => item.InteractionType.InteractionType1)
+                                    </td>
+                                    <td class="span2">
+                                        @Html.DisplayFor(modelItem => item.InspectionPassFail)
+                                    </td>
+                                    <td class="span3">
+                                        @Html.DisplayFor(modelItem => item.InteractionArea)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.InteractionID }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.InteractionID })
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br /><br />
+    }

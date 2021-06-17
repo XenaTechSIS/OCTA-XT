@@ -4,19 +4,23 @@
         ViewBag.Title = "Driver Interactions";
     }
     <p>
+        <a href='~/CHPInformation/Index'>Back to CHP</a>
+    </p>
+    <p>
         @Html.ActionLink("Add Driver Interaction", "Create")
     </p>
 
     @using (Html.BeginForm())
     {
-        <p>
-            @*Find by driver last name: @Html.TextBox("filter")*@
-            @Html.RadioButton("filter", "All") <span>All</span>
-            @Html.RadioButton("filter", "90", true) <span>90</span>
-            @Html.RadioButton("filter", "60") <span>60</span>
-            @Html.RadioButton("filter", "30") <span>30</span>
-        </p>
-        <input type="submit" value="Filter" />
+                  <p>
+                      @*Find by driver last name: @Html.TextBox("filter")*@
+                      How many days in search: 
+                      @Html.RadioButton("filter", "30") <span>30</span>
+                      @Html.RadioButton("filter", "60") <span>60</span>
+                      @Html.RadioButton("filter", "90", true) <span>90</span>
+                      @Html.RadioButton("filter", "All") <span>All</span>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="Filter" />
+                  </p>
     }
     <table data-toggle="table"
            data-search="true"

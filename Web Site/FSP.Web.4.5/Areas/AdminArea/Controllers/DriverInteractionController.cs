@@ -41,13 +41,50 @@ namespace FSP.Web.Areas.AdminArea.Controllers
                 ND = DateTime.Now.AddDays(-90);
             }
 
-
             List<DriverInteraction> data = (from q in db.DriverInteractions
                                             where q.InteractionDate >= ND
+                                            && q.Driver.IsActive
                                             orderby q.Contractor.ContractCompanyName, q.Driver.LastName
                                             select q).ToList();
 
             return View(data);
+        }
+
+
+        public ActionResult Index2(string filter = null)
+        {
+            List<DriverInteraction> driverInteractionList = new List<DriverInteraction>();
+            List<Driver> drivers = new List<Driver>();
+
+            if (filter == null)
+            {
+                driverInteractionList = (from q in db.DriverInteractions
+                                                where q.Driver.IsActive
+                                                orderby q.Contractor.ContractCompanyName, q.Driver.LastName
+                                                select q).ToList();
+
+                drivers = (from d in db.Drivers
+                           where d.IsActive
+                           select d).ToList();
+            }
+            else
+            {
+                driverInteractionList = (from q in db.DriverInteractions
+                                                where q.Driver.IsActive
+                                                && q.Driver.LastName.Contains(filter)
+                                                orderby q.Contractor.ContractCompanyName, q.Driver.LastName
+                                                select q).ToList();
+
+                drivers = (from d in db.Drivers
+                           where d.IsActive
+                           && d.LastName.Contains(filter)
+                           select d).ToList();
+
+            }
+
+            ViewBag.Drivers = drivers.OrderBy(d => d.LastName);
+
+            return View(driverInteractionList.OrderByDescending(di => di.InteractionDate));
         }
 
         public ActionResult Details(Guid id)
