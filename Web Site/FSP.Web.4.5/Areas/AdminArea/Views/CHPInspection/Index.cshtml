@@ -4,15 +4,18 @@
     }
 
     <p>
+        <a href='~/CHPInformation/Index'>Back to CHP</a>
+    </p>
+    <p>
         @Html.ActionLink("Add CHP Inspection", "Create")
     </p>
     <h2>CHP Inspections</h2>
     @using (Html.BeginForm())
     {
-    <p>
-        Find by vehicle: @Html.TextBox("filter")
-        <input type="submit" value="Search" />
-    </p>
+        <p>
+            Find by vehicle: @Html.TextBox("filter")
+            <input type="submit" value="Search" />
+        </p>
     }
     <table class="table table-bordered table-condensed table-striped sortable">
         <thead>
